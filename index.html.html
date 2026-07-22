@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Dashboard Performance Sale Admin 2 — Enterprise Edition</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800;900&display=swap');
+:root{
+  /* ── Light / Minimal White Theme ── */
+  --bg:#f4f6fb;--s1:#ffffff;--s2:#f1f4f9;--s3:#e4e9f1;--border:#e2e7f0;--text:#1c2333;--muted:#64748b;
+  --neon:#0891b2;--neon2:#7c3aed;
+  --glass:rgba(255,255,255,.78);--glass-brd:rgba(15,23,42,.07);
+  --shadow-sm:0 2px 10px rgba(30,41,59,.06);--shadow-md:0 8px 26px rgba(30,41,59,.10);--shadow-lg:0 4px 30px rgba(30,41,59,.08);
+  --sb-w:236px;--sb-w-collapsed:72px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Sarabun',sans-serif;background:
+  radial-gradient(circle at 15% 0%,#7c3aed0d,transparent 40%),
+  radial-gradient(circle at 85% 10%,#06b6d40d,transparent 40%),
+  var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+::-webkit-scrollbar{width:8px;height:6px;}
+::-webkit-scrollbar-thumb{background:#c7d0de;border-radius:4px;}
+
+/* ══════════════ APP SHELL ══════════════ */
+.app-shell{display:flex;min-height:100vh;}
+.main-col{flex:1;min-width:0;}
+.wrap{max-width:1560px;margin:0 auto;padding:20px 28px 60px;}
+
+/* ══════════════ HEADER ══════════════ */
+.hdr{background:var(--glass);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:900;box-shadow:var(--shadow-lg);}
+.hdr-top{display:flex;align-items:center;gap:14px;padding:13px 28px;flex-wrap:wrap;}
+.hdr-logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#f59e0b,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 20px #7c3aed44;flex-shrink:0;}
+.hdr-title{font-size:17px;font-weight:900;letter-spacing:-.3px;}
+.hdr-sub{font-size:9.5px;color:var(--muted);margin-top:2px;}
+.hdr-right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+.hstat{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:6px 13px;text-align:center;min-width:74px;}
+.hstat-v{font-size:14px;font-weight:900;}
+.hstat-l{font-size:8px;color:var(--muted);margin-top:1px;}
+
+/* ══════════════ FILTER BAR ══════════════ */
+.fbar{display:flex;align-items:center;gap:8px;padding:9px 28px;border-top:1px solid var(--border);flex-wrap:wrap;background:#0000001a;}
+.fbar-lbl{font-size:8.5px;font-weight:800;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-right:2px;}
+.fsel{background:var(--s2);border:1px solid var(--border);color:var(--text);border-radius:9px;padding:6px 10px;font-family:'Sarabun',sans-serif;font-size:10.5px;font-weight:700;cursor:pointer;transition:border-color .15s;}
+.fsel:hover{border-color:var(--neon);}
+.fchip{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(90deg,#7c3aed14,#06b6d414);border:1px solid #7c3aed3a;color:#6d28d9;border-radius:20px;padding:4px 10px 4px 12px;font-size:9.5px;font-weight:700;}
+.fchip button{background:none;border:none;color:currentColor;cursor:pointer;font-size:11px;line-height:1;opacity:.7;}
+.fchip button:hover{opacity:1;}
+.fclear{font-size:9px;font-weight:700;color:var(--muted);background:none;border:1px solid var(--border);border-radius:20px;padding:4px 12px;cursor:pointer;}
+.fclear:hover{color:#dc2626;border-color:#ef444455;}
+
+/* ══════════════ SIDEBAR (LEFT) ══════════════ */
+.sidebar{width:var(--sb-w);flex-shrink:0;background:var(--s1);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;display:flex;flex-direction:column;transition:width .22s cubic-bezier(.4,0,.2,1);z-index:950;box-shadow:var(--shadow-sm);}
+.sidebar.collapsed{width:var(--sb-w-collapsed);}
+.sb-head{display:flex;align-items:center;justify-content:space-between;padding:16px 14px;border-bottom:1px solid var(--border);}
+.sb-brand{font-size:11px;font-weight:900;color:var(--neon2);white-space:nowrap;overflow:hidden;opacity:1;transition:opacity .15s;}
+.sidebar.collapsed .sb-brand{opacity:0;width:0;}
+.sb-toggle{background:var(--s2);border:1px solid var(--border);color:var(--muted);width:26px;height:26px;border-radius:8px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
+.sb-toggle:hover{color:var(--neon2);border-color:var(--neon2);}
+.sb-menu{flex:1;overflow-y:auto;padding:10px 8px;display:flex;flex-direction:column;gap:3px;}
+.sb-item{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--muted);font-size:11.5px;font-weight:700;white-space:nowrap;overflow:hidden;border:1px solid transparent;position:relative;transition:all .18s;}
+.sb-item:hover{background:var(--s2);color:var(--text);transform:translateX(2px);}
+.sb-item.active{background:linear-gradient(90deg,#7c3aed14,#06b6d414);color:#5b21b6;border-color:#7c3aed30;box-shadow:inset 3px 0 0 var(--neon2);}
+.sb-ic{font-size:16px;flex-shrink:0;width:20px;text-align:center;}
+.sb-lbl{opacity:1;transition:opacity .12s;}
+.sidebar.collapsed .sb-lbl{opacity:0;width:0;}
+.sidebar.collapsed .sb-item{justify-content:center;padding:10px 0;}
+.sb-foot{padding:12px 16px;border-top:1px solid var(--border);font-size:8px;color:var(--muted);white-space:nowrap;overflow:hidden;}
+.sidebar.collapsed .sb-foot{opacity:0;}
+
+/* ══════════════ PAGES / PANELS ══════════════ */
+.page{display:none;animation:fadein .28s ease;}
+.page.active{display:block;}
+@keyframes fadein{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════ PRODUCTS & PROMOTIONS ══════════════ */
+.promo-hero{position:relative;overflow:hidden;border-radius:22px;padding:26px 28px;color:#fff;background:linear-gradient(120deg,#312e81 0%,#6d28d9 55%,#0891b2 100%);box-shadow:0 18px 45px rgba(79,70,229,.22);margin-bottom:16px}
+.promo-hero:after{content:'🎁';position:absolute;right:34px;top:2px;font-size:105px;opacity:.12;transform:rotate(10deg)}
+.promo-eyebrow{font-size:9px;font-weight:900;letter-spacing:2px;opacity:.78;text-transform:uppercase}.promo-title{font-size:24px;font-weight:900;margin:5px 0}.promo-sub{font-size:11px;opacity:.85;max-width:720px;line-height:1.65}
+.promo-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:16px 0 24px}.promo-kpi{position:relative;overflow:hidden;border-radius:18px;padding:18px 20px 17px;box-shadow:0 9px 24px rgba(30,41,59,.11);transition:transform .18s ease,box-shadow .18s ease}.promo-kpi:before{content:'';position:absolute;left:0;right:0;top:0;height:6px}.promo-kpi:after{content:'';position:absolute;width:84px;height:84px;border-radius:50%;right:-26px;bottom:-42px;background:currentColor;opacity:.08}.promo-kpi:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(30,41,59,.15)}.promo-kpi b{display:block;font-size:29px;line-height:1;font-weight:900;margin-top:8px}.promo-kpi span{font-size:12px;color:#334155;font-weight:800}.promo-kpi:nth-child(1){color:#4338ca;background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1px solid #c7d2fe}.promo-kpi:nth-child(1):before{background:linear-gradient(90deg,#4338ca,#818cf8)}.promo-kpi:nth-child(2){color:#047857;background:linear-gradient(135deg,#ecfdf5,#d1fae5);border:1px solid #a7f3d0}.promo-kpi:nth-child(2):before{background:linear-gradient(90deg,#047857,#34d399)}.promo-kpi:nth-child(3){color:#c2410c;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fed7aa}.promo-kpi:nth-child(3):before{background:linear-gradient(90deg,#ea580c,#fb923c)}.promo-kpi:nth-child(4){color:#be185d;background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid #fbcfe8}.promo-kpi:nth-child(4):before{background:linear-gradient(90deg,#db2777,#f472b6)}
+.promo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.promo-panel{background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;box-shadow:var(--shadow-sm)}.promo-panel.full{grid-column:1/-1}.promo-panel-head{padding:15px 18px;color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:space-between;gap:8px}.promo-panel-head small{font-size:8px;opacity:.85}.ph-indigo{background:linear-gradient(100deg,#3730a3,#7c3aed)}.ph-rose{background:linear-gradient(100deg,#be123c,#db2777)}.ph-green{background:linear-gradient(100deg,#047857,#10b981)}.ph-violet{background:linear-gradient(100deg,#6d28d9,#8b5cf6)}
+.promo-body{padding:14px 16px 17px}.promo-table{width:100%;border-collapse:separate;border-spacing:0;font-size:10.5px}.promo-table th{padding:9px 10px;background:#f8fafc;color:#64748b;text-align:left;font-size:8px;letter-spacing:.5px;text-transform:uppercase;border-bottom:1px solid var(--border)}.promo-table td{padding:9px 10px;border-bottom:1px solid #eef2f7;vertical-align:top}.promo-table tr:last-child td{border-bottom:0}.promo-table tbody tr:hover td{background:#faf5ff}.sku{display:inline-flex;padding:3px 8px;border-radius:999px;background:#ede9fe;color:#6d28d9;font-weight:900;font-size:9px;white-space:nowrap}.price{font-weight:900;color:#059669;white-space:nowrap}.brand-pill{display:inline-flex;padding:4px 9px;border-radius:8px;font-weight:900;font-size:9px}.bp-hv{background:#dbeafe;color:#1d4ed8}.bp-tl{background:#fee2e2;color:#b91c1c}.bp-wp{background:#cffafe;color:#0e7490}.bp-jk{background:#ffedd5;color:#c2410c}
+.promo-brand-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.promo-brand-card{position:relative;overflow:hidden;border-radius:16px;padding:18px 17px 16px;box-shadow:0 8px 20px rgba(30,41,59,.09);transition:transform .18s ease,box-shadow .18s ease}.promo-brand-card:before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px}.promo-brand-card:hover{transform:translateY(-3px);box-shadow:0 13px 28px rgba(30,41,59,.14)}.promo-brand-card:nth-child(1){background:linear-gradient(135deg,#eff6ff,#dbeafe);border:1px solid #bfdbfe}.promo-brand-card:nth-child(1):before{background:#2563eb}.promo-brand-card:nth-child(2){background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid #fecdd3}.promo-brand-card:nth-child(2):before{background:#e11d48}.promo-brand-card:nth-child(3){background:linear-gradient(135deg,#ecfeff,#cffafe);border:1px solid #a5f3fc}.promo-brand-card:nth-child(3):before{background:#0891b2}.promo-brand-card:nth-child(4){background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1px solid #fed7aa}.promo-brand-card:nth-child(4):before{background:#ea580c}.promo-brand-card p{font-size:11px;color:#475569;line-height:1.65;margin-top:7px;font-weight:600}.promo-brand-card strong{display:block;font-size:22px;line-height:1.15;margin:11px 0 5px;color:#0f172a}.promo-brand-card .range{font-size:11px;color:#475569;font-weight:800}.promo-brand-card .brand-pill{font-size:10.5px;padding:5px 10px}.condition-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.condition{padding:10px 12px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:9.5px;border:1px solid #fed7aa}.campaign-row{display:grid;grid-template-columns:140px 1fr 100px 1.4fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:8px}.campaign-row>div{padding:10px 12px;border-right:1px solid var(--border);font-size:10px}.campaign-row>div:last-child{border-right:0}.campaign-month{font-weight:900;background:#f5f3ff;color:#6d28d9}.campaign-qty{text-align:center;font-weight:900;color:#0891b2}
+@media(max-width:1000px){.promo-brand-cards{grid-template-columns:repeat(2,1fr)}.promo-kpis{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.promo-hero{padding:20px}.promo-title{font-size:19px}.promo-grid{grid-template-columns:1fr}.promo-panel.full{grid-column:auto}.promo-brand-cards,.promo-kpis,.condition-list{grid-template-columns:1fr}.campaign-row{grid-template-columns:1fr 1fr}.campaign-row>div:nth-child(2){border-right:0}.campaign-row>div{border-bottom:1px solid var(--border)}.campaign-row>div:nth-last-child(-n+2){border-bottom:0}}
+
+/* ── SEC ── */
+.sec{display:flex;align-items:center;gap:10px;font-size:8.5px;font-weight:800;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin:24px 0 12px;}
+.sec::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ── KPI ── */
+.krow{display:grid;gap:12px;}
+.k3{grid-template-columns:repeat(3,1fr);}
+.k4{grid-template-columns:repeat(4,1fr);}
+.k5{grid-template-columns:repeat(5,1fr);}
+.k6{grid-template-columns:repeat(6,1fr);}
+.kpi{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-brd);border-radius:14px;padding:16px 18px;position:relative;overflow:hidden;transition:transform .15s,box-shadow .15s;cursor:default;}
+.kpi.clickable{cursor:pointer;}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.kpi-stripe{position:absolute;top:0;left:0;right:0;height:3px;}
+.kpi-ic{font-size:20px;margin-bottom:7px;}
+.kpi-lbl{font-size:8.5px;color:var(--muted);font-weight:700;margin-bottom:3px;}
+.kpi-val{font-size:22px;font-weight:900;line-height:1.1;}
+.kpi-sub{font-size:9px;color:var(--muted);margin-top:5px;}
+.kpi-spark{margin-top:6px;height:22px;}
+
+/* ── CARD ── */
+.card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:18px 20px;transition:box-shadow .15s;box-shadow:var(--shadow-sm);}
+.card:hover{box-shadow:var(--shadow-md);}
+.ct{font-size:12px;font-weight:800;display:flex;align-items:center;gap:7px;margin-bottom:3px;}
+.cs{font-size:9px;color:var(--muted);margin-bottom:14px;}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;}
+.g31{display:grid;grid-template-columns:3fr 1fr;gap:14px;}
+.g3s{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+
+/* ── HEATMAP ── */
+.hmap{width:100%;border-collapse:collapse;font-size:11px;}
+.hmap th{background:var(--s2);color:var(--muted);font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 12px;text-align:center;border:1px solid var(--border);}
+.hmap th:first-child{text-align:left;}
+.hmap td{padding:9px 12px;text-align:center;border:1px solid var(--border);font-weight:700;font-size:11.5px;cursor:pointer;}
+.hmap td:first-child{text-align:left;font-size:13px;font-weight:900;background:var(--s2);}
+.hmap tr:hover td{filter:brightness(.95);}
+.cph{background:#10b98130;color:#059669;} .cpl{background:#10b98115;color:#10b981;}
+.cfm{background:#ef444415;color:#dc2626;} .cfh{background:#ef444428;color:#ef4444;}
+.delta{font-size:8px;opacity:.7;display:block;margin-top:1px;}
+
+/* ── TABLE ── */
+.tbl{width:100%;border-collapse:collapse;font-size:11px;}
+.tbl thead th{background:var(--s2);color:var(--muted);font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 10px;text-align:right;border-bottom:2px solid var(--border);}
+.tbl thead th:first-child{text-align:left;}
+.tbl tbody td{padding:7px 10px;text-align:right;border-bottom:1px solid #ffffff05;font-size:10.5px;}
+.tbl tbody td:first-child{text-align:left;font-weight:700;}
+.tbl tbody tr{cursor:pointer;}
+.tbl tbody tr:hover td{background:var(--s2);}
+.tbl tbody tr.sel td{background:#7c3aed22;}
+.tbl tfoot td{background:var(--s2);font-weight:900;border-top:2px solid var(--border);padding:8px 10px;text-align:right;}
+.tbl tfoot td:first-child{text-align:left;}
+.scrl{overflow-x:auto;}
+
+/* ── CROSS SALE DAILY ── */
+#rd-daily-heading{margin-top:22px;color:#047857;letter-spacing:2px;}
+#rd-daily-heading::after{background:linear-gradient(90deg,#10b98155,transparent);}
+#rd-daily-section{padding:0;overflow:hidden;border:1px solid #99f6e4;border-radius:18px;box-shadow:0 14px 34px rgba(13,148,136,.13);}
+.rd-daily-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 20px;background:linear-gradient(115deg,#d1fae5 0%,#ccfbf1 48%,#dbeafe 100%);border-bottom:1px solid #99f6e4;}
+.rd-daily-title{display:flex;align-items:center;gap:11px;}
+.rd-daily-icon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#059669,#0d9488);color:#fff;font-size:17px;box-shadow:0 6px 14px rgba(5,150,105,.22);}
+.rd-daily-title .ct{margin:0;color:#064e3b;font-size:13px;}
+.rd-daily-title .cs{margin:2px 0 0;font-size:9px;}
+.rd-daily-legend{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+.rd-legend{padding:4px 9px;border-radius:999px;font-size:8.5px;font-weight:800;border:1px solid transparent;white-space:nowrap;}
+.rd-legend.high{background:#fdf2f8;color:#be185d;border-color:#fbcfe8;}
+.rd-legend.normal{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
+.rd-legend.wait{background:#f8fafc;color:#64748b;border-color:#e2e8f0;}
+#rd-daily-section .scrl{padding:14px 16px 16px;background:linear-gradient(180deg,#f8fffd,#fff);}
+#rd-daily{width:100%;table-layout:fixed;min-width:560px;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid #cbd5e1;border-radius:13px;box-shadow:0 5px 16px rgba(15,118,110,.06);}
+#rd-daily th{background:linear-gradient(180deg,#0f766e,#0d9488);color:#fff;padding:10px 7px;border-bottom:0;border-right:1px solid rgba(255,255,255,.14);font-size:8px;letter-spacing:.55px;text-align:center;}
+#rd-daily th:last-child{border-right:0;}
+#rd-daily td{padding:8px 7px;text-align:center;border-bottom:1px solid #e2e8f0;border-right:1px solid #f1f5f9;font-size:10.5px;background:#fff;}
+#rd-daily td:last-child{border-right:0;}
+#rd-daily tbody tr:nth-child(even) td{background:#f0fdfa;}
+#rd-daily tbody tr:last-child td{border-bottom:0;}
+#rd-daily tbody tr:hover td{background:#f0fdfa;}
+#rd-daily th:nth-child(1),#rd-daily td:nth-child(1){width:78px;text-align:center;padding-left:7px;white-space:nowrap;}
+#rd-daily th:nth-child(2),#rd-daily td:nth-child(2){width:80px;}
+#rd-daily th:nth-child(3),#rd-daily td:nth-child(3){width:82px;}
+#rd-daily th:nth-child(4),#rd-daily td:nth-child(4){width:98px;}
+#rd-daily th:nth-child(5),#rd-daily td:nth-child(5){width:98px;}
+#rd-daily th:nth-child(6),#rd-daily td:nth-child(6){width:98px;}
+.rd-date{font-weight:800;color:#334155;}
+.rd-status{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:72px;padding:4px 9px;border-radius:999px;font-size:9px;font-weight:900;border:1px solid transparent;}
+.rd-status::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;}
+.rd-status.high{background:#fdf2f8;color:#be185d;border-color:#fbcfe8;}
+.rd-status.normal{background:#eff6ff;color:#1d4ed8;border-color:#bfdbfe;}
+.rd-status.wait{background:#f8fafc;color:#94a3b8;border-color:#e2e8f0;}
+@media(max-width:700px){.rd-daily-head{align-items:flex-start;flex-direction:column;padding:14px 16px}.rd-daily-legend{justify-content:flex-start}.rd-daily-title .ct{font-size:12px}#rd-daily-section .scrl{padding:10px}}
+
+/* ── STAFF CARDS ── */
+.scrd{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:16px;position:relative;overflow:hidden;transition:transform .15s;cursor:pointer;box-shadow:var(--shadow-sm);}
+.scrd:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
+.scrd.sel{border-color:var(--neon);box-shadow:0 0 0 1px var(--neon);}
+.scrd-stripe{position:absolute;top:0;left:0;right:0;height:3px;}
+.scrd-name{font-size:15px;font-weight:900;}
+.scrd-sub{font-size:8.5px;color:var(--muted);margin-top:2px;margin-bottom:10px;}
+.scrd-nums{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;}
+.sn{background:var(--s2);border-radius:8px;padding:7px 10px;}
+.sn-l{font-size:7.5px;color:var(--muted);margin-bottom:2px;}
+.sn-v{font-size:13px;font-weight:900;}
+.pbar-hdr{display:flex;justify-content:space-between;font-size:8px;margin-bottom:3px;}
+.msbar{height:7px;background:var(--s3);border-radius:4px;overflow:hidden;display:flex;margin-bottom:7px;}
+.msb-p{background:#10b981;height:100%;} .msb-f{background:#ef4444;height:100%;} .msb-o{background:#374151;height:100%;}
+
+/* ── LEADERBOARD ── */
+.lb{display:flex;flex-direction:column;gap:6px;}
+.lb-row{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:10px;background:var(--s2);border:1px solid var(--border);cursor:pointer;transition:transform .12s;}
+.lb-row:hover{transform:translateX(-3px);}
+.lb-row.gold{border-color:#f59e0b66;background:linear-gradient(90deg,#f59e0b18,var(--s2));}
+.lb-row.silver{border-color:#94a3b866;background:linear-gradient(90deg,#94a3b818,var(--s2));}
+.lb-row.bronze{border-color:#b4530966;background:linear-gradient(90deg,#b4530918,var(--s2));}
+.lb-rk{font-size:13px;font-weight:900;width:22px;text-align:center;flex-shrink:0;}
+.lb-nm{font-size:11px;font-weight:800;width:56px;flex-shrink:0;}
+.lb-bw{flex:1;background:var(--s3);border-radius:3px;height:6px;overflow:hidden;}
+.lb-bf{height:100%;border-radius:3px;}
+.lb-rv{font-size:12px;font-weight:900;min-width:70px;text-align:right;}
+.lb-pp{font-size:9px;font-weight:700;min-width:38px;text-align:right;color:var(--muted);}
+
+/* ── BRAND CARD ── */
+.bcrd{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:transform .15s;cursor:pointer;}
+.bcrd:hover{transform:translateY(-3px);}
+.bcrd.sel{box-shadow:0 0 0 2px var(--neon);}
+.bcrd-stripe{position:absolute;top:0;left:0;right:0;height:4px;}
+.bcrd-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+.bcrd-name{font-size:14px;font-weight:900;}
+.bcrd-tgt{font-size:8.5px;color:var(--muted);margin-top:2px;}
+.bcrd-ic{font-size:22px;}
+.bcrd-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.bst{background:var(--s2);border-radius:8px;padding:7px 10px;}
+.bst-l{font-size:7.5px;color:var(--muted);margin-bottom:2px;}
+.bst-v{font-size:12px;font-weight:900;}
+
+/* ── RING ── */
+.ring-c{position:relative;width:100px;height:100px;margin:8px auto 10px;}
+.ring-svg{width:100px;height:100px;transform:rotate(-90deg);}
+.ring-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;}
+.ring-pct{font-size:17px;font-weight:900;line-height:1;}
+.ring-lbl{font-size:7px;color:var(--muted);margin-top:1px;}
+
+/* ── ALERT / INSIGHT ── */
+.alert{border-radius:11px;padding:11px 16px;display:flex;align-items:center;gap:11px;border:1px solid;margin-bottom:10px;font-size:10.5px;}
+.aw{background:#f59e0b0d;border-color:#f59e0b44;color:#b45309;}
+.ad{background:#ef44440d;border-color:#ef444444;color:#b91c1c;}
+.ai{background:#06b6d40d;border-color:#06b6d444;color:#0e7490;}
+.ag{background:#10b9810d;border-color:#10b98144;color:#047857;}
+.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.icard{background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--glass-brd);border-radius:14px;padding:16px 18px;}
+.icard-h{font-size:11.5px;font-weight:900;display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.icard-b{font-size:11px;line-height:1.7;color:var(--text);}
+.icard-b b{color:#b45309;}
+.icard-b .g{color:#059669;font-weight:800;}
+.icard-b .r{color:#dc2626;font-weight:800;}
+
+/* ── CALENDAR ── */
+.cal-scrl{overflow-x:auto;}
+.cal{border-collapse:collapse;min-width:900px;width:100%;}
+.cal th{background:var(--s2);color:var(--muted);font-size:7.5px;font-weight:700;padding:6px 3px;text-align:center;border:1px solid var(--border);}
+.cal td{padding:5px 3px;text-align:center;border:1px solid var(--border);font-size:8px;font-weight:700;}
+.cal td:first-child{text-align:left;font-size:9px;font-weight:800;background:var(--s2);padding:5px 8px;white-space:nowrap;}
+.ccp{background:#10b98128;color:#059669;} .ccf{background:#ef444415;color:#dc2626;} .cce{background:var(--s3);color:var(--border);}
+
+/* ── UNIT TABLE ── */
+.utbl{width:100%;border-collapse:collapse;font-size:11px;}
+.utbl th{background:var(--s2);color:var(--muted);font-size:8px;font-weight:700;padding:8px 10px;text-align:center;border:1px solid var(--border);}
+.utbl th:first-child{text-align:left;}
+.utbl td{padding:8px 10px;text-align:center;border:1px solid var(--border);font-weight:700;}
+.utbl td:first-child{text-align:left;}
+.utbl tfoot td{background:var(--s2);font-weight:900;border-top:2px solid var(--border);}
+.u0{color:var(--border);} .u1{background:#10b98112;color:#10b981;} .u2{background:#10b98122;color:#059669;}
+.u3{background:#10b98135;color:#047857;} .u4{background:#10b98150;color:#047857;font-weight:900;}
+
+/* ── TREEMAP (custom, div-based) ── */
+.tmap{display:flex;flex-wrap:wrap;gap:4px;height:220px;}
+.tmap-cell{border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;font-weight:800;overflow:hidden;transition:transform .15s;cursor:pointer;}
+.tmap-cell:hover{transform:scale(1.02);z-index:2;}
+.tmap-cell .tn{font-size:11px;}
+.tmap-cell .tv{font-size:13px;}
+.tmap-cell .tp{font-size:8px;opacity:.85;}
+
+/* ── BADGE ── */
+.sbadge{display:inline-flex;align-items:center;gap:4px;font-size:8.5px;font-weight:700;padding:4px 10px;border-radius:14px;border:1px solid;margin-top:8px;}
+.pill{display:inline-block;font-size:8px;font-weight:700;padding:2px 6px;border-radius:6px;}
+.pill-p{background:#10b98120;color:#059669;} .pill-f{background:#ef444420;color:#dc2626;}
+.badge-nodata{display:inline-block;font-size:8px;font-weight:700;padding:3px 8px;border-radius:6px;background:#64709022;color:var(--muted);margin-left:6px;}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-top:1px solid var(--border);margin-top:36px;}
+
+@media(max-width:1100px){
+  .k3,.k4,.k5,.k6,.g4,.g2,.g31,.g3s,.insight-grid{grid-template-columns:repeat(2,1fr)!important;}
+}
+@media(max-width:900px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;}
+  :root{--sb-w:220px;}
+}
+@media(max-width:700px){
+  .k3,.k4,.k5,.k6,.g4,.g2,.g31,.g3s,.insight-grid{grid-template-columns:1fr!important;}
+  .wrap{padding:16px 14px 50px;}
+  .hdr-top{padding:12px 14px;}
+  .fbar{padding:8px 14px;}
+  .sidebar{width:0;overflow:hidden;}
+  .sidebar.mobile-open{width:220px;}
+}
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <!-- ══════════════ SIDEBAR (LEFT) ══════════════ -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <span class="sb-brand">SA2 MENU</span>
+      <button class="sb-toggle" onclick="toggleSidebar()" id="sbToggleBtn">◀</button>
+    </div>
+    <div class="sb-menu" id="sbMenu">
+      <div class="sb-item active" data-pg="pg-dashboard" onclick="showPage('pg-dashboard')"><span class="sb-ic">🏠</span><span class="sb-lbl">Dashboard</span></div>
+      <div class="sb-item" data-pg="pg-performance" onclick="showPage('pg-performance')"><span class="sb-ic">📈</span><span class="sb-lbl">Performance (GP%)</span></div>
+      <div class="sb-item" data-pg="pg-sales" onclick="showPage('pg-sales')"><span class="sb-ic">💰</span><span class="sb-lbl">Sales &amp; Orders</span></div>
+      <div class="sb-item" data-pg="pg-daily" onclick="showPage('pg-daily')"><span class="sb-ic">🎯</span><span class="sb-lbl">Daily Target</span></div>
+      <div class="sb-item" data-pg="pg-monthly" onclick="showPage('pg-monthly')"><span class="sb-ic">📅</span><span class="sb-lbl">Monthly &amp; Forecast</span></div>
+      <div class="sb-item" data-pg="pg-redemption" onclick="showPage('pg-redemption')"><span class="sb-ic">🎁</span><span class="sb-lbl">Redemption</span></div>
+      <div class="sb-item" data-pg="pg-promotions" onclick="showPage('pg-promotions')"><span class="sb-ic">🏷️</span><span class="sb-lbl">ผลิตภัณฑ์และโปรโมชั่น</span></div>
+      <div class="sb-item" data-pg="pg-leaderboard" onclick="showPage('pg-leaderboard')"><span class="sb-ic">🏆</span><span class="sb-lbl">Leaderboard</span></div>
+      <div class="sb-item" data-pg="pg-insight" onclick="showPage('pg-insight')"><span class="sb-ic">🧠</span><span class="sb-lbl">Insight</span></div>
+    </div>
+    <div class="sb-foot">v2.0 Enterprise · Data-driven</div>
+  </div>
+  <div class="main-col">
+    <!-- HEADER -->
+    <div class="hdr">
+      <div class="hdr-top">
+        <button class="sb-toggle" id="mobileMenuBtn" style="display:none" onclick="toggleMobileSidebar()">☰</button>
+        <div class="hdr-logo">📊</div>
+        <div>
+          <div class="hdr-title">Dashboard Performance Sale Admin 2</div>
+          <div class="hdr-sub">Sale Admin SA2 · Rich Biotech · Master HQ Dashboard <span id="dataSrcBadge" style="margin-left:6px;font-weight:700;cursor:pointer" onclick="openSheetSettings()" title="คลิกเพื่อดู/แก้ไขการเชื่อมต่อ Google Sheets"></span></div>
+        </div>
+        <div class="hdr-right" id="hdrStats"></div>
+      </div>
+      <div class="fbar">
+        <span class="fbar-lbl">📆 ปี</span>
+        <select class="fsel" id="fYear" onchange="setYearFilter(this.value)">
+          <option value="all">ภาพรวมทั้งหมด (All-Time)</option>
+        </select>
+        <span class="fbar-lbl" style="margin-left:8px">🗓️ เดือน</span>
+        <select class="fsel" id="fMonth" onchange="setMonthFilter(this.value)">
+          <option value="all">ทุกเดือน (YTD)</option>
+        </select>
+        <span class="fbar-lbl" style="margin-left:8px">🏷️ Brand</span>
+        <select class="fsel" id="fBrand" onchange="setBrandFilter(this.value)">
+          <option value="all">ทั้งหมด</option>
+        </select>
+        <span class="fbar-lbl" style="margin-left:8px">👤 พนักงาน (ยอดขาย/เป้า)</span>
+        <select class="fsel" id="fEmpA" onchange="setEmpAFilter(this.value)">
+          <option value="all">ทั้งหมด</option>
+        </select>
+        <span class="fbar-lbl" style="margin-left:8px">👤 พนักงาน (GP%/แลกซื้อ)</span>
+        <select class="fsel" id="fEmpB" onchange="setEmpBFilter(this.value)">
+          <option value="all">ทั้งหมด</option>
+        </select>
+        <div id="fchips" style="display:flex;gap:6px;margin-left:8px;flex-wrap:wrap;"></div>
+        <button class="fclear" style="margin-left:auto" onclick="clearFilters()">✕ ล้างตัวกรองทั้งหมด</button>
+        <button class="fclear" onclick="openSheetSettings()">⚙ แหล่งข้อมูล</button>
+      </div>
+    </div>
+
+    <!-- ═══ PAGE: DASHBOARD (OVERVIEW) ═══ -->
+    <div id="pg-dashboard" class="page active"><div class="wrap">
+      <div class="sec">📊 Executive Overview — ภาพรวมผู้บริหาร</div>
+      <div class="krow k4" id="ex-kpi"></div>
+      <div class="sec">🧠 Data Storytelling — สรุปสถานการณ์อัตโนมัติ</div>
+      <div id="ex-story"></div>
+      <div class="sec">🏷️ สัดส่วนยอดขายตามแบรนด์ (Treemap)</div>
+      <div class="card"><div class="tmap" id="ex-tmap"></div></div>
+      <div class="sec">📈 แนวโน้มยอดขาย — YTD / รายเดือน / รายวัน ตามช่วงที่เลือก</div>
+      <div class="card"><canvas id="exTrend" style="max-height:260px"></canvas></div>
+    </div></div>
+
+    <!-- ═══ PAGE: PERFORMANCE (GP%) ═══ -->
+    <div id="pg-performance" class="page"><div class="wrap">
+      <div class="sec">📈 ภาพรวม GP% รายพนักงาน — ตามช่วงเวลาที่เลือก</div>
+      <div class="krow k5" id="gp-kpi"></div>
+      <div class="sec">🔥 Heatmap GP% แยกพนักงาน × แบรนด์</div>
+      <div class="card">
+        <div class="ct"><span class="dot" style="background:#f59e0b"></span>GP% รายพนักงาน — คลิกแถว/หัวคอลัมน์เพื่อกรอง</div>
+        <div class="cs">สีเขียวเข้ม = เกิน+3% · สีเขียวอ่อน = ผ่านเกณฑ์ · สีชมพูอ่อน = ต่ำกว่า −3% · สีแดง = ต่ำมาก</div>
+        <div class="scrl"><table class="hmap" id="gp-hmap"></table></div>
+      </div>
+      <div class="sec">📊 กราฟ GP%</div>
+      <div class="g2">
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#f59e0b"></span>GP% แยกพนักงาน แยกแบรนด์</div>
+          <div class="cs">แท่งกลุ่ม · คลิกแท่งเพื่อกรองแบรนด์</div>
+          <canvas id="gpChart" style="max-height:300px"></canvas>
+        </div>
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#8b5cf6"></span>Radar — GP% เฉลี่ยเทียบเกณฑ์แต่ละแบรนด์</div>
+          <div class="cs">เส้นทึบ = GP% เฉลี่ยจริง · เส้นประ = เกณฑ์ขั้นต่ำ</div>
+          <canvas id="gpRadar" style="max-height:300px"></canvas>
+        </div>
+      </div>
+      <div class="sec">👤 Scorecard รายพนักงาน</div>
+      <div class="g3s" id="gp-cards"></div>
+    </div></div>
+
+    <!-- ═══ PAGE: SALES & ORDERS ═══ -->
+    <div id="pg-sales" class="page"><div class="wrap">
+      <div class="sec">💰 ภาพรวมยอดขาย &amp; ออเดอร์ — ตามช่วงเวลาที่เลือก</div>
+      <div class="krow k5" id="so-kpi"></div>
+      <div class="sec">🏷️ ยอดขายรายแบรนด์</div>
+      <div class="g4" id="so-brand"></div>
+      <div class="sec">📊 กราฟ &amp; Leaderboard</div>
+      <div class="g31">
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#06b6d4"></span>ยอดขายรวมแยกพนักงาน (Stacked by Brand)</div>
+          <div class="cs">เรียงจากยอดสูงสุด · คลิกแท่งเพื่อกรองพนักงาน</div>
+          <canvas id="soRevChart" style="max-height:340px"></canvas>
+        </div>
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#10b981"></span>🏅 Leaderboard ยอดขาย</div>
+          <div class="cs">คลิกเพื่อกรองพนักงานนี้</div>
+          <div class="lb" id="so-lb"></div>
+        </div>
+      </div>
+      <div class="sec">🎯 ยอดขาย vs ออเดอร์ (Bubble = avg/order)</div>
+      <div class="card"><canvas id="soBubble" style="max-height:280px"></canvas></div>
+      <div class="sec">📋 ตารางรายละเอียด</div>
+      <div class="card"><div class="scrl"><table class="tbl" id="so-tbl"></table></div></div>
+    </div></div>
+
+    <!-- ═══ PAGE: DAILY TARGET ═══ -->
+    <div id="pg-daily" class="page"><div class="wrap">
+      <div class="sec">🎯 ภาพรวมเป้ารายวัน — ตามช่วงเวลาที่เลือก</div>
+      <div class="krow k5" id="dly-kpi"></div>
+      <div style="margin-top:12px" id="dly-alerts"></div>
+      <div class="sec">👤 Scorecard รายพนักงาน</div>
+      <div class="g3s" id="dly-cards"></div>
+      <div class="sec">📊 กราฟเปรียบเทียบ</div>
+      <div class="g2">
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#06b6d4"></span>อัตราผ่านเป้า — ออเดอร์ vs ยอดขาย</div>
+          <div class="cs">เรียงตามอัตราผ่านเป้าออเดอร์ · เส้นประ = 50%</div>
+          <canvas id="dlyPass" style="max-height:300px"></canvas>
+        </div>
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#10b981"></span>สถานะวัน — ผ่าน / ไม่ผ่าน / หยุด</div>
+          <div class="cs">จำนวนวัน Stacked แต่ละสถานะ (ออเดอร์)</div>
+          <canvas id="dlyStatus" style="max-height:300px"></canvas>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- ═══ PAGE: MONTHLY TARGET & FORECAST ═══ -->
+    <div id="pg-monthly" class="page"><div class="wrap">
+      <div class="sec">📅 ภาพรวมเป้ารายเดือน &amp; Forecast — ตามช่วงเวลาที่เลือก</div>
+      <div class="krow k5" id="mo-kpi"></div>
+      <div style="margin-top:12px" id="mo-alerts"></div>
+      <div class="sec">🏷️ ผลรายแบรนด์</div>
+      <div class="g4" id="mo-brand"></div>
+      <div class="sec">📊 กราฟยอดขาย</div>
+      <div class="g2">
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#10b981"></span>ยอดขายรายวัน vs เป้า</div>
+          <div class="cs">🟩 ถึงเป้า · 🟥 ไม่ถึงเป้า · เส้นประ = เป้า/วัน</div>
+          <canvas id="moDaily" style="max-height:280px"></canvas>
+        </div>
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#d97706"></span>ยอดสะสม vs เป้าสะสม</div>
+          <div class="cs">พื้นที่แดง = gap ที่ยังขาดอยู่</div>
+          <canvas id="moCumul" style="max-height:280px"></canvas>
+        </div>
+      </div>
+      <div class="sec">🌉 Waterfall — เป้าเดือน → ยอดจริง → ส่วนต่างคงเหลือ</div>
+      <div class="card"><canvas id="moWaterfall" style="max-height:260px"></canvas></div>
+      <div class="sec">🗓️ Calendar Heatmap รายวัน × แบรนด์</div>
+      <div class="card">
+        <div class="ct"><span class="dot" style="background:#10b981"></span>สถานะผ่าน/ไม่ผ่านเป้ารายวัน แยกแบรนด์</div>
+        <div class="cs">🟩 ถึงเป้า · 🟥 ไม่ถึงเป้า</div>
+        <div class="cal-scrl"><table class="cal" id="mo-cal"></table></div>
+      </div>
+    </div></div>
+
+    <!-- ═══ PAGE: REDEMPTION ═══ -->
+    <div id="pg-redemption" class="page"><div class="wrap">
+      <div class="sec">🎁 ภาพรวมสิทธิ์แลกซื้อ — ตามช่วงเวลาที่เลือก</div>
+      <div class="krow k4" id="rd-kpi"></div>
+      <div class="sec">📊 กราฟ &amp; Leaderboard</div>
+      <div class="g31">
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#f43f5e"></span>ยอดเงินแยกสินค้า × พนักงาน (Stacked)</div>
+          <div class="cs">คลิกแท่งเพื่อกรองพนักงาน</div>
+          <canvas id="rdRev" style="max-height:320px"></canvas>
+        </div>
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#10b981"></span>🏅 Leaderboard ยอดรวม</div>
+          <div class="cs">เรียงจากยอดเงินสูงสุด</div>
+          <div class="lb" id="rd-lb"></div>
+        </div>
+      </div>
+      <div class="sec">📉 Pareto — สัดส่วนสะสมยอดเงินแลกซื้อ (80/20)</div>
+      <div class="card"><canvas id="rdPareto" style="max-height:280px"></canvas></div>
+      <div class="sec">📋 ตารางจำนวนชิ้นแยกสินค้า</div>
+      <div class="card" id="rd-product-table-section">
+        <div class="ct"><span class="dot" style="background:#d97706"></span>จำนวนชิ้นที่แลกซื้อ แยกพนักงาน × สินค้า</div>
+        <div class="cs">สีเข้ม = จำนวนมาก · เทา = ไม่มี</div>
+        <div class="scrl"><table class="utbl" id="rd-tbl"></table></div>
+      </div>
+      <!-- ตารางรายวันต้องอยู่ต่อจากตารางจำนวนชิ้นแยกสินค้าทันที -->
+      <div class="sec" id="rd-daily-heading">🧮 สรุป Cross Sale รายวัน</div>
+      <div class="card" id="rd-daily-section">
+        <div class="rd-daily-head">
+          <div class="rd-daily-title"><span class="rd-daily-icon">↗</span><div><div class="ct">จำนวน Cross Sale รายวัน · พนักงาน 9 คน</div><div class="cs">ติดตามยอดรายวัน ยอดสะสม และการเปลี่ยนแปลงจากวันก่อนหน้า</div></div></div>
+          <div class="rd-daily-legend"><span class="rd-legend high">● ยอดสูง</span><span class="rd-legend normal">● ปกติ</span><span class="rd-legend wait">● รอข้อมูล</span></div>
+        </div>
+        <div class="scrl"><table class="utbl" id="rd-daily"></table></div>
+      </div>
+    </div></div>
+
+    <!-- ═══ PAGE: PRODUCTS & PROMOTIONS ═══ -->
+    <div id="pg-promotions" class="page"><div class="wrap">
+      <div class="promo-hero"><div class="promo-eyebrow">Product & Promotion Center · 2569</div><div class="promo-title">🏷️ ผลิตภัณฑ์และโปรโมชั่น</div><div class="promo-sub">ศูนย์รวมข้อมูลโปรโมชั่น รหัส SKU โครงการสิทธิ์แลกซื้อ ของแถมสำหรับลูกค้าที่แอด LINE และแคมเปญประจำเดือน</div></div>
+      <div class="promo-kpis"><div class="promo-kpi"><span>จำนวนแบรนด์</span><b>4</b></div><div class="promo-kpi"><span>โปรโมชั่นหลัก</span><b>29</b></div><div class="promo-kpi"><span>สิทธิ์แลกซื้อ</span><b>5</b></div><div class="promo-kpi"><span>SKU ส่งเสริม</span><b>11</b></div></div>
+
+      <div class="promo-grid">
+        <section class="promo-panel full"><div class="promo-panel-head ph-indigo"><span>🏷️ สรุปโปรโมชั่นแยกตามแบรนด์</span><small>ราคาเริ่มต้น–สูงสุด</small></div><div class="promo-body"><div class="promo-brand-cards">
+          <div class="promo-brand-card"><span class="brand-pill bp-hv">HEAVEN Plus</span><strong>8 โปรโมชั่น</strong><span class="range">฿199 – ฿3,799</span><p>เม็ดเคี้ยวสุขภาพ · LINE @hv88 · 02-1148540</p></div>
+          <div class="promo-brand-card"><span class="brand-pill bp-tl">The Lord</span><strong>6 โปรโมชั่น</strong><span class="range">฿199 – ฿1,999</span><p>แคปซูล · LINE @tlord168 · 02-1147507</p></div>
+          <div class="promo-brand-card"><span class="brand-pill bp-wp">WOLF+</span><strong>6 โปรโมชั่น</strong><span class="range">฿199 – ฿1,999</span><p>แคปซูล · LINE @wp69 · 02-1147221</p></div>
+          <div class="promo-brand-card"><span class="brand-pill bp-jk">เจ้าขุน</span><strong>9 โปรโมชั่น</strong><span class="range">฿150 – ฿4,500</span><p>กาแฟซอง · ยังไม่มี LINE · 02-1147507</p></div>
+        </div></div></section>
+
+        <section class="promo-panel full"><div class="promo-panel-head ph-violet"><span>🧾 ตารางผลิตภัณฑ์ โปรโมชั่น และรหัส SKU</span><small>ข้อมูลพร้อมใช้งาน</small></div><div class="promo-body scrl"><table class="promo-table"><thead><tr><th>แบรนด์</th><th>โปรโมชั่น</th><th>SKU</th></tr></thead><tbody>
+          <tr><td rowspan="8"><span class="brand-pill bp-hv">HEAVEN Plus</span></td><td>โปร 1 กล่อง 199.- บาท (ใส่ 5 เม็ด)</td><td><span class="sku">1T</span></td></tr><tr><td>โปร 1 กล่อง 329.- บาท (ใส่ 10 เม็ด)</td><td><span class="sku">HVP1</span></td></tr><tr><td>1 แถม 1 ราคา 529.-</td><td><span class="sku">HV2</span></td></tr><tr><td>2 แถม 2 ราคา 999.-</td><td><span class="sku">HV4</span></td></tr><tr><td>3 แถม 3 ราคา 1,479.-</td><td><span class="sku">HV6</span></td></tr><tr><td>4 แถม 4 ราคา 1,899.-</td><td><span class="sku">HV8</span></td></tr><tr><td>8 แถม 8 ราคา 3,199.-</td><td><span class="sku">HV16</span></td></tr><tr><td>10 แถม 10 ราคา 3,799.-</td><td><span class="sku">HV20</span></td></tr>
+          <tr><td rowspan="6"><span class="brand-pill bp-tl">The Lord</span></td><td>โปร 1 กล่อง 199.-</td><td><span class="sku">TL1</span></td></tr><tr><td>3 แถม 1 ราคา 589.-</td><td><span class="sku">TL4</span></td></tr><tr><td>4 แถม 2 ราคา 759.-</td><td><span class="sku">TL6</span></td></tr><tr><td>5 แถม 3 ราคา 999.-</td><td><span class="sku">TL8</span></td></tr><tr><td>8 แถม 4 ราคา 1,399.-</td><td><span class="sku">TL12</span></td></tr><tr><td>10 แถม 8 ราคา 1,999.-</td><td><span class="sku">TL18</span></td></tr>
+          <tr><td rowspan="6"><span class="brand-pill bp-wp">WOLF+</span></td><td>โปร 1 กล่อง 199.-</td><td><span class="sku">WP1</span></td></tr><tr><td>3 แถม 1 ราคา 589.-</td><td><span class="sku">WP4</span></td></tr><tr><td>4 แถม 2 ราคา 759.-</td><td><span class="sku">WP6</span></td></tr><tr><td>5 แถม 3 ราคา 999.-</td><td><span class="sku">WP8</span></td></tr><tr><td>8 แถม 4 ราคา 1,399.-</td><td><span class="sku">WP12</span></td></tr><tr><td>10 แถม 8 ราคา 1,999.-</td><td><span class="sku">WP18</span></td></tr>
+          <tr><td rowspan="9"><span class="brand-pill bp-jk">เจ้าขุน</span></td><td>โปร 1 กระสอบ (รอราคา)</td><td><span class="sku">JK1</span></td></tr><tr><td>1 แถม 1 ราคา 350.-</td><td><span class="sku">JK2</span></td></tr><tr><td>2 แถม 2 ราคา 650.-</td><td><span class="sku">JK4</span></td></tr><tr><td>3 แถม 3 ราคา 900.-</td><td><span class="sku">JK6</span></td></tr><tr><td>4 แถม 4 ราคา 1,150.-</td><td><span class="sku">JK8</span></td></tr><tr><td>5 แถม 5 ราคา 1,400.-</td><td><span class="sku">JK10</span></td></tr><tr><td>8 แถม 8 ราคา 2,150.-</td><td><span class="sku">JK16</span></td></tr><tr><td>10 แถม 10 ราคา 2,500.-</td><td><span class="sku">JK20</span></td></tr><tr><td>20 แถม 20 ราคา 4,500.-</td><td><span class="sku">JK40</span></td></tr>
+        </tbody></table></div></section>
+
+        <section class="promo-panel"><div class="promo-panel-head ph-rose"><span>🎁 โครงการสิทธิ์แลกซื้อ</span><small>เริ่ม 4 กรกฎาคม 2569</small></div><div class="promo-body scrl"><table class="promo-table"><thead><tr><th>SKU</th><th>สินค้า</th><th>จำนวน / โปรโมชั่น</th><th>ราคา</th></tr></thead><tbody><tr><td><span class="sku">JKR1</span></td><td>กาแฟเจ้าขุน</td><td>1 กระสอบ</td><td class="price">฿150</td></tr><tr><td><span class="sku">PLR1</span></td><td>น้ำหอมพลัส</td><td>1 ขวด</td><td class="price">฿100</td></tr><tr><td><span class="sku">CRR1</span></td><td>ห่วงรัด</td><td>1 กล่อง</td><td class="price">฿150</td></tr><tr><td><span class="sku">OPR1</span></td><td>สบู่ + เจล</td><td>1 ชุด</td><td class="price">฿100</td></tr><tr><td><span class="sku">ZUR2</span></td><td>สเปรย์</td><td>1 แถม 1</td><td class="price">฿129</td></tr></tbody></table><div class="condition-list"><div class="condition">1. ใช้เป็นรายการแลกซื้อเพิ่มเติมจากสินค้าหลัก</div><div class="condition">2. ราคาในตารางเป็นราคาโครงการสิทธิ์แลกซื้อ</div><div class="condition">3. ตรวจสอบสต๊อกก่อนยืนยันสิทธิ์กับลูกค้า</div><div class="condition">4. บันทึกรหัส SKU ให้ตรงกับรายการทุกครั้ง</div></div></div></section>
+
+        <section class="promo-panel"><div class="promo-panel-head ph-green"><span>🎁 ของแถมสำหรับลูกค้าที่แอด LINE</span><small>เริ่ม 1 พฤษภาคม 2569</small></div><div class="promo-body scrl"><table class="promo-table"><thead><tr><th>สินค้าหลัก</th><th>เงื่อนไข</th><th>ของแถม</th><th>SKU</th></tr></thead><tbody><tr><td>HEAVEN Plus</td><td>ลูกค้าแอด LINE สำเร็จ</td><td>HEAVEN Plus</td><td><span class="sku">Hvg</span></td></tr><tr><td>The Lord</td><td>ลูกค้าแอด LINE สำเร็จ</td><td>The Lord</td><td><span class="sku">Tlg</span></td></tr><tr><td>WOLF+</td><td>ลูกค้าแอด LINE สำเร็จ</td><td>The Lord</td><td><span class="sku">Tlg</span></td></tr><tr><td>เจ้าขุน</td><td>—</td><td>—</td><td>—</td></tr></tbody></table><div class="condition-list"><div class="condition">1. ลูกค้าสั่งซื้อผ่านเพจ Facebook</div><div class="condition">2. แอดมินเสนอสิทธิ์และดูแลให้ลูกค้าแอด LINE</div><div class="condition">3. ตรวจสอบว่าลูกค้าแอด LINE สำเร็จแล้ว</div><div class="condition">4. บันทึก SKU ของของแถมให้ตรงกับแบรนด์</div></div></div></section>
+
+        <section class="promo-panel full"><div class="promo-panel-head ph-violet"><span>🗓️ แคมเปญประจำเดือน ประจำปี 2569</span><small>สิทธิ์รวม 550 ออเดอร์</small></div><div class="promo-body"><div class="campaign-row"><div class="campaign-month">พฤษภาคม 2569</div><div>กระเป๋าสะพายข้างหนัง</div><div class="campaign-qty">200 สิทธิ์</div><div>SKU: กระเป๋าสะพายข้างหนัง ของแถม69</div></div><div class="campaign-row"><div class="campaign-month">มิถุนายน 2569</div><div>ถุงยาง + เจล</div><div class="campaign-qty">150 สิทธิ์</div><div>SKU: ของแถมถุงยาง+เจลมิย.69</div></div><div class="campaign-row"><div class="campaign-month">กรกฎาคม 2569</div><div>พวงกุญแจสเตนเลส</div><div class="campaign-qty">200 สิทธิ์</div><div>SKU: ของแถมพวงกุญแจสเตนเลสกค.69</div></div></div></section>
+      </div>
+    </div></div>
+
+    <!-- ═══ PAGE: LEADERBOARD HUB ═══ -->
+    <div id="pg-leaderboard" class="page"><div class="wrap">
+      <div class="sec">🏆 Leaderboard Hub — รวมทุกโมดูล</div>
+      <div class="g2">
+        <div class="card"><div class="ct">🥇 Top ยอดขาย (Sales &amp; Orders)</div><div class="cs">อันดับพนักงานตามยอดขายรวม</div><div class="lb" id="lbh-sales"></div></div>
+        <div class="card"><div class="ct">📦 Top ออเดอร์ (Sales &amp; Orders)</div><div class="cs">อันดับพนักงานตามจำนวนออเดอร์</div><div class="lb" id="lbh-orders"></div></div>
+      </div>
+      <div class="g2" style="margin-top:14px">
+        <div class="card"><div class="ct">⭐ Top GP% เฉลี่ย</div><div class="cs">อันดับพนักงานตาม GP% เฉลี่ย 4 แบรนด์</div><div class="lb" id="lbh-gp"></div></div>
+        <div class="card"><div class="ct">🎁 Top สิทธิ์แลกซื้อ</div><div class="cs">อันดับพนักงานตามยอดเงินแลกซื้อ</div><div class="lb" id="lbh-rd"></div></div>
+      </div>
+      <div class="sec">⚠️ Bottom 10 — ยอดขายต่ำสุด (Sales &amp; Orders)</div>
+      <div class="card"><div class="lb" id="lbh-bottom"></div></div>
+    </div></div>
+
+    <!-- ═══ PAGE: INSIGHT ═══ -->
+    <div id="pg-insight" class="page"><div class="wrap">
+      <div class="sec">🧠 Executive Insight — วิเคราะห์อัตโนมัติจากข้อมูลจริง</div>
+      <div class="insight-grid" id="insight-grid"></div>
+      <div class="sec" style="margin-top:20px">📌 หมายเหตุขอบเขตข้อมูล</div>
+      <div class="card" style="font-size:10.5px;line-height:1.8;color:var(--muted)">
+        Insight ทั้งหมดคำนวณจากข้อมูลจริงในไฟล์นี้เท่านั้น ไม่มีการสมมุติหรือเดาตัวเลข รายการที่ <b style="color:var(--text)">ไม่แสดง</b> เพราะไม่มีข้อมูลรองรับ ได้แก่ Conversion Rate / Close Rate (ไม่มีข้อมูล lead หรือการปิดการขายแยกจากออเดอร์), ช่วงเวลาขายดีที่สุด/จังหวัดขายดีที่สุด (ไม่มี timestamp หรือ province ในข้อมูล), Funnel การขาย (ไม่มีข้อมูลขั้นตอนก่อนปิดออเดอร์)
+      </div>
+    </div></div>
+
+    <footer>Dashboard Performance Sale Admin 2 · Sale Admin SA2 · Rich Biotech · Master HQ Dashboard · สร้างด้วย Claude AI</footer>
+  </div>
+</div>
+
+<!-- ══════════════ SETTINGS MODAL: เชื่อมต่อ Google Sheets ══════════════ -->
+<div id="sheetModalOverlay" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.45);backdrop-filter:blur(3px);z-index:2000;align-items:center;justify-content:center;">
+  <div style="background:var(--s1);border:1px solid var(--border);border-radius:16px;padding:22px 26px;width:min(560px,92vw);max-height:86vh;overflow-y:auto;box-shadow:var(--shadow-lg);">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+      <div style="font-size:14px;font-weight:900">⚙ เชื่อมต่อ Google Sheets</div>
+      <button class="sb-toggle" onclick="closeSheetSettings()">✕</button>
+    </div>
+    <div style="font-size:10px;color:var(--muted);line-height:1.7;margin-bottom:14px">
+      วางลิงก์ <b>Share ปกติ</b> ของ Google Sheets แต่ละแท็บ (ปุ่ม Share มุมขวาบน → เปลี่ยนเป็น "ทุกคนที่มีลิงก์ (Viewer)" → Copy link) รูปแบบ
+      <code>https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit#gid=GID</code> ของแต่ละตารางด้านล่าง แล้วกด "บันทึก &amp; โหลดข้อมูล"
+      (ไม่ต้องใช้ Publish to web แล้ว — เชื่อมต่อผ่าน Google Visualization API แทน จึงเปิดไฟล์นี้ตรงๆ แบบ file:/// บนเครื่องได้โดยไม่ติด CORS)
+      ถ้าเว้นว่าง จะใช้ข้อมูลตัวอย่างในไฟล์แทน — ดูโครงสร้างคอลัมน์มาตรฐานที่แนบมาพร้อมไฟล์นี้
+    </div>
+    <div id="sheetInputs" style="display:flex;flex-direction:column;gap:10px;font-size:10.5px;"></div>
+    <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end">
+      <button class="fclear" onclick="closeSheetSettings()">ยกเลิก</button>
+      <button class="fclear" style="background:linear-gradient(90deg,#7c3aed14,#06b6d414);border-color:#7c3aed40;color:#5b21b6;font-weight:800" onclick="saveSheetSettingsAndReload()">💾 บันทึก &amp; โหลดข้อมูล</button>
+    </div>
+  </div>
+</div>
+
+<script>
+Chart.defaults.color='#475569';Chart.defaults.font.family='Sarabun';Chart.defaults.font.size=11;
+const GR='#94a3b840';
+const MED=['🥇','🥈','🥉'];
+const medalClass=r=>r===0?'gold':r===1?'silver':r===2?'bronze':'';
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 1 — DATA LAYER  (Master HQ Dashboard — Multi-Month / Multi-Year)
+   ข้อมูลทั้งหมดเก็บเป็น "แถวยาว" (long-format rows) มีคอลัมน์วันที่จริง
+   → ปี/เดือนไม่ hardcode อีกต่อไป ระบบอ่านจากคอลัมน์วันที่แบบ dynamic
+   → เชื่อมกับ Google Sheets (Publish to web → CSV) ได้จริง ผ่าน SHEET_URLS
+     ถ้ายังไม่ตั้งค่า หรือดึงไม่สำเร็จ จะ fallback ไปใช้ข้อมูลตัวอย่าง (SEED_*)
+     ซึ่งคือข้อมูลกรกฎาคม 2569 ชุดเดิมทุกตัวเลข (ไม่มีการสมมุติเพิ่ม)
+
+   วิธีตั้งค่าเชื่อม Google Sheets: กดปุ่ม ⚙ แหล่งข้อมูล ที่แถบตัวกรอง แล้ววาง
+   ลิงก์ CSV (Publish to web) ของแต่ละแท็บ — ดู "โครงสร้างคอลัมน์มาตรฐาน" ในคำอธิบายที่แนบมา
+   ══════════════════════════════════════════════════════════════════ */
+
+const DATA = {
+  meta:{ title:'Dashboard Performance Sale Admin 2', org:'Sale Admin SA2 · Rich Biotech' },
+  brandMeta:[
+    {k:'hv',  lb:'เฮฟเว่นพลัส', full:'HEAVEN PLUS', sh:'HV', ic:'⭐', c:'#f59e0b'},
+    {k:'tl',  lb:'เดอะลอร์ด',   full:'THE LORD',    sh:'TL', ic:'👑', c:'#06b6d4'},
+    {k:'wolf',lb:'วูลฟ์',        full:'WOLF+',       sh:'WF', ic:'🐺', c:'#7c3aed'},
+    {k:'jk',  lb:'เจ้าขุน',     full:'JK เจ้าขุน',  sh:'JK', ic:'☕', c:'#f43f5e'},
+  ],
+};
+const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+
+/* ── ตารางข้อมูลที่โหลดแล้ว (normalized rows) — นี่คือ "ฐานข้อมูล" ทั้งหมดของ dashboard ── */
+const RAW={sales:[],targets:[],gp:[],redemption:[],dailyTargetSummary:[]};
+const DATA_SOURCE={sales:'seed',targets:'seed',gp:'seed',redemption:'seed',dailyTargetSummary:'seed'};
+/* สถานะการเชื่อมต่อของแต่ละตาราง ใช้แสดงผลใน Settings modal เพื่อวินิจฉัยปัญหาให้ผู้ใช้เห็นเอง
+   state: 'none' ยังไม่ใส่ลิงก์ | 'sheet' เชื่อมต่อสำเร็จมีข้อมูล | 'empty' เชื่อมต่อสำเร็จแต่ไม่มีแถวข้อมูลที่ใช้ได้ | 'error' เชื่อมต่อไม่สำเร็จ */
+const LOAD_STATUS={sales:{state:'none',rows:0,detail:''},targets:{state:'none',rows:0,detail:''},gp:{state:'none',rows:0,detail:''},redemption:{state:'none',rows:0,detail:''},dailyTargetSummary:{state:'none',rows:0,detail:''}};
+// เปิดให้ตรวจสอบ/debug ผ่าน console ของเบราว์เซอร์ได้ (window.RAW, window.STATE) — ไม่กระทบการทำงานปกติ
+if(typeof window!=='undefined'){window.RAW=RAW;window.DATA_SOURCE=DATA_SOURCE;window.LOAD_STATUS=LOAD_STATUS;}
+
+/* ══════ SEED DATA — ข้อมูลตัวอย่าง (กรกฎาคม 2569 ชุดเดิมทุกตัวเลข ไม่แต่งเติม) ══════
+   หมายเหตุความละเอียดของข้อมูลเดิม (สำคัญ เพื่อความโปร่งใส):
+   • ยอดขายรวมทีมรายวันแยกแบรนด์ (employee เว้นว่าง) = ข้อมูลจริงรายวัน 18 วัน (26/6–13/7)
+     ใช้สำหรับกราฟเทรนด์ / เป้ารายเดือน / พยากรณ์เท่านั้น (ไม่นับซ้ำกับยอดรายพนักงานด้านล่าง)
+   • ยอดขายรายพนักงานแยกแบรนด์ (employee ระบุชื่อ) = ยอดสะสมทั้งช่วง 26/6–13/7 ของจริง
+     แต่เป็นยอดรวมทั้งช่วง ไม่ใช่ยอดรายวันจริง จึงลงวันที่ 13/7 (วันสุดท้ายของช่วง) แถวเดียวต่อคนต่อแบรนด์
+     → ตั้งแต่เดือนถัดไป แนะนำให้กรอกเป็นรายวันจริงเพื่อให้ dashboard ละเอียดขึ้นอัตโนมัติ
+*/
+const SEED_SALES=(function(){
+  const rows=[];
+  const dates=['2026-06-26','2026-06-27','2026-06-28','2026-06-29','2026-06-30','2026-07-01','2026-07-02','2026-07-03','2026-07-04','2026-07-05','2026-07-06','2026-07-07','2026-07-08','2026-07-09','2026-07-10','2026-07-11','2026-07-12','2026-07-13'];
+  const brandDaily={
+    hv:[33882,28152,38486,38624,40164,45978,49014,48176,39300,38310,39366,48480,45745,49484,51896,38694,41596,46857],
+    tl:[50567,43287,54259,56663,51000,65545,73035,73295,64652,64578,65840,66654,53920,48560,54198,38241,55738,51361],
+    wolf:[121133,110986,105650,121021,110105,102201,113935,105138,93798,101863,116913,116630,110495,135462,133518,113200,116538,121735],
+    jk:[25850,23650,22750,19000,36550,34650,37450,43450,30629,34350,31550,26279,25408,23750,23700,32450,30908,22550],
+  };
+  Object.keys(brandDaily).forEach(bk=>dates.forEach((dt,i)=>rows.push({date:dt,employee:'',brand:bk,orders:'',revenue:brandDaily[bk][i]})));
+  const empBrand={
+    hv:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[223,209,133,137,184,222,203,55,169,165],r:[97347,93681,62097,60942,94194,100327,86097,23055,74311,69755]},
+    tl:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[361,402,224,279,280,366,325,101,264,381],r:[117211,149986,74422,88687,98339,127819,118692,29119,93625,133294]},
+    wolf:{staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[797,963,639,683,820,914,932,294,683,895],r:[211380,265725,175308,180845,222408,245341,243194,78983,187323,237848]},
+    jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[204,174,119,62,171,207,174,2,142,157],r:[74350,66150,47650,23250,61900,77800,63550,700,54650,57550]},
+  };
+  Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-13',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
+  return rows;
+})();
+const SEED_TARGETS=[ // เป้ารายวันต่อแบรนด์ (จริง จากไฟล์เดิม) — เป้ารายพนักงานยังไม่มีระบุในไฟล์เดิม จึงเว้นว่างไว้ก่อน (ไม่จำเป็นสำหรับเดือน ก.ค. 2569 เพราะใช้ DailyTargetSummary แทน)
+  {month:'2026-07',type:'brand',code:'hv',dailyOrderTarget:'',dailyRevenueTarget:43333},
+  {month:'2026-07',type:'brand',code:'tl',dailyOrderTarget:'',dailyRevenueTarget:70000},
+  {month:'2026-07',type:'brand',code:'wolf',dailyOrderTarget:'',dailyRevenueTarget:160000},
+  {month:'2026-07',type:'brand',code:'jk',dailyOrderTarget:'',dailyRevenueTarget:16666},
+];
+const SEED_GP=(function(){
+  const staff=['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','แอปเปิ้ล','เดียร์','ตาล','เกอร์'];
+  const thresholds={hv:28,tl:27,wolf:29,jk:29};
+  const vals={
+    hv:[27.22,29.32,34.59,31.04,33.53,30.31,20.93,26.06,25.16],
+    tl:[31.12,29.41,26.47,29.76,32.91,29.74,24.70,37.64,28.63],
+    wolf:[29.25,26.54,25.31,25.85,27.47,27.96,25.19,31.94,24.27],
+    jk:[28.79,29.23,28.32,27.95,28.41,24.25,20.90,35.84,21.14],
+  };
+  const rows=[];
+  Object.keys(vals).forEach(bk=>staff.forEach((nm,i)=>rows.push({month:'2026-07',employee:nm,brand:bk,gpPercent:vals[bk][i],thresholdPercent:thresholds[bk]})));
+  return rows;
+})();
+const SEED_REDEMPTION=(function(){
+  /* อัปเดตจากรายงาน Cross Sale ช่วง 04/07/2026–20/07/2026 (17 วัน)
+     ยอดรวม 302 ชิ้น; ผลรวมรายพนักงานและรายสินค้าตรงกับรายงานต้นทาง */
+  const units={
+    'หนึ่ง':[14,13,10,8,6], 'ตาล':[13,12,9,8,5], 'แอ๋ม':[10,9,7,6,4],
+    'ป้าย':[10,9,7,6,4], 'แพร':[9,9,7,6,4], 'อชิ':[8,8,6,4,3],
+    'แอ๊ปเปิ้ล':[6,6,5,4,3], 'เกอร์':[6,6,5,4,3], 'เดียร์':[5,5,4,3,3]
+  };
+  const products=['สเปรย์ 1แถม1','น้ำหอมพลัส','กาแฟเจ้าขุน','สบู่+เจล','ห่วงรัด'];
+  const prices=[129,100,150,100,150];
+  const rows=[];
+  Object.keys(units).forEach(nm=>units[nm].forEach((u,pi)=>{ if(u>0) rows.push({date:'2026-07-20',employee:nm,product:products[pi],unitPrice:prices[pi],units:u}); }));
+  return rows;
+})();
+const SEED_CROSS_SALE_DAILY=[
+  {date:'04/07/2026',qty:12,cumulative:12, avg:1.33,change:0, status:'ปกติ',note:''},
+  {date:'05/07/2026',qty:20,cumulative:32, avg:2.22,change:8, status:'ยอดสูง',note:''},
+  {date:'06/07/2026',qty:20,cumulative:52, avg:2.22,change:0, status:'ยอดสูง',note:''},
+  {date:'07/07/2026',qty:13,cumulative:65, avg:1.44,change:-7,status:'ปกติ',note:''},
+  {date:'08/07/2026',qty:15,cumulative:80, avg:1.67,change:2, status:'ปกติ',note:''},
+  {date:'09/07/2026',qty:26,cumulative:106,avg:2.89,change:11,status:'ยอดสูง',note:''},
+  {date:'10/07/2026',qty:19,cumulative:125,avg:2.11,change:-7,status:'ปกติ',note:''},
+  {date:'11/07/2026',qty:10,cumulative:135,avg:1.11,change:-9,status:'ปกติ',note:''},
+  {date:'12/07/2026',qty:21,cumulative:156,avg:2.33,change:11,status:'ยอดสูง',note:''},
+  {date:'13/07/2026',qty:15,cumulative:171,avg:1.67,change:-6,status:'ปกติ',note:''},
+  {date:'14/07/2026',qty:18,cumulative:189,avg:2.00,change:3, status:'ปกติ',note:''},
+  {date:'15/07/2026',qty:14,cumulative:203,avg:1.56,change:-4,status:'ปกติ',note:''},
+  {date:'16/07/2026',qty:13,cumulative:216,avg:1.44,change:-1,status:'ปกติ',note:''},
+  {date:'17/07/2026',qty:16,cumulative:232,avg:1.78,change:3, status:'ปกติ',note:''},
+  {date:'18/07/2026',qty:16,cumulative:248,avg:1.78,change:0, status:'ปกติ',note:''},
+  {date:'19/07/2026',qty:18,cumulative:266,avg:2.00,change:2, status:'ปกติ',note:''},
+  {date:'20/07/2026',qty:36,cumulative:302,avg:4.00,change:18,status:'ยอดสูง',note:''},
+  {date:'21/07/2026'},{date:'22/07/2026'},{date:'23/07/2026'},{date:'24/07/2026'},{date:'25/07/2026'}
+];
+const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
+  {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
+  {month:'2026-07',employee:'Pay',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:10,failRevenueDays:6},
+  {month:'2026-07',employee:'Pear', totalDays:19,passOrderDays:12,failOrderDays:2, passRevenueDays:10,failRevenueDays:4},
+  {month:'2026-07',employee:'Achi', totalDays:19,passOrderDays:9, failOrderDays:6, passRevenueDays:8, failRevenueDays:8},
+  {month:'2026-07',employee:'Tiger',totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
+  {month:'2026-07',employee:'Apple',totalDays:19,passOrderDays:4, failOrderDays:10,passRevenueDays:4, failRevenueDays:10},
+  {month:'2026-07',employee:'Nueng',totalDays:19,passOrderDays:9, failOrderDays:4, passRevenueDays:8, failRevenueDays:5},
+  {month:'2026-07',employee:'Tarn', totalDays:19,passOrderDays:7, failOrderDays:6, passRevenueDays:6, failRevenueDays:8},
+  {month:'2026-07',employee:'Deer', totalDays:19,passOrderDays:1, failOrderDays:14,passRevenueDays:1, failRevenueDays:14},
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 2 — UTILITIES + CSV / DATE PARSING + GOOGLE SHEETS LOADER
+   ══════════════════════════════════════════════════════════════════ */
+const fmtB=v=>'฿'+Math.round(v).toLocaleString();
+const fmtBK=v=>'฿'+(v/1000).toFixed(0)+'K';
+const fmtBM=v=>'฿'+(v/1e6).toFixed(2)+'M';
+const fmtN=v=>Math.round(v).toLocaleString();
+const fmtPct=(v,d=1)=>(v==null?'—':v.toFixed(d)+'%');
+const brandOf=k=>DATA.brandMeta.find(b=>b.k===k);
+const sum=arr=>arr.reduce((a,v)=>a+v,0);
+const avg=arr=>arr.length?sum(arr)/arr.length:0;
+function kpiCard(k){
+  const d=document.createElement('div');d.className='kpi'+(k.onClick?' clickable':'');
+  d.innerHTML=`<div class="kpi-stripe" style="background:linear-gradient(90deg,${k.g})"></div><div class="kpi-ic">${k.ic}</div><div class="kpi-lbl">${k.l}</div><div class="kpi-val" style="color:${k.c}">${k.v}</div><div class="kpi-sub">${k.s||''}</div>${k.spark?`<canvas class="kpi-spark" data-spark="1"></canvas>`:''}`;
+  if(k.onClick) d.onclick=k.onClick;
+  return d;
+}
+function sparkline(canvas,data,color){
+  if(!canvas||!data||!data.length) return;
+  new Chart(canvas,{type:'line',data:{labels:data.map((_,i)=>i),datasets:[{data,borderColor:color,borderWidth:1.6,pointRadius:0,fill:true,backgroundColor:color+'22',tension:.3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}},scales:{x:{display:false},y:{display:false}},elements:{point:{radius:0}}}});
+}
+// รองรับ YYYY-MM-DD / YYYY-MM (แนะนำ, ไม่กำกวม) และ DD/MM/YYYY แบบ fallback (เดา day-first ถ้าไม่ชัดเจน)
+function parseDateFlexible(s){
+  if(!s&&s!==0) return null;
+  s=String(s).trim(); if(!s) return null;
+  let m;
+  if(m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/)) return{y:+m[1],mo:+m[2],d:+m[3]};
+  if(m=s.match(/^(\d{4})[\/-](\d{1,2})$/)) return{y:+m[1],mo:+m[2],d:1};
+  if(m=s.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/)){
+    let a=+m[1],b=+m[2],y=+m[3];
+    if(a>12) return{y,mo:b,d:a};
+    if(b>12) return{y,mo:a,d:b};
+    return{y,mo:b,d:a}; // สมมุติ dd/mm/yyyy (มาตรฐานไทย) เมื่อกำกวม
+  }
+  const d=new Date(s); if(!isNaN(d.getTime())) return{y:d.getFullYear(),mo:d.getMonth()+1,d:d.getDate()};
+  return null;
+}
+function normBrand(s){
+  if(!s) return null;
+  const t=String(s).trim().toLowerCase();
+  const b=DATA.brandMeta.find(b=>b.k===t||b.sh.toLowerCase()===t||b.full.toLowerCase()===t||b.lb===String(s).trim());
+  return b?b.k:null;
+}
+function num(v){ const n=parseFloat(String(v).replace(/,/g,'')); return isNaN(n)?0:n; }
+// case-insensitive key lookup — รองรับทั้ง seed (camelCase) และหัวคอลัมน์จาก Google Sheets ที่ผู้ใช้พิมพ์เอง (Employee/employee/EMPLOYEE ฯลฯ)
+function pick(o,...keys){
+  const lower={};Object.keys(o).forEach(k=>lower[k.toLowerCase()]=o[k]);
+  for(const k of keys){const v=lower[k.toLowerCase()];if(v!==undefined&&v!=='')return v;}
+  return '';
+}
+
+/* ── CSV parser (รองรับ quoted field ที่มี comma/newline ภายใน) ── */
+function parseCSV(text){
+  const out=[]; let row=[],field='',inQ=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(inQ){ if(c==='"'){ if(text[i+1]==='"'){field+='"';i++;} else inQ=false; } else field+=c; }
+    else{
+      if(c==='"') inQ=true;
+      else if(c===','){row.push(field);field='';}
+      else if(c==='\r'){/*skip*/}
+      else if(c==='\n'){row.push(field);out.push(row);row=[];field='';}
+      else field+=c;
+    }
+  }
+  if(field.length||row.length){row.push(field);out.push(row);}
+  if(!out.length) return [];
+  const headers=out[0].map(h=>h.trim());
+  return out.slice(1).filter(r=>r.some(v=>v!=='')).map(r=>{const o={};headers.forEach((h,i)=>o[h]=r[i]!==undefined?r[i].trim():'');return o;});
+}
+function normalizeSalesRow(o){
+  const dt=parseDateFlexible(pick(o,'date','Date','วันที่'));if(!dt)return null;
+  const brand=normBrand(pick(o,'brand','Brand','แบรนด์'));if(!brand)return null;
+  return{y:dt.y,mo:dt.mo,d:dt.d,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),brand,orders:num(pick(o,'orders','Orders','ออเดอร์')),revenue:num(pick(o,'revenue','Revenue','ยอดขาย'))};
+}
+function normalizeTargetRow(o){
+  const monthStr=String(pick(o,'month','Month','เดือน')).trim();const dt=parseDateFlexible(monthStr);if(!dt)return null;
+  const type=String(pick(o,'type','Type','ประเภท')).trim().toLowerCase();
+  return{month:monthStr.slice(0,7),y:dt.y,mo:dt.mo,type:type.startsWith('emp')?'employee':'brand',code:String(pick(o,'code','Code','รหัส')).trim(),dailyOrderTarget:num(pick(o,'dailyordertarget','DailyOrderTarget','เป้าออเดอร์ต่อวัน')),dailyRevenueTarget:num(pick(o,'dailyrevenuetarget','DailyRevenueTarget','เป้ายอดขายต่อวัน'))};
+}
+function normalizeGPRow(o){
+  const monthStr=String(pick(o,'month','Month','เดือน')).trim();const dt=parseDateFlexible(monthStr);if(!dt)return null;
+  const brand=normBrand(pick(o,'brand','Brand','แบรนด์'));if(!brand)return null;
+  return{month:monthStr.slice(0,7),y:dt.y,mo:dt.mo,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),brand,gpPercent:num(pick(o,'gppercent','GPPercent','GP%')),thresholdPercent:num(pick(o,'thresholdpercent','ThresholdPercent','เกณฑ์'))};
+}
+function normalizeRedemptionRow(o){
+  const dt=parseDateFlexible(pick(o,'date','Date','วันที่'));if(!dt)return null;
+  return{y:dt.y,mo:dt.mo,d:dt.d,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),product:String(pick(o,'product','Product','สินค้า')).trim(),unitPrice:num(pick(o,'unitprice','UnitPrice','ราคาต่อชิ้น')),units:num(pick(o,'units','Units','จำนวนชิ้น'))};
+}
+function normalizeDTSRow(o){
+  const monthStr=String(pick(o,'month','Month','เดือน')).trim();const dt=parseDateFlexible(monthStr);if(!dt)return null;
+  return{month:monthStr.slice(0,7),y:dt.y,mo:dt.mo,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),totalDays:num(pick(o,'totaldays','TotalDays')),passOrderDays:num(pick(o,'passorderdays','PassOrderDays')),failOrderDays:num(pick(o,'failorderdays','FailOrderDays')),passRevenueDays:num(pick(o,'passrevenuedays','PassRevenueDays')),failRevenueDays:num(pick(o,'failrevenuedays','FailRevenueDays'))};
+}
+
+/* ── การตั้งค่าลิงก์ Google Sheets — persist ผ่าน localStorage ──
+   ใช้ Google Visualization Query API (gviz/tq) แบบ JSONP (แทรก <script> แล้วรอ callback)
+   แทนการใช้ fetch() ไปยัง CSV Publish-to-web โดยตรง เหตุผล: การโหลดผ่าน <script src>
+   ไม่ถูกจำกัดด้วย CORS เลย (ต่างจาก fetch/XHR) จึงเปิดไฟล์ dashboard.html ตรงๆ แบบ
+   file:/// บนเครื่อง โดยไม่ต้องรัน local web server ก็ดึงข้อมูลจริงได้
+   ข้อกำหนด: ต้องวาง "ลิงก์แชร์ปกติ" ของ Google Sheets (ปุ่ม Share → Anyone with the link:
+   Viewer) รูปแบบ https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit#gid=GID
+   *ไม่ใช่* ลิงก์ Publish-to-web แบบเก่า (…/d/e/2PACX-…/pub) เพราะ gviz ต้องใช้ Spreadsheet ID จริง */
+const SHEET_KEYS=['sales','targets','gp','redemption','dailyTargetSummary'];
+/* บางเบราว์เซอร์/โหมด block localStorage เมื่อเปิดไฟล์แบบ file:/// (opaque origin) —
+   ตรวจสอบก่อนใช้จริง ถ้าใช้ไม่ได้ ให้ fallback เป็นตัวแปรในหน่วยความจำ (ยังใช้งานได้ในเซสชันนี้
+   แต่จะรีเซ็ตเมื่อปิด/รีเฟรชหน้า) พร้อมตั้งค่าสถานะไว้แจ้งเตือนผู้ใช้ */
+let LS_AVAILABLE=null, MEM_CFG_STORE='';
+function storageAvailable(){
+  if(LS_AVAILABLE!==null) return LS_AVAILABLE;
+  try{ const t='__sa2_test__'; window.localStorage.setItem(t,'1'); window.localStorage.removeItem(t); LS_AVAILABLE=true; }
+  catch(e){ LS_AVAILABLE=false; }
+  return LS_AVAILABLE;
+}
+function loadSheetConfig(){
+  try{
+    const raw=storageAvailable()?(localStorage.getItem('sa2_sheet_urls')||'{}'):(MEM_CFG_STORE||'{}');
+    return{sales:'',targets:'',gp:'',redemption:'',dailyTargetSummary:'',...JSON.parse(raw)};
+  }catch(e){return{sales:'',targets:'',gp:'',redemption:'',dailyTargetSummary:''};}
+}
+function saveSheetConfig(cfg){
+  try{
+    if(storageAvailable()) localStorage.setItem('sa2_sheet_urls',JSON.stringify(cfg));
+    else MEM_CFG_STORE=JSON.stringify(cfg);
+  }catch(e){}
+}
+
+/* แยก Spreadsheet ID + gid จากลิงก์ที่ผู้ใช้วาง รองรับหลายรูปแบบ (edit link, ลิงก์ share แบบสั้น, มี/ไม่มี #gid) */
+function parseSheetRef(raw){
+  if(!raw) return null;
+  const s=raw.trim();
+  if(/\/spreadsheets\/d\/e\//.test(s)) return {error:'publish-link'};
+  const idMatch=s.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+  if(!idMatch) return {error:'no-id'};
+  const gidMatch=s.match(/[?&#]gid=(\d+)/);
+  return {id:idMatch[1],gid:gidMatch?gidMatch[1]:'0'};
+}
+
+/* แปลงค่าเซลล์วันที่แบบ gviz "Date(2026,6,21)" (เดือนเริ่มที่ 0) → 'YYYY-MM-DD' */
+function gvizDateToStr(v){
+  const m=String(v).match(/^Date\((\d+),(\d+),(\d+)/);
+  if(!m) return v;
+  const y=+m[1],mo=+m[2]+1,d=+m[3];
+  return y+'-'+String(mo).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+}
+/* แปลง table จาก gviz response → array of objects คีย์ตามหัวคอลัมน์ (label) เหมือนผลลัพธ์ parseCSV เดิม */
+function gvizTableToRows(table){
+  if(!table||!table.cols||!table.rows) return [];
+  const headers=table.cols.map((c,i)=>(c.label||c.id||('col'+i)).trim());
+  return table.rows.map(r=>{
+    const o={};
+    headers.forEach((h,i)=>{
+      const cell=r.c&&r.c[i];
+      if(!cell||cell.v==null){ o[h]=''; return; }
+      let v=cell.v;
+      if(typeof v==='string'&&v.indexOf('Date(')===0) v=gvizDateToStr(v);
+      o[h]=v;
+    });
+    return o;
+  });
+}
+/* ดึงข้อมูลผ่าน gviz โดยแทรก <script> ชั่วคราว (JSONP) — ไม่ผ่าน fetch/XHR จึงไม่ติด CORS แม้เปิดแบบ file:/// */
+function fetchGvizJSONP(id,gid,timeoutMs=12000){
+  return new Promise(resolve=>{
+    const cbName='__gvizCb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    let done=false;
+    const cleanup=()=>{ try{delete window[cbName];}catch(e){window[cbName]=undefined;} const s=document.getElementById(cbName+'_s'); if(s&&s.parentNode) s.parentNode.removeChild(s); clearTimeout(timer); };
+    const timer=setTimeout(()=>{ if(done)return; done=true; cleanup(); resolve({ok:false,reason:'timeout (โหลดนานเกินไป ตรวจสอบสิทธิ์แชร์เป็น "ทุกคนที่มีลิงก์")'}); },timeoutMs);
+    window[cbName]=function(resp){
+      if(done)return; done=true; cleanup();
+      if(!resp||resp.status==='error'){
+        const msg=resp&&resp.errors&&resp.errors[0]&&(resp.errors[0].detailed_message||resp.errors[0].message);
+        resolve({ok:false,reason:msg||'gviz-error (ตรวจสอบสิทธิ์แชร์/gid)'});
+        return;
+      }
+      resolve({ok:true,table:resp.table});
+    };
+    const script=document.createElement('script');
+    script.id=cbName+'_s';
+    script.src='https://docs.google.com/spreadsheets/d/'+encodeURIComponent(id)+'/gviz/tq?gid='+encodeURIComponent(gid)+'&headers=1&tqx=responseHandler:'+cbName;
+    script.onerror=()=>{ if(done)return; done=true; cleanup(); resolve({ok:false,reason:'โหลดสคริปต์ไม่สำเร็จ (Sheet ID/gid ผิด หรือยังไม่ได้แชร์เป็น "ทุกคนที่มีลิงก์")'}); };
+    document.head.appendChild(script);
+  });
+}
+async function fetchSheet(url){
+  if(!url) return {ok:false,reason:'none',rows:null};
+  const ref=parseSheetRef(url);
+  if(!ref) return {ok:false,reason:'ไม่พบลิงก์',rows:null};
+  if(ref.error==='publish-link') return {ok:false,reason:'ลิงก์นี้เป็นลิงก์ Publish-to-web (…/d/e/2PACX-…) ใช้กับวิธีเชื่อมต่อแบบใหม่ไม่ได้ — กรุณาวางลิงก์ Share ปกติแทน เช่น https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit#gid=..',rows:null};
+  if(ref.error==='no-id') return {ok:false,reason:'รูปแบบลิงก์ไม่ถูกต้อง (ต้องมี /spreadsheets/d/SPREADSHEET_ID/)',rows:null};
+  const res=await fetchGvizJSONP(ref.id,ref.gid);
+  if(!res.ok) return {ok:false,reason:res.reason,rows:null};
+  return {ok:true,rows:gvizTableToRows(res.table)};
+}
+const SHEET_SPECS={
+  sales:[()=>SEED_SALES,normalizeSalesRow],
+  targets:[()=>SEED_TARGETS,normalizeTargetRow],
+  gp:[()=>SEED_GP,normalizeGPRow],
+  redemption:[()=>SEED_REDEMPTION,normalizeRedemptionRow],
+  dailyTargetSummary:[()=>SEED_DTS,normalizeDTSRow],
+};
+async function loadAllData(){
+  const cfg=loadSheetConfig();
+  const results=await Promise.all(SHEET_KEYS.map(k=>fetchSheet(cfg[k])));
+  SHEET_KEYS.forEach((k,i)=>{
+    const [getSeed,norm]=SHEET_SPECS[k];
+    const r=results[i];
+    if(!cfg[k]){
+      RAW[k]=getSeed(); DATA_SOURCE[k]='seed';
+      LOAD_STATUS[k]={state:'none',rows:0,detail:'ยังไม่ได้วางลิงก์ — ใช้ข้อมูลตัวอย่าง'};
+      return;
+    }
+    if(!r.ok){
+      RAW[k]=getSeed(); DATA_SOURCE[k]='seed';
+      LOAD_STATUS[k]={state:'error',rows:0,detail:'ดึงข้อมูลไม่สำเร็จ ('+r.reason+') — ใช้ข้อมูลตัวอย่างแทนชั่วคราว'};
+      return;
+    }
+    const rows=(r.rows||[]).map(norm).filter(Boolean);
+    if(rows.length){
+      RAW[k]=rows; DATA_SOURCE[k]='sheet';
+      LOAD_STATUS[k]={state:'sheet',rows:rows.length,detail:'เชื่อมต่อสำเร็จ พบ '+rows.length+' แถว'};
+    }else{
+      RAW[k]=getSeed(); DATA_SOURCE[k]='seed';
+      LOAD_STATUS[k]={state:'empty',rows:0,detail:'เชื่อมต่อสำเร็จ แต่ไม่พบแถวข้อมูลที่ใช้ได้ (ตรวจหัวคอลัมน์/ชื่อแท็บ/gid) — ใช้ข้อมูลตัวอย่างแทนชั่วคราว'};
+    }
+  });
+}
+function isLiveConnected(){ return SHEET_KEYS.some(k=>DATA_SOURCE[k]==='sheet'); }
+const SHEET_LABELS={sales:'📊 Sales (ยอดขาย)',targets:'🎯 Targets (เป้าหมาย)',gp:'📈 GP (Gross Profit %)',redemption:'🎁 Redemption (สิทธิ์แลกซื้อ)',dailyTargetSummary:'📋 DailyTargetSummary (เสริม/legacy)'};
+function statusLine(k){
+  const s=LOAD_STATUS[k];
+  const color=s.state==='sheet'?'#15803d':s.state==='empty'?'#b45309':s.state==='error'?'#b91c1c':'#64748b';
+  const icon=s.state==='sheet'?'✅':s.state==='empty'?'⚠️':s.state==='error'?'❌':'⚪';
+  return `<div class="statusLine" data-k="${k}" style="font-size:9.5px;color:${color};font-weight:700">${icon} ${s.detail||''}</div>`;
+}
+function openSheetSettings(){
+  const box=document.getElementById('sheetInputs');const cfg=loadSheetConfig();
+  const warn=storageAvailable()?'':'<div style="font-size:9.5px;font-weight:700;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:6px 8px">⚠️ เบราว์เซอร์นี้ไม่รองรับการจำค่าถาวร (localStorage) ในโหมดที่เปิดไฟล์อยู่ — ลิงก์ที่บันทึกจะใช้ได้แค่จนกว่าจะปิด/รีเฟรชหน้านี้ ต้องวางใหม่ทุกครั้งที่เปิดไฟล์</div>';
+  box.innerHTML=warn+SHEET_KEYS.map(k=>`<label style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:700">${SHEET_LABELS[k]}</span><input class="fsel" style="width:100%" id="sheetUrl_${k}" placeholder="https://docs.google.com/spreadsheets/d/SPREADSHEET_ID/edit#gid=GID" value="${(cfg[k]||'').replace(/"/g,'&quot;')}">${statusLine(k)}</label>`).join('');
+  document.getElementById('sheetModalOverlay').style.display='flex';
+}
+function closeSheetSettings(){ document.getElementById('sheetModalOverlay').style.display='none'; }
+async function saveSheetSettingsAndReload(){
+  const cfg={}; SHEET_KEYS.forEach(k=>cfg[k]=document.getElementById('sheetUrl_'+k).value.trim());
+  saveSheetConfig(cfg);
+  // แสดงสถานะ "กำลังตรวจสอบ..." ทันที ไม่ต้องปิด modal จะได้เห็นผลลัพธ์การเชื่อมต่อจริง
+  SHEET_KEYS.forEach(k=>{
+    const el=document.querySelector('.statusLine[data-k="'+k+'"]');
+    if(el) el.innerHTML='⏳ กำลังตรวจสอบการเชื่อมต่อ...';
+  });
+  await loadAllData();
+  SHEET_KEYS.forEach(k=>{
+    const el=document.querySelector('.statusLine[data-k="'+k+'"]');
+    if(el) el.outerHTML=statusLine(k);
+  });
+  initFilterOptions();
+  rerenderActive();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 3 — GLOBAL FILTER STATE + CROSS-FILTER
+   year : 'all' | ปี ค.ศ. (เช่น 2026)     → ภาพรวมทั้งหมด หรือเจาะจงปี
+   month: 'all' | 1-12                     → ภาพรวมทั้งปี (YTD) หรือเจาะจงเดือน
+   brand: 'all' | hv|tl|wolf|jk            → กรอง gp / sales / monthly
+   empA : 'all' | ชื่ออังกฤษ (Sales namespace)
+   empB : 'all' | ชื่อไทย (GP%/Redemption namespace)
+   ══════════════════════════════════════════════════════════════════ */
+const STATE={year:'all',month:'all',brand:'all',empA:'all',empB:'all'};
+if(typeof window!=='undefined')window.STATE=STATE;
+const CH={};
+function destroyChart(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
+function mkChart(id,cfg){destroyChart(id);const el=document.getElementById(id);if(!el)return null;CH[id]=new Chart(el,cfg);return CH[id];}
+function inPeriod(y,mo){ if(STATE.year==='all')return true; if(+STATE.year!==+y)return false; if(STATE.month==='all')return true; return +STATE.month===+mo; }
+
+function setYearFilter(v){STATE.year=v;STATE.month='all';populateMonthOptions();refreshChips();rerenderActive();}
+function setMonthFilter(v){STATE.month=v;refreshChips();rerenderActive();}
+function setBrandFilter(v){STATE.brand=v;refreshChips();rerenderActive();}
+function setEmpAFilter(v){STATE.empA=v;refreshChips();rerenderActive();}
+function setEmpBFilter(v){STATE.empB=v;refreshChips();rerenderActive();}
+function clearFilters(){
+  STATE.year='all';STATE.month='all';STATE.brand='all';STATE.empA='all';STATE.empB='all';
+  document.getElementById('fYear').value='all';populateMonthOptions();
+  document.getElementById('fBrand').value='all';document.getElementById('fEmpA').value='all';document.getElementById('fEmpB').value='all';
+  refreshChips();rerenderActive();
+}
+function refreshChips(){
+  const box=document.getElementById('fchips');box.innerHTML='';
+  const add=(lbl,clearFn)=>{const c=document.createElement('span');c.className='fchip';c.innerHTML=`${lbl}<button type="button">✕</button>`;c.querySelector('button').onclick=clearFn;box.appendChild(c);};
+  if(STATE.year!=='all')add(`📆 ปี ${STATE.year}`,()=>{document.getElementById('fYear').value='all';setYearFilter('all');});
+  if(STATE.month!=='all')add(`🗓️ ${MONTH_TH[+STATE.month]}`,()=>{document.getElementById('fMonth').value='all';setMonthFilter('all');});
+  if(STATE.brand!=='all'){const b=brandOf(STATE.brand);add(`${b.ic} ${b.lb}`,()=>setBrandFilter('all'));document.getElementById('fBrand').value=STATE.brand;}
+  if(STATE.empA!=='all')add(`👤 ${STATE.empA}`,()=>setEmpAFilter('all'));
+  if(STATE.empB!=='all')add(`👤 ${STATE.empB}`,()=>setEmpBFilter('all'));
+}
+/* ปี/เดือนที่มีข้อมูลจริง — ดึงจากทุกตารางรวมกัน (ไม่ hardcode) เพื่อสร้างตัวเลือก Filter */
+function getAvailableYears(){
+  const s=new Set();
+  [...RAW.sales,...RAW.redemption].forEach(r=>s.add(r.y));
+  [...RAW.gp,...RAW.targets,...RAW.dailyTargetSummary].forEach(r=>s.add(r.y));
+  return[...s].filter(Boolean).sort((a,b)=>b-a);
+}
+function getAvailableMonths(year){
+  const s=new Set();
+  [...RAW.sales,...RAW.redemption].filter(r=>r.y===+year).forEach(r=>s.add(r.mo));
+  [...RAW.gp,...RAW.targets,...RAW.dailyTargetSummary].filter(r=>r.y===+year).forEach(r=>s.add(r.mo));
+  return[...s].filter(Boolean).sort((a,b)=>a-b);
+}
+function populateYearOptions(){
+  const el=document.getElementById('fYear');el.innerHTML='<option value="all">ภาพรวมทั้งหมด (All-Time)</option>';
+  getAvailableYears().forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent='ปี '+y;el.appendChild(o);});
+  el.value=STATE.year;
+}
+function populateMonthOptions(){
+  const el=document.getElementById('fMonth');el.innerHTML='<option value="all">ทุกเดือน (YTD)</option>';
+  if(STATE.year!=='all') getAvailableMonths(STATE.year).forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=MONTH_TH[m]||m;el.appendChild(o);});
+  el.disabled=STATE.year==='all';
+  el.value=STATE.month;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 4 — ROUTER (SPA, ไม่ reload หน้า) + SIDEBAR
+   ══════════════════════════════════════════════════════════════════ */
+const PAGE_RENDER={
+  'pg-dashboard':renderDashboard,
+  'pg-performance':renderPerformance,
+  'pg-sales':renderSales,
+  'pg-daily':renderDaily,
+  'pg-monthly':renderMonthly,
+  'pg-redemption':renderRedemption,
+  'pg-promotions':()=>{},
+  'pg-leaderboard':renderLeaderboard,
+  'pg-insight':renderInsight,
+};
+let currentPage='pg-dashboard';
+const inited={};
+function showPage(id){
+  currentPage=id;
+  document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.toggle('active',b.dataset.pg===id));
+  PAGE_RENDER[id]&&PAGE_RENDER[id]();
+  inited[id]=true;
+  if(window.innerWidth<=900)document.getElementById('sidebar').classList.remove('mobile-open');
+}
+function rerenderActive(){PAGE_RENDER[currentPage]&&PAGE_RENDER[currentPage]();}
+function toggleSidebar(){
+  const sb=document.getElementById('sidebar');sb.classList.toggle('collapsed');
+  document.getElementById('sbToggleBtn').textContent=sb.classList.contains('collapsed')?'▶':'◀';
+}
+function toggleMobileSidebar(){document.getElementById('sidebar').classList.toggle('mobile-open');}
+if(window.innerWidth<=900){document.getElementById('mobileMenuBtn').style.display='flex';}
+window.addEventListener('resize',()=>{document.getElementById('mobileMenuBtn').style.display=window.innerWidth<=900?'flex':'none';});
+
+/* populate filter <select> options จากข้อมูลที่โหลดจริง (ไม่ hardcode ชื่อ) */
+function initFilterOptions(){
+  const fb=document.getElementById('fBrand');fb.innerHTML='<option value="all">ทั้งหมด</option>';
+  DATA.brandMeta.forEach(b=>{const o=document.createElement('option');o.value=b.k;o.textContent=`${b.ic} ${b.lb}`;fb.appendChild(o);});
+  const fa=document.getElementById('fEmpA');fa.innerHTML='<option value="all">ทั้งหมด</option>';
+  [...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;fa.appendChild(o);});
+  const fbB=document.getElementById('fEmpB');fbB.innerHTML='<option value="all">ทั้งหมด</option>';
+  [...new Set([...RAW.gp,...RAW.redemption].map(r=>r.employee))].filter(Boolean).sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;fbB.appendChild(o);});
+  populateYearOptions();populateMonthOptions();
+  const badge=document.getElementById('dataSrcBadge');
+  if(badge){
+    const hasError=SHEET_KEYS.some(k=>LOAD_STATUS[k].state==='error'||LOAD_STATUS[k].state==='empty');
+    if(isLiveConnected()&&hasError) badge.textContent='🟡 เชื่อมต่อบางส่วน (คลิก ⚙ เพื่อดูรายละเอียด)';
+    else if(isLiveConnected()) badge.textContent='🟢 เชื่อมต่อ Google Sheets';
+    else if(hasError) badge.textContent='🔴 เชื่อมต่อไม่สำเร็จ (คลิก ⚙ เพื่อดูรายละเอียด)';
+    else badge.textContent='🔌 ข้อมูลตัวอย่าง (ยังไม่เชื่อมต่อ Sheets)';
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 5 — COMPUTE LAYER (กรองตาม Year/Month/Brand/Employee ก่อนรวมทุกครั้ง)
+   ══════════════════════════════════════════════════════════════════ */
+function computeGP(){
+  const brands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
+  const staffAll=[...new Set(RAW.gp.map(r=>r.employee))].filter(Boolean).sort();
+  const staff=STATE.empB==='all'?staffAll:staffAll.filter(n=>n===STATE.empB);
+  const periodRows=RAW.gp.filter(r=>inPeriod(r.y,r.mo));
+  const rows=staff.map(name=>{
+    const vals=brands.map(b=>{
+      const match=periodRows.filter(r=>r.employee===name&&r.brand===b.k);
+      if(!match.length) return{b,v:null,t:match[0]?match[0].thresholdPercent:null,pass:false};
+      const v=avg(match.map(r=>r.gpPercent)); const t=avg(match.map(r=>r.thresholdPercent));
+      return{b,v,t,pass:v>=t};
+    });
+    const known=vals.filter(v=>v.v!=null);
+    const passCount=known.filter(v=>v.pass).length;
+    const avgGP=known.length?avg(known.map(v=>v.v)):null;
+    const ratio=known.length?passCount/known.length:0;
+    return{name,vals,passCount,knownCount:known.length,avgGP,badge:!known.length?'— ไม่มีข้อมูล':ratio>=0.75?'🌟 ดีมาก':ratio>=0.5?'✅ พอใช้':'⚠️ ต้องปรับ'};
+  });
+  const brandStats=brands.map(b=>{
+    const known=rows.map(r=>r.vals.find(v=>v.b.k===b.k)).filter(v=>v.v!=null);
+    const passCount=known.filter(v=>v.pass).length;
+    return{b,passCount,total:known.length,passPct:known.length?passCount/known.length*100:0};
+  });
+  const totalCells=brandStats.reduce((a,s)=>a+s.total,0);
+  const totalPass=brandStats.reduce((a,s)=>a+s.passCount,0);
+  return{brands,rows,brandStats,overallPassPct:totalCells?totalPass/totalCells*100:0,totalPass,totalCells};
+}
+
+function computeSO(){
+  const brands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
+  const brandKeys=new Set(brands.map(b=>b.k));
+  const staffAll=[...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].sort();
+  const staff=STATE.empA==='all'?staffAll:staffAll.filter(n=>n===STATE.empA);
+  const periodNamed=RAW.sales.filter(r=>r.employee&&brandKeys.has(r.brand)&&inPeriod(r.y,r.mo));
+  const rows=staff.map(name=>{
+    const rs=periodNamed.filter(r=>r.employee===name);
+    let ord=0,rev=0;const byBrand={};brands.forEach(b=>byBrand[b.k]=0);
+    rs.forEach(r=>{ord+=r.orders;rev+=r.revenue;byBrand[r.brand]+=r.revenue;});
+    return{name,ord,rev,avgOrder:ord?Math.round(rev/ord):0,byBrand};
+  });
+  const sortRev=[...rows].sort((a,b)=>b.rev-a.rev);
+  const totalOrd=sum(rows.map(r=>r.ord)),totalRev=sum(rows.map(r=>r.rev));
+  const brandTotals=brands.map(b=>{
+    const rs=periodNamed.filter(r=>r.brand===b.k&&(STATE.empA==='all'||r.employee===STATE.empA));
+    const o=sum(rs.map(r=>r.orders)),r=sum(rs.map(r=>r.revenue));
+    return{b,o,r,avg:o?Math.round(r/o):0,pct:totalRev?r/totalRev*100:0};
+  });
+  return{brands,rows,sortRev,totalOrd,totalRev,avgOrderValue:totalOrd?Math.round(totalRev/totalOrd):0,brandTotals,topRevenue:sortRev[0]||null};
+}
+
+// เป้ารายวันรายพนักงาน: คำนวณจริงจาก Sales รายวัน + Targets ถ้ามีข้อมูลรายวันเพียงพอ (≥5 วันจริงต่อคนในช่วงที่เลือก)
+// ถ้าไม่พอ (เช่น ก.ค. 2569 ที่มีแต่ยอดสะสม) จะ fallback ไปใช้ DailyTargetSummary ของเดือนนั้นแทนอัตโนมัติ
+function employeeDailyTarget(name,y,mo){
+  const rows=RAW.targets.filter(r=>r.type==='employee'&&r.code===name&&(r.y<y||(r.y===y&&r.mo<=mo)));
+  if(!rows.length) return null;
+  rows.sort((a,b)=>(a.y*12+a.mo)-(b.y*12+b.mo));
+  return rows[rows.length-1];
+}
+function computeDaily(){
+  const staffAll=[...new Set([...RAW.sales.filter(r=>r.employee).map(r=>r.employee),...RAW.dailyTargetSummary.map(r=>r.employee)])].sort();
+  const staff=STATE.empA==='all'?staffAll:staffAll.filter(n=>n===STATE.empA);
+  const rows=staff.map(name=>{
+    const namedDaily=RAW.sales.filter(r=>r.employee===name&&inPeriod(r.y,r.mo));
+    const distinctDates=new Set(namedDaily.map(r=>`${r.y}-${r.mo}-${r.d}`));
+    let po=0,fo=0,pr=0,fr=0,ao=0,ar=0,rev=0,ord=0,mode='none';
+    if(distinctDates.size>=5){
+      mode='daily';
+      const byDate={};
+      namedDaily.forEach(r=>{const k=`${r.y}-${r.mo}-${r.d}`;byDate[k]=byDate[k]||{orders:0,revenue:0,y:r.y,mo:r.mo};byDate[k].orders+=r.orders;byDate[k].revenue+=r.revenue;});
+      Object.values(byDate).forEach(day=>{
+        const tgt=employeeDailyTarget(name,day.y,day.mo);
+        rev+=day.revenue;ord+=day.orders;
+        if(tgt&&tgt.dailyOrderTarget>0){ao++; day.orders>=tgt.dailyOrderTarget?po++:fo++;}
+        if(tgt&&tgt.dailyRevenueTarget>0){ar++; day.revenue>=tgt.dailyRevenueTarget?pr++:fr++;}
+      });
+    } else {
+      const summary=RAW.dailyTargetSummary.filter(s=>s.employee===name&&inPeriod(s.y,s.mo));
+      if(summary.length){
+        mode='summary';
+        po=sum(summary.map(s=>s.passOrderDays));fo=sum(summary.map(s=>s.failOrderDays));
+        pr=sum(summary.map(s=>s.passRevenueDays));fr=sum(summary.map(s=>s.failRevenueDays));
+        ao=po+fo;ar=pr+fr;
+        rev=sum(namedDaily.map(r=>r.revenue));ord=sum(namedDaily.map(r=>r.orders));
+        if(!rev&&!ord){ // ถ้าไม่มี sales row เลยในช่วงนี้ (เช่นดูปีอื่น) ใช้ 0
+        }
+      }
+    }
+    const totalDays=mode==='summary'?sum(RAW.dailyTargetSummary.filter(s=>s.employee===name&&inPeriod(s.y,s.mo)).map(s=>s.totalDays)):distinctDates.size;
+    const oo=Math.max(0,totalDays-ao),orOff=Math.max(0,totalDays-ar);
+    return{n:name,mode,rev,ord,po,fo,pr,fr,ao,ar,oo,or:orOff,totalDays,pco:ao?po/ao*100:0,pcr:ar?pr/ar*100:0,avr:ao?Math.round(rev/ao):0,avo:ao?(ord/ao):0};
+  }).filter(r=>r.mode!=='none');
+  const totalOrd=sum(rows.map(r=>r.ord)),totalRev=sum(rows.map(r=>r.rev));
+  const totalPO=sum(rows.map(r=>r.po)),totalAO=sum(rows.map(r=>r.ao));
+  const totalPR=sum(rows.map(r=>r.pr)),totalAR=sum(rows.map(r=>r.ar));
+  const sortByRev=[...rows].sort((a,b)=>b.rev-a.rev);
+  return{rows,totalOrd,totalRev,passOrderPct:totalAO?totalPO/totalAO*100:0,passRevPct:totalAR?totalPR/totalAR*100:0,topRevenue:sortByRev[0]||null,worstOrderPct:rows.length?[...rows].sort((a,b)=>a.pco-b.pco)[0]:null};
+}
+
+// รวมยอดขายรายวันแยกแบรนด์จาก Sales: ถ้าวันนั้น+แบรนด์นั้นมีแถว "ยอดรวมทีม" (employee ว่าง) ให้ใช้ค่านั้น (กันนับซ้ำ)
+// ถ้าไม่มี ให้รวมจากแถวรายพนักงานแทน (เผื่อเดือนถัดไปที่กรอกเฉพาะรายพนักงาน)
+function brandDailySeries(brandKey,y,mo){
+  const rows=RAW.sales.filter(r=>r.brand===brandKey&&inPeriod(y===undefined?r.y:y,mo===undefined?r.mo:mo));
+  const byDate={};
+  rows.forEach(r=>{const k=`${r.y}-${String(r.mo).padStart(2,'0')}-${String(r.d).padStart(2,'0')}`;byDate[k]=byDate[k]||{team:0,named:0,hasTeam:false,y:r.y,mo:r.mo,d:r.d};
+    if(r.employee){byDate[k].named+=r.revenue;} else {byDate[k].team+=r.revenue;byDate[k].hasTeam=true;}
+  });
+  return Object.keys(byDate).sort().map(k=>{const b=byDate[k];return{date:k,y:b.y,mo:b.mo,d:b.d,revenue:b.hasTeam?b.team:b.named};});
+}
+function computeMonthly(){
+  const brands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
+  const perBrandSeries=brands.map(b=>({b,series:brandDailySeries(b.k)}));
+  const dateSet=[...new Set(perBrandSeries.flatMap(x=>x.series.map(s=>s.date)))].sort();
+  const combinedSeries=dateSet.map(dt=>sum(perBrandSeries.map(x=>{const f=x.series.find(s=>s.date===dt);return f?f.revenue:0;})));
+  const N=dateSet.length;
+  const monthsInScope=[...new Set(dateSet.map(dt=>dt.slice(0,7)))];
+  const targetForMonth=(brandKey,ym)=>{const[y,mo]=ym.split('-').map(Number);const r=RAW.targets.filter(t=>t.type==='brand'&&t.code===brandKey&&t.y===y&&t.mo===mo);return r.length?avg(r.map(x=>x.dailyRevenueTarget)):0;};
+  const combinedTargetPerDate=dateSet.map(dt=>sum(brands.map(b=>targetForMonth(b.k,dt.slice(0,7)))));
+  const combinedTarget=N?avg(combinedTargetPerDate):0;
+  const totalMonthTarget=sum(monthsInScope.map(ym=>{const[,mo]=ym.split('-').map(Number);const daysInM=new Date(+ym.slice(0,4),mo,0).getDate();return sum(brands.map(b=>targetForMonth(b.k,ym)))*daysInM;}));
+  const cumulativeActual=sum(combinedSeries);
+  const daysInScopeMonth=monthsInScope.length===1?new Date(+monthsInScope[0].slice(0,4),+monthsInScope[0].slice(5,7),0).getDate():null;
+  const remainingDays=daysInScopeMonth!=null?Math.max(0,daysInScopeMonth-N):0;
+  const gap=totalMonthTarget-cumulativeActual;
+  const achievedPct=totalMonthTarget?cumulativeActual/totalMonthTarget*100:0;
+  const avgPerDay=N?cumulativeActual/N:0;
+  const requiredDailyRemaining=remainingDays>0?gap/remainingDays:0;
+  const requiredIncreasePct=avgPerDay>0?(requiredDailyRemaining-avgPerDay)/avgPerDay*100:0;
+  const isSingleMonth=monthsInScope.length===1;
+  const brandCards=brands.map(b=>{
+    const series=brandDailySeries(b.k);const tr=sum(series.map(s=>s.revenue));
+    const ym=monthsInScope[0];const dailyT=isSingleMonth?targetForMonth(b.k,ym):avg(monthsInScope.map(m=>targetForMonth(b.k,m)));
+    const tt=isSingleMonth?dailyT*(daysInScopeMonth||30):dailyT*series.length;
+    const ps=isSingleMonth?series.filter(s=>s.revenue>=dailyT).length:0;
+    return{b,tr,tt,ps,n:series.length,pct:tt?tr/tt*100:0};
+  });
+  const wow=weekOverWeek(combinedSeries);
+  // เทรนด์รายเดือน (สำหรับกราฟเปรียบเทียบแต่ละเดือน / YTD) — รวมทุกเดือนที่มีข้อมูล ไม่ผูกกับ brand filter ของหน้านี้ (ใช้แบรนด์ที่เลือกจริง)
+  const monthlyBuckets={};
+  perBrandSeries.forEach(x=>x.series.forEach(s=>{monthlyBuckets[s.date.slice(0,7)]=(monthlyBuckets[s.date.slice(0,7)]||0)+s.revenue;}));
+  const monthlyTrend=Object.keys(monthlyBuckets).sort().map(ym=>({ym,revenue:monthlyBuckets[ym]}));
+  return{brands,N,isSingleMonth,scopeMonth:isSingleMonth?monthsInScope[0]:null,daysInScopeMonth,combinedTarget,combinedSeries,dateSet,totalMonthTarget,cumulativeActual,remainingDays,gap,achievedPct,avgPerDay,requiredDailyRemaining,requiredIncreasePct,brandCards,wow,monthlyTrend};
+}
+function weekOverWeek(series){
+  if(series.length<8)return null;
+  const last=series.slice(-7),prevLen=Math.min(7,series.length-7),prev=series.slice(-7-prevLen,-7);
+  if(!prev.length)return null;
+  const a=avg(last),p=avg(prev);
+  return{lastAvg:a,prevAvg:p,pct:p?((a-p)/p*100):0};
+}
+// อันดับแบรนด์ตาม % บรรลุเป้า — ใช้ช่วงเวลาที่เลือกอยู่ (Year/Month) เสมอ ไม่ผูกกับ brand-filter (สำหรับ Executive/Insight)
+function brandAchievementRanking(){
+  return DATA.brandMeta.map(b=>{
+    const series=brandDailySeries(b.k);const tr=sum(series.map(s=>s.revenue));
+    const months=[...new Set(series.map(s=>s.date.slice(0,7)))];
+    const tt=sum(months.map(ym=>{const[y,mo]=ym.split('-').map(Number);const r=RAW.targets.filter(t=>t.type==='brand'&&t.code===b.k&&t.y===y&&t.mo===mo);const dailyT=r.length?avg(r.map(x=>x.dailyRevenueTarget)):0;const daysInM=new Date(y,mo,0).getDate();return dailyT*daysInM;}));
+    return{b,tr,tt,pct:tt?tr/tt*100:0};
+  }).sort((a,b)=>b.pct-a.pct);
+}
+
+function computeRedemption(){
+  const allNames=[...new Set(RAW.redemption.map(r=>r.employee))].filter(Boolean).sort();
+  const names=STATE.empB==='all'?allNames:allNames.filter(n=>n===STATE.empB);
+  const periodRows=RAW.redemption.filter(r=>inPeriod(r.y,r.mo));
+  const productList=[...new Set(RAW.redemption.map(r=>r.product))];
+  const priceOf=p=>{const r=RAW.redemption.find(x=>x.product===p);return r?r.unitPrice:0;};
+  const rows=names.map(name=>{
+    const rs=periodRows.filter(r=>r.employee===name);
+    const rev=sum(rs.map(r=>r.unitPrice*r.units)),totalUnits=sum(rs.map(r=>r.units));
+    const u=productList.map(p=>sum(rs.filter(r=>r.product===p).map(r=>r.units)));
+    return{name,u,rev,totalUnits};
+  }).sort((a,b)=>b.totalUnits-a.totalUnits||b.rev-a.rev);
+  const gRev=sum(rows.map(r=>r.rev)),gU=sum(rows.map(r=>r.totalUnits));
+  const relevantRows=STATE.empB==='all'?periodRows:periodRows.filter(r=>r.employee===STATE.empB);
+  const perProduct=productList.map((p,pi)=>({name:p,icon:['☕','🌸','💧','🧴','✨'][pi%5],color:['#f59e0b','#8b5cf6','#06b6d4','#10b981','#f43f5e'][pi%5],price:priceOf(p),units:sum(relevantRows.filter(r=>r.product===p).map(r=>r.units))}));
+  return{rows,gRev,gU,products:productList,perProduct,top:rows[0]||null};
+}
+
+function renderHeaderStats(){
+  const so=computeSO();const gp=computeGP();const m=computeMonthly();
+  const empCountA=[...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].length;
+  const box=document.getElementById('hdrStats');
+  box.innerHTML=[
+    {v:empCountA,l:'พนักงาน',c:'#d97706'},
+    {v:fmtBM(so.totalRev),l:'ยอดขายสะสม',c:'#059669'},
+    {v:fmtPct(gp.overallPassPct),l:'GP% ผ่านเกณฑ์',c:'#0891b2'},
+    {v:fmtPct(m.achievedPct,2),l:'บรรลุเป้า',c:'#7c3aed'},
+  ].map(s=>`<div class="hstat"><div class="hstat-v" style="color:${s.c}">${s.v}</div><div class="hstat-l">${s.l}</div></div>`).join('');
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 6 — PAGE: PERFORMANCE (GP%)
+   ══════════════════════════════════════════════════════════════════ */
+function renderPerformance(){
+  const gp=computeGP();
+  renderHeaderStats();
+  const ke=document.getElementById('gp-kpi');ke.innerHTML='';
+  const overallColor=gp.overallPassPct>=60?'#059669':gp.overallPassPct>=40?'#d97706':'#dc2626';
+  ke.appendChild(kpiCard({ic:'📊',l:'Overall Pass',v:fmtPct(gp.overallPassPct),s:`${gp.totalPass}/${gp.totalCells} เกณฑ์ผ่าน (เฉพาะที่มีข้อมูล)`,c:overallColor,g:'#d97706,#f59e0b'}));
+  gp.brandStats.forEach(bs=>{
+    ke.appendChild(kpiCard({ic:bs.b.ic,l:`${bs.b.sh} ผ่านเกณฑ์`,v:`${bs.passCount}/${bs.total} คน`,s:bs.total?fmtPct(bs.passPct)+(bs.passPct>=60?' — ดี':bs.passPct<30?' — ต้องปรับ':''):'ไม่มีข้อมูลช่วงนี้',c:bs.b.c,g:bs.b.c+',#ffffff',
+      onClick:()=>setBrandFilter(STATE.brand===bs.b.k?'all':bs.b.k)}));
+  });
+  // Heatmap
+  const hm=document.getElementById('gp-hmap');
+  let h=`<thead><tr><th>พนักงาน</th>`;
+  gp.brands.forEach(b=>h+=`<th style="color:${b.c}">${b.lb}</th>`);
+  h+=`<th>avg GP%</th><th>ผ่าน</th></tr></thead><tbody>`;
+  if(!gp.rows.length) h+=`<tr><td colspan="${gp.brands.length+3}" style="text-align:center;color:var(--muted)">ไม่มีข้อมูล GP% ในช่วงที่เลือก</td></tr>`;
+  gp.rows.forEach(r=>{
+    h+=`<tr><td onclick="setEmpBFilter('${r.name}')">${r.name}</td>`;
+    r.vals.forEach(v=>{
+      if(v.v==null){h+=`<td style="color:var(--muted)">—</td>`;return;}
+      const df=(v.v-v.t),cls=df>=3?'cph':df>=0?'cpl':df>=-3?'cfm':'cfh';
+      h+=`<td class="${cls}" onclick="setBrandFilter('${v.b.k}')">${v.v.toFixed(2)}%<span class="delta">${df>=0?'+':''}${df.toFixed(2)}% (เกณฑ์${v.t.toFixed(0)}%)</span></td>`;
+    });
+    h+=`<td style="color:${r.avgGP==null?'var(--muted)':r.avgGP>=28?'#059669':'#d97706'};font-weight:900">${r.avgGP==null?'—':r.avgGP.toFixed(2)+'%'}</td><td style="color:${!r.knownCount?'var(--muted)':r.passCount/r.knownCount>=0.75?'#059669':r.passCount/r.knownCount>=0.5?'#d97706':'#dc2626'};font-weight:900">${r.knownCount?r.passCount+'/'+r.knownCount:'—'}</td></tr>`;
+  });
+  hm.innerHTML=h+'</tbody>';
+  // Grouped bar
+  mkChart('gpChart',{type:'bar',data:{labels:gp.rows.map(r=>r.name),datasets:gp.brands.map(b=>({label:b.lb,data:gp.rows.map(r=>{const v=r.vals.find(x=>x.b.k===b.k);return v&&v.v!=null?v.v:null;}),backgroundColor:b.c+'99',borderRadius:3,_bk:b.k}))},
+    options:{responsive:true,onClick:(e,els)=>{if(els.length){const ds=els[0].datasetIndex;setBrandFilter(gp.brands[ds].k===STATE.brand?'all':gp.brands[ds].k);}},
+      plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9,font:{size:9}}},tooltip:{callbacks:{label:c=>c.raw!=null?` ${c.dataset.label}: ${c.raw}%`:` ${c.dataset.label}: ไม่มีข้อมูล`}}},
+      scales:{x:{grid:{color:GR},ticks:{font:{size:9}}},y:{grid:{color:GR},min:15,max:40,ticks:{callback:v=>v+'%'}}}}});
+  // Radar — GP% เฉลี่ยเทียบเกณฑ์ต่อแบรนด์
+  const radarAvg=gp.brands.map(b=>{const vs=gp.rows.map(r=>r.vals.find(x=>x.b.k===b.k)).filter(v=>v&&v.v!=null);return vs.length?avg(vs.map(v=>v.v)):0;});
+  const radarThr=gp.brands.map(b=>{const vs=gp.rows.map(r=>r.vals.find(x=>x.b.k===b.k)).filter(v=>v&&v.t!=null);return vs.length?avg(vs.map(v=>v.t)):0;});
+  mkChart('gpRadar',{type:'radar',data:{labels:gp.brands.map(b=>b.lb),datasets:[
+    {label:'GP% เฉลี่ยจริง',data:radarAvg,borderColor:'#8b5cf6',backgroundColor:'#8b5cf633',pointBackgroundColor:'#8b5cf6'},
+    {label:'เกณฑ์ขั้นต่ำ',data:radarThr,borderColor:'#d97706',borderDash:[5,4],backgroundColor:'transparent',pointBackgroundColor:'#d97706'},
+  ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}}},scales:{r:{grid:{color:GR},angleLines:{color:GR},ticks:{backdropColor:'transparent'}}}}});
+  // Staff cards
+  const gc=document.getElementById('gp-cards');gc.innerHTML='';
+  const rg=['#d97706,#f59e0b','#94a3b8,#64748b','#d97706,#b45309','#7c3aed,#7c3aed','#06b6d4,#0891b2','#10b981,#059669','#ef4444,#dc2626','#8b5cf6,#7c3aed','#f59e0b,#d97706'];
+  gp.rows.forEach((r,i)=>{
+    const ratio=r.knownCount?r.passCount/r.knownCount:0;
+    const bc=!r.knownCount?'#64748b':ratio>=0.7?'#059669':ratio>=0.4?'#d97706':'#dc2626';
+    const el=document.createElement('div');el.className='scrd'+(STATE.empB===r.name?' sel':'');
+    el.onclick=()=>setEmpBFilter(STATE.empB===r.name?'all':r.name);
+    el.innerHTML=`<div class="scrd-stripe" style="background:linear-gradient(90deg,${rg[i%rg.length]})"></div>
+    <div class="scrd-name">${r.name}</div><div class="scrd-sub">avg GP% ${r.avgGP==null?'—':r.avgGP.toFixed(1)+'%'} · ผ่าน ${r.knownCount?r.passCount+'/'+r.knownCount:'—'} แบรนด์</div>
+    <div class="scrd-nums">${r.vals.map(v=>`<div class="sn"><div class="sn-l" style="color:${v.b.c}">${v.b.sh}${v.t!=null?' ≥'+v.t.toFixed(0)+'%':''}</div><div class="sn-v" style="color:${v.v==null?'var(--muted)':v.pass?'#059669':'#dc2626'}">${v.v==null?'—':v.v.toFixed(2)+'%'}</div></div>`).join('')}</div>
+    <span class="sbadge" style="background:${bc}18;border-color:${bc}55;color:${bc}">${r.badge}</span>`;
+    gc.appendChild(el);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 7 — PAGE: SALES & ORDERS
+   ══════════════════════════════════════════════════════════════════ */
+function renderSales(){
+  const so=computeSO();
+  renderHeaderStats();
+  const ke=document.getElementById('so-kpi');ke.innerHTML='';
+  const topShareBrand=[...so.brandTotals].sort((a,b)=>b.pct-a.pct)[0];
+  [{ic:'📦',l:'ออเดอร์รวม',v:fmtN(so.totalOrd),s:`${so.rows.length} พนักงาน · ${so.brands.length} แบรนด์`,c:'#d97706',g:'#d97706,#f59e0b'},
+   {ic:'💰',l:'ยอดขายรวม',v:fmtB(so.totalRev),s:'ตามช่วงเวลาที่เลือก',c:'#059669',g:'#10b981,#059669'},
+   {ic:'📊',l:'avg/ออเดอร์',v:fmtB(so.avgOrderValue),s:'เฉลี่ยต่อออเดอร์',c:'#0891b2',g:'#06b6d4,#0891b2'},
+   {ic:'🏆',l:'Top Revenue',v:so.topRevenue?so.topRevenue.name:'—',s:so.topRevenue?fmtB(so.topRevenue.rev):'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>so.topRevenue&&setEmpAFilter(STATE.empA===so.topRevenue.name?'all':so.topRevenue.name)},
+   topShareBrand?{ic:topShareBrand.b.ic,l:`${topShareBrand.b.sh} สัดส่วน`,v:fmtPct(topShareBrand.pct),s:'สัดส่วนสูงสุดในทีม',c:topShareBrand.b.c,g:topShareBrand.b.c+',#ffffff'}:{ic:'—',l:'—',v:'—',s:'',c:'#647090',g:'#647090,#647090'},
+  ].forEach(k=>ke.appendChild(kpiCard(k)));
+  // Brand cards
+  const bc=document.getElementById('so-brand');bc.innerHTML='';
+  so.brandTotals.forEach(t=>{
+    const el=document.createElement('div');el.className='bcrd'+(STATE.brand===t.b.k?' sel':'');
+    el.onclick=()=>setBrandFilter(STATE.brand===t.b.k?'all':t.b.k);
+    el.innerHTML=`<div class="bcrd-stripe" style="background:${t.b.c}"></div><div class="bcrd-head"><div><div class="bcrd-name">${t.b.lb}</div><div class="bcrd-tgt">${fmtPct(t.pct)} ของยอดทีม</div></div><div class="bcrd-ic">${t.b.ic}</div></div><div class="bcrd-stats"><div class="bst"><div class="bst-l">ยอดขาย</div><div class="bst-v" style="color:${t.b.c}">${fmtBK(t.r)}</div></div><div class="bst"><div class="bst-l">ออเดอร์</div><div class="bst-v">${fmtN(t.o)}</div></div><div class="bst"><div class="bst-l">avg/order</div><div class="bst-v">฿${t.avg}</div></div><div class="bst"><div class="bst-l">% ยอด</div><div class="bst-v" style="color:${t.b.c}">${fmtPct(t.pct)}</div></div></div>`;
+    bc.appendChild(el);
+  });
+  // Stacked chart
+  mkChart('soRevChart',{type:'bar',data:{labels:so.sortRev.map(s=>s.name),datasets:so.brands.map(b=>({label:b.lb,data:so.sortRev.map(s=>s.byBrand[b.k]),backgroundColor:b.c+'bb',stack:'s',borderRadius:0,_bk:b.k}))},
+    options:{responsive:true,onClick:(e,els)=>{if(els.length){const s=so.sortRev[els[0].index];setEmpAFilter(STATE.empA===s.name?'all':s.name);}},
+      plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9,font:{size:9}}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},
+      scales:{x:{stacked:true,grid:{color:GR},ticks:{font:{size:9}}},y:{stacked:true,grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+  // Leaderboard
+  const lb=document.getElementById('so-lb');lb.innerHTML='';
+  so.sortRev.forEach((s,r)=>{
+    const pct=so.totalRev?(s.rev/so.totalRev*100):0,w=so.sortRev[0]&&so.sortRev[0].rev?(s.rev/so.sortRev[0].rev*100):0;
+    const el=document.createElement('div');el.className='lb-row '+medalClass(r);el.onclick=()=>setEmpAFilter(STATE.empA===s.name?'all':s.name);
+    el.innerHTML=`<div class="lb-rk">${r<3?MED[r]:r+1}</div><div class="lb-nm">${s.name}</div><div class="lb-bw"><div class="lb-bf" style="width:${w}%;background:linear-gradient(90deg,#06b6d4,#10b981)"></div></div><div class="lb-rv">${fmtBK(s.rev)}</div><div class="lb-pp">${fmtPct(pct)}</div>`;
+    lb.appendChild(el);
+  });
+  // Bubble: x=orders, y=revenue, r=avgOrderValue
+  const maxAvg=Math.max(1,...so.rows.map(r=>r.avgOrder));
+  mkChart('soBubble',{type:'bubble',data:{datasets:[{label:'พนักงาน',data:so.rows.map(r=>({x:r.ord,y:r.rev,r:6+14*(r.avgOrder/maxAvg),_n:r.name})),backgroundColor:'#06b6d488',borderColor:'#06b6d4'}]},
+    options:{responsive:true,onClick:(e,els)=>{if(els.length){const n=so.rows[els[0].index].name;setEmpAFilter(STATE.empA===n?'all':n);}},
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw._n}: ${fmtN(c.raw.x)} ออเดอร์ · ${fmtB(c.raw.y)} (avg ฿${so.rows[c.dataIndex].avgOrder})`}}},
+      scales:{x:{title:{display:true,text:'จำนวนออเดอร์',color:'var(--muted)',font:{size:9}},grid:{color:GR}},y:{title:{display:true,text:'ยอดขาย',color:'var(--muted)',font:{size:9}},grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+  // Table
+  const tbl=document.getElementById('so-tbl');
+  tbl.innerHTML=`<thead><tr><th>พนักงาน</th><th>ออเดอร์</th><th>ยอดขาย</th><th>avg/order</th>${so.brands.map(b=>`<th style="color:${b.c}">${b.lb}</th>`).join('')}<th>% ทีม</th></tr></thead>`;
+  let tb='<tbody>';
+  so.sortRev.forEach((s,r)=>{
+    const pct=so.totalRev?(s.rev/so.totalRev*100):0;
+    tb+=`<tr class="${STATE.empA===s.name?'sel':''}" onclick="setEmpAFilter('${STATE.empA===s.name?'all':s.name}')"><td>${r<3?MED[r]:''} ${s.name}</td><td style="color:#d97706">${fmtN(s.ord)}</td><td style="color:#059669;font-weight:800">${fmtB(s.rev)}</td><td style="color:var(--muted)">฿${s.avgOrder}</td>${so.brands.map(b=>`<td>${fmtB(s.byBrand[b.k])}</td>`).join('')}<td style="color:#0891b2">${fmtPct(pct)}</td></tr>`;
+  });
+  tb+=`</tbody><tfoot><tr><td>รวม</td><td style="color:#d97706">${fmtN(so.totalOrd)}</td><td style="color:#059669">${fmtB(so.totalRev)}</td><td style="color:var(--muted)">฿${so.avgOrderValue}</td>${so.brandTotals.map(t=>`<td>${fmtB(t.r)}</td>`).join('')}<td>100%</td></tr></tfoot>`;
+  tbl.innerHTML+=tb;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 8 — PAGE: DAILY TARGET
+   ══════════════════════════════════════════════════════════════════ */
+function renderDaily(){
+  const d=computeDaily();
+  renderHeaderStats();
+  const ke=document.getElementById('dly-kpi');ke.innerHTML='';
+  [{ic:'📦',l:'ออเดอร์รวม',v:fmtN(d.totalOrd),s:`${d.rows.length} พนักงาน`,c:'#d97706',g:'#d97706,#f59e0b'},
+   {ic:'💰',l:'ยอดขายรวม',v:fmtBM(d.totalRev),s:fmtB(d.totalRev),c:'#059669',g:'#10b981,#059669'},
+   {ic:'🎯',l:'ผ่านเป้าออเดอร์',v:fmtPct(d.passOrderPct),s:'สะสมทุกพนักงาน',c:'#0891b2',g:'#06b6d4,#0891b2'},
+   {ic:'💹',l:'ผ่านเป้ายอดขาย',v:fmtPct(d.passRevPct),s:'สะสมทุกพนักงาน',c:'#7c3aed',g:'#7c3aed,#7c3aed'},
+   {ic:'🏆',l:'Top Revenue',v:d.topRevenue?d.topRevenue.n:'—',s:d.topRevenue?`${fmtB(d.topRevenue.rev)} · ${fmtN(d.topRevenue.ord)} orders`:'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>d.topRevenue&&setEmpAFilter(STATE.empA===d.topRevenue.n?'all':d.topRevenue.n)},
+  ].forEach(k=>ke.appendChild(kpiCard(k)));
+  // Alerts (คำนวณสด แทนข้อความพิมพ์มือ)
+  const al=document.getElementById('dly-alerts');al.innerHTML='';
+  if(d.worstOrderPct){
+    const w=d.worstOrderPct;
+    al.innerHTML+=`<div class="alert ${w.pco<20?'ad':'aw'}"><span style="font-size:16px">${w.pco<20?'⚠️':'🔸'}</span><div><strong>${w.n}</strong> — ผ่านเป้าออเดอร์เพียง ${w.po}/${w.ao} วัน (${fmtPct(w.pco)}) — อัตราต่ำสุดในทีม</div></div>`;
+  }
+  al.innerHTML+=`<div class="alert ai"><span style="font-size:16px">📊</span><div>อัตราผ่านเป้าเฉลี่ยทีม: ออเดอร์ <b>${fmtPct(d.passOrderPct)}</b> · ยอดขาย <b>${fmtPct(d.passRevPct)}</b></div></div>`;
+  // Staff cards
+  const gr=document.getElementById('dly-cards');gr.innerHTML='';
+  const rg=['#d97706,#f59e0b','#94a3b8,#64748b','#d97706,#b45309','#7c3aed,#7c3aed','#06b6d4,#0891b2','#10b981,#059669','#ef4444,#dc2626','#8b5cf6,#7c3aed','#f59e0b,#d97706'];
+  const sorted=[...d.rows].sort((a,b)=>b.pco-a.pco);
+  sorted.forEach((s,r)=>{
+    const p=s.pco,pc=p>=70?'#059669':p>=50?'#d97706':'#dc2626';
+    const bk=p>=80?'🌟 ยอดเยี่ยม':p>=60?'✅ ดี':p>=40?'⚠️ พอใช้':p>=20?'🔸 ต้องปรับ':'❌ เร่งด่วน';
+    const el=document.createElement('div');el.className='scrd'+(STATE.empA===s.n?' sel':'');el.onclick=()=>setEmpAFilter(STATE.empA===s.n?'all':s.n);
+    el.innerHTML=`<div class="scrd-stripe" style="background:linear-gradient(90deg,${rg[r%rg.length]})"></div>
+    <div class="scrd-name">${s.n} <span style="font-size:12px">${r<3?MED[r]:''}</span></div>
+    <div class="scrd-sub">avg ${fmtB(s.avr)}/วัน · ${s.avo.toFixed(1)} orders/วัน</div>
+    <div class="scrd-nums"><div class="sn"><div class="sn-l">ออเดอร์</div><div class="sn-v" style="color:#d97706">${fmtN(s.ord)}</div></div><div class="sn"><div class="sn-l">ยอดขาย</div><div class="sn-v" style="color:#059669">${fmtBK(s.rev)}</div></div></div>
+    <div class="pbar-hdr"><span style="color:var(--muted);font-size:8px">📦 ออเดอร์ ✅${s.po} ❌${s.fo} ⬜${s.oo} ${s.mode==='summary'?'(สรุป)':'(รายวันจริง)'}</span><span style="font-size:8.5px;font-weight:800;color:${pc}">${fmtPct(s.pco)}</span></div>
+    <div class="msbar"><div class="msb-p" style="width:${s.totalDays?s.po/s.totalDays*100:0}%"></div><div class="msb-f" style="width:${s.totalDays?s.fo/s.totalDays*100:0}%"></div><div class="msb-o" style="width:${s.totalDays?s.oo/s.totalDays*100:0}%"></div></div>
+    <div class="pbar-hdr"><span style="color:var(--muted);font-size:8px">💰 ยอดขาย ✅${s.pr} ❌${s.fr} ⬜${s.or}</span><span style="font-size:8.5px;font-weight:800;color:${pc}">${fmtPct(s.pcr)}</span></div>
+    <div class="msbar"><div class="msb-p" style="width:${s.totalDays?s.pr/s.totalDays*100:0}%"></div><div class="msb-f" style="width:${s.totalDays?s.fr/s.totalDays*100:0}%"></div><div class="msb-o" style="width:${s.totalDays?s.or/s.totalDays*100:0}%"></div></div>
+    <span class="sbadge" style="background:${pc}18;border-color:${pc}55;color:${pc}">${bk}</span>`;
+    gr.appendChild(el);
+  });
+  // Pass rate chart
+  mkChart('dlyPass',{type:'bar',data:{labels:sorted.map(s=>s.n),datasets:[{label:'% ผ่านออเดอร์',data:sorted.map(s=>s.pco),backgroundColor:'#06b6d4bb',borderRadius:4},{label:'% ผ่านยอดขาย',data:sorted.map(s=>s.pcr),backgroundColor:'#f59e0bbb',borderRadius:4}]},
+    options:{responsive:true,indexAxis:'y',onClick:(e,els)=>{if(els.length){const n=sorted[els[0].index].n;setEmpAFilter(STATE.empA===n?'all':n);}},
+      plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw.toFixed(1)}%`}}},
+      scales:{x:{grid:{color:GR},min:0,max:100,ticks:{callback:v=>v+'%'}},y:{grid:{color:GR}}}}});
+  // Status chart
+  mkChart('dlyStatus',{type:'bar',data:{labels:d.rows.map(s=>s.n),datasets:[{label:'✅ ผ่าน',data:d.rows.map(s=>s.po),backgroundColor:'#10b981cc',borderRadius:0},{label:'❌ ไม่ผ่าน',data:d.rows.map(s=>s.fo),backgroundColor:'#ef4444cc',borderRadius:0},{label:'⬜ หยุด',data:d.rows.map(s=>s.oo),backgroundColor:'#374151cc',borderRadius:4}]},
+    options:{responsive:true,indexAxis:'y',onClick:(e,els)=>{if(els.length){const n=d.rows[els[0].index].n;setEmpAFilter(STATE.empA===n?'all':n);}},
+      plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${c.raw} วัน`}}},
+      scales:{x:{stacked:true,grid:{color:GR}},y:{stacked:true,grid:{color:GR}}}}});
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 9 — PAGE: MONTHLY TARGET & FORECAST
+   ══════════════════════════════════════════════════════════════════ */
+function renderMonthly(){
+  const m=computeMonthly();
+  renderHeaderStats();
+  const periodLbl=m.isSingleMonth?`${m.N} วัน`:`${m.monthlyTrend.length} เดือน`;
+  const ke=document.getElementById('mo-kpi');ke.innerHTML='';
+  [{ic:'🎯',l:m.isSingleMonth?'เป้ารวมเดือน':'เป้ารวมช่วงที่เลือก',v:fmtB(m.totalMonthTarget),s:`เป้าเฉลี่ย ${fmtB(m.combinedTarget)}/วัน`,c:'#d97706',g:'#d97706,#f59e0b'},
+   {ic:'💰',l:`ยอดสะสม (${periodLbl})`,v:fmtB(m.cumulativeActual),s:`avg ${fmtB(m.avgPerDay)}/วัน`,c:'#059669',g:'#10b981,#059669'},
+   {ic:m.gap>0?'📉':'📈',l:'ส่วนต่างจากเป้า',v:(m.gap>0?'-':'+')+fmtBM(Math.abs(m.gap)),s:`${m.gap>0?'ยังขาด':'เกินเป้า'} ${fmtB(Math.abs(m.gap))}`,c:m.gap>0?'#dc2626':'#059669',g:'#ef4444,#dc2626'},
+   {ic:'📈',l:'% บรรลุเป้า',v:fmtPct(m.achievedPct,2),s:m.isSingleMonth?`${m.N}/${m.daysInScopeMonth} วัน`:`${periodLbl}ที่มีข้อมูล`,c:'#d97706',g:'#f59e0b,#d97706'},
+   m.isSingleMonth?{ic:'⏳',l:'วันที่เหลือ',v:`${m.remainingDays} วัน`,s:m.remainingDays>0?`ต้องการ ${fmtB(m.requiredDailyRemaining)}/วัน`:'ครบเดือนแล้ว',c:'#0891b2',g:'#06b6d4,#0891b2'}:
+     {ic:'🗓️',l:'ช่วงที่ดู',v:STATE.year==='all'?'ทั้งหมด':STATE.year,s:'พยากรณ์สิ้นเดือนแสดงเมื่อเลือกเจาะจง 1 เดือน',c:'#0891b2',g:'#06b6d4,#0891b2'},
+  ].forEach(k=>ke.appendChild(kpiCard(k)));
+  // Alerts (คำนวณสด)
+  const al=document.getElementById('mo-alerts');al.innerHTML='';
+  if(m.isSingleMonth&&m.remainingDays>0&&m.gap>0){
+    al.innerHTML+=`<div class="alert ad"><span style="font-size:16px">⚠️</span><div>ต้องการยอด <strong>${fmtB(m.requiredDailyRemaining)}/วัน</strong> ใน ${m.remainingDays} วันที่เหลือ — สูงกว่า avg ปัจจุบัน (${fmtB(m.avgPerDay)}) ${m.requiredIncreasePct>=0?'ถึง':'ลดลง'} <strong>${fmtPct(Math.abs(m.requiredIncreasePct),1)}</strong></div></div>`;
+  }
+  const bestBrand=m.brandCards.length?[...m.brandCards].sort((a,b)=>b.pct-a.pct)[0]:null;
+  if(bestBrand){
+    al.innerHTML+=`<div class="alert ${bestBrand.pct>=100?'ai':'aw'}"><span style="font-size:16px">${bestBrand.pct>=100?'✅':'🔸'}</span><div><strong>${bestBrand.b.lb}</strong> บรรลุเป้าแล้ว ${fmtPct(bestBrand.pct,2)} ${bestBrand.pct>=100?'(สูงสุดในทีม)':''}</div></div>`;
+  }
+  // Brand cards with rings
+  const bc=document.getElementById('mo-brand');bc.innerHTML='';
+  m.brandCards.forEach(b=>{
+    const pct=b.pct.toFixed(1),ci=2*Math.PI*40,os=ci*(1-Math.min(100,parseFloat(pct))/100);
+    const el=document.createElement('div');el.className='bcrd'+(STATE.brand===b.b.k?' sel':'');el.onclick=()=>setBrandFilter(STATE.brand===b.b.k?'all':b.b.k);
+    el.innerHTML=`<div class="bcrd-stripe" style="background:${b.b.c}"></div><div class="bcrd-head"><div><div class="bcrd-name">${b.b.lb}</div><div class="bcrd-tgt">เป้า ${fmtBK(b.tt)}</div></div><div class="bcrd-ic">${b.b.ic}</div></div>
+    <div class="ring-c"><svg class="ring-svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="${b.b.c}20" stroke-width="8"/><circle cx="50" cy="50" r="40" fill="none" stroke="${b.b.c}" stroke-width="8" stroke-linecap="round" stroke-dasharray="${ci}" stroke-dashoffset="${Math.max(0,os)}"/></svg><div class="ring-text"><div class="ring-pct" style="color:${b.b.c}">${pct}%</div><div class="ring-lbl">บรรลุ</div></div></div>
+    <div class="bcrd-stats"><div class="bst"><div class="bst-l">ยอดจริง</div><div class="bst-v" style="color:${b.b.c}">${fmtBK(b.tr)}</div></div><div class="bst"><div class="bst-l">ส่วนต่าง</div><div class="bst-v" style="color:${b.tr>=b.tt?'#059669':'#dc2626'}">${b.tr>=b.tt?'+':''}${fmtBK(b.tr-b.tt)}</div></div><div class="bst"><div class="bst-l">ผ่าน/วัน</div><div class="bst-v" style="color:${b.n&&b.ps>b.n*0.6?'#059669':b.n&&b.ps>b.n*0.3?'#d97706':'#dc2626'}">${b.n?b.ps+'/'+b.n+'วัน':'—'}</div></div><div class="bst"><div class="bst-l">สถานะ</div><div class="bst-v" style="color:${b.tr>=b.tt?'#059669':'#dc2626'}">${b.tr>=b.tt?'✅ ถึงแล้ว':'❌ ยังขาด'}</div></div></div>`;
+    bc.appendChild(el);
+  });
+  // กราฟยอดขาย: ถ้าเจาะจง 1 เดือน → รายวัน; ถ้าดูหลายเดือน/ทั้งหมด → รายเดือน (เทรนด์)
+  if(m.isSingleMonth){
+    mkChart('moDaily',{type:'bar',data:{labels:m.dateSet.map(dt=>dt.slice(8,10)+'/'+dt.slice(5,7)),datasets:[{label:'ยอดขายรวม',data:m.combinedSeries,backgroundColor:m.combinedSeries.map(v=>v>=m.combinedTarget?'#10b981bb':'#ef4444bb'),borderRadius:3},{label:`เป้า ${fmtB(m.combinedTarget)}`,data:Array(m.N).fill(m.combinedTarget),type:'line',borderColor:'#d97706',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false}]},
+      options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9,font:{size:9}}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw||0)}`}}},scales:{x:{grid:{color:GR},ticks:{font:{size:9}}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+    const ca=[];let ra=0;m.combinedSeries.forEach(v=>{ra+=v;ca.push(ra);});
+    const ct=m.dateSet.map((_,i)=>m.combinedTarget*(i+1));
+    mkChart('moCumul',{type:'line',data:{labels:m.dateSet.map(dt=>dt.slice(8,10)+'/'+dt.slice(5,7)),datasets:[{label:'เป้าสะสม',data:ct,borderColor:'#d97706',borderWidth:1.5,borderDash:[6,4],pointRadius:0,fill:false,tension:0},{label:'ยอดจริงสะสม',data:ca,borderColor:'#10b981',borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',fill:{target:0,above:'#10b98110',below:'#ef444415'},tension:.2}]},
+      options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>c.raw!=null?` ${c.dataset.label}: ${fmtB(c.raw)}`:' ยังไม่มีข้อมูล'}}},scales:{x:{grid:{color:GR},ticks:{font:{size:9},maxTicksLimit:10}},y:{grid:{color:GR},ticks:{callback:v=>fmtBM(v)}}}}});
+  } else {
+    const labels=m.monthlyTrend.map(t=>t.ym);
+    mkChart('moDaily',{type:'bar',data:{labels,datasets:[{label:'ยอดขายรวมรายเดือน',data:m.monthlyTrend.map(t=>t.revenue),backgroundColor:'#7c3aedbb',borderRadius:4}]},
+      options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+    let ra=0;const ca=m.monthlyTrend.map(t=>{ra+=t.revenue;return ra;});
+    mkChart('moCumul',{type:'line',data:{labels,datasets:[{label:'ยอดสะสมข้ามเดือน',data:ca,borderColor:'#10b981',borderWidth:2.5,pointRadius:3,pointBackgroundColor:'#10b981',fill:{target:'origin',above:'#10b98110'},tension:.2}]},
+      options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}}},scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>fmtBM(v)}}}}});
+  }
+  // Waterfall (bridge): เป้า → ยอดจริง → ส่วนต่างคงเหลือ
+  const wfLabels=['เป้า','ยอดจริงสะสม','ส่วนต่างคงเหลือ'];
+  const wfData=[[0,m.totalMonthTarget],[0,m.cumulativeActual],m.gap>0?[m.cumulativeActual,m.totalMonthTarget]:[m.totalMonthTarget,m.cumulativeActual]];
+  const wfColors=['#d97706bb','#10b981bb',m.gap>0?'#ef4444bb':'#059669bb'];
+  mkChart('moWaterfall',{type:'bar',data:{labels:wfLabels,datasets:[{data:wfData,backgroundColor:wfColors,borderRadius:4}]},
+    options:{responsive:true,indexAxis:'y',plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${fmtB(c.raw[1]-c.raw[0])}`}}},scales:{x:{grid:{color:GR},ticks:{callback:v=>fmtBM(v)}},y:{grid:{color:GR}}}}});
+  // Calendar heatmap — แสดงเฉพาะตอนเจาะจง 1 เดือน (มีวันที่ชัดเจนพอสร้างปฏิทิน)
+  const calCard=document.getElementById('mo-cal').closest('.card');
+  const cal=document.getElementById('mo-cal');
+  if(m.isSingleMonth){
+    calCard.style.display='';
+    const brs=[...m.brands.map(b=>({lb:b.lb,c:b.c,series:brandDailySeries(b.k)})),{lb:'รวม',c:'#d97706',series:m.dateSet.map((dt,i)=>({date:dt,revenue:m.combinedSeries[i]}))}];
+    let ch=`<thead><tr><th>แบรนด์</th>${m.dateSet.map(dt=>`<th>${dt.slice(8,10)}/${dt.slice(5,7)}</th>`).join('')}</tr></thead><tbody>`;
+    brs.forEach(b=>{
+      ch+=`<tr><td style="color:${b.c}">${b.lb}</td>`;
+      m.dateSet.forEach(dt=>{const f=b.series.find(s=>s.date===dt);const v=f?f.revenue:0;const t=b.lb==='รวม'?m.combinedTarget:(RAW.targets.find(x=>x.type==='brand'&&x.code===DATA.brandMeta.find(bb=>bb.lb===b.lb).k)||{}).dailyRevenueTarget||0;const p=v>=t;ch+=`<td class="${p?'ccp':'ccf'}">${(v/1000).toFixed(0)}K</td>`;});
+      ch+='</tr>';
+    });
+    cal.innerHTML=ch+'</tbody>';
+  } else {
+    calCard.style.display='none';
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 10 — PAGE: REDEMPTION
+   ══════════════════════════════════════════════════════════════════ */
+function renderRedemption(){
+  const rd=computeRedemption();
+  renderHeaderStats();
+  const ke=document.getElementById('rd-kpi');ke.innerHTML='';
+  [{ic:'📦',l:'ออเดอร์รวม',v:`${fmtN(rd.gU)} ชิ้น`,s:`${rd.rows.length} พนักงาน · ${rd.products.length} สินค้า`,c:'#d97706',g:'#d97706,#f59e0b'},
+   {ic:'💰',l:'ยอดเงินรวม',v:fmtB(rd.gRev),s:'ตามช่วงที่เลือก',c:'#059669',g:'#10b981,#059669'},
+   {ic:'📊',l:'avg ต่อคน',v:rd.rows.length?fmtB(rd.gRev/rd.rows.length):'—',s:rd.rows.length?`avg ${(rd.gU/rd.rows.length).toFixed(0)} ชิ้น/คน`:'',c:'#0891b2',g:'#06b6d4,#0891b2'},
+   {ic:'🏆',l:'Top',v:rd.top?rd.top.name:'—',s:rd.top?`${fmtB(rd.top.rev)} · ${rd.top.totalUnits} ชิ้น`:'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>rd.top&&setEmpBFilter(STATE.empB===rd.top.name?'all':rd.top.name)},
+  ].forEach(k=>ke.appendChild(kpiCard(k)));
+  // Daily Cross Sale summary
+  const dailyTbl=document.getElementById('rd-daily');
+  dailyTbl.innerHTML=`<thead><tr><th>วันที่</th><th>จำนวน</th><th>สะสม</th><th>ค่าเฉลี่ยต่อ<br>พนักงาน</th><th>เทียบวันก่อน</th><th>สถานะ</th></tr></thead><tbody>${SEED_CROSS_SALE_DAILY.map(r=>{
+    const has=Number.isFinite(r.qty), high=r.status==='ยอดสูง';
+    const change=has?(r.change>0?'+'+r.change:String(r.change)):'';
+    return `<tr><td class="rd-date">${r.date}</td><td style="font-weight:900;color:${has?'#d97706':'var(--muted)'}">${has?r.qty:'—'}</td><td style="font-weight:${has?'800':'600'}">${has?r.cumulative:'—'}</td><td>${has?r.avg.toFixed(2):'—'}</td><td style="font-weight:900;color:${!has?'var(--muted)':r.change>0?'#059669':r.change<0?'#dc2626':'#64748b'}">${change||'—'}</td><td><span class="rd-status ${!has?'wait':high?'high':'normal'}">${has?r.status:'รอข้อมูล'}</span></td></tr>`;
+  }).join('')}</tbody>`;
+  // Stacked chart
+  mkChart('rdRev',{type:'bar',data:{labels:rd.rows.map(s=>s.name),datasets:rd.perProduct.map((p,pi)=>({label:`${p.icon} ${p.name}`,data:rd.rows.map(s=>s.u[pi]*p.price),backgroundColor:p.color+'cc',stack:'s',borderRadius:pi===4?4:0}))},
+    options:{responsive:true,onClick:(e,els)=>{if(els.length){const n=rd.rows[els[0].index].name;setEmpBFilter(STATE.empB===n?'all':n);}},
+      plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9,font:{size:9}}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{stacked:true,grid:{color:GR}},y:{stacked:true,grid:{color:GR},ticks:{callback:v=>'฿'+v.toLocaleString()}}}}});
+  // Leaderboard
+  const lb=document.getElementById('rd-lb');lb.innerHTML='';
+  rd.rows.forEach((s,r)=>{
+    const pct=rd.gRev?(s.rev/rd.gRev*100):0,w=rd.rows[0]&&rd.rows[0].rev?(s.rev/rd.rows[0].rev*100):0;
+    const el=document.createElement('div');el.className='lb-row '+medalClass(r);el.onclick=()=>setEmpBFilter(STATE.empB===s.name?'all':s.name);
+    el.innerHTML=`<div class="lb-rk">${r<3?MED[r]:r+1}</div><div class="lb-nm">${s.name}</div><div class="lb-bw"><div class="lb-bf" style="width:${w}%;background:linear-gradient(90deg,#f43f5e,#f59e0b)"></div></div><div class="lb-rv">${fmtB(s.rev)}</div><div class="lb-pp">${s.totalUnits}ชิ้น</div>`;
+    lb.appendChild(el);
+  });
+  // Pareto (80/20): เรียงจากยอดสูงสุด + เส้นสัดส่วนสะสม
+  let cum=0;
+  const paretoData=rd.rows.map(s=>{cum+=s.rev;return rd.gRev?cum/rd.gRev*100:0;});
+  mkChart('rdPareto',{data:{labels:rd.rows.map(s=>s.name),datasets:[
+    {type:'bar',label:'ยอดเงิน',data:rd.rows.map(s=>s.rev),backgroundColor:'#f43f5ebb',borderRadius:3,order:2,yAxisID:'y'},
+    {type:'line',label:'% สะสม',data:paretoData,borderColor:'#d97706',borderWidth:2,pointRadius:3,pointBackgroundColor:'#d97706',fill:false,order:1,yAxisID:'y1'},
+  ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>c.dataset.type==='line'?` สะสม: ${c.raw.toFixed(1)}%`:` ${fmtB(c.raw)}`}}},
+    scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>'฿'+v.toLocaleString()}},y1:{position:'right',min:0,max:100,grid:{display:false},ticks:{callback:v=>v+'%'}}}}});
+  // Unit table
+  const tbl=document.getElementById('rd-tbl');
+  const uCls=u=>u===0?'u0':u<=2?'u1':u<=5?'u2':u<=8?'u3':'u4';
+  tbl.innerHTML=`<thead><tr><th>พนักงาน</th>${rd.perProduct.map(p=>`<th style="color:${p.color}">${p.icon} ${p.name}<br><small>฿${p.price}/ชิ้น</small></th>`).join('')}<th>รวมชิ้น</th><th>รวมเงิน</th></tr></thead>`;
+  let tb='<tbody>';
+  rd.rows.forEach((s,r)=>{tb+=`<tr class="${STATE.empB===s.name?'sel':''}" onclick="setEmpBFilter('${STATE.empB===s.name?'all':s.name}')"><td>${r<3?MED[r]:''} ${s.name}</td>${s.u.map((u,i)=>`<td class="${uCls(u)}">${u>0?u:'—'}</td>`).join('')}<td style="color:#d97706;font-weight:900">${s.totalUnits}</td><td style="color:#059669;font-weight:900">${fmtB(s.rev)}</td></tr>`;});
+  tb+=`</tbody><tfoot><tr><td>รวม</td>${rd.perProduct.map(p=>`<td style="color:${p.color}">${p.units}ชิ้น<br>${fmtB(p.units*p.price)}</td>`).join('')}<td>${rd.gU}</td><td>${fmtB(rd.gRev)}</td></tr></tfoot>`;
+  tbl.innerHTML+=tb;
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 11 — PAGE: LEADERBOARD HUB (รวมข้ามโมดูล)
+   ══════════════════════════════════════════════════════════════════ */
+function lbRow(rank,name,valueLabel,widthPct,gradient,onClick){
+  const el=document.createElement('div');el.className='lb-row '+medalClass(rank);el.onclick=onClick;
+  el.innerHTML=`<div class="lb-rk">${rank<3?MED[rank]:rank+1}</div><div class="lb-nm">${name}</div><div class="lb-bw"><div class="lb-bf" style="width:${widthPct}%;background:linear-gradient(90deg,${gradient})"></div></div><div class="lb-rv">${valueLabel}</div>`;
+  return el;
+}
+function renderLeaderboard(){
+  renderHeaderStats();
+  const so=computeSO(),gp=computeGP(),rd=computeRedemption();
+  // Top Sales
+  const es=document.getElementById('lbh-sales');es.innerHTML='';
+  so.sortRev.forEach((s,r)=>es.appendChild(lbRow(r,s.name,fmtBK(s.rev),so.sortRev[0].rev?s.rev/so.sortRev[0].rev*100:0,'#06b6d4,#10b981',()=>setEmpAFilter(STATE.empA===s.name?'all':s.name))));
+  // Top Orders
+  const sortOrd=[...so.rows].sort((a,b)=>b.ord-a.ord);
+  const eo=document.getElementById('lbh-orders');eo.innerHTML='';
+  sortOrd.forEach((s,r)=>eo.appendChild(lbRow(r,s.name,fmtN(s.ord)+' ord',sortOrd[0].ord?s.ord/sortOrd[0].ord*100:0,'#d97706,#f59e0b',()=>setEmpAFilter(STATE.empA===s.name?'all':s.name))));
+  // Top GP% (เฉพาะพนักงานที่มีข้อมูล GP% ในช่วงที่เลือก)
+  const sortGP=gp.rows.filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP);
+  const eg=document.getElementById('lbh-gp');eg.innerHTML='';
+  if(!sortGP.length) eg.innerHTML='<div style="color:var(--muted);font-size:10.5px;padding:8px">ไม่มีข้อมูล GP% ในช่วงที่เลือก</div>';
+  sortGP.forEach((s,r)=>eg.appendChild(lbRow(r,s.name,s.avgGP.toFixed(1)+'%',sortGP[0]?s.avgGP/sortGP[0].avgGP*100:0,'#8b5cf6,#7c3aed',()=>setEmpBFilter(STATE.empB===s.name?'all':s.name))));
+  // Top Redemption
+  const er=document.getElementById('lbh-rd');er.innerHTML='';
+  rd.rows.forEach((s,r)=>er.appendChild(lbRow(r,s.name,fmtB(s.rev),rd.rows[0]&&rd.rows[0].rev?s.rev/rd.rows[0].rev*100:0,'#f43f5e,#f59e0b',()=>setEmpBFilter(STATE.empB===s.name?'all':s.name))));
+  // Bottom 10 (ยอดขายต่ำสุด)
+  const bottom=[...so.rows].sort((a,b)=>a.rev-b.rev);
+  const eb=document.getElementById('lbh-bottom');eb.innerHTML='';
+  bottom.forEach((s,r)=>{
+    const el=document.createElement('div');el.className='lb-row';el.onclick=()=>setEmpAFilter(STATE.empA===s.name?'all':s.name);
+    el.innerHTML=`<div class="lb-rk" style="color:#dc2626">${r+1}</div><div class="lb-nm">${s.name}</div><div class="lb-bw"><div class="lb-bf" style="width:${bottom[bottom.length-1]&&bottom[bottom.length-1].rev?s.rev/(bottom[bottom.length-1].rev||1)*40:0}%;background:linear-gradient(90deg,#ef4444,#dc2626)"></div></div><div class="lb-rv" style="color:#dc2626">${fmtBK(s.rev)}</div>`;
+    eb.appendChild(el);
+  });
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 12 — PAGE: DASHBOARD (EXECUTIVE OVERVIEW)
+   ══════════════════════════════════════════════════════════════════ */
+function renderDashboard(){
+  renderHeaderStats();
+  const so=computeSO(),m=computeMonthly(),brandRank=brandAchievementRanking();
+  const best=so.sortRev[0],worst=so.sortRev[so.sortRev.length-1];
+  const bestBrand=brandRank[0],worstBrand=brandRank[brandRank.length-1];
+  const ke=document.getElementById('ex-kpi');ke.innerHTML='';
+  [
+    {ic:'💰',l:'Total Sales',v:fmtBM(so.totalRev),s:fmtB(so.totalRev),c:'#059669',g:'#10b981,#059669'},
+    {ic:'📦',l:'Total Orders',v:fmtN(so.totalOrd),s:STATE.year==='all'?'ภาพรวมทั้งหมด':(STATE.month==='all'?'ปี '+STATE.year:MONTH_TH[+STATE.month]+' '+STATE.year),c:'#d97706',g:'#d97706,#f59e0b'},
+    {ic:'📊',l:'Average Order Value',v:fmtB(so.avgOrderValue),s:'ยอดขาย/ออเดอร์',c:'#0891b2',g:'#06b6d4,#0891b2'},
+    {ic:'🎯',l:'Achievement %',v:fmtPct(m.achievedPct,2),s:m.isSingleMonth?`${m.N}/${m.daysInScopeMonth} วัน`:`${m.monthlyTrend.length} เดือนที่มีข้อมูล`,c:'#7c3aed',g:'#7c3aed,#7c3aed'},
+    {ic:m.wow&&m.wow.pct>=0?'📈':'📉',l:'Growth % (WoW)',v:m.wow?fmtPct(m.wow.pct,1):'—',s:m.wow?'สัปดาห์ล่าสุด vs ก่อนหน้า':'ข้อมูลไม่พอ (ต้องการ ≥8 วัน)',c:m.wow&&m.wow.pct>=0?'#059669':'#dc2626',g:'#10b981,#f43f5e'},
+    {ic:'📉',l:'Target Gap',v:(m.gap>0?'-':'+')+fmtBK(Math.abs(m.gap)),s:m.gap>0?'ยังขาดจากเป้า':'เกินเป้าแล้ว',c:m.gap>0?'#dc2626':'#059669',g:'#ef4444,#dc2626'},
+    {ic:'📆',l:'Revenue / Day',v:fmtB(m.avgPerDay),s:`เฉลี่ย ${m.N} วันที่ผ่านมา`,c:'#059669',g:'#10b981,#059669'},
+    {ic:'👥',l:'Revenue / Employee',v:fmtB(so.rows.length?so.totalRev/so.rows.length:0),s:`${so.rows.length} พนักงาน`,c:'#0891b2',g:'#06b6d4,#0891b2'},
+    {ic:'👥',l:'Order / Employee',v:so.rows.length?(so.totalOrd/so.rows.length).toFixed(0):'0',s:`${so.rows.length} พนักงาน`,c:'#d97706',g:'#d97706,#f59e0b'},
+    {ic:'🏆',l:'Best Employee',v:best?best.name:'—',s:best?fmtB(best.rev):'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>best&&setEmpAFilter(STATE.empA===best.name?'all':best.name)},
+    {ic:'🔻',l:'Worst Employee',v:worst?worst.name:'—',s:worst?fmtB(worst.rev):'',c:'#dc2626',g:'#ef4444,#dc2626',onClick:()=>worst&&setEmpAFilter(STATE.empA===worst.name?'all':worst.name)},
+    {ic:bestBrand.b.ic,l:'Best Brand',v:bestBrand.b.lb,s:fmtPct(bestBrand.pct,1)+' บรรลุเป้า',c:bestBrand.b.c,g:bestBrand.b.c+',#ffffff',onClick:()=>setBrandFilter(STATE.brand===bestBrand.b.k?'all':bestBrand.b.k)},
+    {ic:worstBrand.b.ic,l:'Worst Brand',v:worstBrand.b.lb,s:fmtPct(worstBrand.pct,1)+' บรรลุเป้า',c:'#dc2626',g:'#ef4444,#dc2626',onClick:()=>setBrandFilter(STATE.brand===worstBrand.b.k?'all':worstBrand.b.k)},
+  ].forEach(k=>ke.appendChild(kpiCard(k)));
+
+  // Data Storytelling — สรุปข้อความอัตโนมัติจากค่าที่คำนวณจริง
+  const story=document.getElementById('ex-story');
+  const wowTxt=m.wow?`ยอดขายสัปดาห์ล่าสุดเทียบสัปดาห์ก่อนหน้า ${m.wow.pct>=0?'<span class="g">เพิ่มขึ้น '+m.wow.pct.toFixed(1)+'%</span>':'<span class="r">ลดลง '+Math.abs(m.wow.pct).toFixed(1)+'%</span>'} (avg ${fmtB(m.wow.lastAvg)}/วัน เทียบ ${fmtB(m.wow.prevAvg)}/วัน)`:'ข้อมูลยังไม่พอสำหรับเปรียบเทียบสัปดาห์ต่อสัปดาห์ (ต้องการอย่างน้อย 8 วัน)';
+  const progressTxt=m.isSingleMonth
+    ? `ขณะนี้บรรลุเป้าเดือนแล้ว <b>${fmtPct(m.achievedPct,2)}</b> จาก ${m.N}/${m.daysInScopeMonth} วัน ${m.remainingDays>0?`เหลือ ${m.remainingDays} วัน ต้องทำยอดเฉลี่ย <b>${fmtB(m.requiredDailyRemaining)}/วัน</b> (${m.requiredIncreasePct>=0?'เพิ่มขึ้น':'ลดลง'} ${fmtPct(Math.abs(m.requiredIncreasePct),1)} จากค่าเฉลี่ยปัจจุบัน) จึงจะถึงเป้า`:'ครบกำหนดเดือนแล้ว'}`
+    : `บรรลุเป้าภาพรวมช่วงที่เลือกแล้ว <b>${fmtPct(m.achievedPct,2)}</b> จากข้อมูล ${m.monthlyTrend.length} เดือน (เลือกเจาะจง 1 เดือน เพื่อดูพยากรณ์สิ้นเดือนแบบละเอียด)`;
+  story.innerHTML=`<div class="alert ${m.wow&&m.wow.pct>=0?'ag':'aw'}"><span style="font-size:16px">🧠</span><div>${wowTxt} ${progressTxt}</div></div>
+  <div class="alert ai"><span style="font-size:16px">🏷️</span><div>แบรนด์ที่บรรลุเป้าดีที่สุด: <b style="color:${bestBrand.b.c}">${bestBrand.b.lb}</b> (${fmtPct(bestBrand.pct,1)}) · แบรนด์ที่ต้องเร่ง: <b style="color:#dc2626">${worstBrand.b.lb}</b> (${fmtPct(worstBrand.pct,1)})</div></div>`;
+
+  // Treemap (custom div-based) — สัดส่วนยอดขายตามแบรนด์ (จากข้อมูลจริง so.brandTotals)
+  const tmap=document.getElementById('ex-tmap');tmap.innerHTML='';
+  so.brandTotals.slice().sort((a,b)=>b.pct-a.pct).forEach(t=>{
+    const cell=document.createElement('div');cell.className='tmap-cell';
+    cell.style.background=t.b.c;cell.style.flexGrow=Math.max(t.pct,3);cell.style.flexBasis=Math.max(t.pct,8)+'%';
+    cell.onclick=()=>setBrandFilter(STATE.brand===t.b.k?'all':t.b.k);
+    cell.innerHTML=`<div class="tn">${t.b.ic} ${t.b.lb}</div><div class="tv">${fmtBK(t.r)}</div><div class="tp">${fmtPct(t.pct)} ของยอดทีม</div>`;
+    tmap.appendChild(cell);
+  });
+
+  // Trend chart — YTD/เทรนด์รายเดือน ถ้าดูหลายเดือน หรือรายวันถ้าเจาะจง 1 เดือน
+  if(m.isSingleMonth){
+    mkChart('exTrend',{type:'line',data:{labels:m.dateSet.map(dt=>dt.slice(8,10)+'/'+dt.slice(5,7)),datasets:[
+      {label:'ยอดขายรวม',data:m.combinedSeries,borderColor:'#0891b2',backgroundColor:'#0891b222',pointRadius:2,borderWidth:2.4,fill:true,tension:.25},
+      {label:'เป้า/วัน',data:Array(m.N).fill(m.combinedTarget),borderColor:'#d97706',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false},
+    ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{grid:{color:GR},ticks:{font:{size:9},maxTicksLimit:12}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+  } else {
+    mkChart('exTrend',{type:'bar',data:{labels:m.monthlyTrend.map(t=>t.ym),datasets:[{label:'ยอดขายรายเดือน (YTD Trend)',data:m.monthlyTrend.map(t=>t.revenue),backgroundColor:'#0891b2bb',borderRadius:4}]},
+      options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 13 — PAGE: INSIGHT (Executive Insight & Forecast, คำนวณอัตโนมัติทั้งหมด)
+   ══════════════════════════════════════════════════════════════════ */
+function icard(title,icon,html){
+  const d=document.createElement('div');d.className='icard';
+  d.innerHTML=`<div class="icard-h">${icon} ${title}</div><div class="icard-b">${html}</div>`;
+  return d;
+}
+function renderInsight(){
+  renderHeaderStats();
+  const grid=document.getElementById('insight-grid');grid.innerHTML='';
+  const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly(),brandRank=brandAchievementRanking();
+
+  // 1) Top Performer
+  const best=so.sortRev[0],worst=so.sortRev[so.sortRev.length-1];
+  grid.appendChild(icard('Top Performer','🔥',
+    best?`<b>${best.name}</b> ทำยอดขายสูงสุด <span class="g">${fmtB(best.rev)}</span> (${fmtN(best.ord)} ออเดอร์ · avg ฿${best.avgOrder}/ออเดอร์) — คิดเป็น ${fmtPct(so.totalRev?best.rev/so.totalRev*100:0)} ของยอดทีม<br>ต่ำสุด: <b>${worst.name}</b> ${fmtB(worst.rev)}`:`ไม่มีข้อมูล`));
+
+  // 2) แบรนด์โต / แบรนด์ตก (WoW ต่อแบรนด์ จากข้อมูลรายวันจริง)
+  const brandWow=DATA.brandMeta.map(b=>({b,wow:weekOverWeek(brandDailySeries(b.k).map(s=>s.revenue))})).filter(x=>x.wow);
+  let bwHtml='ข้อมูลรายวันยังไม่พอสำหรับเปรียบเทียบ WoW รายแบรนด์ (ต้องการ ≥8 วัน)';
+  if(brandWow.length){
+    const grow=[...brandWow].sort((a,b)=>b.wow.pct-a.wow.pct)[0];
+    const fall=[...brandWow].sort((a,b)=>a.wow.pct-b.wow.pct)[0];
+    bwHtml=`แบรนด์ที่กำลังโต: <b style="color:${grow.b.c}">${grow.b.lb}</b> <span class="g">${grow.wow.pct>=0?'+':''}${grow.wow.pct.toFixed(1)}%</span> WoW<br>แบรนด์ที่กำลังตก: <b style="color:${fall.b.c}">${fall.b.lb}</b> <span class="${fall.wow.pct<0?'r':'g'}">${fall.wow.pct>=0?'+':''}${fall.wow.pct.toFixed(1)}%</span> WoW`;
+  }
+  grid.appendChild(icard('แบรนด์โต / แบรนด์ตก (Week-over-Week)','📈',bwHtml));
+
+  // 3) ใครควร Coaching (GP% ผ่านเกณฑ์ ≤1 จากที่มีข้อมูล)
+  const coach=gp.rows.filter(r=>r.knownCount>0&&r.passCount<=1).sort((a,b)=>a.passCount-b.passCount);
+  grid.appendChild(icard('ควร Coaching เร่งด่วน (GP%)','🎓',
+    coach.length?coach.map(r=>`<b>${r.name}</b> ผ่านเกณฑ์เพียง ${r.passCount}/${r.knownCount} แบรนด์ (avg GP% ${r.avgGP.toFixed(1)}%)`).join('<br>'):'ไม่มีพนักงานที่อยู่ในเกณฑ์ต้อง Coaching เร่งด่วน (หรือยังไม่มีข้อมูล GP% ในช่วงนี้)'));
+
+  // 4) ใครทำยอดดีที่สุด / ออเดอร์สูงสุด
+  const topOrd=[...so.rows].sort((a,b)=>b.ord-a.ord)[0];
+  grid.appendChild(icard('ยอดขายสูงสุด / ออเดอร์สูงสุด','💪',
+    `ยอดขายสูงสุด: <b>${best.name}</b> ${fmtB(best.rev)}<br>ออเดอร์สูงสุด: <b>${topOrd.name}</b> ${fmtN(topOrd.ord)} ออเดอร์`));
+
+  // 5) Daily Target ปิดการขายต่ำ / สูง
+  if(dly.rows.length){
+    const sorted=[...dly.rows].sort((a,b)=>b.pco-a.pco);
+    const top=sorted[0],low=sorted[sorted.length-1];
+    grid.appendChild(icard('เป้ารายวัน — ปิดเป้าต่ำ/สูงสุด','🎯',
+      `อัตราผ่านเป้าออเดอร์สูงสุด: <b>${top.n}</b> <span class="g">${fmtPct(top.pco)}</span><br>อัตราผ่านเป้าออเดอร์ต่ำสุด: <b>${low.n}</b> <span class="r">${fmtPct(low.pco)}</span> — ควรทบทวนสาเหตุ`));
+  }
+
+  // 6) Redemption — Top + concentration (Pareto)
+  if(rd.rows.length){
+    let cum=0;const top20Count=Math.max(1,Math.ceil(rd.rows.length*0.2));
+    const top20Rev=sum(rd.rows.slice(0,top20Count).map(r=>r.rev));
+    grid.appendChild(icard('สิทธิ์แลกซื้อ — สัดส่วนกระจุกตัว','🎁',
+      `<b>${rd.top.name}</b> ทำยอดแลกซื้อสูงสุด ${fmtB(rd.top.rev)} (${rd.top.totalUnits} ชิ้น)<br>พนักงาน Top ${top20Count} คนแรก ทำยอดรวม <b>${fmtPct(rd.gRev?top20Rev/rd.gRev*100:0)}</b> ของยอดแลกซื้อทั้งหมด`));
+  }
+
+  // 7) Forecast สิ้นเดือน (แสดงพยากรณ์ละเอียดเฉพาะตอนเจาะจง 1 เดือน)
+  grid.appendChild(icard('Forecast สิ้นเดือน — จะถึงเป้าหรือไม่','🔮',
+    !m.isSingleMonth?`เลือกเจาะจง 1 เดือน จากตัวกรองปี/เดือนด้านบน เพื่อดูพยากรณ์สิ้นเดือนแบบละเอียด (ขณะนี้กำลังดูภาพรวม ${m.monthlyTrend.length} เดือน บรรลุเป้ารวม <b>${fmtPct(m.achievedPct,2)}</b>)`:
+    m.gap<=0?`บรรลุเป้าเดือนแล้ว! ยอดสะสม ${fmtB(m.cumulativeActual)} เกินเป้า ${fmtB(Math.abs(m.gap))}`:
+    `ตามอัตราปัจจุบัน (avg ${fmtB(m.avgPerDay)}/วัน) คาดว่าสิ้นเดือนจะทำได้ <b>${fmtPct(m.achievedPct+(m.avgPerDay*m.remainingDays/m.totalMonthTarget*100),1)}</b> ของเป้า<br>ต้องขายเพิ่มเป็น <b class="r">${fmtB(m.requiredDailyRemaining)}/วัน</b> ใน ${m.remainingDays} วันที่เหลือ (${so.avgOrderValue?'≈ ต้องปิดเพิ่มราว '+Math.max(0,Math.ceil((m.requiredDailyRemaining-m.avgPerDay)/so.avgOrderValue))+' ออเดอร์/วัน จาก avg เดิม':''}) จึงจะถึงเป้า ${fmtB(m.totalMonthTarget)}`));
+
+  // 8) Best/Worst Brand overview
+  grid.appendChild(icard('ภาพรวมแบรนด์','🏷️',
+    `บรรลุเป้าดีที่สุด: <b style="color:${brandRank[0].b.c}">${brandRank[0].b.lb}</b> ${fmtPct(brandRank[0].pct,1)}<br>ต้องเร่งที่สุด: <b style="color:${brandRank[brandRank.length-1].b.c}">${brandRank[brandRank.length-1].b.lb}</b> ${fmtPct(brandRank[brandRank.length-1].pct,1)}`));
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   SECTION 14 — BOOTSTRAP
+   ══════════════════════════════════════════════════════════════════ */
+async function bootstrap(){
+  await loadAllData();      // โหลดจาก Google Sheets ถ้าตั้งค่าไว้ ไม่งั้น fallback ไปข้อมูลตัวอย่าง
+  initFilterOptions();
+  refreshChips();
+  showPage('pg-dashboard');
+}
+bootstrap();
+</script>
+</body>
+</html>
