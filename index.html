@@ -327,6 +327,8 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 .promo-grid>section:nth-of-type(5) .campaign-month{font-size:14px;font-weight:900;color:#5b21b6}
 .promo-grid>section:nth-of-type(5) .campaign-qty{font-size:15px;font-weight:900}
 @media(max-width:700px){.promo-grid>section:nth-of-type(3) .promo-panel-head,.promo-grid>section:nth-of-type(4) .promo-panel-head,.promo-grid>section:nth-of-type(5) .promo-panel-head{font-size:17px}.promo-grid>section:nth-of-type(3) .promo-table,.promo-grid>section:nth-of-type(4) .promo-table{font-size:13px;min-width:620px}.promo-grid>section:nth-of-type(3) .promo-table td,.promo-grid>section:nth-of-type(4) .promo-table td{font-size:13px}.promo-grid>section:nth-of-type(5) .campaign-row{grid-template-columns:1fr 1fr}.promo-grid>section:nth-of-type(5) .campaign-row>div{padding:13px 12px;font-size:12px}}
+/* Monthly 4-brand report */
+.m4-hero{background:linear-gradient(135deg,#211b5a,#46227f 54%,#c2185b);border-radius:22px;padding:25px 28px;color:#fff;box-shadow:0 16px 38px rgba(54,31,124,.22)}.m4-eyebrow{font-size:11px;font-weight:900;letter-spacing:1.3px;color:#f9a8d4}.m4-title{font-size:25px;font-weight:900;margin-top:5px}.m4-sub{font-size:12px;line-height:1.7;color:#e9d5ff;margin-top:5px}.m4-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:15px 0}.m4-kpi{background:#fff;border:1px solid #e9d5ff;border-radius:17px;padding:16px 18px;box-shadow:0 8px 22px rgba(76,29,149,.08)}.m4-kpi span{display:block;font-size:10.5px;color:#64748b;font-weight:800}.m4-kpi b{display:block;font-size:22px;color:#312e81;margin-top:5px}.m4-kpi small{display:block;font-size:10px;color:#059669;font-weight:800;margin-top:3px}.m4-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:14px 0 10px}.m4-filter{border:1px solid #ddd6fe;background:#fff;color:#5b21b6;border-radius:999px;padding:8px 14px;font:800 11px inherit;cursor:pointer}.m4-filter.active,.m4-filter:hover{background:linear-gradient(90deg,#6d28d9,#c2185b);color:#fff;border-color:transparent}.m4-note{margin-left:auto;font-size:10px;color:#64748b;font-weight:700}.m4-card{background:#fff;border:1px solid #e2e8f0;border-radius:19px;box-shadow:0 10px 28px rgba(30,41,59,.08);overflow:hidden}.m4-card-head{background:linear-gradient(90deg,#4f46e5,#0284c7 42%,#059669 70%,#db2777);color:#fff;padding:15px 18px;font-size:16px;font-weight:900}.m4-scroll{overflow:auto}.m4-table{width:100%;min-width:1440px;border-collapse:separate;border-spacing:0;font-size:11px}.m4-table th{padding:11px 9px;text-align:center;color:#fff;font-weight:900;white-space:nowrap;border-right:1px solid #ffffff38}.m4-table thead tr:first-child th:nth-child(1),.m4-table thead tr:nth-child(2) th:nth-child(-n+2){background:#4f46e5}.m4-table thead tr:first-child th:nth-child(2),.m4-table thead tr:nth-child(2) th:nth-child(n+3):nth-child(-n+7){background:#0284c7}.m4-table thead tr:first-child th:nth-child(3),.m4-table thead tr:nth-child(2) th:nth-child(n+8):nth-child(-n+10){background:#059669}.m4-table thead tr:first-child th:nth-child(4),.m4-table thead tr:nth-child(2) th:nth-child(n+11):nth-child(-n+13){background:#ea580c}.m4-table thead tr:first-child th:nth-child(5),.m4-table thead tr:nth-child(2) th:nth-child(n+14){background:#be185d}.m4-table td{padding:10px 9px;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;text-align:right;color:#273449;font-weight:700;white-space:nowrap}.m4-table td:first-child,.m4-table td:nth-child(2){text-align:left}.m4-table tbody tr:nth-child(even){background:#f8fafc}.m4-table tbody tr:hover{background:#f5f3ff}.m4-brand{font-weight:900}.m4-brand.hv{color:#2563eb}.m4-brand.tl{color:#e11d48}.m4-brand.wp{color:#0891b2}.m4-brand.jk{color:#d97706}.m4-net{color:#059669!important;font-weight:900!important}.m4-foot{padding:11px 16px;background:#fafafa;color:#64748b;font-size:10px}.m4-table tr.hidden{display:none}@media(max-width:900px){.m4-kpis{grid-template-columns:repeat(2,1fr)}.m4-title{font-size:20px}.m4-note{width:100%;margin-left:0}.m4-hero{padding:20px}}
 </style>
 </head>
 <body>
@@ -343,6 +345,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="sb-item" data-pg="pg-sales" onclick="showPage('pg-sales')"><span class="sb-ic">💰</span><span class="sb-lbl">Sales &amp; Orders</span></div>
       <div class="sb-item" data-pg="pg-daily" onclick="showPage('pg-daily')"><span class="sb-ic">🎯</span><span class="sb-lbl">Daily Target</span></div>
       <div class="sb-item" data-pg="pg-monthly" onclick="showPage('pg-monthly')"><span class="sb-ic">📅</span><span class="sb-lbl">Monthly &amp; Forecast</span></div>
+      <div class="sb-item" data-pg="pg-monthly-brands" onclick="showPage('pg-monthly-brands')"><span class="sb-ic">📊</span><span class="sb-lbl">ผลงานรายเดือน 4 แบรนด์</span></div>
       <div class="sb-item" data-pg="pg-redemption" onclick="showPage('pg-redemption')"><span class="sb-ic">🎁</span><span class="sb-lbl">Redemption</span></div>
       <div class="sb-item" data-pg="pg-promotions" onclick="showPage('pg-promotions')"><span class="sb-ic">🏷️</span><span class="sb-lbl">ผลิตภัณฑ์และโปรโมชั่น</span></div>
       <div class="sb-item" data-pg="pg-leaderboard" onclick="showPage('pg-leaderboard')"><span class="sb-ic">🏆</span><span class="sb-lbl">Leaderboard</span></div>
@@ -503,6 +506,22 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="cs">🟩 ถึงเป้า · 🟥 ไม่ถึงเป้า</div>
         <div class="cal-scrl"><table class="cal" id="mo-cal"></table></div>
       </div>
+    </div></div>
+
+    <!-- ═══ PAGE: MONTHLY 4-BRAND PERFORMANCE ═══ -->
+    <div id="pg-monthly-brands" class="page"><div class="wrap">
+      <div class="m4-hero"><div class="m4-eyebrow">MONTHLY BRAND PERFORMANCE · 2569</div><div class="m4-title">📊 รายงานผลงานรายเดือน เปรียบเทียบ 4 แบรนด์</div><div class="m4-sub">เปรียบเทียบลูกค้า ออเดอร์ ยอดขาย ค่าโฆษณา และประสิทธิภาพรายแบรนด์ · ข้อมูลเดือนมีนาคม–มิถุนายน 2569</div></div>
+      <div class="m4-kpis">
+        <div class="m4-kpi"><span>ยอดขายรวม · มิถุนายน</span><b>฿8.71M</b><small>▲ 16.6% เทียบพฤษภาคม</small></div>
+        <div class="m4-kpi"><span>ยอดขายหลังหัก Ads</span><b>฿3.70M</b><small>42.5% ของยอดขายรวม</small></div>
+        <div class="m4-kpi"><span>ROAS รวมโดยประมาณ</span><b>1.74</b><small>ยอดขาย ÷ ค่า Ads</small></div>
+        <div class="m4-kpi"><span>แบรนด์ยอดขายสูงสุด</span><b>WOLF+</b><small>฿5.04M · มิถุนายน</small></div>
+      </div>
+      <div class="m4-toolbar"><b style="font-size:11px;color:#475569">กรองแบรนด์:</b><button class="m4-filter active" onclick="filterM4('all',this)">ทั้งหมด</button><button class="m4-filter" onclick="filterM4('hv',this)">💙 HEAVEN Plus</button><button class="m4-filter" onclick="filterM4('tl',this)">❤️ The Lord</button><button class="m4-filter" onclick="filterM4('wp',this)">🩵 WOLF+</button><button class="m4-filter" onclick="filterM4('jk',this)">🧡 เจ้าขุน</button><span class="m4-note">เลื่อนตารางซ้าย–ขวาเพื่อดูข้อมูลทั้งหมด</span></div>
+      <div class="m4-card"><div class="m4-card-head">🔎 ตารางเปรียบเทียบผลการดำเนินงานรายเดือน</div><div class="m4-scroll"><table class="m4-table">
+        <thead><tr><th colspan="2">▦ ช่วงเวลาและแบรนด์</th><th colspan="5">👥 ลูกค้าและออเดอร์</th><th colspan="3">💰 ยอดขาย</th><th colspan="3">📣 ค่าโฆษณา</th><th colspan="4">📈 ประสิทธิภาพและกำไร</th></tr><tr><th>เดือน</th><th>แบรนด์</th><th>คนทัก</th><th>ออเดอร์<br>ลูกค้าเก่า</th><th>ออเดอร์<br>ลูกค้าใหม่</th><th>ออเดอร์<br>ทั้งหมด</th><th>%ปิด<br>ลูกค้าต่อทัก</th><th>ยอดขาย<br>ลูกค้าเก่า</th><th>ยอดขาย<br>ลูกค้าใหม่</th><th>ยอดขายรวม</th><th>ค่า Ads</th><th>% Ads</th><th>ROAS</th><th>ต้นทุนต่อทัก</th><th>ต้นทุนต่อ<br>ลูกค้าใหม่</th><th>เฉลี่ยต่อบิล</th><th>ยอดขาย -<br>ค่า Ads</th></tr></thead>
+        <tbody id="m4-tbody"></tbody>
+      </table></div><div class="m4-foot">หมายเหตุ: เดือนมกราคม–กุมภาพันธ์ยังไม่มีข้อมูลในต้นฉบับ จึงเริ่มแสดงผลตั้งแต่เดือนมีนาคม · ตัวเลขทั้งหมดถอดตามตารางที่ได้รับ</div></div>
     </div></div>
 
     <!-- ═══ PAGE: REDEMPTION ═══ -->
@@ -1070,12 +1089,39 @@ function populateMonthOptions(){
 /* ══════════════════════════════════════════════════════════════════
    SECTION 4 — ROUTER (SPA, ไม่ reload หน้า) + SIDEBAR
    ══════════════════════════════════════════════════════════════════ */
+const M4_ROWS=[
+['มีนาคม','hv','HEAVEN Plus','17,362','1,725','3,732','5,457','31.43%','985,260','1,309,452','2,294,712','1,405,198','61%','1.63','81','377','421','889,514'],
+['มีนาคม','tl','The Lord','31,872','2,257','6,314','8,571','26.89%','913,685','1,796,511','2,710,196','1,709,465','63%','1.59','54','271','316','1,000,731'],
+['มีนาคม','wp','WOLF+','35,451','1,429','9,356','10,785','30.42%','516,001','2,392,975','2,908,976','1,843,820','63%','1.58','52','197','270','1,065,156'],
+['เมษายน','hv','HEAVEN Plus','11,094','1,550','2,066','3,616','32.59%','817,896','817,860','1,735,756','1,005,933','58%','1.73','91','487','480','729,823'],
+['เมษายน','tl','The Lord','30,205','2,369','4,996','7,365','24.38%','993,946','1,423,020','2,416,966','1,688,644','70%','1.43','56','338','328','728,322'],
+['เมษายน','wp','WOLF+','61,938','1,675','16,844','18,519','29.90%','641,405','4,254,957','4,896,362','2,826,884','58%','1.73','46','168','264','2,069,478'],
+['พฤษภาคม','hv','HEAVEN Plus','7,099','1,302','1,142','2,444','34.43%','806,186','485,856','1,292,042','610,784','47%','2.12','86','535','529','681,258'],
+['พฤษภาคม','tl','The Lord','23,757','2,189','3,574','5,763','24.26%','922,464','1,026,000','1,948,464','1,373,781','71%','1.42','58','384','338','574,683'],
+['พฤษภาคม','wp','WOLF+','53,142','1,829','13,917','15,746','29.63%','670,973','3,553,973','4,224,946','2,405,185','57%','1.76','45','173','268','1,819,761'],
+['พฤษภาคม','jk','เจ้าขุน','176','—','10','10','0','—','3,800','3,800','2,291','60%','1.66','13','229','380','1,506'],
+['มิถุนายน','hv','HEAVEN Plus','10,952','1,357','1,568','2,925','26.71%','776,512','584,827','1,361,339','787,384','58%','1.73','72','502','465','573,955'],
+['มิถุนายน','tl','The Lord','19,613','2,142','3,324','5,466','27.87%','900,926','948,381','1,849,307','1,106,181','60%','1.67','56','333','338','743,126'],
+['มิถุนายน','wp','WOLF+','70,663','2,248','16,994','19,242','27.23%','805,780','4,235,952','5,041,732','2,884,486','57%','1.75','41','170','262','2,157,246'],
+['มิถุนายน','jk','เจ้าขุน','5,175','10','1,189','199','23.17%','3,800','455,950','459,750','231,504','50%','1.99','45','195','383','228,246']
+];
+function renderMonthlyBrands(){
+  const tb=document.getElementById('m4-tbody');if(!tb||tb.dataset.ready)return;
+  tb.innerHTML=M4_ROWS.map(function(r){return '<tr data-brand="'+r[1]+'"><td>'+r[0]+'</td><td class="m4-brand '+r[1]+'">'+r[2]+'</td>'+r.slice(3,-1).map(function(v){return '<td>'+v+'</td>'}).join('')+'<td class="m4-net">'+r[r.length-1]+'</td></tr>';}).join('');
+  tb.dataset.ready='1';
+}
+function filterM4(brand,btn){
+  renderMonthlyBrands();
+  document.querySelectorAll('.m4-filter').forEach(function(b){b.classList.toggle('active',b===btn);});
+  document.querySelectorAll('#m4-tbody tr').forEach(function(r){r.classList.toggle('hidden',brand!=='all'&&r.dataset.brand!==brand);});
+}
 const PAGE_RENDER={
   'pg-dashboard':renderDashboard,
   'pg-performance':renderPerformance,
   'pg-sales':renderSales,
   'pg-daily':renderDaily,
   'pg-monthly':renderMonthly,
+  'pg-monthly-brands':renderMonthlyBrands,
   'pg-redemption':renderRedemption,
   'pg-promotions':()=>{},
   'pg-leaderboard':renderLeaderboard,
