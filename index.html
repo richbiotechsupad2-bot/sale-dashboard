@@ -204,6 +204,31 @@ body{font-family:'Sarabun',sans-serif;background:
 #pg-sales #so-lb .lb-bf{box-shadow:0 2px 7px rgba(6,182,212,.28)}
 #pg-sales #so-lb .lb-rv{min-width:78px;font-size:14px;font-weight:900;color:#0f766e;text-shadow:0 1px 0 #fff,0 3px 8px rgba(13,148,136,.14)}
 #pg-sales #so-lb .lb-pp{min-width:42px;font-size:10px;font-weight:900;color:#7c3aed}
+#pg-sales .so-bubble-card{position:relative;overflow:hidden;padding:24px 26px 20px;border:1px solid #c4b5fd;border-radius:22px;background:radial-gradient(circle at 8% 4%,rgba(6,182,212,.17),transparent 24%),radial-gradient(circle at 92% 8%,rgba(236,72,153,.13),transparent 25%),linear-gradient(145deg,#f0f9ff 0%,#fff 46%,#faf5ff 100%);box-shadow:0 16px 36px rgba(79,70,229,.14),inset 0 1px 0 #fff}
+#pg-sales .so-bubble-card:before{content:'';position:absolute;left:0;right:0;top:0;height:7px;background:linear-gradient(90deg,#06b6d4,#10b981,#f59e0b,#f43f5e,#7c3aed)}
+#pg-sales .so-bubble-card canvas{position:relative}
+#pg-sales .so-detail-card{position:relative;overflow:hidden;padding:18px 20px 20px;border:1px solid #c7d2fe;border-radius:22px;background:linear-gradient(145deg,#ffffff 0%,#f8fafc 52%,#f5f3ff 100%);box-shadow:0 16px 36px rgba(49,46,129,.13),inset 0 1px 0 #fff}
+#pg-sales .so-detail-card:before{content:'';position:absolute;left:0;right:0;top:0;height:7px;background:linear-gradient(90deg,#4f46e5,#06b6d4,#10b981,#f59e0b,#f43f5e)}
+#pg-sales #so-tbl{position:relative;border-collapse:separate;border-spacing:0 6px;min-width:980px;font-size:12px}
+#pg-sales #so-tbl thead th{padding:13px 11px;background:linear-gradient(135deg,#312e81,#4f46e5);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.35px;border:0;text-shadow:0 2px 5px rgba(15,23,42,.28);white-space:nowrap}
+#pg-sales #so-tbl thead th:first-child{border-radius:12px 0 0 12px;padding-left:16px}
+#pg-sales #so-tbl thead th:last-child{border-radius:0 12px 12px 0}
+#pg-sales #so-tbl thead th:nth-child(2){background:linear-gradient(135deg,#d97706,#f59e0b)}
+#pg-sales #so-tbl thead th:nth-child(3){background:linear-gradient(135deg,#047857,#10b981)}
+#pg-sales #so-tbl thead th:nth-child(4){background:linear-gradient(135deg,#0369a1,#06b6d4)}
+#pg-sales #so-tbl thead th:last-child{background:linear-gradient(135deg,#6d28d9,#a855f7)!important}
+#pg-sales #so-tbl tbody td{padding:11px 11px;background:rgba(255,255,255,.9);border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-size:11.5px;font-weight:750;color:#334155;transition:.16s}
+#pg-sales #so-tbl tbody td:first-child{padding-left:16px;border-left:1px solid #e2e8f0;border-radius:12px 0 0 12px;font-size:13px;font-weight:900;color:#172554}
+#pg-sales #so-tbl tbody td:last-child{border-right:1px solid #e2e8f0;border-radius:0 12px 12px 0;font-size:12.5px;font-weight:900}
+#pg-sales #so-tbl tbody tr:hover td{background:#eef2ff;transform:translateY(-1px);box-shadow:0 7px 15px rgba(79,70,229,.08)}
+#pg-sales #so-tbl tbody tr.rank-1 td{background:linear-gradient(90deg,#fffbeb,#fff7ed);border-color:#fbbf24}
+#pg-sales #so-tbl tbody tr.rank-2 td{background:linear-gradient(90deg,#f8fafc,#f1f5f9);border-color:#94a3b8}
+#pg-sales #so-tbl tbody tr.rank-3 td{background:linear-gradient(90deg,#fff7ed,#ffedd5);border-color:#fb923c}
+#pg-sales #so-tbl tbody td:nth-child(2){color:#d97706!important;font-size:13px;font-weight:900;text-shadow:0 1px 0 #fff}
+#pg-sales #so-tbl tbody td:nth-child(3){color:#059669!important;font-size:14px;font-weight:900!important;text-shadow:0 1px 0 #fff,0 3px 8px rgba(5,150,105,.12)}
+#pg-sales #so-tbl tfoot td{padding:13px 11px;background:linear-gradient(135deg,#e0e7ff,#ecfeff);border-top:2px solid #818cf8;border-bottom:2px solid #818cf8;font-size:12px;font-weight:900;color:#172554}
+#pg-sales #so-tbl tfoot td:first-child{padding-left:16px;border-left:2px solid #818cf8;border-radius:12px 0 0 12px;font-size:14px}
+#pg-sales #so-tbl tfoot td:last-child{border-right:2px solid #818cf8;border-radius:0 12px 12px 0;color:#6d28d9;font-size:13px}
 @media(max-width:760px){.so-hero{padding:23px 20px}.so-hero h2{font-size:22px}.so-filter{min-width:calc(50% - 6px)}.so-insights{grid-template-columns:1fr}.so-toolbar{align-items:stretch;padding:12px}.so-reset{width:100%}#pg-sales .sec{font-size:13px}}
 
 /* ── CROSS SALE DAILY ── */
@@ -630,9 +655,9 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         </div>
       </div>
       <div class="sec">🎯 ยอดขาย vs ออเดอร์ (Bubble = avg/order)</div>
-      <div class="card"><canvas id="soBubble" style="max-height:280px"></canvas></div>
+      <div class="card so-bubble-card"><canvas id="soBubble" style="max-height:310px"></canvas></div>
       <div class="sec">📋 ตารางรายละเอียด</div>
-      <div class="card"><div class="scrl"><table class="tbl" id="so-tbl"></table></div></div>
+      <div class="card so-detail-card"><div class="scrl"><table class="tbl" id="so-tbl"></table></div></div>
     </div></div>
 
     <!-- ═══ PAGE: DAILY TARGET ═══ -->
@@ -2120,17 +2145,25 @@ function renderSales(){
   });
   // Bubble: x=orders, y=revenue, r=avgOrderValue
   const maxAvg=Math.max(1,...so.rows.map(r=>r.avgOrder));
-  mkChart('soBubble',{type:'bubble',data:{datasets:[{label:'พนักงาน',data:so.rows.map(r=>({x:r.ord,y:r.rev,r:6+14*(r.avgOrder/maxAvg),_n:r.name})),backgroundColor:'#06b6d488',borderColor:'#06b6d4'}]},
+  const bubblePalette=['#f59e0b','#8b5cf6','#06b6d4','#ec4899','#10b981','#f97316','#2563eb','#e11d48','#14b8a6','#a855f7','#64748b','#0ea5e9','#84cc16','#fb7185'];
+  const bubbleColors=so.rows.map((r,i)=>bubblePalette[i%bubblePalette.length]);
+  const bubbleLabels={id:'soBubbleLabels',afterDatasetsDraw(chart){
+    const{ctx}=chart;ctx.save();ctx.font='900 10px Sarabun';ctx.textAlign='center';ctx.textBaseline='bottom';
+    chart.getDatasetMeta(0).data.forEach((point,i)=>{const raw=chart.data.datasets[0].data[i];ctx.lineWidth=3.5;ctx.strokeStyle='rgba(255,255,255,.96)';ctx.strokeText(raw._n,point.x,point.y-point.options.radius-4);ctx.fillStyle='#172554';ctx.fillText(raw._n,point.x,point.y-point.options.radius-4);});
+    ctx.restore();
+  }};
+  mkChart('soBubble',{type:'bubble',plugins:[bubbleLabels],data:{datasets:[{label:'พนักงาน',data:so.rows.map(r=>({x:r.ord,y:r.rev,r:8+15*(r.avgOrder/maxAvg),_n:r.name})),backgroundColor:bubbleColors.map(c=>c+'a8'),borderColor:bubbleColors,borderWidth:2,hoverBorderWidth:4,hoverBackgroundColor:bubbleColors.map(c=>c+'dc')}]},
     options:{responsive:true,onClick:(e,els)=>{if(els.length){const n=so.rows[els[0].index].name;setEmpAFilter(STATE.empA===n?'all':n);}},
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.raw._n}: ${fmtN(c.raw.x)} ออเดอร์ · ${fmtB(c.raw.y)} (avg ฿${so.rows[c.dataIndex].avgOrder})`}}},
-      scales:{x:{title:{display:true,text:'จำนวนออเดอร์',color:'var(--muted)',font:{size:9}},grid:{color:GR}},y:{title:{display:true,text:'ยอดขาย',color:'var(--muted)',font:{size:9}},grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
+      layout:{padding:{top:24,right:18,left:8}},animation:{duration:650,easing:'easeOutQuart'},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#172554',titleFont:{family:'Sarabun',size:12,weight:'bold'},bodyFont:{family:'Sarabun',size:11,weight:'bold'},padding:12,cornerRadius:10,callbacks:{label:c=>` ${c.raw._n}: ${fmtN(c.raw.x)} ออเดอร์ · ${fmtB(c.raw.y)} (avg ฿${so.rows[c.dataIndex].avgOrder})`}}},
+      scales:{x:{title:{display:true,text:'จำนวนออเดอร์',color:'#334155',font:{family:'Sarabun',size:11,weight:'bold'}},grid:{color:'#cbd5e177'},ticks:{color:'#475569',font:{family:'Sarabun',size:10,weight:'bold'}}},y:{title:{display:true,text:'ยอดขาย',color:'#334155',font:{family:'Sarabun',size:11,weight:'bold'}},grid:{color:'#cbd5e177'},ticks:{color:'#475569',font:{family:'Sarabun',size:10,weight:'bold'},callback:v=>fmtBK(v)}}}}});
   // Table
   const tbl=document.getElementById('so-tbl');
   tbl.innerHTML=`<thead><tr><th>พนักงาน</th><th>ออเดอร์</th><th>ยอดขาย</th><th>avg/order</th>${so.brands.map(b=>`<th style="color:${b.c}">${b.lb}</th>`).join('')}<th>% ทีม</th></tr></thead>`;
   let tb='<tbody>';
   so.sortRev.forEach((s,r)=>{
     const pct=so.totalRev?(s.rev/so.totalRev*100):0;
-    tb+=`<tr class="${STATE.empA===s.name?'sel':''}" onclick="setEmpAFilter('${STATE.empA===s.name?'all':s.name}')"><td>${r<3?MED[r]:''} ${s.name}</td><td style="color:#d97706">${fmtN(s.ord)}</td><td style="color:#059669;font-weight:800">${fmtB(s.rev)}</td><td style="color:var(--muted)">฿${s.avgOrder}</td>${so.brands.map(b=>`<td>${fmtB(s.byBrand[b.k])}</td>`).join('')}<td style="color:#0891b2">${fmtPct(pct)}</td></tr>`;
+    tb+=`<tr class="${STATE.empA===s.name?'sel ':''}${r<3?'rank-'+(r+1):''}" onclick="setEmpAFilter('${STATE.empA===s.name?'all':s.name}')"><td>${r<3?MED[r]:''} ${s.name}</td><td style="color:#d97706">${fmtN(s.ord)}</td><td style="color:#059669;font-weight:800">${fmtB(s.rev)}</td><td style="color:var(--muted)">฿${s.avgOrder}</td>${so.brands.map(b=>`<td>${fmtB(s.byBrand[b.k])}</td>`).join('')}<td style="color:#0891b2">${fmtPct(pct)}</td></tr>`;
   });
   tb+=`</tbody><tfoot><tr><td>รวม</td><td style="color:#d97706">${fmtN(so.totalOrd)}</td><td style="color:#059669">${fmtB(so.totalRev)}</td><td style="color:var(--muted)">฿${so.avgOrderValue}</td>${so.brandTotals.map(t=>`<td>${fmtB(t.r)}</td>`).join('')}<td>${so.totalRev?'100%':'0%'}</td></tr></tfoot>`;
   tbl.innerHTML+=tb;
