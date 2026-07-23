@@ -231,6 +231,25 @@ body{font-family:'Sarabun',sans-serif;background:
 #pg-sales #so-tbl tfoot td:last-child{border-right:2px solid #818cf8;border-radius:0 12px 12px 0;color:#6d28d9;font-size:13px}
 @media(max-width:760px){.so-hero{padding:23px 20px}.so-hero h2{font-size:22px}.so-filter{min-width:calc(50% - 6px)}.so-insights{grid-template-columns:1fr}.so-toolbar{align-items:stretch;padding:12px}.so-reset{width:100%}#pg-sales .sec{font-size:13px}}
 
+/* ── GP% PERFORMANCE — MONTHLY EXECUTIVE VIEW ── */
+.gp-hero{position:relative;overflow:hidden;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:27px 30px;margin-bottom:16px;border-radius:25px;color:#fff;background:radial-gradient(circle at 88% 10%,#ffffff2b 0 8%,transparent 9%),linear-gradient(120deg,#4f46e5,#7c3aed 43%,#db2777 75%,#f97316);box-shadow:0 20px 44px rgba(124,58,237,.27)}
+.gp-hero:after{content:'%';position:absolute;right:22%;top:-58px;font-size:180px;font-weight:900;opacity:.08;transform:rotate(-9deg)}
+.gp-hero>div{position:relative;z-index:1}.gp-hero small{font-size:10px;font-weight:900;letter-spacing:2px;color:#ede9fe}.gp-hero h2{font-size:29px;line-height:1.2;margin:7px 0 6px;font-weight:900;text-shadow:0 4px 15px #312e8166}.gp-hero p{font-size:11px;font-weight:800;color:#fdf2f8}
+.gp-hero-badge{padding:11px 17px;border:1px solid #ffffff55;border-radius:999px;background:#ffffff20;backdrop-filter:blur(8px);font-size:11px;font-weight:900;white-space:nowrap;box-shadow:inset 0 1px 0 #ffffff55}
+.gp-toolbar{display:flex;align-items:flex-end;gap:11px;flex-wrap:wrap;padding:17px;margin-bottom:20px;border:1px solid #ddd6fe;border-radius:19px;background:linear-gradient(120deg,#eef2ff,#faf5ff 45%,#fff1f2 78%,#fff7ed);box-shadow:0 11px 27px rgba(109,40,217,.12)}
+.gp-filter{--gc:#6d28d9;display:flex;flex:1;min-width:150px;flex-direction:column;gap:6px;padding:10px;border-radius:13px;background:#ffffffcc;border:1px solid color-mix(in srgb,var(--gc) 25%,#e2e8f0);box-shadow:0 5px 13px rgba(30,41,59,.06)}.gp-filter:nth-child(2){--gc:#db2777}.gp-filter:nth-child(3){--gc:#ea580c}.gp-filter:nth-child(4){--gc:#0891b2}
+.gp-filter label{font-size:10px;font-weight:900;color:var(--gc)}.gp-filter select{min-height:39px;padding:8px 10px;border:1.5px solid color-mix(in srgb,var(--gc) 38%,#cbd5e1);border-radius:10px;background:#fff;color:#172554;font-family:'Sarabun',sans-serif;font-size:11.5px;font-weight:900;outline:none}
+.gp-filter select:focus{border-color:var(--gc);box-shadow:0 0 0 3px color-mix(in srgb,var(--gc) 15%,transparent)}
+.gp-reset{min-height:43px;padding:10px 16px;border:1px solid #fbcfe8;border-radius:11px;background:linear-gradient(135deg,#fff,#fdf2f8);color:#be185d;font-family:'Sarabun',sans-serif;font-size:10.5px;font-weight:900;cursor:pointer;box-shadow:0 5px 14px rgba(190,24,93,.09)}.gp-reset:hover{color:#fff;background:#db2777}
+#pg-performance .sec{margin-top:23px;font-size:15px;font-weight:900;color:#312e81}#pg-performance .sec:after{background:linear-gradient(90deg,#7c3aed,#ec4899,#f97316,transparent)}
+#pg-performance .krow{gap:14px}#pg-performance .kpi{min-height:143px;padding:19px;border-radius:20px;border:1px solid #fff;background:linear-gradient(145deg,#fff,#f5f3ff);box-shadow:0 13px 28px rgba(79,70,229,.14)}#pg-performance .kpi:hover{transform:translateY(-5px) scale(1.01)}#pg-performance .kpi-val{font-size:29px!important;text-shadow:0 2px 0 #fff,0 4px 10px rgba(15,23,42,.14)}#pg-performance .kpi-lbl{font-size:10.5px;font-weight:900}#pg-performance .kpi-sub{font-size:9.5px;font-weight:750}
+#pg-performance .card{border-radius:21px;border-color:#ddd6fe;background:linear-gradient(145deg,#fff,#faf5ff);box-shadow:0 14px 31px rgba(76,29,149,.11)}#pg-performance .ct{font-size:14px;font-weight:900;color:#312e81}#pg-performance .cs{font-size:9.5px;font-weight:700}
+#pg-performance .hmap{border-collapse:separate;border-spacing:0 5px;min-width:820px}#pg-performance .hmap th{padding:12px 10px;background:linear-gradient(135deg,#312e81,#6d28d9);color:#fff;font-size:9px;font-weight:900;white-space:nowrap}#pg-performance .hmap th:first-child{border-radius:10px 0 0 10px}#pg-performance .hmap th:last-child{border-radius:0 10px 10px 0}
+#pg-performance .hmap td{padding:10px;background:#fff;border-top:1px solid #ede9fe;border-bottom:1px solid #ede9fe;font-size:11.5px;font-weight:850}#pg-performance .hmap td:first-child{border-left:1px solid #ede9fe;border-radius:10px 0 0 10px;font-size:13px;font-weight:900;color:#312e81}#pg-performance .hmap td:last-child{border-right:1px solid #ede9fe;border-radius:0 10px 10px 0}
+#pg-performance .hmap td.cph,#pg-performance .hmap td.cpl{background:linear-gradient(135deg,#d1fae5,#ecfdf5);color:#047857;box-shadow:inset 4px 0 #10b981}#pg-performance .hmap td.cfm,#pg-performance .hmap td.cfh{background:linear-gradient(135deg,#fee2e2,#fff1f2);color:#be123c;box-shadow:inset 4px 0 #f43f5e}
+#pg-performance .scrd{padding:19px;border-radius:18px;background:linear-gradient(145deg,#fff,#f8fafc);box-shadow:0 10px 23px rgba(76,29,149,.11)}#pg-performance .scrd-name{font-size:17px;color:#312e81;text-shadow:0 2px 0 #fff}#pg-performance .sn{padding:9px 10px;background:#fff;border:1px solid #ede9fe}#pg-performance .sn-v{font-size:15px;text-shadow:0 1px 0 #fff}
+@media(max-width:760px){.gp-hero{padding:22px 19px;align-items:flex-start;flex-direction:column}.gp-hero h2{font-size:23px}.gp-filter{min-width:calc(50% - 6px)}.gp-reset{width:100%}.gp-hero-badge{white-space:normal}}
+
 /* ── CROSS SALE DAILY ── */
 #rd-daily-heading{margin-top:22px;color:#047857;letter-spacing:2px;}
 #rd-daily-heading::after{background:linear-gradient(90deg,#10b98155,transparent);}
@@ -624,7 +643,18 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: PERFORMANCE (GP%) ═══ -->
     <div id="pg-performance" class="page"><div class="wrap">
-      <div class="sec">📈 ภาพรวม GP% รายพนักงาน — ตามช่วงเวลาที่เลือก</div>
+      <div class="gp-hero">
+        <div><small>EMPLOYEE PROFIT PERFORMANCE</small><h2 id="gpHeroTitle">📈 Performance (GP%)</h2><p id="gpHeroPeriod">สรุป GP% รายพนักงาน แยกตามแบรนด์</p></div>
+        <div class="gp-hero-badge" id="gpHeroBadge">กำลังโหลดข้อมูล</div>
+      </div>
+      <div class="gp-toolbar">
+        <div class="gp-filter"><label>📆 ปี พ.ศ.</label><select id="gpYearFilter" onchange="setGPYear(this.value)"></select></div>
+        <div class="gp-filter"><label>🗓️ เดือน</label><select id="gpMonthFilter" onchange="setGPMonth(this.value)"></select></div>
+        <div class="gp-filter"><label>🏷️ แบรนด์</label><select id="gpBrandFilter" onchange="setBrandFilter(this.value)"></select></div>
+        <div class="gp-filter"><label>👤 พนักงาน</label><select id="gpEmployeeFilter" onchange="setEmpBFilter(this.value)"></select></div>
+        <button class="gp-reset" onclick="resetGPFilters()">↻ ล้างตัวกรอง</button>
+      </div>
+      <div class="sec">📈 ภาพรวม GP% รายพนักงาน</div>
       <div class="krow k5" id="gp-kpi"></div>
       <div class="sec">🔥 Heatmap GP% แยกพนักงาน × แบรนด์</div>
       <div class="card">
@@ -1120,16 +1150,20 @@ const SEED_TARGETS=[ // เป้ารายวันต่อแบรนด�
   {month:'2026-07',type:'brand',code:'jk',dailyOrderTarget:'',dailyRevenueTarget:16666},
 ];
 const SEED_GP=(function(){
-  const staff=['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','แอปเปิ้ล','เดียร์','ตาล','เกอร์'];
-  const thresholds={hv:28,tl:27,wolf:29,jk:29};
-  const vals={
-    hv:[27.22,29.32,34.59,31.04,33.53,30.31,20.93,26.06,25.16],
-    tl:[31.12,29.41,26.47,29.76,32.91,29.74,24.70,37.64,28.63],
-    wolf:[29.25,26.54,25.31,25.85,27.47,27.96,25.19,31.94,24.27],
-    jk:[28.79,29.23,28.32,27.95,28.41,24.25,20.90,35.84,21.14],
+  const staff=['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','เกมส์','แอปเปิ้ล','เดียร์','ตาล','เกอร์'];
+  const periods={
+    '2026-01':{t:{hv:25,tl:22,wolf:20},v:{hv:[34.24,33.69,35.13,32.38,null,29.08,28.56,null,31.05,null],tl:[28.06,28.15,28.43,23.15,null,22.45,26.18,null,22.30,null],wolf:[27.26,30.33,28.59,27.36,null,23.75,29.77,null,27.61,null]}},
+    '2026-02':{t:{hv:25,tl:22,wolf:20},v:{hv:[30.92,33.01,38.71,31.99,null,27.26,31.24,null,30.24,null],tl:[26.98,26.83,28.86,26.27,null,23.65,26.95,null,27.21,null],wolf:[30.13,32.82,32.45,31.74,null,30.46,31.40,null,33.25,null]}},
+    '2026-03':{t:{hv:25,tl:22,wolf:20},v:{hv:[36.33,33.23,37.29,35.29,31.76,34.03,33.49,null,33.31,33.97],tl:[30.07,30.21,28.50,27.75,26.73,28.31,29.05,null,28.84,26.74],wolf:[27.57,33.60,32.07,28.15,30.22,29.84,33.10,null,29.84,26.34]}},
+    '2026-04':{t:{hv:28,tl:24,wolf:29},v:{hv:[36.30,33.07,35.75,38.88,29.00,32.74,37.80,null,43.80,30.54],tl:[26.90,26.21,29.96,28.57,29.20,23.18,26.67,null,26.96,24.85],wolf:[29.48,29.67,31.41,29.44,29.16,31.29,25.72,null,30.03,25.67]}},
+    '2026-05':{t:{hv:28,tl:24,wolf:29},v:{hv:[39.38,36.28,43.59,39.93,35.53,39.41,38.58,37.62,36.99,37.74],tl:[30.12,32.35,27.90,26.36,26.30,22.29,26.07,21.70,24.88,25.45],wolf:[29.95,29.61,31.26,29.93,28.49,27.11,29.94,25.74,29.59,26.76]}},
+    '2026-06':{t:{hv:28,tl:24,wolf:29,jk:29},v:{hv:[37.93,33.82,28.59,30.82,27.36,27.27,30.36,28.68,30.25,28.65],tl:[33.73,32.99,33.96,30.93,32.08,28.33,28.08,26.79,34.27,29.28],wolf:[27.75,26.06,28.98,28.66,25.45,24.65,27.96,23.55,26.88,25.56],jk:[24.15,22.06,26.18,23.44,20.06,19.76,23.66,18.95,24.88,20.36]}},
+    '2026-07':{t:{hv:28,tl:27,wolf:29,jk:29},v:{hv:[27.18,27.55,28.36,27.03,29.32,34.13,20.06,22.27,21.78,null],tl:[27.85,26.58,23.61,24.96,27.63,28.21,24.41,24.51,24.51,null],wolf:[27.65,26.80,24.69,23.90,25.77,28.00,25.05,26.57,24.82,null],jk:[30.28,27.88,26.43,25.15,27.15,25.22,20.93,29.41,21.26,null]}}
   };
   const rows=[];
-  Object.keys(vals).forEach(bk=>staff.forEach((nm,i)=>rows.push({month:'2026-07',employee:nm,brand:bk,gpPercent:vals[bk][i],thresholdPercent:thresholds[bk]})));
+  Object.entries(periods).forEach(([month,p])=>Object.keys(p.v).forEach(bk=>staff.forEach((nm,i)=>{
+    if(p.v[bk][i]!=null)rows.push({month,employee:nm,brand:bk,gpPercent:p.v[bk][i],thresholdPercent:p.t[bk]});
+  })));
   return rows;
 })();
 const SEED_REDEMPTION=(function(){
@@ -1942,9 +1976,9 @@ function initFilterOptions(){
    ══════════════════════════════════════════════════════════════════ */
 function computeGP(){
   const brands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
-  const staffAll=[...new Set(RAW.gp.map(r=>r.employee))].filter(Boolean).sort();
-  const staff=STATE.empB==='all'?staffAll:staffAll.filter(n=>n===STATE.empB);
   const periodRows=RAW.gp.filter(r=>inPeriod(r.y,r.mo));
+  const staffAll=[...new Set(periodRows.map(r=>r.employee))].filter(Boolean).sort();
+  const staff=STATE.empB==='all'?staffAll:staffAll.filter(n=>n===STATE.empB);
   const rows=staff.map(name=>{
     const vals=brands.map(b=>{
       const match=periodRows.filter(r=>r.employee===name&&r.brand===b.k);
@@ -2133,6 +2167,18 @@ function renderHeaderStats(){
 function renderPerformance(){
   const gp=computeGP();
   renderHeaderStats();
+  const years=[...new Set(RAW.gp.map(r=>r.y))].sort((a,b)=>b-a),monthNames=['','มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const yearSel=document.getElementById('gpYearFilter'),monthSel=document.getElementById('gpMonthFilter'),brandSel=document.getElementById('gpBrandFilter'),empSel=document.getElementById('gpEmployeeFilter');
+  yearSel.innerHTML=years.map(y=>`<option value="${y}" ${String(STATE.year)===String(y)?'selected':''}>พ.ศ. ${y+543}</option>`).join('');
+  const months=[...new Set(RAW.gp.filter(r=>r.y===+STATE.year).map(r=>r.mo))].sort((a,b)=>a-b);
+  monthSel.innerHTML=months.map(m=>`<option value="${m}" ${String(STATE.month)===String(m)?'selected':''}>${monthNames[m]}</option>`).join('');
+  brandSel.innerHTML='<option value="all">ทุกแบรนด์</option>'+gp.brands.concat(STATE.brand==='all'?[]:DATA.brandMeta.filter(b=>b.k!==STATE.brand)).filter((b,i,a)=>a.findIndex(x=>x.k===b.k)===i).map(b=>`<option value="${b.k}" ${STATE.brand===b.k?'selected':''}>${b.ic} ${b.full}</option>`).join('');
+  const periodEmployees=[...new Set(RAW.gp.filter(r=>inPeriod(r.y,r.mo)).map(r=>r.employee))].sort((a,b)=>a.localeCompare(b,'th'));
+  empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+periodEmployees.map(n=>`<option value="${n}" ${STATE.empB===n?'selected':''}>${n}</option>`).join('');
+  const periodLabel=STATE.month==='all'?`ภาพรวมปี ${+STATE.year+543}`:`${monthNames[+STATE.month]} ${+STATE.year+543}`;
+  document.getElementById('gpHeroTitle').textContent=`📈 Performance (GP%) — ${periodLabel}`;
+  document.getElementById('gpHeroPeriod').textContent=`วัดผล ${gp.brands.length} แบรนด์ · แสดงเฉพาะพนักงานที่มีข้อมูลจริง`;
+  document.getElementById('gpHeroBadge').textContent=`${gp.rows.length} พนักงาน · ผ่าน ${gp.totalPass}/${gp.totalCells} รายการ`;
   const ke=document.getElementById('gp-kpi');ke.innerHTML='';
   const overallColor=gp.overallPassPct>=60?'#059669':gp.overallPassPct>=40?'#d97706':'#dc2626';
   ke.appendChild(kpiCard({ic:'📊',l:'Overall Pass',v:fmtPct(gp.overallPassPct),s:`${gp.totalPass}/${gp.totalCells} เกณฑ์ผ่าน (เฉพาะที่มีข้อมูล)`,c:overallColor,g:'#d97706,#f59e0b'}));
@@ -2183,6 +2229,14 @@ function renderPerformance(){
     gc.appendChild(el);
   });
 }
+
+function setGPYear(v){
+  STATE.year=v;
+  const ms=[...new Set(RAW.gp.filter(r=>r.y===+v).map(r=>r.mo))].sort((a,b)=>b-a);
+  STATE.month=ms.length?String(ms[0]):'all';STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance();
+}
+function setGPMonth(v){STATE.month=v;STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance()}
+function resetGPFilters(){STATE.year='2026';STATE.month='7';STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance()}
 
 /* ══════════════════════════════════════════════════════════════════
    SECTION 7 — PAGE: SALES & ORDERS
