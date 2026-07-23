@@ -582,7 +582,6 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
           <div class="hdr-title">Dashboard Performance Sale Admin 2</div>
           <div class="hdr-sub">Sale Admin SA2 · Rich Biotech · Master HQ Dashboard <span id="dataSrcBadge" style="margin-left:6px;font-weight:700;cursor:pointer" onclick="openSheetSettings()" title="คลิกเพื่อดู/แก้ไขการเชื่อมต่อ Google Sheets"></span></div>
         </div>
-        <div class="hdr-right" id="hdrStats"></div>
       </div>
       <div class="fbar" style="display:none" aria-hidden="true">
         <span class="fbar-lbl">📆 ปี</span>
@@ -720,7 +719,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="mf-hero-copy">
           <div class="mf-eyebrow">MONTHLY SALES PERFORMANCE · FORECAST</div>
           <h1 id="mfTitle">📅 สรุปยอดขาย — กรกฎาคม 2569</h1>
-          <p id="mfRange">รอบรายงาน 26 มิถุนายน – 19 กรกฎาคม 2569 · เห็นภาพรวม ผลงานรายแบรนด์ และวันที่ต้องเร่งแก้ไขในหน้าเดียว</p>
+          <p id="mfRange">รอบรายงาน 26 มิถุนายน – 19 กรกฎาคม 2569</p>
         </div>
         <div class="mf-hero-badge"><span>สถานะภาพรวม</span><b id="mfHeroStatus">❌ ยังไม่ถึงเป้า</b><small id="mfHeroPassDays">ผ่านเป้ารายวัน 0/30 วัน</small></div>
       </section>
@@ -2124,15 +2123,8 @@ function computeRedemption(){
 }
 
 function renderHeaderStats(){
-  const so=computeSO();const gp=computeGP();const m=computeMonthly();
-  const empCountA=[...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].length;
-  const box=document.getElementById('hdrStats');
-  box.innerHTML=[
-    {v:empCountA,l:'พนักงาน',c:'#d97706'},
-    {v:fmtBM(so.totalRev),l:'ยอดขายสะสม',c:'#059669'},
-    {v:fmtPct(gp.overallPassPct),l:'GP% ผ่านเกณฑ์',c:'#0891b2'},
-    {v:fmtPct(m.achievedPct,2),l:'บรรลุเป้า',c:'#7c3aed'},
-  ].map(s=>`<div class="hstat"><div class="hstat-v" style="color:${s.c}">${s.v}</div><div class="hstat-l">${s.l}</div></div>`).join('');
+  // Header summary cards were intentionally removed because the same
+  // information appeared on every page without helping the current view.
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -2476,7 +2468,7 @@ function renderMonthly(){
   const totalTarget=sum(data.brands.map(b=>b.target)),totalActual=data.summaryActual||sum(data.brands.map(b=>b.actual)),gap=totalActual-totalTarget,pct=totalActual/totalTarget*100;
   const periodDays=data.periodDays||data.rows.length,totals=data.rows.map(r=>r.slice(1).reduce((a,v)=>a+v,0)),dailyTarget=data.dailyTarget||Math.round(totalTarget/periodDays),passDays=totals.filter(v=>v>=dailyTarget).length;
   document.getElementById('mfTitle').textContent=`📅 สรุปยอดขาย — ${data.label}`;
-  document.getElementById('mfRange').textContent=`รอบรายงาน ${data.range} · เห็นภาพรวม ผลงานรายแบรนด์ และวันที่ต้องเร่งแก้ไขในหน้าเดียว`;
+  document.getElementById('mfRange').textContent=`รอบรายงาน ${data.range}`;
   document.getElementById('mfHeroStatus').textContent=pct>=100?'✅ ถึงเป้า':'❌ ยังไม่ถึงเป้า';
   document.getElementById('mfHeroPassDays').textContent=`ผ่านเป้ารายวัน ${passDays}/${periodDays} วัน`;
   const kpis=[
