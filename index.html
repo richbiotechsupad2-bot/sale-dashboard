@@ -1117,6 +1117,51 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
   #gp-kpi .kpi,#gp-kpi .kpi-ic{transition:none}
   #gp-kpi .kpi:hover::before{animation:none}
 }
+/* 2026-07-23 DASHBOARD SIMPLIFIED — bold, colorful, decision-first */
+#pg-dashboard .wrap{background:radial-gradient(circle at 7% 5%,#dbeafeaa,transparent 22%),radial-gradient(circle at 96% 18%,#fce7f3bb,transparent 25%),linear-gradient(180deg,#f8faff,#fffaf5);min-height:100vh;padding-bottom:38px}
+#pg-dashboard .hub-hero{min-height:154px;padding:34px 37px;border-radius:30px;background:radial-gradient(circle at 90% 5%,#ffffff38 0 8%,transparent 8.5%),radial-gradient(circle at 84% 120%,#fbbf2444 0 23%,transparent 40%),linear-gradient(115deg,#172554,#3730a3 27%,#7c3aed 56%,#db2777 80%,#f97316);box-shadow:0 27px 58px #5b21b633}
+#pg-dashboard .hub-hero:after{content:'✦';position:absolute;right:6%;top:-62px;font-size:210px;font-weight:950;color:#ffffff14;transform:rotate(14deg)}
+#pg-dashboard .hub-eyebrow{font-size:12px;letter-spacing:2.4px;color:#fde68a}
+#pg-dashboard .hub-title{font-size:36px;margin-top:8px}
+#pg-dashboard .hub-sub{font-size:13px;max-width:900px;font-weight:850}
+#pg-dashboard .hub-toolbar{padding:17px 18px;border-radius:21px;box-shadow:0 14px 34px #4338ca18}
+#pg-dashboard .dash-sec{display:flex;align-items:center;gap:10px;margin:29px 0 14px;font-size:21px;color:#172554;letter-spacing:0}
+#pg-dashboard .dash-sec small{padding:5px 10px;border-radius:999px;background:#eef2ff;color:#6366f1;font-size:10px;font-weight:900}
+#pg-dashboard #ex-kpi{grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+#pg-dashboard #ex-kpi .kpi{min-height:158px;padding:21px 20px;border-radius:24px;border-width:1.5px;box-shadow:0 17px 36px color-mix(in srgb,var(--kc) 18%,transparent);transition:.22s}
+#pg-dashboard #ex-kpi .kpi:hover{transform:translateY(-6px) scale(1.015);box-shadow:0 24px 45px color-mix(in srgb,var(--kc) 25%,transparent)}
+#pg-dashboard #ex-kpi .kv{font-size:34px;line-height:1.05}
+#pg-dashboard #ex-kpi .kl{font-size:13px}
+#pg-dashboard #ex-kpi .ks{font-size:11px}
+.dash-spotlight{display:grid;grid-template-columns:1.15fr .85fr;gap:15px;margin:17px 0}
+.spot-card{position:relative;overflow:hidden;display:flex;align-items:center;gap:18px;min-height:126px;padding:22px 25px;border-radius:25px;color:#fff;cursor:pointer;box-shadow:0 18px 38px #1e293b24;transition:.22s}
+.spot-card.product{background:radial-gradient(circle at 90% 10%,#ffffff32 0 13%,transparent 13.5%),linear-gradient(125deg,#0f766e,#10b981,#06b6d4)}
+.spot-card.person{background:radial-gradient(circle at 90% 10%,#ffffff30 0 13%,transparent 13.5%),linear-gradient(125deg,#9f1239,#e11d48,#f97316)}
+.spot-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 25px 48px #1e293b35}
+.spot-ico{display:grid;place-items:center;width:72px;height:72px;flex:0 0 72px;border:1px solid #ffffff55;border-radius:22px;background:#ffffff24;font-size:37px;box-shadow:inset 0 1px 0 #ffffff70,0 10px 24px #0002}
+.spot-card small,.spot-card b,.spot-card span{display:block}.spot-card small{font-size:11px;font-weight:950;color:#fef3c7}.spot-card b{margin-top:4px;font-size:29px;font-weight:950;text-shadow:0 3px 12px #0003}.spot-card span{margin-top:5px;font-size:12px;font-weight:850}
+.dash-brand-tops{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.brand-top-card{--bc:#4f46e5;position:relative;overflow:hidden;min-height:240px;padding:20px 18px;border:1.5px solid color-mix(in srgb,var(--bc) 28%,#e2e8f0);border-radius:24px;background:linear-gradient(155deg,#fff 45%,color-mix(in srgb,var(--bc) 15%,#fff));box-shadow:0 15px 32px color-mix(in srgb,var(--bc) 15%,transparent);cursor:pointer;transition:.22s}
+.brand-top-card:before{content:'';position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,var(--bc),color-mix(in srgb,var(--bc) 45%,#fff))}
+.brand-top-card:hover{transform:translateY(-7px);box-shadow:0 24px 44px color-mix(in srgb,var(--bc) 24%,transparent)}
+.btc-rank{position:absolute;right:15px;top:17px;font-size:27px;filter:drop-shadow(0 3px 5px #0002)}
+.btc-brand{margin-top:8px;color:#172554;font-size:16px;font-weight:950}.btc-sales{margin-top:13px;color:var(--bc);font-size:28px;font-weight:950}.btc-share{margin-top:3px;color:#64748b;font-size:10.5px;font-weight:850}
+.btc-leader{margin-top:17px;padding:13px 14px;border:1px solid color-mix(in srgb,var(--bc) 18%,#e2e8f0);border-radius:16px;background:#ffffffd9}.btc-leader span,.btc-leader b,.btc-leader small{display:block}.btc-leader span{color:#64748b;font-size:9px;font-weight:900}.btc-leader b{margin-top:3px;color:#172554;font-size:20px;font-weight:950}.btc-leader small{margin-top:2px;color:var(--bc);font-size:12px;font-weight:900}
+#pg-dashboard .dash-performance{gap:14px}
+#pg-dashboard .pulse-card{min-height:139px;padding:20px;border-radius:22px;box-shadow:0 15px 32px color-mix(in srgb,var(--pc) 16%,transparent);transition:.2s}
+#pg-dashboard .pulse-card:hover{transform:translateY(-5px);box-shadow:0 22px 40px color-mix(in srgb,var(--pc) 24%,transparent)}
+#pg-dashboard .pulse-card span{font-size:11px;color:#475569}#pg-dashboard .pulse-card b{font-size:25px}#pg-dashboard .pulse-card small{font-size:10.5px}
+#pg-dashboard .dash-brand-board{padding:19px;border-radius:25px;background:linear-gradient(145deg,#fff,#f8faff);box-shadow:0 16px 36px #33415516}
+#pg-dashboard .tmap{min-height:210px;gap:10px}
+#pg-dashboard .tmap-cell{min-height:170px;padding:21px;border-radius:20px;box-shadow:0 13px 27px #1e293b20;transition:.2s}
+#pg-dashboard .tmap-cell:hover{transform:translateY(-6px) scale(1.012);filter:saturate(1.12)}
+#pg-dashboard .tmap-cell .tn{font-size:15px}#pg-dashboard .tmap-cell .tv{font-size:28px}#pg-dashboard .tmap-cell .tp{font-size:11px}
+#pg-dashboard .story-card{border-radius:22px;box-shadow:0 15px 32px #1e293b18}#pg-dashboard .story-label{font-size:13px}#pg-dashboard .story-copy{font-size:12px;line-height:1.75}
+#pg-dashboard .trend-panel{padding:22px;border-radius:25px;box-shadow:0 16px 36px #33415518}
+#pg-dashboard .trend-title{font-size:17px}
+@media(max-width:1100px){#pg-dashboard #ex-kpi,.dash-brand-tops{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){#pg-dashboard .hub-hero{min-height:auto;padding:27px 22px}#pg-dashboard .hub-title{font-size:27px}.dash-spotlight{grid-template-columns:1fr}.dash-performance{grid-template-columns:repeat(2,1fr)!important}}
+@media(max-width:560px){#pg-dashboard .dash-sec{align-items:flex-start;flex-direction:column;font-size:18px}#pg-dashboard #ex-kpi,.dash-brand-tops,.dash-performance{grid-template-columns:1fr!important}#pg-dashboard #ex-kpi .kpi{min-height:130px}.spot-card{padding:18px}.spot-ico{width:59px;height:59px;flex-basis:59px;font-size:30px}.spot-card b{font-size:23px}.brand-top-card{min-height:215px}}
 </style>
 </head>
 <body>
@@ -1184,17 +1229,20 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: DASHBOARD (OVERVIEW) ═══ -->
     <div id="pg-dashboard" class="page active"><div class="wrap">
-      <div class="hub-hero"><div class="hub-eyebrow">EXECUTIVE COMMAND CENTER</div><div class="hub-title">🏠 Dashboard — ภาพรวมทุกมิติของ Sale Admin 2</div><div class="hub-sub">รวม Sales &amp; Orders, GP%, Daily Target, Monthly Forecast, Redemption และผลงานรายแบรนด์ไว้ในหน้าเดียว</div></div>
+      <div class="hub-hero"><div class="hub-eyebrow">SA2 SALES COMMAND CENTER</div><div class="hub-title">✨ Dashboard — สรุปยอด เข้าใจง่ายในหน้าเดียว</div><div class="hub-sub">ดูยอดรวม ตัวทำยอด พนักงาน Top และจุดที่ควรเร่งได้ทันที · ตัวเลขทุกส่วนเปลี่ยนตามตัวกรอง</div></div>
       <div class="hub-toolbar" id="dashboard-toolbar"></div>
-      <div class="sec">📊 Executive Overview — ภาพรวมผู้บริหาร</div>
+      <div class="sec dash-sec"><span>📊 ตัวเลขสำคัญของทีม</span><small>4 ตัวเลขที่ต้องรู้ก่อน</small></div>
       <div class="krow k4" id="ex-kpi"></div>
-      <div class="sec">💓 Performance Pulse — สุขภาพทีมจากทุกโมดูล</div>
-      <div class="hub-pulse" id="ex-pulse"></div>
-      <div class="sec">🧠 Data Storytelling — สรุปสถานการณ์อัตโนมัติ</div>
+      <div class="dash-spotlight" id="ex-spotlight"></div>
+      <div class="sec dash-sec"><span>🏆 ใครคือ Top ของแต่ละสินค้า</span><small>จัดอันดับจากยอดขายจริงของแต่ละแบรนด์</small></div>
+      <div class="dash-brand-tops" id="ex-brand-tops"></div>
+      <div class="sec dash-sec"><span>⭐ คนเด่น &amp; ประสิทธิภาพการขาย</span><small>Top GP% รายคน · % ปิดรายแบรนด์ · สิทธิ์แลกซื้อ</small></div>
+      <div class="hub-pulse dash-performance" id="ex-pulse"></div>
+      <div class="sec dash-sec"><span>🏷️ สินค้าอะไรเป็นตัวทำยอด</span><small>เรียงจากยอดขายสูงสุด พร้อมสัดส่วนยอดทีม</small></div>
+      <div class="card visual-panel dash-brand-board"><div class="tmap" id="ex-tmap"></div></div>
+      <div class="sec dash-sec"><span>🧠 สรุปให้เลย — ดีตรงไหน ต้องเร่งอะไร</span><small>วิเคราะห์จากข้อมูลตามตัวกรอง</small></div>
       <div id="ex-story" class="story-zone"></div>
-      <div class="sec">🏷️ สัดส่วนยอดขายตามแบรนด์ (Treemap)</div>
-      <div class="card visual-panel"><div class="tmap" id="ex-tmap"></div></div>
-      <div class="sec">📈 แนวโน้มยอดขาย — YTD / รายเดือน / รายวัน ตามช่วงที่เลือก</div>
+      <div class="sec dash-sec"><span>📈 แนวโน้มยอดขาย</span><small>ดูทิศทางยอดจริงเทียบเป้าหมาย</small></div>
       <div class="card trend-panel"><div class="trend-head"><div class="trend-title">📊 ยอดขายจริงเทียบเป้าหมาย</div><div class="trend-note">แตะจุดบนกราฟเพื่อดูยอดรายวัน</div></div><canvas id="exTrend" style="max-height:310px"></canvas></div>
     </div></div>
 
@@ -3351,30 +3399,43 @@ function renderDashboard(){
   const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly(),brandRank=brandAchievementRanking();
   const best=so.sortRev[0],worst=so.sortRev[so.sortRev.length-1];
   const bestBrand=brandRank[0],worstBrand=brandRank[brandRank.length-1];
+  const topGP=[...gp.rows].filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP)[0]||null;
+  const topProduct=[...so.brandTotals].sort((a,b)=>b.r-a.r)[0]||null;
   const ke=document.getElementById('ex-kpi');ke.innerHTML='';
   [
-    {ic:'💰',l:'Total Sales',v:fmtBM(so.totalRev),s:fmtB(so.totalRev),c:'#059669',g:'#10b981,#059669'},
-    {ic:'📦',l:'Total Orders',v:fmtN(so.totalOrd),s:STATE.year==='all'?'ภาพรวมทั้งหมด':(STATE.month==='all'?'ปี '+STATE.year:MONTH_TH[+STATE.month]+' '+STATE.year),c:'#d97706',g:'#d97706,#f59e0b'},
-    {ic:'📊',l:'Average Order Value',v:fmtB(so.avgOrderValue),s:'ยอดขาย/ออเดอร์',c:'#0891b2',g:'#06b6d4,#0891b2'},
-    {ic:'🎯',l:'Achievement %',v:fmtPct(m.achievedPct,2),s:m.isSingleMonth?`${m.N}/${m.daysInScopeMonth} วัน`:`${m.monthlyTrend.length} เดือนที่มีข้อมูล`,c:'#7c3aed',g:'#7c3aed,#7c3aed'},
-    {ic:m.wow&&m.wow.pct>=0?'📈':'📉',l:'Growth % (WoW)',v:m.wow?fmtPct(m.wow.pct,1):'—',s:m.wow?'สัปดาห์ล่าสุด vs ก่อนหน้า':'ข้อมูลไม่พอ (ต้องการ ≥8 วัน)',c:m.wow&&m.wow.pct>=0?'#059669':'#dc2626',g:'#10b981,#f43f5e'},
-    {ic:'📉',l:'Target Gap',v:(m.gap>0?'-':'+')+fmtBK(Math.abs(m.gap)),s:m.gap>0?'ยังขาดจากเป้า':'เกินเป้าแล้ว',c:m.gap>0?'#dc2626':'#059669',g:'#ef4444,#dc2626'},
-    {ic:'📆',l:'Revenue / Day',v:fmtB(m.avgPerDay),s:`เฉลี่ย ${m.N} วันที่ผ่านมา`,c:'#059669',g:'#10b981,#059669'},
-    {ic:'👥',l:'Revenue / Employee',v:fmtB(so.rows.length?so.totalRev/so.rows.length:0),s:`${so.rows.length} พนักงาน`,c:'#0891b2',g:'#06b6d4,#0891b2'},
-    {ic:'👥',l:'Order / Employee',v:so.rows.length?(so.totalOrd/so.rows.length).toFixed(0):'0',s:`${so.rows.length} พนักงาน`,c:'#d97706',g:'#d97706,#f59e0b'},
-    {ic:'🏆',l:'Best Employee',v:best?best.name:'—',s:best?fmtB(best.rev):'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>best&&setEmpAFilter(STATE.empA===best.name?'all':best.name)},
-    {ic:'🔻',l:'Worst Employee',v:worst?worst.name:'—',s:worst?fmtB(worst.rev):'',c:'#dc2626',g:'#ef4444,#dc2626',onClick:()=>worst&&setEmpAFilter(STATE.empA===worst.name?'all':worst.name)},
-    {ic:bestBrand.b.ic,l:'Best Brand',v:bestBrand.b.lb,s:fmtPct(bestBrand.pct,1)+' บรรลุเป้า',c:bestBrand.b.c,g:bestBrand.b.c+',#ffffff',onClick:()=>setBrandFilter(STATE.brand===bestBrand.b.k?'all':bestBrand.b.k)},
-    {ic:worstBrand.b.ic,l:'Worst Brand',v:worstBrand.b.lb,s:fmtPct(worstBrand.pct,1)+' บรรลุเป้า',c:'#dc2626',g:'#ef4444,#dc2626',onClick:()=>setBrandFilter(STATE.brand===worstBrand.b.k?'all':worstBrand.b.k)},
+    {ic:'💰',l:'ยอดขายรวม',v:fmtBM(so.totalRev),s:fmtB(so.totalRev)+' ทั้งทีม',c:'#059669',g:'#10b981,#059669'},
+    {ic:'📦',l:'ออเดอร์รวม',v:fmtN(so.totalOrd),s:'เฉลี่ย '+fmtB(so.avgOrderValue)+' / ออเดอร์',c:'#d97706',g:'#f59e0b,#ea580c'},
+    {ic:'🧾',l:'ยอดเฉลี่ยต่อบิล',v:fmtB(so.avgOrderValue),s:'คำนวณจากยอดขาย ÷ ออเดอร์',c:'#0891b2',g:'#06b6d4,#2563eb'},
+    {ic:'🎯',l:'บรรลุเป้าหมาย',v:fmtPct(m.achievedPct,1),s:m.gap>0?'ยังขาด '+fmtB(m.gap):'เกินเป้า '+fmtB(Math.abs(m.gap)),c:m.gap>0?'#e11d48':'#059669',g:m.gap>0?'#f43f5e,#e11d48':'#10b981,#059669'},
   ].forEach(k=>ke.appendChild(kpiCard(k)));
 
+  const spotlight=document.getElementById('ex-spotlight');
+  spotlight.innerHTML=`<article class="spot-card product" ${topProduct?`onclick="setBrandFilter(STATE.brand==='${topProduct.b.k}'?'all':'${topProduct.b.k}')"`:''}>
+      <div class="spot-ico">${topProduct?topProduct.b.ic:'🏷️'}</div><div><small>สินค้าตัวทำยอดอันดับ 1</small><b>${topProduct?topProduct.b.lb:'—'}</b><span>${topProduct?fmtB(topProduct.r)+' · '+fmtPct(topProduct.pct,1)+' ของยอดทีม':'ไม่มีข้อมูล'}</span></div>
+    </article>
+    <article class="spot-card person" ${best?`onclick="setEmpAFilter(STATE.empA==='${best.name}'?'all':'${best.name}')"`:''}>
+      <div class="spot-ico">👑</div><div><small>Top ยอดขายของทีม</small><b>${best?best.name:'—'}</b><span>${best?fmtB(best.rev)+' · '+fmtN(best.ord)+' ออเดอร์':'ไม่มีข้อมูล'}</span></div>
+    </article>`;
+
+  const brandTops=document.getElementById('ex-brand-tops');brandTops.innerHTML='';
+  so.brandTotals.slice().sort((a,b)=>b.r-a.r).forEach((t,rank)=>{
+    const leader=[...so.rows].filter(r=>(r.byBrand[t.b.k]||0)>0).sort((a,b)=>(b.byBrand[t.b.k]||0)-(a.byBrand[t.b.k]||0))[0];
+    const card=document.createElement('article');card.className='brand-top-card';card.style.setProperty('--bc',t.b.c);
+    card.onclick=()=>setBrandFilter(STATE.brand===t.b.k?'all':t.b.k);
+    card.innerHTML=`<div class="btc-rank">${rank===0?'🥇':rank===1?'🥈':rank===2?'🥉':'#4'}</div><div class="btc-brand">${t.b.ic} ${t.b.lb}</div><div class="btc-sales">${fmtB(t.r)}</div><div class="btc-share">${fmtPct(t.pct,1)} ของยอดทีม</div><div class="btc-leader"><span>Top ของสินค้า</span><b>${leader?leader.name:'—'}</b><small>${leader?fmtB(leader.byBrand[t.b.k]||0):'ไม่มีข้อมูล'}</small></div>`;
+    brandTops.appendChild(card);
+  });
+
   const pulse=document.getElementById('ex-pulse');
-  const dailyAvg=dly.rows.length?avg(dly.rows.map(r=>(r.pco+r.pcr)/2)):0;
+  const requestedCloseMonth=STATE.month!=='all'&&MONTH_TH[+STATE.month]?MONTH_TH[+STATE.month]:'มิถุนายน';
+  const monthLabel=M4_ROWS.some(r=>r[0]===requestedCloseMonth)?requestedCloseMonth:'มิถุนายน';
+  const closeRows=M4_ROWS.filter(r=>r[0]===monthLabel&&m4Num(String(r[7]).replace('%',''))>0);
+  const topClose=[...closeRows].sort((a,b)=>m4Num(String(b[7]).replace('%',''))-m4Num(String(a[7]).replace('%','')))[0]||null;
   pulse.innerHTML=[
-    {c:'#7c3aed',l:'📈 GP% ผ่านเกณฑ์',v:fmtPct(gp.overallPassPct,1),s:`ผ่าน ${gp.totalPass}/${gp.totalCells} จุดวัด`},
-    {c:'#10b981',l:'🎯 ผ่านเป้ารายวัน',v:fmtPct(dailyAvg,1),s:`เฉลี่ยออเดอร์ + ยอดขาย · ${dly.rows.length} คน`},
-    {c:'#f43f5e',l:'🎁 สิทธิ์แลกซื้อ',v:fmtB(rd.gRev),s:`${fmtN(rd.gU)} ชิ้น`},
-    {c:'#f59e0b',l:'🏷️ แบรนด์ผ่านเป้าดีสุด',v:bestBrand?bestBrand.b.lb:'—',s:bestBrand?fmtPct(bestBrand.pct,1):'ไม่มีข้อมูล'}
+    {c:'#7c3aed',l:'⭐ Top GP% รายพนักงาน',v:topGP?topGP.name:'—',s:topGP?fmtPct(topGP.avgGP,1)+' GP% เฉลี่ย':'ไม่มีข้อมูล'},
+    {c:'#10b981',l:'📈 % ปิดสูงสุดรายแบรนด์',v:topClose?topClose[2]:'—',s:topClose?topClose[7]+' · '+monthLabel:'ไม่มีข้อมูลคนทักในเดือนนี้'},
+    {c:'#f43f5e',l:'🎁 Top สิทธิ์แลกซื้อ',v:rd.top?rd.top.name:'—',s:rd.top?fmtB(rd.top.rev)+' · '+fmtN(rd.top.totalUnits)+' ชิ้น':'ไม่มีข้อมูล'},
+    {c:'#f59e0b',l:'🏆 แบรนด์บรรลุเป้าดีสุด',v:bestBrand?bestBrand.b.lb:'—',s:bestBrand?fmtPct(bestBrand.pct,1)+' ของเป้า':'ไม่มีข้อมูล'}
   ].map(x=>`<div class="pulse-card" style="--pc:${x.c}"><span>${x.l}</span><b>${x.v}</b><small>${x.s}</small></div>`).join('');
 
   // Data Storytelling — สรุปข้อความอัตโนมัติจากค่าที่คำนวณจริง
