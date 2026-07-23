@@ -548,8 +548,9 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: SALES & ORDERS ═══ -->
     <div id="pg-sales" class="page"><div class="wrap">
-      <div class="so-hero"><small>EXECUTIVE SALES PERFORMANCE · JULY 2026</small><h2>💰 Sale &amp; Orders — ผลงานเดือนกรกฎาคม</h2><p>ข้อมูลสะสม 26/06/2026–22/07/2026 · กรอง เจาะลึก และจัดอันดับได้ทันที</p></div>
+      <div class="so-hero"><small id="soHeroEyebrow">EXECUTIVE SALES PERFORMANCE</small><h2 id="soHeroTitle">💰 Sale &amp; Orders</h2><p id="soHeroPeriod">กรอง เจาะลึก และจัดอันดับได้ทันที</p></div>
       <div class="so-toolbar">
+        <div class="so-filter"><label>📅 รอบรายงาน</label><select id="soMonthFilter" onchange="setSOMonth(this.value)"></select></div>
         <div class="so-filter"><label>🏷️ สินค้า / แบรนด์</label><select id="soBrandFilter" onchange="setSOBrand(this.value)"></select></div>
         <div class="so-filter"><label>👤 รายชื่อพนักงาน</label><select id="soEmployeeFilter" onchange="setSOEmployee(this.value)"></select></div>
         <div class="so-filter"><label>📦 จำนวนออเดอร์ขั้นต่ำ</label><select id="soOrderFilter" onchange="setSOView('minOrders',this.value)"><option value="0">ทั้งหมด</option><option value="1000">1,000 ขึ้นไป</option><option value="2000">2,000 ขึ้นไป</option><option value="2400">2,400 ขึ้นไป</option></select></div>
@@ -896,6 +897,15 @@ if(typeof window!=='undefined'){window.RAW=RAW;window.DATA_SOURCE=DATA_SOURCE;wi
 */
 const SEED_SALES=(function(){
   const rows=[];
+  /* รอบรายงานเดือนมิถุนายน 2569: 26/05/2026–25/06/2026
+     ข้อมูลต้นทางเป็นยอดสะสมทั้งรอบ จึงบันทึกไว้ที่วันสิ้นสุดรอบรายงาน */
+  const juneEmpBrand={
+    hv:  {staff:['Achi','Amm','Apple','Deer','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[284,267,321,256,248,348,348,362,246,255],r:[124046,124023,152670,115551,119344,163945,155200,182459,109634,114467]},
+    tl:  {staff:['Achi','Amm','Apple','Deer','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[658,565,544,397,447,714,583,617,522,439],r:[226516,190910,180799,129694,145500,240882,198605,205690,179676,151035]},
+    wolf:{staff:['Achi','Amm','Apple','Deer','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[2085,1878,1893,1609,1887,2296,2204,2058,1709,1678],r:[545934,503573,483218,415979,496419,598480,563199,538563,443851,452516]},
+    jk:  {staff:['Achi','Amm','Apple','Deer','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[138,155,110,72,110,102,176,128,101,114],r:[51950,60250,44850,27000,40800,38800,66150,47100,38750,44450]},
+  };
+  Object.keys(juneEmpBrand).forEach(bk=>{const g=juneEmpBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-06-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
   const dates=['2026-06-26','2026-06-27','2026-06-28','2026-06-29','2026-06-30','2026-07-01','2026-07-02','2026-07-03','2026-07-04','2026-07-05','2026-07-06','2026-07-07','2026-07-08','2026-07-09','2026-07-10','2026-07-11','2026-07-12','2026-07-13'];
   const brandDaily={
     hv:[33882,28152,38486,38624,40164,45978,49014,48176,39300,38310,39366,48480,45745,49484,51896,38694,41596,46857],
@@ -1184,13 +1194,17 @@ async function loadAllData(){
   SHEET_KEYS.forEach((k,i)=>{
     const [getSeed,norm]=SHEET_SPECS[k];
     const r=results[i];
+    // SEED_* ใช้โครงสร้างเดียวกับข้อมูลต้นทาง (date/month เป็นข้อความ)
+    // จึงต้อง normalize ก่อนกรองปี/เดือนเช่นเดียวกับข้อมูลจาก Google Sheets
+    // เดิมคืนค่า seed ตรง ๆ ทำให้ r.y/r.mo เป็น undefined และตัวกรองแสดง 0 ทั้งหน้า
+    const normalizedSeed=()=>getSeed().map(norm).filter(Boolean);
     if(!cfg[k]){
-      RAW[k]=getSeed(); DATA_SOURCE[k]='seed';
+      RAW[k]=normalizedSeed(); DATA_SOURCE[k]='seed';
       LOAD_STATUS[k]={state:'none',rows:0,detail:'ยังไม่ได้วางลิงก์ — ใช้ข้อมูลตัวอย่าง'};
       return;
     }
     if(!r.ok){
-      RAW[k]=getSeed(); DATA_SOURCE[k]='seed';
+      RAW[k]=normalizedSeed(); DATA_SOURCE[k]='seed';
       LOAD_STATUS[k]={state:'error',rows:0,detail:'ดึงข้อมูลไม่สำเร็จ ('+r.reason+') — ใช้ข้อมูลตัวอย่างแทนชั่วคราว'};
       return;
     }
@@ -1199,7 +1213,7 @@ async function loadAllData(){
       RAW[k]=rows; DATA_SOURCE[k]='sheet';
       LOAD_STATUS[k]={state:'sheet',rows:rows.length,detail:'เชื่อมต่อสำเร็จ พบ '+rows.length+' แถว'};
     }else{
-      RAW[k]=getSeed(); DATA_SOURCE[k]='seed';
+      RAW[k]=normalizedSeed(); DATA_SOURCE[k]='seed';
       LOAD_STATUS[k]={state:'empty',rows:0,detail:'เชื่อมต่อสำเร็จ แต่ไม่พบแถวข้อมูลที่ใช้ได้ (ตรวจหัวคอลัมน์/ชื่อแท็บ/gid) — ใช้ข้อมูลตัวอย่างแทนชั่วคราว'};
     }
   });
@@ -1244,9 +1258,14 @@ async function saveSheetSettingsAndReload(){
    empA : 'all' | ชื่ออังกฤษ (Sales namespace)
    empB : 'all' | ชื่อไทย (GP%/Redemption namespace)
    ══════════════════════════════════════════════════════════════════ */
-const STATE={year:'all',month:'all',brand:'all',empA:'all',empB:'all'};
+const STATE={year:'2026',month:'7',brand:'all',empA:'all',empB:'all'};
 const SO_VIEW={minOrders:0,minRevenue:0,sort:'revenue'};
 function setSOView(key,value){SO_VIEW[key]=key==='sort'?value:Number(value)||0;renderSales()}
+function setSOMonth(value){
+  if(value==='all'){STATE.year='2026';STATE.month='all';}
+  else{const parts=value.split('-');STATE.year=parts[0];STATE.month=String(Number(parts[1]));}
+  STATE.empA='all';refreshChips();renderSales();
+}
 function setSOBrand(value){setBrandFilter(value)}
 function setSOEmployee(value){setEmpAFilter(value)}
 function resetSOFilters(){SO_VIEW.minOrders=0;SO_VIEW.minRevenue=0;SO_VIEW.sort='revenue';STATE.brand='all';STATE.empA='all';refreshChips();renderSales()}
@@ -1929,9 +1948,19 @@ function renderPerformance(){
 function renderSales(){
   const so=computeSO();
   renderHeaderStats();
-  const brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
+  const monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
+  const reportPeriods=[
+    {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–22/07/2026'},
+    {value:'2026-06',label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026'}
+  ];
+  const currentPeriod=STATE.year==='all'||STATE.month==='all'?'all':`${STATE.year}-${String(STATE.month).padStart(2,'0')}`;
+  monthSel.innerHTML='<option value="all">ทุกเดือน</option>'+reportPeriods.map(p=>`<option value="${p.value}" ${currentPeriod===p.value?'selected':''}>${p.label}</option>`).join('');
+  const periodMeta=reportPeriods.find(p=>p.value===currentPeriod);
+  document.getElementById('soHeroEyebrow').textContent=periodMeta?`EXECUTIVE SALES PERFORMANCE · ${periodMeta.value}`:'EXECUTIVE SALES PERFORMANCE · ALL PERIODS';
+  document.getElementById('soHeroTitle').textContent=periodMeta?`💰 Sale & Orders — ผลงานเดือน${periodMeta.label.replace(' 2569','')}`:'💰 Sale & Orders — ภาพรวมทุกเดือน';
+  document.getElementById('soHeroPeriod').textContent=(periodMeta?`ข้อมูลสะสม ${periodMeta.range}`:'ข้อมูลรวมทุกช่วงรายงาน')+' · กรอง เจาะลึก และจัดอันดับได้ทันที';
   brandSel.innerHTML='<option value="all">สินค้าทั้งหมด</option>'+DATA.brandMeta.map(b=>`<option value="${b.k}" ${STATE.brand===b.k?'selected':''}>${b.ic} ${b.lb}</option>`).join('');
-  const employees=[...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].sort();
+  const employees=[...new Set(RAW.sales.filter(r=>r.employee&&inPeriod(r.y,r.mo)).map(r=>r.employee))].sort();
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+employees.map(n=>`<option value="${n}" ${STATE.empA===n?'selected':''}>${n}</option>`).join('');
   document.getElementById('soOrderFilter').value=String(SO_VIEW.minOrders);
   document.getElementById('soRevenueFilter').value=String(SO_VIEW.minRevenue);
@@ -1948,7 +1977,7 @@ function renderSales(){
   const topOrders=[...so.rows].sort((a,b)=>b.ord-a.ord)[0],topAvg=[...so.rows].sort((a,b)=>b.avgOrder-a.avgOrder)[0];
   const concentration=so.totalRev&&so.sortRev.length?so.sortRev.slice(0,3).reduce((a,r)=>a+r.rev,0)/so.totalRev*100:0;
   insight.innerHTML=so.rows.length?`
-    <div class="so-insight" style="--accent:#10b981"><b>🏆 ผู้นำยอดขาย</b><span>${so.topRevenue.name} ทำยอด ${fmtB(so.topRevenue.rev)} คิดเป็น ${fmtPct(so.topRevenue.rev/so.totalRev*100)} ของยอดตามตัวกรอง</span></div>
+    <div class="so-insight" style="--accent:#10b981"><b>🏆 ผู้นำยอดขาย</b><span>${so.topRevenue.name} ทำยอด ${fmtB(so.topRevenue.rev)} คิดเป็น ${fmtPct(so.totalRev?so.topRevenue.rev/so.totalRev*100:0)} ของยอดตามตัวกรอง</span></div>
     <div class="so-insight" style="--accent:#f59e0b"><b>📦 ผู้นำจำนวนออเดอร์</b><span>${topOrders.name} มี ${fmtN(topOrders.ord)} ออเดอร์ · ส่วน ${topAvg.name} มีค่าเฉลี่ยต่อออเดอร์สูงสุด ${fmtB(topAvg.avgOrder)}</span></div>
     <div class="so-insight" style="--accent:#8b5cf6"><b>🧠 Executive Focus</b><span>Top 3 สร้างยอดขายรวม ${fmtPct(concentration)} · แบรนด์หลักคือ ${topShareBrand?topShareBrand.b.lb:'—'} สัดส่วน ${topShareBrand?fmtPct(topShareBrand.pct):'—'}</span></div>`:
     '<div class="so-insight" style="--accent:#ef4444;grid-column:1/-1"><b>ไม่พบข้อมูล</b><span>ลองลดเกณฑ์ออเดอร์/ยอดขาย หรือกด “ล้างตัวกรอง”</span></div>';
@@ -1987,7 +2016,7 @@ function renderSales(){
     const pct=so.totalRev?(s.rev/so.totalRev*100):0;
     tb+=`<tr class="${STATE.empA===s.name?'sel':''}" onclick="setEmpAFilter('${STATE.empA===s.name?'all':s.name}')"><td>${r<3?MED[r]:''} ${s.name}</td><td style="color:#d97706">${fmtN(s.ord)}</td><td style="color:#059669;font-weight:800">${fmtB(s.rev)}</td><td style="color:var(--muted)">฿${s.avgOrder}</td>${so.brands.map(b=>`<td>${fmtB(s.byBrand[b.k])}</td>`).join('')}<td style="color:#0891b2">${fmtPct(pct)}</td></tr>`;
   });
-  tb+=`</tbody><tfoot><tr><td>รวม</td><td style="color:#d97706">${fmtN(so.totalOrd)}</td><td style="color:#059669">${fmtB(so.totalRev)}</td><td style="color:var(--muted)">฿${so.avgOrderValue}</td>${so.brandTotals.map(t=>`<td>${fmtB(t.r)}</td>`).join('')}<td>100%</td></tr></tfoot>`;
+  tb+=`</tbody><tfoot><tr><td>รวม</td><td style="color:#d97706">${fmtN(so.totalOrd)}</td><td style="color:#059669">${fmtB(so.totalRev)}</td><td style="color:var(--muted)">฿${so.avgOrderValue}</td>${so.brandTotals.map(t=>`<td>${fmtB(t.r)}</td>`).join('')}<td>${so.totalRev?'100%':'0%'}</td></tr></tfoot>`;
   tbl.innerHTML+=tb;
 }
 
