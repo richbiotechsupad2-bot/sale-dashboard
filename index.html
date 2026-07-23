@@ -897,6 +897,15 @@ if(typeof window!=='undefined'){window.RAW=RAW;window.DATA_SOURCE=DATA_SOURCE;wi
 */
 const SEED_SALES=(function(){
   const rows=[];
+  /* รอบรายงานเดือนกุมภาพันธ์ 2569: 26/01/2026–25/02/2026
+     ข้อมูลต้นทางเป็นยอดสะสมทั้งรอบ จึงบันทึกไว้ที่วันสิ้นสุดรอบรายงาน
+     เดือนนี้มีข้อมูล 3 แบรนด์ (ไม่มีรายการกาแฟเจ้าขุนในต้นฉบับ) */
+  const februaryEmpBrand={
+    hv:  {staff:['Achi','Amm','Apple','พนักงานลาออก','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[81,1055,1533,760,877,915,1015,1012,940,66],r:[34958,437513,601361,290754,344888,397894,385566,430747,388487,23844]},
+    tl:  {staff:['Achi','Amm','Apple','พนักงานลาออก','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[246,1211,2228,903,823,1170,1150,1297,1065,65],r:[75183,365808,678369,274094,247572,356316,366001,411119,327447,19394]},
+    wolf:{staff:['Achi','Amm','Apple','พนักงานลาออก','Game','Nueng','Pay','Pear','Tarn','Tiger'],o:[216,1292,2265,1073,1185,1444,1661,1541,1356,162],r:[65784,354678,603759,293056,318991,395630,445163,422295,362351,43347]},
+  };
+  Object.keys(februaryEmpBrand).forEach(bk=>{const g=februaryEmpBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-02-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
   /* รอบรายงานเดือนมีนาคม 2569: 26/02/2026–25/03/2026
      ข้อมูลต้นทางเป็นยอดสะสมทั้งรอบ จึงบันทึกไว้ที่วันสิ้นสุดรอบรายงาน
      เดือนนี้มีข้อมูล 3 แบรนด์ (ไม่มีรายการกาแฟเจ้าขุนในต้นฉบับ) */
@@ -1981,7 +1990,8 @@ function renderSales(){
     {value:'2026-06',label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026'},
     {value:'2026-05',label:'พฤษภาคม 2569',range:'26/04/2026–25/05/2026'},
     {value:'2026-04',label:'เมษายน 2569',range:'26/03/2026–25/04/2026'},
-    {value:'2026-03',label:'มีนาคม 2569',range:'26/02/2026–25/03/2026'}
+    {value:'2026-03',label:'มีนาคม 2569',range:'26/02/2026–25/03/2026'},
+    {value:'2026-02',label:'กุมภาพันธ์ 2569',range:'26/01/2026–25/02/2026'}
   ];
   const currentPeriod=STATE.year==='all'||STATE.month==='all'?'all':`${STATE.year}-${String(STATE.month).padStart(2,'0')}`;
   monthSel.innerHTML='<option value="all">ทุกเดือน</option>'+reportPeriods.map(p=>`<option value="${p.value}" ${currentPeriod===p.value?'selected':''}>${p.label}</option>`).join('');
