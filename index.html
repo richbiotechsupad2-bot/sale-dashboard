@@ -184,6 +184,26 @@ body{font-family:'Sarabun',sans-serif;background:
 #pg-sales #so-brand .bst{padding:9px 11px;border:1px solid rgba(255,255,255,.9);border-radius:11px;background:rgba(255,255,255,.72);box-shadow:inset 0 1px 0 #fff}
 #pg-sales #so-brand .bst-l{font-size:8.5px;font-weight:800;color:#64748b}
 #pg-sales #so-brand .bst-v{font-size:15px;font-weight:900;color:#172554;text-shadow:0 1px 0 #fff}
+#pg-sales .so-performance-grid{gap:18px;align-items:stretch}
+#pg-sales .so-performance-card{position:relative;overflow:hidden;border:1px solid #bae6fd;border-radius:22px;padding:22px 24px;background:linear-gradient(145deg,#f0f9ff 0%,#ffffff 46%,#f5f3ff 100%);box-shadow:0 15px 34px rgba(37,99,235,.14),inset 0 1px 0 #fff}
+#pg-sales .so-performance-card:before{content:'';position:absolute;left:0;right:0;top:0;height:7px;background:linear-gradient(90deg,#06b6d4,#2563eb,#7c3aed,#f43f5e)}
+#pg-sales .so-performance-card .ct{position:relative;font-size:16px;font-weight:900;color:#172554;margin:3px 0 5px;text-shadow:0 2px 0 #fff,0 4px 10px rgba(37,99,235,.13)}
+#pg-sales .so-performance-card .ct .dot{width:11px;height:11px;box-shadow:0 0 0 5px rgba(6,182,212,.12)}
+#pg-sales .so-performance-card .cs{position:relative;font-size:10.5px;font-weight:750;color:#64748b;margin-bottom:15px}
+#pg-sales .so-leaderboard-card{border-color:#a7f3d0;background:linear-gradient(145deg,#ecfdf5 0%,#ffffff 44%,#fff7ed 100%);box-shadow:0 15px 34px rgba(5,150,105,.15),inset 0 1px 0 #fff}
+#pg-sales .so-leaderboard-card:before{background:linear-gradient(90deg,#10b981,#06b6d4,#f59e0b)}
+#pg-sales #so-lb{gap:9px}
+#pg-sales #so-lb .lb-row{min-height:48px;padding:10px 12px;border:1px solid #dbeafe;border-radius:13px;background:linear-gradient(100deg,#ffffff,#eff6ff);box-shadow:0 5px 13px rgba(30,64,175,.08)}
+#pg-sales #so-lb .lb-row:hover{transform:translateX(-4px) scale(1.01);box-shadow:0 9px 19px rgba(30,64,175,.14)}
+#pg-sales #so-lb .lb-row.gold{border-color:#fbbf24;background:linear-gradient(100deg,#fef3c7,#fff7ed);box-shadow:0 8px 20px rgba(245,158,11,.22)}
+#pg-sales #so-lb .lb-row.silver{border-color:#94a3b8;background:linear-gradient(100deg,#f1f5f9,#ffffff);box-shadow:0 7px 17px rgba(100,116,139,.16)}
+#pg-sales #so-lb .lb-row.bronze{border-color:#fb923c;background:linear-gradient(100deg,#ffedd5,#fff7ed);box-shadow:0 7px 17px rgba(234,88,12,.16)}
+#pg-sales #so-lb .lb-rk{width:28px;font-size:17px;filter:drop-shadow(0 2px 2px rgba(15,23,42,.13))}
+#pg-sales #so-lb .lb-nm{width:66px;font-size:13px;font-weight:900;color:#172554;text-shadow:0 1px 0 #fff}
+#pg-sales #so-lb .lb-bw{height:8px;background:rgba(203,213,225,.52);box-shadow:inset 0 1px 2px rgba(15,23,42,.08)}
+#pg-sales #so-lb .lb-bf{box-shadow:0 2px 7px rgba(6,182,212,.28)}
+#pg-sales #so-lb .lb-rv{min-width:78px;font-size:14px;font-weight:900;color:#0f766e;text-shadow:0 1px 0 #fff,0 3px 8px rgba(13,148,136,.14)}
+#pg-sales #so-lb .lb-pp{min-width:42px;font-size:10px;font-weight:900;color:#7c3aed}
 @media(max-width:760px){.so-hero{padding:23px 20px}.so-hero h2{font-size:22px}.so-filter{min-width:calc(50% - 6px)}.so-insights{grid-template-columns:1fr}.so-toolbar{align-items:stretch;padding:12px}.so-reset{width:100%}#pg-sales .sec{font-size:13px}}
 
 /* ── CROSS SALE DAILY ── */
@@ -597,13 +617,13 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="sec">🏷️ ยอดขายรายแบรนด์</div>
       <div class="g4" id="so-brand"></div>
       <div class="sec">📊 กราฟ &amp; Leaderboard</div>
-      <div class="g31">
-        <div class="card">
+      <div class="g31 so-performance-grid">
+        <div class="card so-performance-card">
           <div class="ct"><span class="dot" style="background:#06b6d4"></span>ยอดขายรวมแยกพนักงาน (Stacked by Brand)</div>
           <div class="cs">เรียงจากยอดสูงสุด · คลิกแท่งเพื่อกรองพนักงาน</div>
           <canvas id="soRevChart" style="max-height:340px"></canvas>
         </div>
-        <div class="card">
+        <div class="card so-performance-card so-leaderboard-card">
           <div class="ct"><span class="dot" style="background:#10b981"></span>🏅 Leaderboard ยอดขาย</div>
           <div class="cs">คลิกเพื่อกรองพนักงานนี้</div>
           <div class="lb" id="so-lb"></div>
@@ -1807,9 +1827,11 @@ function computeGP(){
 function computeSO(){
   const brands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
   const brandKeys=new Set(brands.map(b=>b.k));
-  const staffAll=[...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].sort();
-  const staff=STATE.empA==='all'?staffAll:staffAll.filter(n=>n===STATE.empA);
   const periodNamed=RAW.sales.filter(r=>r.employee&&brandKeys.has(r.brand)&&inPeriod(r.y,r.mo));
+  // แสดงเฉพาะพนักงานที่มีข้อมูลจริงในปี/เดือน/แบรนด์ที่เลือก
+  // เพื่อไม่ให้ชื่อจากเดือนอื่นติดมาเป็นแถวหรือแท่งยอด 0
+  const activeStaff=[...new Set(periodNamed.map(r=>r.employee))].sort();
+  const staff=STATE.empA==='all'?activeStaff:activeStaff.filter(n=>n===STATE.empA);
   const rows=staff.map(name=>{
     const rs=periodNamed.filter(r=>r.employee===name);
     let ord=0,rev=0;const byBrand={};brands.forEach(b=>byBrand[b.k]=0);
