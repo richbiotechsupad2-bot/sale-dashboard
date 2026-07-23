@@ -863,6 +863,11 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-redemption #rd-daily-heading{color:#047857;font-size:20px}
 #pg-redemption #rd-daily-section{padding:0;border:2px solid #5eead4;background:#fff;box-shadow:0 20px 44px rgba(13,148,136,.18)}
 #pg-redemption #rd-daily-section:before{background:linear-gradient(90deg,#059669,#0d9488,#06b6d4)}
+.rd-cross-card{overflow:hidden;border:2px solid #bfdbfe!important;background:radial-gradient(circle at 100% 0,rgba(59,130,246,.16),transparent 32%),linear-gradient(145deg,#fff,#eff6ff)!important}
+.rd-cross-card:before{background:linear-gradient(90deg,#2563eb,#06b6d4,#10b981)!important}
+.rd-top5-card{overflow:hidden;border:2px solid #fed7aa!important;background:radial-gradient(circle at 100% 0,rgba(251,146,60,.17),transparent 34%),linear-gradient(145deg,#fff,#fff7ed)!important}
+.rd-top5-card:before{background:linear-gradient(90deg,#f59e0b,#f97316,#ec4899)!important}
+.rd-top5{width:100%;border-collapse:separate;border-spacing:0 7px;font-size:12px}.rd-top5 th{padding:9px 10px;color:#fff;background:linear-gradient(135deg,#f97316,#ea580c);font-size:11px;font-weight:950}.rd-top5 th:first-child{border-radius:10px 0 0 10px}.rd-top5 th:last-child{border-radius:0 10px 10px 0}.rd-top5 td{padding:10px;background:rgba(255,255,255,.92);border-top:1px solid #ffedd5;border-bottom:1px solid #ffedd5;font-weight:800;transition:.18s}.rd-top5 td:first-child{border-left:1px solid #ffedd5;border-radius:11px 0 0 11px;text-align:center;font-size:17px}.rd-top5 td:last-child{border-right:1px solid #ffedd5;border-radius:0 11px 11px 0;color:#059669;font-weight:950;text-align:right}.rd-top5 tr:hover td{transform:translateY(-2px);background:#fff7ed;box-shadow:0 8px 18px rgba(234,88,12,.10)}.rd-top5 td:nth-child(3),.rd-top5 td:nth-child(4){text-align:center}.rd-top5-name{color:#9a3412;font-weight:950}.rd-top5-share{display:inline-flex;padding:4px 8px;border-radius:999px;color:#9a3412;background:#ffedd5;font-weight:950}
 #pg-redemption .rd-daily-head{padding:24px 25px;background:radial-gradient(circle at 95% 10%,rgba(255,255,255,.7),transparent 20%),linear-gradient(115deg,#a7f3d0,#99f6e4 48%,#bfdbfe)}
 #pg-redemption .rd-daily-icon{width:52px;height:52px;font-size:26px;border-radius:17px;box-shadow:0 10px 22px rgba(5,150,105,.3);animation:rdPulse 2.4s ease-in-out infinite}
 #pg-redemption .rd-daily-title .ct{font-size:20px;color:#064e3b;text-shadow:0 2px 0 rgba(255,255,255,.7)}
@@ -1141,9 +1146,17 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
           <div class="cs">เรียงจากยอดเงินสูงสุด</div>
           <div class="lb" id="rd-lb"></div>
         </div>
+        <div class="card rd-cross-card">
+          <div class="ct"><span class="dot" style="background:#2563eb"></span>📈 ยอด Cross Sale แยกตามแบรนด์</div>
+          <div class="cs">จำนวนและสัดส่วนจาก Cross Sale รวม 302 รายการ</div>
+          <canvas id="rdBrandCross" style="max-height:320px"></canvas>
+        </div>
+        <div class="card rd-top5-card">
+          <div class="ct"><span class="dot" style="background:#f97316"></span>🏆 Top 5 สินค้าขายดีที่สุด</div>
+          <div class="cs">เรียงตามจำนวนชิ้น พร้อมสัดส่วนและยอดขาย</div>
+          <div class="scrl"><table class="rd-top5" id="rd-top5"></table></div>
+        </div>
       </div>
-      <div class="sec">📉 Pareto — สัดส่วนสะสมยอดเงินแลกซื้อ (80/20)</div>
-      <div class="card"><canvas id="rdPareto" style="max-height:280px"></canvas></div>
       <div class="sec">📋 ตารางจำนวนชิ้นแยกสินค้า</div>
       <div class="card" id="rd-product-table-section">
         <div class="ct"><span class="dot" style="background:#d97706"></span>จำนวนชิ้นที่แลกซื้อ แยกพนักงาน × สินค้า</div>
@@ -2965,7 +2978,7 @@ function renderRedemption(){
   const ke=document.getElementById('rd-kpi');ke.innerHTML='';
   [{ic:'📦',l:'ออเดอร์รวม',v:`${fmtN(rd.gU)} ชิ้น`,s:`${rd.rows.length} พนักงาน · ${rd.products.length} สินค้า`,c:'#d97706',g:'#d97706,#f59e0b'},
    {ic:'💰',l:'ยอดเงินรวม',v:fmtB(rd.gRev),s:'ตามช่วงที่เลือก',c:'#059669',g:'#10b981,#059669'},
-   {ic:'📊',l:'avg ต่อคน',v:rd.rows.length?fmtB(rd.gRev/rd.rows.length):'—',s:rd.rows.length?`avg ${(rd.gU/rd.rows.length).toFixed(0)} ชิ้น/คน`:'',c:'#0891b2',g:'#06b6d4,#0891b2'},
+   {ic:'🧴',l:'สินค้าอันดับ 1',v:'สเปรย์ 1 แถม 1',s:'81 ชิ้น · 26.82% ของทั้งหมด',c:'#7c3aed',g:'#8b5cf6,#ec4899'},
    {ic:'🏆',l:'Top',v:rd.top?rd.top.name:'—',s:rd.top?`${fmtB(rd.top.rev)} · ${rd.top.totalUnits} ชิ้น`:'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>rd.top&&setEmpBFilter(STATE.empB===rd.top.name?'all':rd.top.name)},
   ].forEach(k=>ke.appendChild(kpiCard(k)));
   // Daily Cross Sale summary
@@ -2987,14 +3000,21 @@ function renderRedemption(){
     el.innerHTML=`<div class="lb-rk">${r<3?MED[r]:r+1}</div><div class="lb-nm">${s.name}</div><div class="lb-bw"><div class="lb-bf" style="width:${w}%;background:linear-gradient(90deg,#f43f5e,#f59e0b)"></div></div><div class="lb-rv">${fmtB(s.rev)}</div><div class="lb-pp">${s.totalUnits}ชิ้น</div>`;
     lb.appendChild(el);
   });
-  // Pareto (80/20): เรียงจากยอดสูงสุด + เส้นสัดส่วนสะสม
-  let cum=0;
-  const paretoData=rd.rows.map(s=>{cum+=s.rev;return rd.gRev?cum/rd.gRev*100:0;});
-  mkChart('rdPareto',{data:{labels:rd.rows.map(s=>s.name),datasets:[
-    {type:'bar',label:'ยอดเงิน',data:rd.rows.map(s=>s.rev),backgroundColor:'#f43f5ebb',borderRadius:3,order:2,yAxisID:'y'},
-    {type:'line',label:'% สะสม',data:paretoData,borderColor:'#d97706',borderWidth:2,pointRadius:3,pointBackgroundColor:'#d97706',fill:false,order:1,yAxisID:'y1'},
-  ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>c.dataset.type==='line'?` สะสม: ${c.raw.toFixed(1)}%`:` ${fmtB(c.raw)}`}}},
-    scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>'฿'+v.toLocaleString()}},y1:{position:'right',min:0,max:100,grid:{display:false},ticks:{callback:v=>v+'%'}}}}});
+  const brandCross=[
+    {name:'HEAVEN Plus',qty:43,share:14.24,color:'#3b82f6'},
+    {name:'Thelord',qty:62,share:20.53,color:'#ef4444'},
+    {name:'WOLF',qty:162,share:53.64,color:'#8b5cf6'},
+    {name:'เจ้าขุน',qty:35,share:11.59,color:'#f59e0b'}
+  ];
+  mkChart('rdBrandCross',{type:'bar',data:{labels:brandCross.map(x=>x.name),datasets:[{label:'จำนวน Cross Sale',data:brandCross.map(x=>x.qty),backgroundColor:brandCross.map(x=>x.color+'dd'),borderColor:brandCross.map(x=>x.color),borderWidth:2,borderRadius:9}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const x=brandCross[c.dataIndex];return ` ${x.qty} รายการ · ${x.share.toFixed(2)}%`;}}}},scales:{x:{grid:{display:false},ticks:{font:{size:11,weight:'bold'}}},y:{beginAtZero:true,grid:{color:GR},ticks:{font:{weight:'bold'}}}}}});
+  const topProducts=[
+    {name:'สเปรย์ 1 แถม 1',qty:81,share:26.82,revenue:10449},
+    {name:'น้ำหอมพลัส',qty:77,share:25.50,revenue:7700},
+    {name:'กาแฟเจ้าขุน',qty:60,share:19.87,revenue:9000},
+    {name:'สบู่+เจล',qty:49,share:16.23,revenue:4900},
+    {name:'ห่วงรัด',qty:35,share:11.59,revenue:5250}
+  ];
+  document.getElementById('rd-top5').innerHTML=`<thead><tr><th>อันดับ</th><th>สินค้า</th><th>จำนวน</th><th>สัดส่วน</th><th>ยอดขาย (บาท)</th></tr></thead><tbody>${topProducts.map((p,i)=>`<tr><td>${MED[i]||i+1}</td><td class="rd-top5-name">${p.name}</td><td>${p.qty}</td><td><span class="rd-top5-share">${p.share.toFixed(2)}%</span></td><td>${p.revenue.toLocaleString('th-TH')}</td></tr>`).join('')}</tbody>`;
   // Unit table
   const tbl=document.getElementById('rd-tbl');
   const uCls=u=>u===0?'u0':u<=2?'u1':u<=5?'u2':u<=8?'u3':'u4';
