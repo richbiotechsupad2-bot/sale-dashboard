@@ -144,6 +144,16 @@ body{font-family:'Sarabun',sans-serif;background:
 .tbl tfoot td:first-child{text-align:left;}
 .scrl{overflow-x:auto;}
 
+/* ── SALES & ORDERS EXECUTIVE CONTROL ── */
+.so-hero{position:relative;overflow:hidden;border-radius:22px;padding:24px 26px;margin-bottom:14px;color:#fff;background:linear-gradient(125deg,#0f766e 0%,#0891b2 46%,#4f46e5 100%);box-shadow:0 18px 42px rgba(8,145,178,.22)}
+.so-hero:after{content:'↗';position:absolute;right:28px;top:-28px;font-size:150px;font-weight:900;opacity:.09;transform:rotate(-8deg)}
+.so-hero h2{font-size:23px;margin:4px 0 5px;font-weight:900}.so-hero p{font-size:10.5px;opacity:.88}.so-hero small{font-size:8.5px;letter-spacing:1.7px;font-weight:900;opacity:.78}
+.so-toolbar{display:flex;align-items:flex-end;gap:9px;flex-wrap:wrap;padding:14px 16px;margin-bottom:15px;border:1px solid #bae6fd;border-radius:16px;background:linear-gradient(120deg,#ecfeff,#eff6ff 52%,#f5f3ff);box-shadow:0 8px 22px rgba(14,116,144,.08)}
+.so-filter{display:flex;flex-direction:column;gap:5px;min-width:145px;flex:1}.so-filter label{font-size:8px;font-weight:900;color:#475569;letter-spacing:.7px}.so-filter select{width:100%;padding:9px 10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#0f172a;font-family:'Sarabun',sans-serif;font-size:10.5px;font-weight:800;outline:none}.so-filter select:focus{border-color:#0891b2;box-shadow:0 0 0 3px rgba(8,145,178,.12)}
+.so-reset{padding:9px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#475569;font-family:'Sarabun',sans-serif;font-size:9.5px;font-weight:900;cursor:pointer}.so-reset:hover{border-color:#ef4444;color:#dc2626}
+.so-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 18px}.so-insight{position:relative;overflow:hidden;padding:14px 15px;border-radius:14px;border:1px solid #e2e8f0;background:#fff;box-shadow:var(--shadow-sm)}.so-insight:before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,#06b6d4)}.so-insight b{display:block;font-size:11px;color:#0f172a;margin-bottom:4px}.so-insight span{font-size:9.5px;line-height:1.55;color:#475569}
+@media(max-width:760px){.so-hero{padding:20px}.so-hero h2{font-size:19px}.so-filter{min-width:calc(50% - 6px)}.so-insights{grid-template-columns:1fr}.so-toolbar{align-items:stretch}.so-reset{width:100%}}
+
 /* ── CROSS SALE DAILY ── */
 #rd-daily-heading{margin-top:22px;color:#047857;letter-spacing:2px;}
 #rd-daily-heading::after{background:linear-gradient(90deg,#10b98155,transparent);}
@@ -538,8 +548,18 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: SALES & ORDERS ═══ -->
     <div id="pg-sales" class="page"><div class="wrap">
-      <div class="sec">💰 ภาพรวมยอดขาย &amp; ออเดอร์ — ตามช่วงเวลาที่เลือก</div>
+      <div class="so-hero"><small>EXECUTIVE SALES PERFORMANCE · JULY 2026</small><h2>💰 Sale &amp; Orders — ผลงานเดือนกรกฎาคม</h2><p>ข้อมูลสะสม 26/06/2026–22/07/2026 · กรอง เจาะลึก และจัดอันดับได้ทันที</p></div>
+      <div class="so-toolbar">
+        <div class="so-filter"><label>🏷️ สินค้า / แบรนด์</label><select id="soBrandFilter" onchange="setSOBrand(this.value)"></select></div>
+        <div class="so-filter"><label>👤 รายชื่อพนักงาน</label><select id="soEmployeeFilter" onchange="setSOEmployee(this.value)"></select></div>
+        <div class="so-filter"><label>📦 จำนวนออเดอร์ขั้นต่ำ</label><select id="soOrderFilter" onchange="setSOView('minOrders',this.value)"><option value="0">ทั้งหมด</option><option value="1000">1,000 ขึ้นไป</option><option value="2000">2,000 ขึ้นไป</option><option value="2400">2,400 ขึ้นไป</option></select></div>
+        <div class="so-filter"><label>💰 ยอดขายขั้นต่ำ</label><select id="soRevenueFilter" onchange="setSOView('minRevenue',this.value)"><option value="0">ทั้งหมด</option><option value="500000">500,000 บาทขึ้นไป</option><option value="700000">700,000 บาทขึ้นไป</option><option value="790000">790,000 บาทขึ้นไป</option></select></div>
+        <div class="so-filter"><label>🏆 จัดอันดับตาม</label><select id="soSortFilter" onchange="setSOView('sort',this.value)"><option value="revenue">ยอดขายสูงสุด</option><option value="orders">ออเดอร์สูงสุด</option><option value="average">เฉลี่ยต่อออเดอร์สูงสุด</option><option value="name">รายชื่อ A–Z</option></select></div>
+        <button class="so-reset" onclick="resetSOFilters()">↻ ล้างตัวกรอง</button>
+      </div>
+      <div class="sec">💰 ภาพรวมยอดขาย &amp; ออเดอร์ — ตามตัวกรองที่เลือก</div>
       <div class="krow k5" id="so-kpi"></div>
+      <div class="so-insights" id="so-insights"></div>
       <div class="sec">🏷️ ยอดขายรายแบรนด์</div>
       <div class="g4" id="so-brand"></div>
       <div class="sec">📊 กราฟ &amp; Leaderboard</div>
@@ -866,7 +886,7 @@ const LOAD_STATUS={sales:{state:'none',rows:0,detail:''},targets:{state:'none',r
 // เปิดให้ตรวจสอบ/debug ผ่าน console ของเบราว์เซอร์ได้ (window.RAW, window.STATE) — ไม่กระทบการทำงานปกติ
 if(typeof window!=='undefined'){window.RAW=RAW;window.DATA_SOURCE=DATA_SOURCE;window.LOAD_STATUS=LOAD_STATUS;}
 
-/* ══════ SEED DATA — ข้อมูลตัวอย่าง (กรกฎาคม 2569 ชุดเดิมทุกตัวเลข ไม่แต่งเติม) ══════
+/* ══════ SEED DATA — ข้อมูลจริงสะสม 26/06/2026–22/07/2026 ══════
    หมายเหตุความละเอียดของข้อมูลเดิม (สำคัญ เพื่อความโปร่งใส):
    • ยอดขายรวมทีมรายวันแยกแบรนด์ (employee เว้นว่าง) = ข้อมูลจริงรายวัน 18 วัน (26/6–13/7)
      ใช้สำหรับกราฟเทรนด์ / เป้ารายเดือน / พยากรณ์เท่านั้น (ไม่นับซ้ำกับยอดรายพนักงานด้านล่าง)
@@ -885,12 +905,12 @@ const SEED_SALES=(function(){
   };
   Object.keys(brandDaily).forEach(bk=>dates.forEach((dt,i)=>rows.push({date:dt,employee:'',brand:bk,orders:'',revenue:brandDaily[bk][i]})));
   const empBrand={
-    hv:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[223,209,133,137,184,222,203,55,169,165],r:[97347,93681,62097,60942,94194,100327,86097,23055,74311,69755]},
-    tl:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[361,402,224,279,280,366,325,101,264,381],r:[117211,149986,74422,88687,98339,127819,118692,29119,93625,133294]},
-    wolf:{staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[797,963,639,683,820,914,932,294,683,895],r:[211380,265725,175308,180845,222408,245341,243194,78983,187323,237848]},
-    jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[204,174,119,62,171,207,174,2,142,157],r:[74350,66150,47650,23250,61900,77800,63550,700,54650,57550]},
+    hv:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[342,305,182,212,88,286,331,288,253,204],r:[149328,131575,81237,93817,37772,135332,143478,126322,105906,86976]},
+    tl:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[521,542,312,418,163,449,569,438,413,479],r:[165270,193204,105724,139405,51217,157598,193674,155699,143445,166705]},
+    wolf:{staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[1293,1444,808,1002,430,1253,1330,1327,1087,1193],r:[346202,395443,224338,268945,113847,335944,351714,354978,292299,316299]},
+    jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[272,236,158,118,8,264,271,227,233,192],r:[100700,92150,61900,43850,2800,98100,104100,84400,90750,71500]},
   };
-  Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-13',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
+  Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-22',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
   return rows;
 })();
 const SEED_TARGETS=[ // เป้ารายวันต่อแบรนด์ (จริง จากไฟล์เดิม) — เป้ารายพนักงานยังไม่มีระบุในไฟล์เดิม จึงเว้นว่างไว้ก่อน (ไม่จำเป็นสำหรับเดือน ก.ค. 2569 เพราะใช้ DailyTargetSummary แทน)
@@ -1225,6 +1245,11 @@ async function saveSheetSettingsAndReload(){
    empB : 'all' | ชื่อไทย (GP%/Redemption namespace)
    ══════════════════════════════════════════════════════════════════ */
 const STATE={year:'all',month:'all',brand:'all',empA:'all',empB:'all'};
+const SO_VIEW={minOrders:0,minRevenue:0,sort:'revenue'};
+function setSOView(key,value){SO_VIEW[key]=key==='sort'?value:Number(value)||0;renderSales()}
+function setSOBrand(value){setBrandFilter(value)}
+function setSOEmployee(value){setEmpAFilter(value)}
+function resetSOFilters(){SO_VIEW.minOrders=0;SO_VIEW.minRevenue=0;SO_VIEW.sort='revenue';STATE.brand='all';STATE.empA='all';refreshChips();renderSales()}
 if(typeof window!=='undefined')window.STATE=STATE;
 const CH={};
 function destroyChart(id){if(CH[id]){CH[id].destroy();delete CH[id];}}
@@ -1688,15 +1713,18 @@ function computeSO(){
     let ord=0,rev=0;const byBrand={};brands.forEach(b=>byBrand[b.k]=0);
     rs.forEach(r=>{ord+=r.orders;rev+=r.revenue;byBrand[r.brand]+=r.revenue;});
     return{name,ord,rev,avgOrder:ord?Math.round(rev/ord):0,byBrand};
-  });
-  const sortRev=[...rows].sort((a,b)=>b.rev-a.rev);
+  }).filter(r=>r.ord>=SO_VIEW.minOrders&&r.rev>=SO_VIEW.minRevenue);
+  const sorters={revenue:(a,b)=>b.rev-a.rev,orders:(a,b)=>b.ord-a.ord,average:(a,b)=>b.avgOrder-a.avgOrder,name:(a,b)=>a.name.localeCompare(b.name)};
+  const sortRev=[...rows].sort(sorters[SO_VIEW.sort]||sorters.revenue);
   const totalOrd=sum(rows.map(r=>r.ord)),totalRev=sum(rows.map(r=>r.rev));
+  const visibleNames=new Set(rows.map(r=>r.name));
   const brandTotals=brands.map(b=>{
-    const rs=periodNamed.filter(r=>r.brand===b.k&&(STATE.empA==='all'||r.employee===STATE.empA));
+    const rs=periodNamed.filter(r=>r.brand===b.k&&visibleNames.has(r.employee));
     const o=sum(rs.map(r=>r.orders)),r=sum(rs.map(r=>r.revenue));
     return{b,o,r,avg:o?Math.round(r/o):0,pct:totalRev?r/totalRev*100:0};
   });
-  return{brands,rows,sortRev,totalOrd,totalRev,avgOrderValue:totalOrd?Math.round(totalRev/totalOrd):0,brandTotals,topRevenue:sortRev[0]||null};
+  const topRevenue=[...rows].sort((a,b)=>b.rev-a.rev)[0]||null;
+  return{brands,rows,sortRev,totalOrd,totalRev,avgOrderValue:totalOrd?Math.round(totalRev/totalOrd):0,brandTotals,topRevenue};
 }
 
 // เป้ารายวันรายพนักงาน: คำนวณจริงจาก Sales รายวัน + Targets ถ้ามีข้อมูลรายวันเพียงพอ (≥5 วันจริงต่อคนในช่วงที่เลือก)
@@ -1901,6 +1929,13 @@ function renderPerformance(){
 function renderSales(){
   const so=computeSO();
   renderHeaderStats();
+  const brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
+  brandSel.innerHTML='<option value="all">สินค้าทั้งหมด</option>'+DATA.brandMeta.map(b=>`<option value="${b.k}" ${STATE.brand===b.k?'selected':''}>${b.ic} ${b.lb}</option>`).join('');
+  const employees=[...new Set(RAW.sales.filter(r=>r.employee).map(r=>r.employee))].sort();
+  empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+employees.map(n=>`<option value="${n}" ${STATE.empA===n?'selected':''}>${n}</option>`).join('');
+  document.getElementById('soOrderFilter').value=String(SO_VIEW.minOrders);
+  document.getElementById('soRevenueFilter').value=String(SO_VIEW.minRevenue);
+  document.getElementById('soSortFilter').value=SO_VIEW.sort;
   const ke=document.getElementById('so-kpi');ke.innerHTML='';
   const topShareBrand=[...so.brandTotals].sort((a,b)=>b.pct-a.pct)[0];
   [{ic:'📦',l:'ออเดอร์รวม',v:fmtN(so.totalOrd),s:`${so.rows.length} พนักงาน · ${so.brands.length} แบรนด์`,c:'#d97706',g:'#d97706,#f59e0b'},
@@ -1909,6 +1944,14 @@ function renderSales(){
    {ic:'🏆',l:'Top Revenue',v:so.topRevenue?so.topRevenue.name:'—',s:so.topRevenue?fmtB(so.topRevenue.rev):'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>so.topRevenue&&setEmpAFilter(STATE.empA===so.topRevenue.name?'all':so.topRevenue.name)},
    topShareBrand?{ic:topShareBrand.b.ic,l:`${topShareBrand.b.sh} สัดส่วน`,v:fmtPct(topShareBrand.pct),s:'สัดส่วนสูงสุดในทีม',c:topShareBrand.b.c,g:topShareBrand.b.c+',#ffffff'}:{ic:'—',l:'—',v:'—',s:'',c:'#647090',g:'#647090,#647090'},
   ].forEach(k=>ke.appendChild(kpiCard(k)));
+  const insight=document.getElementById('so-insights');
+  const topOrders=[...so.rows].sort((a,b)=>b.ord-a.ord)[0],topAvg=[...so.rows].sort((a,b)=>b.avgOrder-a.avgOrder)[0];
+  const concentration=so.totalRev&&so.sortRev.length?so.sortRev.slice(0,3).reduce((a,r)=>a+r.rev,0)/so.totalRev*100:0;
+  insight.innerHTML=so.rows.length?`
+    <div class="so-insight" style="--accent:#10b981"><b>🏆 ผู้นำยอดขาย</b><span>${so.topRevenue.name} ทำยอด ${fmtB(so.topRevenue.rev)} คิดเป็น ${fmtPct(so.topRevenue.rev/so.totalRev*100)} ของยอดตามตัวกรอง</span></div>
+    <div class="so-insight" style="--accent:#f59e0b"><b>📦 ผู้นำจำนวนออเดอร์</b><span>${topOrders.name} มี ${fmtN(topOrders.ord)} ออเดอร์ · ส่วน ${topAvg.name} มีค่าเฉลี่ยต่อออเดอร์สูงสุด ${fmtB(topAvg.avgOrder)}</span></div>
+    <div class="so-insight" style="--accent:#8b5cf6"><b>🧠 Executive Focus</b><span>Top 3 สร้างยอดขายรวม ${fmtPct(concentration)} · แบรนด์หลักคือ ${topShareBrand?topShareBrand.b.lb:'—'} สัดส่วน ${topShareBrand?fmtPct(topShareBrand.pct):'—'}</span></div>`:
+    '<div class="so-insight" style="--accent:#ef4444;grid-column:1/-1"><b>ไม่พบข้อมูล</b><span>ลองลดเกณฑ์ออเดอร์/ยอดขาย หรือกด “ล้างตัวกรอง”</span></div>';
   // Brand cards
   const bc=document.getElementById('so-brand');bc.innerHTML='';
   so.brandTotals.forEach(t=>{
