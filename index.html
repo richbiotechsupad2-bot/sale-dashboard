@@ -2250,7 +2250,13 @@ function renderGPMonthlyTrend(monthNames){
   const wrap=document.getElementById('gpTrendWrap');
   const show=STATE.month==='all'&&STATE.empB!=='all';
   wrap.classList.toggle('show',show);
-  if(!show){if(CHARTS.gpMonthlyTrendChart){CHARTS.gpMonthlyTrendChart.destroy();delete CHARTS.gpMonthlyTrendChart;}return;}
+  if(!show){
+    if(CH.gpMonthlyTrendChart){
+      CH.gpMonthlyTrendChart.destroy();
+      delete CH.gpMonthlyTrendChart;
+    }
+    return;
+  }
   const employee=STATE.empB;
   const allBrands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
   const rows=RAW.gp.filter(r=>r.y===+STATE.year&&r.employee===employee&&allBrands.some(b=>b.k===r.brand));
