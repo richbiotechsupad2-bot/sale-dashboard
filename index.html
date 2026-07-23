@@ -636,6 +636,11 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-leaderboard .g2>.card:nth-child(2){border-top:6px solid #f59e0b}
 #pg-leaderboard .g2:nth-of-type(2)>.card:nth-child(1){border-top-color:#8b5cf6}
 #pg-leaderboard .g2:nth-of-type(2)>.card:nth-child(2){border-top-color:#f43f5e}
+#pg-leaderboard .lbh-featured>.card:nth-child(1){border-top-color:#8b5cf6;background:linear-gradient(145deg,#fff,#faf5ff 58%,#ede9fe)}
+#pg-leaderboard .lbh-featured>.card:nth-child(2){border-top-color:#f59e0b;background:linear-gradient(145deg,#fff,#fff7ed 58%,#fef3c7)}
+#pg-leaderboard .lbh-featured .ct{font-size:19px}
+#pg-leaderboard .lbh-featured .cs{font-size:11px}
+#pg-leaderboard .lb-empty{padding:18px;border:1px dashed #cbd5e1;border-radius:14px;background:#f8fafc;color:#64748b;font-size:12px;font-weight:800;text-align:center}
 #pg-leaderboard .ct{font-size:17px;font-weight:950;color:#1e1b4b}
 #pg-leaderboard .cs{margin-top:4px;font-size:10.5px;font-weight:800;color:#64748b}
 #pg-leaderboard .lb{display:grid;gap:9px;margin-top:14px}
@@ -1172,19 +1177,18 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: LEADERBOARD HUB ═══ -->
     <div id="pg-leaderboard" class="page"><div class="wrap">
-      <div class="hub-hero"><div class="hub-eyebrow">MULTI-DIMENSION PERFORMANCE RANKING</div><div class="hub-title">🏆 Leaderboard — ใครโดดเด่นในมิติไหน</div><div class="hub-sub">จัดอันดับจากยอดขาย ออเดอร์ GP% เป้ารายวัน และสิทธิ์แลกซื้อ พร้อมคะแนนภาพรวมแบบสมดุล</div></div>
+      <div class="hub-hero"><div class="hub-eyebrow">PERFORMANCE LEADERBOARD</div><div class="hub-title">🏆 Leaderboard — ใครโดดเด่นในมิติไหน</div><div class="hub-sub">จัดอันดับจากข้อมูลจริงของยอดขาย ออเดอร์ GP% และสิทธิ์แลกซื้อ ตามตัวกรองที่เลือก</div></div>
       <div class="hub-toolbar" id="leaderboard-toolbar"></div>
       <div class="lb-summary" id="lb-summary"></div>
-      <div class="sec">👑 Overall Performance Index — อันดับรวมหลายมิติ</div>
-      <div class="card"><div class="overall-rank" id="lbh-overall"></div></div>
-      <div class="sec">🏆 Leaderboard Hub — รวมทุกโมดูล</div>
+      <div class="sec">⭐🎁 ผู้นำด้านคุณภาพและสิทธิ์แลกซื้อ</div>
+      <div class="g2 lbh-featured">
+        <div class="card"><div class="ct">⭐ Top GP% เฉลี่ย</div><div class="cs">อันดับพนักงานตาม GP% เฉลี่ยของแบรนด์ที่เลือก</div><div class="lb" id="lbh-gp"></div></div>
+        <div class="card"><div class="ct">🎁 Top สิทธิ์แลกซื้อ</div><div class="cs">อันดับพนักงานตามยอดเงินแลกซื้อ พร้อมจำนวนชิ้น</div><div class="lb" id="lbh-rd"></div></div>
+      </div>
+      <div class="sec">🏆 Leaderboard ยอดขายและออเดอร์</div>
       <div class="g2">
         <div class="card"><div class="ct">🥇 Top ยอดขาย (Sales &amp; Orders)</div><div class="cs">อันดับพนักงานตามยอดขายรวม</div><div class="lb" id="lbh-sales"></div></div>
         <div class="card"><div class="ct">📦 Top ออเดอร์ (Sales &amp; Orders)</div><div class="cs">อันดับพนักงานตามจำนวนออเดอร์</div><div class="lb" id="lbh-orders"></div></div>
-      </div>
-      <div class="g2" style="margin-top:14px">
-        <div class="card"><div class="ct">⭐ Top GP% เฉลี่ย</div><div class="cs">อันดับพนักงานตาม GP% เฉลี่ย 4 แบรนด์</div><div class="lb" id="lbh-gp"></div></div>
-        <div class="card"><div class="ct">🎁 Top สิทธิ์แลกซื้อ</div><div class="cs">อันดับพนักงานตามยอดเงินแลกซื้อ</div><div class="lb" id="lbh-rd"></div></div>
       </div>
       <div class="sec">⚠️ Bottom 10 — ยอดขายต่ำสุด (Sales &amp; Orders)</div>
       <div class="card"><div class="lb" id="lbh-bottom"></div></div>
@@ -2969,15 +2973,12 @@ function renderLeaderboard(){
   renderHeaderStats();
   renderExecutiveToolbar('leaderboard-toolbar');
   const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption();
-  const overall=overallPerformanceRows(so,gp,dly,rd);
-  const topSales=so.sortRev[0],topGP=[...gp.rows].filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP)[0],topDaily=[...dly.rows].sort((a,b)=>(b.pco+b.pcr)-(a.pco+a.pcr))[0];
+  const topSales=so.sortRev[0],topGP=[...gp.rows].filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP)[0],topRedemption=rd.rows[0];
   document.getElementById('lb-summary').innerHTML=[
     {l:'ผู้นำยอดขาย',v:topSales?(EMP_ALIAS[topSales.name]||topSales.name):'—',s:topSales?fmtB(topSales.rev):'ไม่มีข้อมูล'},
     {l:'ผู้นำ GP% เฉลี่ย',v:topGP?topGP.name:'—',s:topGP?fmtPct(topGP.avgGP,1):'ไม่มีข้อมูล'},
-    {l:'ผู้นำผ่านเป้ารายวัน',v:topDaily?(EMP_ALIAS[topDaily.n]||topDaily.n):'—',s:topDaily?`เฉลี่ย ${fmtPct((topDaily.pco+topDaily.pcr)/2,1)}`:'ไม่มีข้อมูล'}
+    {l:'ผู้นำสิทธิ์แลกซื้อ',v:topRedemption?topRedemption.name:'—',s:topRedemption?`${fmtB(topRedemption.rev)} · ${fmtN(topRedemption.totalUnits)} ชิ้น`:'ไม่มีข้อมูล'}
   ].map(x=>`<div class="lb-summary-card"><small>${x.l} · ${executivePeriodLabel()}</small><b>${x.v}</b><span>${x.s}</span></div>`).join('');
-  const overallEl=document.getElementById('lbh-overall');
-  overallEl.innerHTML=overall.length?overall.map((x,r)=>`<div class="overall-row" onclick="setEmpBFilter('${x.name}')"><div class="lb-rk">${r<3?MED[r]:r+1}</div><div><div class="lb-nm">${x.name}</div><div class="overall-meta">มีข้อมูล ${x.coverage} มิติ</div></div><div class="overall-bar"><i style="width:${x.score}%"></i></div><div class="overall-score">${x.score.toFixed(1)} คะแนน</div></div>`).join(''):'<div class="overall-meta">ไม่มีข้อมูลในช่วงที่เลือก</div>';
   // Top Sales
   const es=document.getElementById('lbh-sales');es.innerHTML='';
   so.sortRev.forEach((s,r)=>es.appendChild(lbRow(r,EMP_ALIAS[s.name]||s.name,fmtBK(s.rev),so.sortRev[0]&&so.sortRev[0].rev?s.rev/so.sortRev[0].rev*100:0,'#06b6d4,#10b981',()=>setEmpAFilter(STATE.empA===s.name?'all':s.name))));
@@ -2988,11 +2989,13 @@ function renderLeaderboard(){
   // Top GP% (เฉพาะพนักงานที่มีข้อมูล GP% ในช่วงที่เลือก)
   const sortGP=gp.rows.filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP);
   const eg=document.getElementById('lbh-gp');eg.innerHTML='';
-  if(!sortGP.length) eg.innerHTML='<div style="color:var(--muted);font-size:10.5px;padding:8px">ไม่มีข้อมูล GP% ในช่วงที่เลือก</div>';
+  if(!sortGP.length) eg.innerHTML='<div class="lb-empty">ยังไม่มีข้อมูล GP% ในช่วงและตัวกรองที่เลือก</div>';
   sortGP.forEach((s,r)=>eg.appendChild(lbRow(r,s.name,s.avgGP.toFixed(1)+'%',sortGP[0]?s.avgGP/sortGP[0].avgGP*100:0,'#8b5cf6,#7c3aed',()=>setEmpBFilter(STATE.empB===s.name?'all':s.name))));
   // Top Redemption
   const er=document.getElementById('lbh-rd');er.innerHTML='';
-  rd.rows.forEach((s,r)=>er.appendChild(lbRow(r,s.name,fmtB(s.rev),rd.rows[0]&&rd.rows[0].rev?s.rev/rd.rows[0].rev*100:0,'#f43f5e,#f59e0b',()=>setEmpBFilter(STATE.empB===s.name?'all':s.name))));
+  const redemptionRows=rd.rows.filter(s=>s.totalUnits>0||s.rev>0);
+  if(!redemptionRows.length) er.innerHTML='<div class="lb-empty">ยังไม่มีข้อมูลสิทธิ์แลกซื้อในช่วงและตัวกรองที่เลือก</div>';
+  redemptionRows.forEach((s,r)=>er.appendChild(lbRow(r,s.name,`${fmtB(s.rev)} · ${fmtN(s.totalUnits)} ชิ้น`,redemptionRows[0]&&redemptionRows[0].rev?s.rev/redemptionRows[0].rev*100:0,'#f43f5e,#f59e0b',()=>setEmpBFilter(STATE.empB===s.name?'all':s.name))));
   // Bottom 10 (ยอดขายต่ำสุด)
   const bottom=[...so.rows].sort((a,b)=>a.rev-b.rev);
   const eb=document.getElementById('lbh-bottom');eb.innerHTML='';
