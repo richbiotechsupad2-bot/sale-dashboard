@@ -371,7 +371,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         </div>
         <div class="hdr-right" id="hdrStats"></div>
       </div>
-      <div class="fbar">
+      <div class="fbar" style="display:none" aria-hidden="true">
         <span class="fbar-lbl">📆 ปี</span>
         <select class="fsel" id="fYear" onchange="setYearFilter(this.value)">
           <option value="all">ภาพรวมทั้งหมด (All-Time)</option>
@@ -596,8 +596,8 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: SA · ACCOUNT · PAGE OWNERSHIP ═══ -->
     <div id="pg-accounts" class="page"><div class="wrap">
-      <div class="acc-hero"><div class="acc-eyebrow">ACCOUNT · STATUS · BRAND · PAGE</div><div class="acc-title">👤 สถานะบัญชีและการรับเพจ</div><div class="acc-sub">ตรวจสอบชื่อบัญชี สถานะบัญชี แบรนด์ และสถานะการรับเพจ โดยไม่มีช่อง SA</div></div>
-      <div class="acc-warning">ℹ️ ตารางนี้ไม่เก็บ ID เบอร์โทร รหัสผ่าน E-mail หรือ 2FA · ข้อมูลที่กรอกบันทึกเฉพาะในเบราว์เซอร์เครื่องที่ใช้งาน</div>
+      <div class="acc-hero"><div class="acc-eyebrow">ACCOUNT · STATUS · BRAND · PAGE</div><div class="acc-title">👤 สถานะบัญชีและการรับเพจ</div><div class="acc-sub">ตรวจสอบชื่อบัญชี สถานะบัญชี แบรนด์ และสถานะการรับเพจ</div></div>
+      <div class="acc-warning">ℹ️ ตารางนี้ไม่เก็บ ID เบอร์โทร รหัสผ่าน E-mail หรือ 2FA หากต้องการข้อมูล แจ้งขอที่ Sup</div>
       <div class="acc-kpis"><div class="acc-kpi"><span>ชื่อบัญชี</span><b id="accKpiAccount">0</b></div><div class="acc-kpi"><span>มีเพจแล้ว</span><b id="accKpiHave">0</b></div><div class="acc-kpi"><span>ยังไม่มีเพจ</span><b id="accKpiMissing">0</b></div><div class="acc-kpi"><span>รับเพจไม่ได้</span><b id="accKpiBlocked">0</b></div></div>
       <div class="acc-toolbar">
         <div class="acc-field"><label>ค้นหา</label><input id="accSearch" class="acc-input" placeholder="ชื่อบัญชี แบรนด์ หรือชื่อเพจ" oninput="renderAccounts()"></div>
