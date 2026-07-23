@@ -249,6 +249,7 @@ body{font-family:'Sarabun',sans-serif;background:
 #pg-performance .hmap td{padding:11px 10px;background:#fff;border-top:1px solid #ede9fe;border-bottom:1px solid #ede9fe;font-size:12px;font-weight:900;transition:transform .15s ease,filter .15s ease}#pg-performance .hmap tr:hover td{filter:saturate(1.12);transform:translateY(-1px)}#pg-performance .hmap td:first-child{border-left:1px solid #ede9fe;border-radius:11px 0 0 11px;font-size:13.5px;font-weight:900;color:#312e81}#pg-performance .hmap td:last-child{border-right:1px solid #ede9fe;border-radius:0 11px 11px 0}
 #pg-performance .hmap td.cph{background:linear-gradient(135deg,#a7f3d0,#ecfdf5);color:#047857;box-shadow:inset 5px 0 #059669}#pg-performance .hmap td.cpl{background:linear-gradient(135deg,#d1fae5,#f0fdf4);color:#047857;box-shadow:inset 5px 0 #10b981}#pg-performance .hmap td.cfm{background:linear-gradient(135deg,#ffe4e6,#fff1f2);color:#be123c;box-shadow:inset 5px 0 #fb7185}#pg-performance .hmap td.cfh{background:linear-gradient(135deg,#fecdd3,#fff1f2);color:#be123c;box-shadow:inset 5px 0 #e11d48}
 #pg-performance .scrd{position:relative;overflow:hidden;padding:20px;border-radius:20px;border:1px solid #ede9fe;background:linear-gradient(145deg,#fff 35%,#f8f7ff);box-shadow:0 12px 27px rgba(76,29,149,.13);transition:transform .2s ease,box-shadow .2s ease}#pg-performance .scrd:hover{transform:translateY(-5px);box-shadow:0 19px 35px rgba(76,29,149,.2)}#pg-performance .scrd-name{font-size:18px;color:#312e81;text-shadow:0 2px 0 #fff,0 4px 12px #7c3aed1f}#pg-performance .sn{padding:10px 11px;background:linear-gradient(145deg,#fff,#fafafa);border:1px solid #ede9fe;border-radius:11px;box-shadow:0 4px 10px #312e810a}#pg-performance .sn-v{font-size:16px;text-shadow:0 1px 0 #fff;font-weight:900}
+.gp-trend-wrap{display:none}.gp-trend-wrap.show{display:block}.gp-trend-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:15px}.gp-trend-pill{padding:15px 16px;border:1px solid #ddd6fe;border-radius:17px;background:linear-gradient(145deg,#fff,#f5f3ff);box-shadow:0 9px 22px #6d28d91a}.gp-trend-pill b{display:block;font-size:20px;color:#312e81;margin-top:4px}.gp-trend-pill span{font-size:9px;font-weight:900;color:#64748b}.gp-trend-table{min-width:900px;border-collapse:separate;border-spacing:0 6px}.gp-trend-table th{padding:11px 9px;background:linear-gradient(135deg,#0f766e,#7c3aed);color:#fff;font-size:9px}.gp-trend-table th:first-child{border-radius:10px 0 0 10px}.gp-trend-table th:last-child{border-radius:0 10px 10px 0}.gp-trend-table td{padding:11px 9px;text-align:center;background:#fff;border-top:1px solid #ede9fe;border-bottom:1px solid #ede9fe;font-size:11px;font-weight:900}.gp-trend-table td:first-child{border-left:1px solid #ede9fe;border-radius:10px 0 0 10px;color:#312e81;text-align:left}.gp-trend-table td:last-child{border-right:1px solid #ede9fe;border-radius:0 10px 10px 0}.gp-up{color:#047857;background:#ecfdf5!important}.gp-down{color:#be123c;background:#fff1f2!important}.gp-flat{color:#a16207;background:#fffbeb!important}@media(max-width:760px){.gp-trend-summary{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(prefers-reduced-motion:reduce){.gp-hero-badge{animation:none}#pg-performance .kpi,#pg-performance .scrd,#pg-performance .hmap td{transition:none}}
 @media(max-width:760px){.gp-hero{padding:22px 19px;align-items:flex-start;flex-direction:column}.gp-hero h2{font-size:23px}.gp-filter{min-width:calc(50% - 6px)}.gp-reset{width:100%}.gp-hero-badge{white-space:normal}}
 
@@ -663,6 +664,16 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="ct"><span class="dot" style="background:#f59e0b"></span>GP% รายพนักงาน — คลิกแถว/หัวคอลัมน์เพื่อกรอง</div>
         <div class="cs">สีเขียวเข้ม = เกิน+3% · สีเขียวอ่อน = ผ่านเกณฑ์ · สีชมพูอ่อน = ต่ำกว่า −3% · สีแดง = ต่ำมาก</div>
         <div class="scrl"><table class="hmap" id="gp-hmap"></table></div>
+      </div>
+      <div class="gp-trend-wrap" id="gpTrendWrap">
+        <div class="sec" id="gpTrendHeading">📅 พัฒนาการรายเดือน</div>
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#10b981"></span><span id="gpTrendTitle">แนวโน้ม GP% รายเดือน</span></div>
+          <div class="cs">เปรียบเทียบแต่ละเดือนตามจริง · ลูกศรแสดงการเปลี่ยนแปลงจากเดือนก่อน</div>
+          <div class="gp-trend-summary" id="gpTrendSummary"></div>
+          <canvas id="gpMonthlyTrendChart" style="max-height:285px"></canvas>
+          <div class="scrl" style="margin-top:14px"><table class="gp-trend-table" id="gpTrendTable"></table></div>
+        </div>
       </div>
       <div class="sec">📊 กราฟ GP%</div>
       <div class="g2">
@@ -2204,6 +2215,9 @@ function renderPerformance(){
     h+=`<td style="color:${r.avgGP==null?'var(--muted)':r.avgGP>=28?'#059669':'#d97706'};font-weight:900">${r.avgGP==null?'—':r.avgGP.toFixed(2)+'%'}</td><td style="color:${!r.knownCount?'var(--muted)':r.passCount/r.knownCount>=0.75?'#059669':r.passCount/r.knownCount>=0.5?'#d97706':'#dc2626'};font-weight:900">${r.knownCount?r.passCount+'/'+r.knownCount:'—'}</td></tr>`;
   });
   hm.innerHTML=h+'</tbody>';
+  // เมื่อเลือก "ทุกเดือน" และพนักงานคนเดียว ให้เปิดรายละเอียดรายเดือนจริง
+  // แทนการแสดงเพียงค่าเฉลี่ยรวมที่ไม่บอกพัฒนาการ
+  renderGPMonthlyTrend(monthNames);
   // Grouped bar
   mkChart('gpChart',{type:'bar',data:{labels:gp.rows.map(r=>r.name),datasets:gp.brands.map(b=>({label:b.lb,data:gp.rows.map(r=>{const v=r.vals.find(x=>x.b.k===b.k);return v&&v.v!=null?v.v:null;}),backgroundColor:b.c+'99',borderRadius:3,_bk:b.k}))},
     options:{responsive:true,onClick:(e,els)=>{if(els.length){const ds=els[0].datasetIndex;setBrandFilter(gp.brands[ds].k===STATE.brand?'all':gp.brands[ds].k);}},
@@ -2230,6 +2244,51 @@ function renderPerformance(){
     <span class="sbadge" style="background:${bc}18;border-color:${bc}55;color:${bc}">${r.badge}</span>`;
     gc.appendChild(el);
   });
+}
+
+function renderGPMonthlyTrend(monthNames){
+  const wrap=document.getElementById('gpTrendWrap');
+  const show=STATE.month==='all'&&STATE.empB!=='all';
+  wrap.classList.toggle('show',show);
+  if(!show){if(CHARTS.gpMonthlyTrendChart){CHARTS.gpMonthlyTrendChart.destroy();delete CHARTS.gpMonthlyTrendChart;}return;}
+  const employee=STATE.empB;
+  const allBrands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
+  const rows=RAW.gp.filter(r=>r.y===+STATE.year&&r.employee===employee&&allBrands.some(b=>b.k===r.brand));
+  const months=[...new Set(rows.map(r=>r.mo))].sort((a,b)=>a-b);
+  const monthly=months.map(m=>{
+    const br=allBrands.map(b=>{
+      const r=rows.find(x=>x.mo===m&&x.brand===b.k);
+      return{b,v:r?r.gpPercent:null,t:r?r.thresholdPercent:null,pass:r?+r.gpPercent>=+r.thresholdPercent:false};
+    });
+    const known=br.filter(x=>x.v!=null);
+    return{m,br,avg:known.length?avg(known.map(x=>x.v)):null,pass:known.filter(x=>x.pass).length,total:known.length};
+  });
+  const first=monthly.find(x=>x.avg!=null),last=[...monthly].reverse().find(x=>x.avg!=null);
+  const change=first&&last?last.avg-first.avg:0;
+  const best=monthly.filter(x=>x.avg!=null).sort((a,b)=>b.avg-a.avg)[0];
+  const improving=change>0.25,declining=change<-0.25;
+  document.getElementById('gpTrendHeading').textContent=`📅 พัฒนาการรายเดือน — ${employee}`;
+  document.getElementById('gpTrendTitle').textContent=`แนวโน้ม GP% ของ ${employee} · มกราคม–${last?monthNames[last.m]:'ปัจจุบัน'} ${+STATE.year+543}`;
+  document.getElementById('gpTrendSummary').innerHTML=[
+    ['เดือนแรก',first?first.avg.toFixed(2)+'%':'—'],
+    ['เดือนล่าสุด',last?last.avg.toFixed(2)+'%':'—'],
+    ['เปลี่ยนแปลง',`${change>=0?'+':''}${change.toFixed(2)} จุด`],
+    ['สรุปพัฒนาการ',improving?'📈 ดีขึ้น':declining?'📉 ลดลง':'➡️ ทรงตัว']
+  ].map(x=>`<div class="gp-trend-pill"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');
+  mkChart('gpMonthlyTrendChart',{type:'line',data:{labels:monthly.map(x=>monthNames[x.m]),datasets:[
+    ...allBrands.map(b=>({label:b.lb,data:monthly.map(x=>{const z=x.br.find(v=>v.b.k===b.k);return z&&z.v!=null?z.v:null;}),borderColor:b.c,backgroundColor:b.c+'22',pointBackgroundColor:b.c,pointRadius:4,tension:.28,spanGaps:true})),
+    {label:'ค่าเฉลี่ย',data:monthly.map(x=>x.avg),borderColor:'#111827',backgroundColor:'#11182718',borderWidth:3,pointRadius:5,pointBackgroundColor:'#fff',pointBorderColor:'#111827',pointBorderWidth:2,tension:.28}
+  ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:10,padding:10,font:{size:9}}},tooltip:{callbacks:{label:c=>c.raw==null?` ${c.dataset.label}: ไม่มีข้อมูล`:` ${c.dataset.label}: ${Number(c.raw).toFixed(2)}%`}}},scales:{x:{grid:{color:GR}},y:{grid:{color:GR},suggestedMin:18,suggestedMax:40,ticks:{callback:v=>v+'%'}}}}});
+  let h='<thead><tr><th>เดือน</th>'+allBrands.map(b=>`<th>${b.ic} ${b.sh}</th>`).join('')+'<th>เฉลี่ย</th><th>เทียบเดือนก่อน</th><th>ผ่านเกณฑ์</th></tr></thead><tbody>';
+  monthly.forEach((x,i)=>{
+    const prev=i?monthly[i-1]:null,d=prev&&prev.avg!=null&&x.avg!=null?x.avg-prev.avg:null;
+    const cls=d==null?'':d>.25?'gp-up':d<-.25?'gp-down':'gp-flat';
+    const delta=d==null?'เริ่มต้น':`${d>0?'▲ +':d<0?'▼ ':'➡️ '}${d.toFixed(2)} จุด`;
+    h+=`<tr><td>${monthNames[x.m]} ${+STATE.year+543}</td>`;
+    x.br.forEach(v=>h+=`<td style="color:${v.v==null?'#94a3b8':v.pass?'#047857':'#be123c'}">${v.v==null?'—':v.v.toFixed(2)+'%'}</td>`);
+    h+=`<td>${x.avg==null?'—':x.avg.toFixed(2)+'%'}</td><td class="${cls}">${delta}</td><td>${x.pass}/${x.total}</td></tr>`;
+  });
+  document.getElementById('gpTrendTable').innerHTML=h+'</tbody>';
 }
 
 function setGPYear(v){
