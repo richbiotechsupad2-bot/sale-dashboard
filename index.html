@@ -1112,11 +1112,35 @@ function populateMonthOptions(){
 /* ══════════════════════════════════════════════════════════════════
    SECTION 4 — ROUTER (SPA, ไม่ reload หน้า) + SIDEBAR
    ══════════════════════════════════════════════════════════════════ */
-const ACC_STORAGE='sa2_account_page_assignment_v8',ACC_OLD_STORAGE='sa2_account_page_assignment_v7';
+const ACC_STORAGE='sa2_account_page_assignment_v9',ACC_OLD_STORAGE='sa2_account_page_assignment_v8';
 let ACC_ROWS=[];
 try{ACC_ROWS=JSON.parse(localStorage.getItem(ACC_STORAGE)||'[]')}catch(e){ACC_ROWS=[]}
 /* v4 intentionally starts from the corrected source table; older SA-based rows are not imported. */
-const ACC_PEOPLE=[['แตงโม','Santry Gagal Folk','User หลัก'],['ตาล','Putrawangsa','User หลัก'],['แพร','Yusri','User หลัก'],['นิโก้','Ilham Sodiq','User หลัก'],['หนึ่ง','Markjomel Titula','User หลัก'],['ป๊อปปี้','Rome Nelle Roma','User หลัก'],['เคอร์','Jerome Casidsid','User หลัก'],['ลิว','Michael Galang','User หลัก'],['แอป','Mercy Albia','User หลัก'],['ปาย','Menoor Qz','User รอง'],['','Jordan Balintao','User รอง'],['','Kang Prabu Poek','User รอง'],['','Wilmer Cordero','User รอง'],['','Ethna Garrard','User รอง'],['','Clemence Wolfe','User รอง'],['','Emerson Cardozo','User รอง'],['','Luanah Andrade','User รอง'],['','Laynynha Felici','User รอง']];
+const ACC_WOLF_ACCOUNTS=[
+  ['Santry Gagal Fokus','User หลัก'],['Putrawangsa','User หลัก'],['Yusri','User หลัก'],
+  ['Ilham Sodiq','User หลัก'],['Markjomel Titular','User หลัก'],['Rome Nelle Romanos','User หลัก'],
+  ['Jerome Casidsid','User หลัก'],['Michael Galang','User หลัก'],['Michael Jimenez Ramirez','User หลัก'],
+  ['Mercy Albia','User หลัก'],['Menoor Qz','User รอง'],['Jordan Balintao','User รอง'],
+  ['Kang Prabu Poek','User รอง'],['Wilmer Cordero','User รอง'],['Ethna Garrard','ปั้นเม้นเก่า'],
+  ['Clemence Wolfgern','ปั้นเม้นเก่า'],['Emerson Cardozo','ปั้นเม้นเก่า'],
+  ['Luanah Andrade','ปั้นเม้นใหม่'],['Laynynha Feliciano','ปั้นเม้นใหม่']
+];
+const ACC_WOLF_PAGES=[
+  'WOLF พลังหมาป่า','Wolf พลังหมาป่า อึด ถึก ดุดัน','WOLF+ เรื่องลับพลังหมาป่า',
+  'Wolf+ สมุนไพรพลังแกร่ง','WOLF+ ความมั่นใจวัยเกษียณ','WOLF+ ปลุกพลังนักล่า',
+  'WOLF+ สูตรเด็ดเผด็จศึก','Wolf+ มั่นใจทุกกิจกรรม','Wolf+ ดูแลครบ จบในซอง',
+  'WOLF+ คืนพลังนักล่า','Wolf+ ตัวจริงเรื่องพลังชาย','Wolf+ เสริมฟิตแบบไม่ฝืน',
+  'WOLF+ พลังผู้ชาย','WOLF+ พร้อมทุกวัน มั่นใจทุกคืน','Wolf+ ฟิตสไตล์ผู้ชาย',
+  'WOLF+ ต่อเวลาแห่งความสุข'
+];
+/* G=มีเพจ, P=ยังไม่มี, Y=รับเพจไม่ได้ — WOLF ตามภาพต้นฉบับ */
+const ACC_WOLF_MATRIX=[
+  'GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGGG',
+  'GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGGG',
+  'GGGGGGGGGGGGGGGG','GGGGGGGGGGGGGGYG','GGGGGGGPPPGPPPPP','GGGGGGGPGPGPPPPP',
+  'GGGGGGGPPPGGPPPP','GGGPPPPPPPPPPPPP','PGPPPPPPPPPPPPPP','PGGPGGGGGGGGGGGG',
+  'PPGGPGGGPGGGPGGG','PPGGPGGGPGGGPGGG','PPGGPGGGPGGGPGGG'
+];
 const ACC_HEAVEN_ACCOUNTS=[
   ['Syner Hurst','User หลัก'],['Barth Woespin','User หลัก'],['Gislenus Herosor','User หลัก'],['Menoor Qz','User หลัก'],
   ['Jordan Balintao','User หลัก'],['Kang Prabu Poek','User หลัก'],['Bertha Specht','User หลัก'],['Wilmer Cordero','User หลัก'],
@@ -1178,8 +1202,7 @@ const ACC_JAOKHUN_PAGES=[
 ];
 /* ทุกบัญชีมีครบทั้ง 5 เพจตามภาพต้นฉบับ */
 const ACC_JAOKHUN_MATRIX=Array(12).fill('GGGGG');
-const ACC_PAGES={'WOLF+':['WOLF พลังหมาป่า','Wolf พลังหมาป่า ฟิต อึด คึก','WOLF+ เรื่องลับพลังหมาป่า','Wolf+ สมุนไพรพลังแกร่ง','WOLF+ ความมั่นใจไร้เทียมทาน','WOLF+ ปลุกพลังนักล่า','WOLF+ สูตรลับหมาป่า','Wolf+ ฟื้นฟูทุกกิจกรรม','Wolf+ ดูแลรอบด้าน','WOLF+ คืนพลังนักล่า','Wolf+ ตัวช่วยเรื่องพลังชาย','Wolf+ เคล็ดลับแมนไม่ทิ้ง','WOLF+ พลังผู้ชาย','WOLF+ พร้อมทุกวัน','Wolf+ ฟิตใส่ใจผู้ชาย','WOLF+ ส่งต่อประสบการณ์']};
-function accSeed(){let id=1000,out=[];ACC_PEOPLE.forEach((p,pi)=>Object.entries(ACC_PAGES).forEach(([brand,pages])=>pages.forEach((page,pgi)=>{let missing=false;if(brand==='WOLF+')missing=(pi>=13&&pgi!==1&&pgi!==5)||(pi>=9&&pi<=12&&pgi>=7&&pgi!==10);const role=pi>=16?'ปั้นเม้นใหม่':pi>=13?'ปั้นเม้นเก่า':p[2];out.push({id:id++,account:p[1],role,brand,page,status:missing?'ยังไม่มีเพจ':'มีเพจ',note:''})})));ACC_HEAVEN_ACCOUNTS.forEach((a,ri)=>ACC_HEAVEN_PAGES.forEach((page,ci)=>{const code=ACC_HEAVEN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'HEAVEN Plus',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_LORD_ACCOUNTS.forEach((a,ri)=>ACC_LORD_PAGES.forEach((page,ci)=>{const code=ACC_LORD_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'The Lord',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_JAOKHUN_ACCOUNTS.forEach((a,ri)=>ACC_JAOKHUN_PAGES.forEach((page,ci)=>{const code=ACC_JAOKHUN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'เจ้าขุน',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));return out}
+function accSeed(){let id=1000,out=[];ACC_WOLF_ACCOUNTS.forEach((a,ri)=>ACC_WOLF_PAGES.forEach((page,ci)=>{const code=ACC_WOLF_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'WOLF+',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_HEAVEN_ACCOUNTS.forEach((a,ri)=>ACC_HEAVEN_PAGES.forEach((page,ci)=>{const code=ACC_HEAVEN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'HEAVEN Plus',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_LORD_ACCOUNTS.forEach((a,ri)=>ACC_LORD_PAGES.forEach((page,ci)=>{const code=ACC_LORD_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'The Lord',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_JAOKHUN_ACCOUNTS.forEach((a,ri)=>ACC_JAOKHUN_PAGES.forEach((page,ci)=>{const code=ACC_JAOKHUN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'เจ้าขุน',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));return out}
 if(!ACC_ROWS.length){ACC_ROWS=accSeed();localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
 function accEsc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function saveAccounts(){localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
