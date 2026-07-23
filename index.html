@@ -518,6 +518,21 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 @media(max-width:1050px){#pg-admin-org .org-direct-grid{grid-template-columns:1fr}#pg-admin-org #orgLead{min-height:0}#pg-admin-org .org-shifts{grid-template-columns:1fr 1fr}}
 @media(max-width:900px){#pg-admin-org .org-shifts{grid-template-columns:1fr}#pg-admin-org .org-summary{margin-left:0;width:100%}}
 @media(max-width:600px){#pg-admin-org .org-hero{padding:22px 19px}#pg-admin-org .org-title{font-size:22px}#pg-admin-org .org-toolbar{align-items:stretch}#pg-admin-org .org-field{min-width:calc(50% - 6px);flex:1}#pg-admin-org .org-btn{flex:1}#pg-admin-org .org-summary{display:grid;grid-template-columns:repeat(2,1fr)}#pg-admin-org .org-pill{min-width:0}#pg-admin-org .org-pill:last-child{grid-column:1/-1}#pg-admin-org .org-chart{padding:15px 8px}#pg-admin-org .org-members{grid-template-columns:repeat(2,minmax(0,1fr))}#pg-admin-org .person-photo{height:128px}#orgEditor .org-form{grid-template-columns:1fr}#orgEditor .org-field.full{grid-column:auto}}
+/* DAILY EMPLOYEE PERFORMANCE — colorful executive view */
+#pg-daily .wrap{background:linear-gradient(180deg,#f5f3ff 0%,#eff6ff 42%,#fff7ed 100%);min-height:100vh}
+.ed-hero{position:relative;overflow:hidden;border-radius:25px;padding:29px 31px;color:#fff;background:linear-gradient(118deg,#4f46e5 0%,#7c3aed 34%,#db2777 67%,#f97316 100%);box-shadow:0 20px 46px rgba(109,40,217,.28)}
+.ed-hero:before{content:'';position:absolute;width:230px;height:230px;border-radius:50%;right:-45px;top:-105px;background:#fff2;box-shadow:-185px 190px 0 25px #ffffff0d}
+.ed-hero:after{content:'📊';position:absolute;right:38px;bottom:-22px;font-size:112px;opacity:.13;transform:rotate(-7deg)}
+.ed-eyebrow{position:relative;z-index:1;font-size:11px;font-weight:900;letter-spacing:1.8px;color:#fde68a}.ed-title{position:relative;z-index:1;font-size:31px;font-weight:900;line-height:1.2;margin-top:5px;text-shadow:0 4px 14px #312e8166}.ed-sub{position:relative;z-index:1;font-size:12px;font-weight:700;color:#fff;margin-top:7px}
+.ed-toolbar{display:flex;align-items:flex-end;gap:11px;flex-wrap:wrap;margin:16px 0;padding:15px 17px;border:1px solid #ddd6fe;border-radius:19px;background:#ffffffdc;box-shadow:0 10px 28px rgba(79,70,229,.1);backdrop-filter:blur(10px)}
+.ed-field{min-width:150px}.ed-field.search{flex:1;min-width:220px}.ed-field label{display:block;margin-bottom:6px;color:#4338ca;font-size:10px;font-weight:900}.ed-select,.ed-input{width:100%;height:40px;border:1px solid #c7d2fe;border-radius:11px;background:#fff;padding:0 12px;color:#1e1b4b;font:800 12px Sarabun;outline:none;transition:.2s}.ed-select:focus,.ed-input:focus{border-color:#7c3aed;box-shadow:0 0 0 4px #8b5cf622}.ed-reset{height:40px;border:0;border-radius:11px;padding:0 16px;color:#fff;background:linear-gradient(100deg,#7c3aed,#ec4899);font:900 11px Sarabun;cursor:pointer;box-shadow:0 7px 16px #c026d333;transition:.2s}.ed-reset:hover{transform:translateY(-2px)}
+.ed-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;margin:15px 0 19px}.ed-kpi{--ec:#7c3aed;position:relative;overflow:hidden;min-height:137px;padding:18px 17px;border:0;border-radius:20px;background:linear-gradient(145deg,#fff 54%,color-mix(in srgb,var(--ec) 18%,white));box-shadow:0 12px 28px color-mix(in srgb,var(--ec) 20%,transparent),inset 0 1px 0 #fff}.ed-kpi:before{content:'';position:absolute;inset:0 0 auto;height:7px;background:linear-gradient(90deg,var(--ec),color-mix(in srgb,var(--ec) 35%,#fff))}.ed-kpi:after{content:'';position:absolute;width:78px;height:78px;right:-24px;bottom:-27px;border-radius:50%;background:color-mix(in srgb,var(--ec) 12%,transparent)}.ed-kpi-ic{font-size:22px}.ed-kpi span{display:block;color:#475569;font-size:10.5px;font-weight:900;margin-top:7px}.ed-kpi b{display:block;color:var(--ec);font-size:27px;font-weight:900;line-height:1.08;margin-top:4px;text-shadow:0 2px 8px color-mix(in srgb,var(--ec) 18%,transparent)}.ed-kpi small{display:block;color:#64748b;font-size:9.5px;font-weight:700;margin-top:5px}
+.ed-highlight{display:grid;grid-template-columns:1.25fr .75fr;gap:14px;margin-bottom:18px}.ed-focus,.ed-winner{position:relative;overflow:hidden;border-radius:20px;padding:19px 21px;color:#fff;box-shadow:0 13px 30px rgba(15,23,42,.15)}.ed-focus{background:linear-gradient(115deg,#0f766e,#06b6d4)}.ed-winner{background:linear-gradient(115deg,#b45309,#f59e0b,#f97316)}.ed-highlight strong{display:block;font-size:17px;font-weight:900;text-shadow:0 2px 8px #0003}.ed-highlight p{font-size:11px;font-weight:700;line-height:1.65;margin-top:5px;color:#fff}.ed-highlight .big{font-size:25px;font-weight:900}
+.ed-section{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 11px;color:#312e81;font-size:18px;font-weight:900}.ed-section small{font-size:10px;color:#64748b;font-weight:800}
+.ed-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:14px}.ed-card{position:relative;overflow:hidden;border:1px solid #e0e7ff;border-radius:21px;background:#fff;box-shadow:0 12px 30px rgba(30,41,59,.1);padding:18px}.ed-card:before{content:'';position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,#7c3aed,#06b6d4,#10b981,#f59e0b,#ec4899)}.ed-card-title{font-size:15px;font-weight:900;color:#312e81;margin-bottom:3px}.ed-card-sub{font-size:9.5px;font-weight:700;color:#64748b;margin-bottom:11px}
+.ed-people{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.ed-person{--ec:#7c3aed;position:relative;overflow:hidden;border:1px solid color-mix(in srgb,var(--ec) 25%,#e2e8f0);border-radius:18px;padding:15px 14px;background:linear-gradient(150deg,#fff 62%,color-mix(in srgb,var(--ec) 13%,white));box-shadow:0 8px 20px rgba(15,23,42,.07);transition:.22s;cursor:pointer}.ed-person:hover{transform:translateY(-4px);box-shadow:0 14px 27px color-mix(in srgb,var(--ec) 22%,transparent)}.ed-person-rank{position:absolute;right:10px;top:9px;min-width:29px;height:29px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--ec);color:#fff;font-size:10px;font-weight:900;box-shadow:0 5px 12px color-mix(in srgb,var(--ec) 35%,transparent)}.ed-person-name{font-size:17px;font-weight:900;color:#1e1b4b}.ed-person-sales{color:var(--ec);font-size:19px;font-weight:900;margin-top:10px}.ed-person-orders{color:#475569;font-size:10px;font-weight:800;margin-top:2px}.ed-pass-row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:11px}.ed-pass{border-radius:10px;padding:7px 5px;text-align:center;background:#f8fafc}.ed-pass span{display:block;color:#64748b;font-size:8px;font-weight:800}.ed-pass b{display:block;color:#0f766e;font-size:15px;font-weight:900}.ed-pass.order b{color:#4f46e5}
+.ed-table-wrap{overflow:auto;border-radius:16px;border:1px solid #e0e7ff}.ed-table{width:100%;min-width:940px;border-collapse:separate;border-spacing:0;font-size:11px}.ed-table th{position:sticky;top:0;padding:12px 10px;color:#fff;background:#4f46e5;text-align:center;font-size:10px;font-weight:900}.ed-table th:nth-child(4),.ed-table th:nth-child(5),.ed-table th:nth-child(6){background:#0891b2}.ed-table th:nth-child(n+7){background:#059669}.ed-table td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:center;color:#334155;font-weight:700}.ed-table tbody tr:nth-child(even){background:#f8fafc}.ed-table tbody tr:hover{background:#eef2ff}.ed-table td.name{text-align:left;font-size:13px;font-weight:900;color:#312e81}.ed-table td.sales{font-size:14px;font-weight:900;color:#db2777}.ed-table td.orders{font-size:14px;font-weight:900;color:#4f46e5}.ed-rank{display:inline-flex;width:29px;height:29px;align-items:center;justify-content:center;border-radius:9px;background:#ede9fe;color:#6d28d9;font-weight:900}.ed-rank.top{color:#92400e;background:linear-gradient(135deg,#fef3c7,#fbbf24);box-shadow:0 4px 10px #f59e0b44}.ed-pill{display:inline-flex;min-width:63px;justify-content:center;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900}.ed-pill.pass{background:#dcfce7;color:#15803d}.ed-pill.fail{background:#fee2e2;color:#dc2626}.ed-empty{padding:35px!important;color:#64748b!important;font-size:13px!important}
+@media(max-width:1100px){.ed-kpis{grid-template-columns:repeat(3,1fr)}.ed-people{grid-template-columns:repeat(3,1fr)}}@media(max-width:850px){.ed-grid,.ed-highlight{grid-template-columns:1fr}.ed-kpis{grid-template-columns:repeat(2,1fr)}.ed-people{grid-template-columns:repeat(2,1fr)}}@media(max-width:560px){.ed-hero{padding:23px 20px}.ed-title{font-size:24px}.ed-kpis{grid-template-columns:1fr 1fr;gap:9px}.ed-kpi{min-height:124px;padding:15px 13px}.ed-kpi b{font-size:22px}.ed-people{grid-template-columns:1fr}.ed-field,.ed-field.search{min-width:100%;width:100%}.ed-reset{width:100%}}
 </style>
 </head>
 <body>
@@ -662,24 +677,29 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: DAILY TARGET ═══ -->
     <div id="pg-daily" class="page"><div class="wrap">
-      <div class="sec">🎯 ภาพรวมเป้ารายวัน — ตามช่วงเวลาที่เลือก</div>
-      <div class="krow k5" id="dly-kpi"></div>
-      <div style="margin-top:12px" id="dly-alerts"></div>
-      <div class="sec">👤 Scorecard รายพนักงาน</div>
-      <div class="g3s" id="dly-cards"></div>
-      <div class="sec">📊 กราฟเปรียบเทียบ</div>
-      <div class="g2">
-        <div class="card">
-          <div class="ct"><span class="dot" style="background:#06b6d4"></span>อัตราผ่านเป้า — ออเดอร์ vs ยอดขาย</div>
-          <div class="cs">เรียงตามอัตราผ่านเป้าออเดอร์ · เส้นประ = 50%</div>
-          <canvas id="dlyPass" style="max-height:300px"></canvas>
-        </div>
-        <div class="card">
-          <div class="ct"><span class="dot" style="background:#10b981"></span>สถานะวัน — ผ่าน / ไม่ผ่าน / หยุด</div>
-          <div class="cs">จำนวนวัน Stacked แต่ละสถานะ (ออเดอร์)</div>
-          <canvas id="dlyStatus" style="max-height:300px"></canvas>
-        </div>
+      <section class="ed-hero">
+        <div class="ed-eyebrow">DAILY TARGET · EMPLOYEE PERFORMANCE</div>
+        <div class="ed-title">🎯 Daily Target — ผลงานรายวันพนักงาน</div>
+        <div class="ed-sub" id="edPeriod">รอบรายงาน 26/05/2026–25/06/2026 · เป้า 100 ออเดอร์ และ 23,553 บาท/วัน</div>
+      </section>
+      <div class="ed-toolbar">
+        <div class="ed-field"><label>📆 ปี พ.ศ.</label><select id="edYear" class="ed-select" onchange="renderEmployeeDaily()"></select></div>
+        <div class="ed-field"><label>🗓️ เดือน</label><select id="edMonth" class="ed-select" onchange="renderEmployeeDaily()"></select></div>
+        <div class="ed-field search"><label>🔍 ค้นหาพนักงาน</label><input id="edSearch" class="ed-input" placeholder="พิมพ์ชื่อ เช่น Pear, Achi" oninput="renderEmployeeDaily()"></div>
+        <div class="ed-field"><label>🏆 จัดอันดับตาม</label><select id="edSort" class="ed-select" onchange="renderEmployeeDaily()"><option value="sales">ยอดขายสูงสุด</option><option value="orders">ออเดอร์สูงสุด</option><option value="salesPass">ผ่านเป้ายอดขายสูงสุด</option><option value="orderPass">ผ่านเป้าออเดอร์สูงสุด</option><option value="name">ชื่อ A–Z</option></select></div>
+        <button class="ed-reset" onclick="resetEmployeeDaily()">↻ ล้างตัวกรอง</button>
       </div>
+      <div class="ed-kpis" id="edKpis"></div>
+      <div class="ed-highlight" id="edHighlights"></div>
+      <div class="ed-section"><span>🏅 ผลงานรายบุคคล</span><small>คลิกการ์ดเพื่อค้นหาพนักงานคนนั้น</small></div>
+      <div class="ed-people" id="edPeople"></div>
+      <div class="ed-section"><span>📊 ภาพเปรียบเทียบผลงาน</span><small>ยอดรวมและอัตราผ่านเป้าในมุมมองเดียว</small></div>
+      <div class="ed-grid">
+        <div class="ed-card"><div class="ed-card-title">💰 ยอดขายและออเดอร์รายพนักงาน</div><div class="ed-card-sub">แท่งสี = ยอดขาย · เส้น = จำนวนออเดอร์</div><canvas id="edPerformanceChart" style="max-height:330px"></canvas></div>
+        <div class="ed-card"><div class="ed-card-title">✅ อัตราผ่านเป้า</div><div class="ed-card-sub">เปรียบเทียบผ่านเป้าออเดอร์และยอดขาย</div><canvas id="edPassChart" style="max-height:330px"></canvas></div>
+      </div>
+      <div class="ed-section"><span>🔎 ตารางรายละเอียดและอันดับ</span><small>ผ่าน–ไม่ผ่านคำนวณจากจำนวนวันที่ปฏิบัติงาน</small></div>
+      <div class="ed-card"><div class="ed-table-wrap"><table class="ed-table"><thead><tr><th>อันดับ</th><th>พนักงาน</th><th>ออเดอร์รวม</th><th>ยอดขายรวม</th><th>ผ่านออเดอร์</th><th>ไม่ผ่านออเดอร์</th><th>ผ่านยอดขาย</th><th>ไม่ผ่านยอดขาย</th><th>% ผ่านออเดอร์</th><th>% ผ่านยอดขาย</th></tr></thead><tbody id="edTbody"></tbody></table></div></div>
     </div></div>
 
     <!-- ═══ PAGE: MONTHLY TARGET & FORECAST ═══ -->
@@ -955,6 +975,24 @@ const DATA = {
   ],
 };
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+const EMPLOYEE_DAILY_REPORTS={
+  '2026-06':{
+    year:2026,month:6,label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026',days:31,orderTarget:100,revenueTarget:23553,
+    totalOrders:28831,totalSales:8711929,orderPassPct:59.70,salesPassPct:79.48,
+    employees:[
+      {name:'Game',orders:2684,sales:802063,orderPass:16,orderFail:11,salesPass:20,salesFail:7},
+      {name:'Pear',orders:3157,sales:973812,orderPass:19,orderFail:7,salesPass:24,salesFail:2},
+      {name:'Nueng',orders:3449,sales:1042107,orderPass:25,orderFail:2,salesPass:26,salesFail:1},
+      {name:'Apple',orders:2857,sales:861537,orderPass:11,orderFail:16,salesPass:18,salesFail:9},
+      {name:'Tarn',orders:2573,sales:771911,orderPass:11,orderFail:16,salesPass:22,salesFail:5},
+      {name:'Tiger',orders:2480,sales:762468,orderPass:12,orderFail:15,salesPass:19,salesFail:8},
+      {name:'Pay',orders:3293,sales:983154,orderPass:21,orderFail:6,salesPass:25,salesFail:2},
+      {name:'Amm',orders:2855,sales:878406,orderPass:18,orderFail:8,salesPass:23,salesFail:3},
+      {name:'Deer',orders:2324,sales:688025,orderPass:7,orderFail:20,salesPass:14,salesFail:13},
+      {name:'Achi',orders:3159,sales:948446,orderPass:20,orderFail:7,salesPass:22,salesFail:5}
+    ]
+  }
+};
 
 /* ── ตารางข้อมูลที่โหลดแล้ว (normalized rows) — นี่คือ "ฐานข้อมูล" ทั้งหมดของ dashboard ── */
 const RAW={sales:[],targets:[],gp:[],redemption:[],dailyTargetSummary:[]};
@@ -1730,6 +1768,59 @@ function renderAdminOrg(){
   document.getElementById('orgRosterTitle').textContent=`📋 รายชื่อ Admin ประจำเดือน${month} ${year}`;
   document.getElementById('orgRoster').innerHTML=people.filter(p=>p.role!=='Supervisor').map(p=>`<span>${escOrg(p.name)}${p.role==='Lead'?' · Lead Standby กะเช้า/กะบ่าย':p.shift==='wfh'?' · WFH Standby กะเช้า/กะบ่าย':''}</span>`).join('')||'<span>ยังไม่มีรายชื่อ</span>';
 }
+
+/* ══════ EMPLOYEE DAILY PERFORMANCE ══════ */
+const ED_COLORS=['#7c3aed','#0891b2','#059669','#db2777','#f97316','#4f46e5','#0d9488','#d97706','#e11d48','#2563eb'];
+function initEmployeeDailyFilters(){
+  const y=document.getElementById('edYear'),m=document.getElementById('edMonth');if(!y||!m)return;
+  const years=[...new Set(Object.values(EMPLOYEE_DAILY_REPORTS).map(r=>r.year))].sort((a,b)=>b-a);
+  const currentY=Number(y.value)||years[0];
+  y.innerHTML=years.map(v=>`<option value="${v}">${v+543}</option>`).join('');
+  y.value=String(years.includes(currentY)?currentY:years[0]);
+  const months=Object.values(EMPLOYEE_DAILY_REPORTS).filter(r=>r.year===Number(y.value)).sort((a,b)=>b.month-a.month);
+  const currentM=Number(m.value)||months[0].month;
+  m.innerHTML=months.map(r=>`<option value="${r.month}">${r.label.replace(' '+(r.year+543),'')}</option>`).join('');
+  m.value=String(months.some(r=>r.month===currentM)?currentM:months[0].month);
+}
+function edReport(){
+  initEmployeeDailyFilters();
+  const y=Number(document.getElementById('edYear').value),m=Number(document.getElementById('edMonth').value);
+  return EMPLOYEE_DAILY_REPORTS[`${y}-${String(m).padStart(2,'0')}`];
+}
+function resetEmployeeDaily(){document.getElementById('edSearch').value='';document.getElementById('edSort').value='sales';renderEmployeeDaily()}
+function selectEmployeeDaily(name){document.getElementById('edSearch').value=name;renderEmployeeDaily();document.getElementById('edPeople').scrollIntoView({behavior:'smooth',block:'center'})}
+function renderEmployeeDaily(){
+  const r=edReport();if(!r)return;
+  document.getElementById('edPeriod').textContent=`รอบรายงาน ${r.range} · เป้า ${fmtN(r.orderTarget)} ออเดอร์ และ ${fmtN(r.revenueTarget)} บาท/วัน`;
+  const activeDays=r.employees.reduce((s,e)=>s+e.orderPass+e.orderFail,0);
+  const avgOrders=Math.round(r.totalOrders/r.employees.length),avgSales=Math.round(r.totalSales/r.employees.length);
+  const kpis=[
+    ['📦','ออเดอร์รวม',fmtN(r.totalOrders),`เฉลี่ย ${fmtN(avgOrders)} ออเดอร์/คน`,'#4f46e5'],
+    ['💰','ยอดขายรวม',fmtB(r.totalSales),`เฉลี่ย ${fmtB(avgSales)}/คน`,'#db2777'],
+    ['✅','ผ่านเป้าออเดอร์',fmtPct(r.orderPassPct,2),`เป้า ${fmtN(r.orderTarget)} ออเดอร์/วัน`,'#0891b2'],
+    ['🌟','ผ่านเป้ายอดขาย',fmtPct(r.salesPassPct,2),`เป้า ${fmtB(r.revenueTarget)}/วัน`,'#059669'],
+    ['👥','ทีมงาน',`${r.employees.length} คน`,`รวม ${fmtN(activeDays)} วันทำงาน`,'#f97316']
+  ];
+  document.getElementById('edKpis').innerHTML=kpis.map(k=>`<div class="ed-kpi" style="--ec:${k[4]}"><div class="ed-kpi-ic">${k[0]}</div><span>${k[1]}</span><b>${k[2]}</b><small>${k[3]}</small></div>`).join('');
+  const topSales=[...r.employees].sort((a,b)=>b.sales-a.sales)[0],topOrder=[...r.employees].sort((a,b)=>b.orders-a.orders)[0];
+  const weakest=[...r.employees].sort((a,b)=>(a.salesPass/(a.salesPass+a.salesFail))-(b.salesPass/(b.salesPass+b.salesFail)))[0];
+  document.getElementById('edHighlights').innerHTML=`<div class="ed-winner"><strong>🏆 ผลงานเด่นประจำเดือน</strong><p><span class="big">${topSales.name}</span> ทำยอดขายสูงสุด ${fmtB(topSales.sales)} · ${topOrder.name} ทำออเดอร์สูงสุด ${fmtN(topOrder.orders)} ออเดอร์</p></div><div class="ed-focus"><strong>🎯 Executive Focus</strong><p><span class="big">${weakest.name}</span> มีอัตราผ่านเป้ายอดขายต่ำสุด ${fmtPct(weakest.salesPass/(weakest.salesPass+weakest.salesFail)*100,1)} ควรได้รับ Coaching เป็นลำดับแรก</p></div>`;
+  const q=(document.getElementById('edSearch').value||'').trim().toLowerCase(),sort=document.getElementById('edSort').value;
+  let rows=r.employees.filter(e=>!q||e.name.toLowerCase().includes(q));
+  const sorters={sales:(a,b)=>b.sales-a.sales,orders:(a,b)=>b.orders-a.orders,salesPass:(a,b)=>b.salesPass-a.salesPass,orderPass:(a,b)=>b.orderPass-a.orderPass,name:(a,b)=>a.name.localeCompare(b.name)};
+  rows=[...rows].sort(sorters[sort]||sorters.sales);
+  document.getElementById('edPeople').innerHTML=rows.length?rows.map((e,i)=>{
+    const op=e.orderPass/(e.orderPass+e.orderFail)*100,sp=e.salesPass/(e.salesPass+e.salesFail)*100,c=ED_COLORS[i%ED_COLORS.length];
+    return `<article class="ed-person" style="--ec:${c}" onclick="selectEmployeeDaily('${e.name}')"><span class="ed-person-rank">#${i+1}</span><div class="ed-person-name">${e.name}</div><div class="ed-person-sales">${fmtB(e.sales)}</div><div class="ed-person-orders">📦 ${fmtN(e.orders)} ออเดอร์</div><div class="ed-pass-row"><div class="ed-pass order"><span>ผ่านออเดอร์</span><b>${fmtPct(op,1)}</b></div><div class="ed-pass"><span>ผ่านยอดขาย</span><b>${fmtPct(sp,1)}</b></div></div></article>`
+  }).join(''):'<div class="ed-card ed-empty">ไม่พบชื่อพนักงานตามคำค้นหา</div>';
+  document.getElementById('edTbody').innerHTML=rows.length?rows.map((e,i)=>{
+    const op=e.orderPass/(e.orderPass+e.orderFail)*100,sp=e.salesPass/(e.salesPass+e.salesFail)*100;
+    return `<tr><td><span class="ed-rank ${i<3?'top':''}">${i<3?MED[i]:i+1}</span></td><td class="name">${e.name}</td><td class="orders">${fmtN(e.orders)}</td><td class="sales">${fmtB(e.sales)}</td><td><span class="ed-pill pass">${e.orderPass} วัน</span></td><td><span class="ed-pill fail">${e.orderFail} วัน</span></td><td><span class="ed-pill pass">${e.salesPass} วัน</span></td><td><span class="ed-pill fail">${e.salesFail} วัน</span></td><td>${fmtPct(op,1)}</td><td>${fmtPct(sp,1)}</td></tr>`
+  }).join(''):'<tr><td class="ed-empty" colspan="10">ไม่พบข้อมูลตามตัวกรอง</td></tr>';
+  const labels=rows.map(e=>e.name),colors=rows.map((_,i)=>ED_COLORS[i%ED_COLORS.length]);
+  mkChart('edPerformanceChart',{data:{labels,datasets:[{type:'bar',label:'ยอดขาย (บาท)',data:rows.map(e=>e.sales),backgroundColor:colors.map(c=>c+'d9'),borderColor:colors,borderWidth:1,borderRadius:8,yAxisID:'y'},{type:'line',label:'ออเดอร์',data:rows.map(e=>e.orders),borderColor:'#f59e0b',backgroundColor:'#f59e0b',pointBackgroundColor:'#fff',pointBorderColor:'#f59e0b',pointBorderWidth:3,pointRadius:5,tension:.3,yAxisID:'y1'}]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{grid:{display:false},ticks:{font:{weight:'bold'}}},y:{beginAtZero:true,grid:{color:GR},ticks:{callback:v=>'฿'+(v/1000)+'K'}},y1:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false}}}}});
+  mkChart('edPassChart',{type:'bar',data:{labels,datasets:[{label:'ผ่านออเดอร์ %',data:rows.map(e=>e.orderPass/(e.orderPass+e.orderFail)*100),backgroundColor:'#6366f1d9',borderRadius:6},{label:'ผ่านยอดขาย %',data:rows.map(e=>e.salesPass/(e.salesPass+e.salesFail)*100),backgroundColor:'#10b981d9',borderRadius:6}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{min:0,max:100,grid:{color:GR},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{font:{weight:'bold'}}}}}});
+}
 function openOrgEditor(id){
   const people=currentOrgPeople(),p=id?people.find(x=>x.id===id):null;ORG_EDIT_ID=p?p.id:null;ORG_NEW_PHOTO=p?p.photo:ORG_FALLBACK;
   document.getElementById('orgEditorTitle').textContent=p?'แก้ไขข้อมูลพนักงาน':'เพิ่มพนักงาน Admin';
@@ -1769,7 +1860,7 @@ const PAGE_RENDER={
   'pg-dashboard':renderDashboard,
   'pg-performance':renderPerformance,
   'pg-sales':renderSales,
-  'pg-daily':renderDaily,
+  'pg-daily':renderEmployeeDaily,
   'pg-monthly':renderMonthly,
   'pg-monthly-brands':renderMonthlyBrands,
   'pg-redemption':renderRedemption,
