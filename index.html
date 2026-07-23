@@ -145,14 +145,17 @@ body{font-family:'Sarabun',sans-serif;background:
 .scrl{overflow-x:auto;}
 
 /* ── SALES & ORDERS EXECUTIVE CONTROL ── */
-.so-hero{position:relative;overflow:hidden;border-radius:22px;padding:24px 26px;margin-bottom:14px;color:#fff;background:linear-gradient(125deg,#0f766e 0%,#0891b2 46%,#4f46e5 100%);box-shadow:0 18px 42px rgba(8,145,178,.22)}
-.so-hero:after{content:'↗';position:absolute;right:28px;top:-28px;font-size:150px;font-weight:900;opacity:.09;transform:rotate(-8deg)}
-.so-hero h2{font-size:23px;margin:4px 0 5px;font-weight:900}.so-hero p{font-size:10.5px;opacity:.88}.so-hero small{font-size:8.5px;letter-spacing:1.7px;font-weight:900;opacity:.78}
-.so-toolbar{display:flex;align-items:flex-end;gap:9px;flex-wrap:wrap;padding:14px 16px;margin-bottom:15px;border:1px solid #bae6fd;border-radius:16px;background:linear-gradient(120deg,#ecfeff,#eff6ff 52%,#f5f3ff);box-shadow:0 8px 22px rgba(14,116,144,.08)}
-.so-filter{display:flex;flex-direction:column;gap:5px;min-width:145px;flex:1}.so-filter label{font-size:8px;font-weight:900;color:#475569;letter-spacing:.7px}.so-filter select{width:100%;padding:9px 10px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#0f172a;font-family:'Sarabun',sans-serif;font-size:10.5px;font-weight:800;outline:none}.so-filter select:focus{border-color:#0891b2;box-shadow:0 0 0 3px rgba(8,145,178,.12)}
-.so-reset{padding:9px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#fff;color:#475569;font-family:'Sarabun',sans-serif;font-size:9.5px;font-weight:900;cursor:pointer}.so-reset:hover{border-color:#ef4444;color:#dc2626}
+.so-hero{position:relative;overflow:hidden;border-radius:25px;padding:29px 31px;margin-bottom:17px;color:#fff;background:linear-gradient(120deg,#087f72 0%,#0891b2 38%,#4f46e5 72%,#7c3aed 100%);box-shadow:0 20px 46px rgba(37,99,235,.27)}
+.so-hero:before{content:'';position:absolute;width:230px;height:230px;border-radius:50%;right:80px;top:-155px;background:#ffffff18}.so-hero:after{content:'↗';position:absolute;right:28px;top:-28px;font-size:150px;font-weight:900;opacity:.1;transform:rotate(-8deg)}
+.so-hero h2{position:relative;font-size:29px;line-height:1.25;margin:6px 0 7px;font-weight:900;text-shadow:0 2px 12px #17255435}.so-hero p{position:relative;font-size:12px;font-weight:800;color:#e0f2fe}.so-hero small{position:relative;font-size:10px;letter-spacing:1.9px;font-weight:900;color:#cffafe}
+.so-toolbar{display:flex;align-items:flex-end;gap:11px;flex-wrap:wrap;padding:18px;margin-bottom:19px;border:1px solid #c4b5fd;border-radius:19px;background:linear-gradient(120deg,#ecfeff 0%,#eff6ff 34%,#f5f3ff 68%,#fff1f2 100%);box-shadow:0 11px 28px rgba(79,70,229,.12)}
+.so-filter{--fc:#0891b2;--fb:#ecfeff;display:flex;flex-direction:column;gap:7px;min-width:142px;flex:1;padding:10px;border-radius:13px;background:linear-gradient(145deg,#fff,var(--fb));border:1px solid color-mix(in srgb,var(--fc) 28%,#e2e8f0);box-shadow:0 5px 14px rgba(30,41,59,.06)}.so-filter:nth-child(2){--fc:#7c3aed;--fb:#f5f3ff}.so-filter:nth-child(3){--fc:#ea580c;--fb:#fff7ed}.so-filter:nth-child(4){--fc:#db2777;--fb:#fdf2f8}.so-filter:nth-child(5){--fc:#d97706;--fb:#fffbeb}.so-filter:nth-child(6){--fc:#059669;--fb:#ecfdf5}.so-filter:nth-child(7){--fc:#2563eb;--fb:#eff6ff}
+.so-filter label{font-size:10px;font-weight:900;color:var(--fc);letter-spacing:.35px}.so-filter select{width:100%;min-height:39px;padding:9px 10px;border:1.5px solid color-mix(in srgb,var(--fc) 35%,#cbd5e1);border-radius:10px;background:#fff;color:#172554;font-family:'Sarabun',sans-serif;font-size:11.5px;font-weight:900;outline:none}.so-filter select:focus{border-color:var(--fc);box-shadow:0 0 0 3px color-mix(in srgb,var(--fc) 16%,transparent)}
+.so-reset{min-height:42px;padding:10px 15px;border:1px solid #fecaca;border-radius:11px;background:linear-gradient(135deg,#fff,#fff1f2);color:#be123c;font-family:'Sarabun',sans-serif;font-size:10.5px;font-weight:900;cursor:pointer;box-shadow:0 5px 14px rgba(225,29,72,.08)}.so-reset:hover{background:#e11d48;color:#fff;border-color:#e11d48}
+.so-toolbar+.sec,#pg-sales .sec{font-size:15px;font-weight:900;color:#172554;letter-spacing:.15px;margin-top:23px}.so-toolbar+.sec:after,#pg-sales .sec:after{background:linear-gradient(90deg,#06b6d4,#7c3aed,#f43f5e,transparent)}
+#pg-sales .kpi .kl{font-size:10.5px;font-weight:900}#pg-sales .kpi .kv{font-size:23px}
 .so-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 18px}.so-insight{position:relative;overflow:hidden;padding:14px 15px;border-radius:14px;border:1px solid #e2e8f0;background:#fff;box-shadow:var(--shadow-sm)}.so-insight:before{content:'';position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,#06b6d4)}.so-insight b{display:block;font-size:11px;color:#0f172a;margin-bottom:4px}.so-insight span{font-size:9.5px;line-height:1.55;color:#475569}
-@media(max-width:760px){.so-hero{padding:20px}.so-hero h2{font-size:19px}.so-filter{min-width:calc(50% - 6px)}.so-insights{grid-template-columns:1fr}.so-toolbar{align-items:stretch}.so-reset{width:100%}}
+@media(max-width:760px){.so-hero{padding:23px 20px}.so-hero h2{font-size:22px}.so-filter{min-width:calc(50% - 6px)}.so-insights{grid-template-columns:1fr}.so-toolbar{align-items:stretch;padding:12px}.so-reset{width:100%}#pg-sales .sec{font-size:13px}}
 
 /* ── CROSS SALE DAILY ── */
 #rd-daily-heading{margin-top:22px;color:#047857;letter-spacing:2px;}
@@ -548,9 +551,10 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: SALES & ORDERS ═══ -->
     <div id="pg-sales" class="page"><div class="wrap">
-      <div class="so-hero"><small id="soHeroEyebrow">EXECUTIVE SALES PERFORMANCE</small><h2 id="soHeroTitle">💰 Sale &amp; Orders</h2><p id="soHeroPeriod">กรอง เจาะลึก และจัดอันดับได้ทันที</p></div>
+      <div class="so-hero"><small id="soHeroEyebrow">EXECUTIVE SALES PERFORMANCE</small><h2 id="soHeroTitle">💰 Sale &amp; Orders</h2><p id="soHeroPeriod">ภาพรวมผลงานยอดขายและออเดอร์</p></div>
       <div class="so-toolbar">
-        <div class="so-filter"><label>📅 รอบรายงาน</label><select id="soMonthFilter" onchange="setSOMonth(this.value)"></select></div>
+        <div class="so-filter"><label>📆 ปี</label><select id="soYearFilter" onchange="setSOYear(this.value)"></select></div>
+        <div class="so-filter"><label>🗓️ เดือน</label><select id="soMonthFilter" onchange="setSOMonth(this.value)"></select></div>
         <div class="so-filter"><label>🏷️ สินค้า / แบรนด์</label><select id="soBrandFilter" onchange="setSOBrand(this.value)"></select></div>
         <div class="so-filter"><label>👤 รายชื่อพนักงาน</label><select id="soEmployeeFilter" onchange="setSOEmployee(this.value)"></select></div>
         <div class="so-filter"><label>📦 จำนวนออเดอร์ขั้นต่ำ</label><select id="soOrderFilter" onchange="setSOView('minOrders',this.value)"><option value="0">ทั้งหมด</option><option value="1000">1,000 ขึ้นไป</option><option value="2000">2,000 ขึ้นไป</option><option value="2400">2,400 ขึ้นไป</option></select></div>
@@ -1307,9 +1311,13 @@ async function saveSheetSettingsAndReload(){
 const STATE={year:'2026',month:'7',brand:'all',empA:'all',empB:'all'};
 const SO_VIEW={minOrders:0,minRevenue:0,sort:'revenue'};
 function setSOView(key,value){SO_VIEW[key]=key==='sort'?value:Number(value)||0;renderSales()}
+function setSOYear(value){
+  STATE.year=value;
+  if(value==='all')STATE.month='all';
+  STATE.empA='all';refreshChips();renderSales();
+}
 function setSOMonth(value){
-  if(value==='all'){STATE.year='2026';STATE.month='all';}
-  else{const parts=value.split('-');STATE.year=parts[0];STATE.month=String(Number(parts[1]));}
+  STATE.month=value;
   STATE.empA='all';refreshChips();renderSales();
 }
 function setSOBrand(value){setBrandFilter(value)}
@@ -1994,7 +2002,7 @@ function renderPerformance(){
 function renderSales(){
   const so=computeSO();
   renderHeaderStats();
-  const monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
+  const yearSel=document.getElementById('soYearFilter'),monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
   const reportPeriods=[
     {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–22/07/2026'},
     {value:'2026-06',label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026'},
@@ -2004,12 +2012,17 @@ function renderSales(){
     {value:'2026-02',label:'กุมภาพันธ์ 2569',range:'26/01/2026–25/02/2026'},
     {value:'2026-01',label:'มกราคม 2569',range:'26/12/2025–25/01/2026'}
   ];
+  const availableYears=[...new Set(reportPeriods.map(p=>p.value.slice(0,4)))].sort((a,b)=>b-a);
+  yearSel.innerHTML='<option value="all">ทุกปี</option>'+availableYears.map(y=>`<option value="${y}" ${STATE.year===y?'selected':''}>พ.ศ. ${Number(y)+543}</option>`).join('');
+  const monthNames=['','มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const monthsForYear=STATE.year==='all'?[]:reportPeriods.filter(p=>p.value.startsWith(STATE.year+'-')).map(p=>Number(p.value.slice(5))).sort((a,b)=>a-b);
+  monthSel.disabled=STATE.year==='all';
+  monthSel.innerHTML='<option value="all">'+(STATE.year==='all'?'ทุกเดือน (เลือกปีก่อน)':'ทุกเดือน')+'</option>'+monthsForYear.map(m=>`<option value="${m}" ${String(STATE.month)===String(m)?'selected':''}>${monthNames[m]}</option>`).join('');
   const currentPeriod=STATE.year==='all'||STATE.month==='all'?'all':`${STATE.year}-${String(STATE.month).padStart(2,'0')}`;
-  monthSel.innerHTML='<option value="all">ทุกเดือน</option>'+reportPeriods.map(p=>`<option value="${p.value}" ${currentPeriod===p.value?'selected':''}>${p.label}</option>`).join('');
   const periodMeta=reportPeriods.find(p=>p.value===currentPeriod);
   document.getElementById('soHeroEyebrow').textContent=periodMeta?`EXECUTIVE SALES PERFORMANCE · ${periodMeta.value}`:'EXECUTIVE SALES PERFORMANCE · ALL PERIODS';
-  document.getElementById('soHeroTitle').textContent=periodMeta?`💰 Sale & Orders — ผลงานเดือน${periodMeta.label.replace(' 2569','')}`:'💰 Sale & Orders — ภาพรวมทุกเดือน';
-  document.getElementById('soHeroPeriod').textContent=(periodMeta?`ข้อมูลสะสม ${periodMeta.range}`:'ข้อมูลรวมทุกช่วงรายงาน')+' · กรอง เจาะลึก และจัดอันดับได้ทันที';
+  document.getElementById('soHeroTitle').textContent=periodMeta?`💰 Sale & Orders — ผลงานเดือน${periodMeta.label.replace(' 2569','')}`:STATE.year!=='all'?`💰 Sale & Orders — ภาพรวมปี ${Number(STATE.year)+543}`:'💰 Sale & Orders — ภาพรวมทุกปี';
+  document.getElementById('soHeroPeriod').textContent=periodMeta?`ข้อมูลสะสม ${periodMeta.range}`:STATE.year!=='all'?`ข้อมูลรวมทุกเดือนของปี ${Number(STATE.year)+543}`:'ข้อมูลรวมทุกช่วงรายงาน';
   brandSel.innerHTML='<option value="all">สินค้าทั้งหมด</option>'+DATA.brandMeta.map(b=>`<option value="${b.k}" ${STATE.brand===b.k?'selected':''}>${b.ic} ${b.lb}</option>`).join('');
   const employees=[...new Set(RAW.sales.filter(r=>r.employee&&inPeriod(r.y,r.mo)).map(r=>r.employee))].sort();
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+employees.map(n=>`<option value="${n}" ${STATE.empA===n?'selected':''}>${n}</option>`).join('');
