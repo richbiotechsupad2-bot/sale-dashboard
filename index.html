@@ -1112,7 +1112,7 @@ function populateMonthOptions(){
 /* ══════════════════════════════════════════════════════════════════
    SECTION 4 — ROUTER (SPA, ไม่ reload หน้า) + SIDEBAR
    ══════════════════════════════════════════════════════════════════ */
-const ACC_STORAGE='sa2_account_page_assignment_v6',ACC_OLD_STORAGE='sa2_account_page_assignment_v5';
+const ACC_STORAGE='sa2_account_page_assignment_v7',ACC_OLD_STORAGE='sa2_account_page_assignment_v6';
 let ACC_ROWS=[];
 try{ACC_ROWS=JSON.parse(localStorage.getItem(ACC_STORAGE)||'[]')}catch(e){ACC_ROWS=[]}
 /* v4 intentionally starts from the corrected source table; older SA-based rows are not imported. */
@@ -1141,8 +1141,33 @@ const ACC_HEAVEN_MATRIX=[
   'GGGGGPPPPPPPPPP','GPGGGGGGGGGGPGP','GPPPPGGGPPPPPPP','PPPPPGPPPPPPPPP',
   'PGPYPGGGGPPPPPG','PGPYPGGGGPPPPPG'
 ];
-const ACC_PAGES={'เจ้าขุน':['เจ้าขุน ฟิตพลังชาย','เจ้าขุน แกร่งจากภายใน','เจ้าขุน ปลุกตื่นคนเก่า','เจ้าขุน ฟิต 24 ชั่วโมง','เจ้าขุน สูตรลับของผู้ชาย'],'WOLF+':['WOLF พลังหมาป่า','Wolf พลังหมาป่า ฟิต อึด คึก','WOLF+ เรื่องลับพลังหมาป่า','Wolf+ สมุนไพรพลังแกร่ง','WOLF+ ความมั่นใจไร้เทียมทาน','WOLF+ ปลุกพลังนักล่า','WOLF+ สูตรลับหมาป่า','Wolf+ ฟื้นฟูทุกกิจกรรม','Wolf+ ดูแลรอบด้าน','WOLF+ คืนพลังนักล่า','Wolf+ ตัวช่วยเรื่องพลังชาย','Wolf+ เคล็ดลับแมนไม่ทิ้ง','WOLF+ พลังผู้ชาย','WOLF+ พร้อมทุกวัน','Wolf+ ฟิตใส่ใจผู้ชาย','WOLF+ ส่งต่อประสบการณ์'],'The Lord':['The Lord ปลุกพลังผู้ชาย','เคล็ดไม่ลับฉบับ The Lord','The Lord ตัวช่วยผู้ชาย','สมุนไพรสำหรับผู้ชาย The Lord','The Lord คืนพลังชาย','The Lord สมุนไพรผู้ชาย','The Lord ฟื้นฟูพลังชาย','The Lord ดูแลผู้ชาย','The Lord ทางเลือกของผู้ชาย','The Lord ของดีต้องบอกต่อ','The Lord ปลุกศักยภาพผู้ชาย']};
-function accSeed(){let id=1000,out=[];ACC_PEOPLE.forEach((p,pi)=>Object.entries(ACC_PAGES).forEach(([brand,pages])=>pages.forEach((page,pgi)=>{let missing=false;if(brand==='WOLF+')missing=(pi>=13&&pgi!==1&&pgi!==5)||(pi>=9&&pi<=12&&pgi>=7&&pgi!==10);if(brand==='The Lord')missing=(pi>=13&&pgi<8)||(pi>=9&&pi<=12&&pgi>=9);const role=pi>=16?'ปั้นเม้นใหม่':pi>=13?'ปั้นเม้นเก่า':p[2];out.push({id:id++,account:p[1],role,brand,page,status:missing?'ยังไม่มีเพจ':'มีเพจ',note:''})})));ACC_HEAVEN_ACCOUNTS.forEach((a,ri)=>ACC_HEAVEN_PAGES.forEach((page,ci)=>{const code=ACC_HEAVEN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'HEAVEN Plus',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));return out}
+const ACC_LORD_ACCOUNTS=[
+  ['Ercanbald Gehrin','User หลัก'],['Evita Broadhead','User หลัก'],['Arryn Etchinghan','User หลัก'],
+  ['Adelina Jenney','User หลัก'],['Brunard Zellwege','User หลัก'],['Henry Limsey','User หลัก'],
+  ['Menoor Qz','User รอง'],['Jordan Balintao','User รอง'],['Kang Prabu Poek','User รอง'],
+  ['Karl Ringer','ปั้นเม้นเก่า'],['Lithian Doomeye','ปั้นเม้นเก่า'],['Osward Welby','ปั้นเม้นเก่า'],
+  ['Emerson Cardozo','ปั้นเม้นเก่า'],['Daryl Pobador','ปั้นเม้นใหม่'],['Silene Maria Delf','ปั้นเม้นใหม่']
+];
+const ACC_LORD_PAGES=[
+  'The Lord เสริมพลังแกร่งทุกมิติ โทร. 02-114-7507',
+  'เคล็ดไม่ลับฉบับ Thelord โทร 02-1147507',
+  'The Lord สูตรลับนายท่าน โทร 02-1147507',
+  'สมุนไพรวัยเกษียณ The Lord โทร 02-1147507',
+  'Thelord ฟื้นฟูพลังชายธรรมชาติ โทร 02-1147507',
+  'The Lord สมุนไพรพลังชาย โทร. 02-114-7507',
+  'The Lord ฟื้นพลังหนุ่ม คืนพลังแกร่ง โทร. 02-114-7507',
+  'The Lord ทางเลือกของผู้ชายพลังอึด',
+  'The Lord ของดีต้องมีติดตัว โทร. 02-114-7507',
+  'The Lord ขุนศึกเจ็ดยับไม่มีแผ่ว โทร. 02-114-7507'
+];
+/* G=มีเพจ, P=ยังไม่มี, Y=รับเพจไม่ได้ — The Lord ตามภาพต้นฉบับ */
+const ACC_LORD_MATRIX=[
+  'GGGGGGGGGG','GGGGGGGGYY','GGGGGGGGGG','GGGGGGGGGG','GGGGGGGGGG',
+  'GGGGGGGGGG','GGGGGGGGGG','GGGGGGGGGG','GGGGGGGGGG','GGGGGGPPPP',
+  'GGGGGGGGPP','GGGGGGGGPP','PPPPPGGPGG','GGGGGGGGGG','GGGGGGGGGG'
+];
+const ACC_PAGES={'เจ้าขุน':['เจ้าขุน ฟิตพลังชาย','เจ้าขุน แกร่งจากภายใน','เจ้าขุน ปลุกตื่นคนเก่า','เจ้าขุน ฟิต 24 ชั่วโมง','เจ้าขุน สูตรลับของผู้ชาย'],'WOLF+':['WOLF พลังหมาป่า','Wolf พลังหมาป่า ฟิต อึด คึก','WOLF+ เรื่องลับพลังหมาป่า','Wolf+ สมุนไพรพลังแกร่ง','WOLF+ ความมั่นใจไร้เทียมทาน','WOLF+ ปลุกพลังนักล่า','WOLF+ สูตรลับหมาป่า','Wolf+ ฟื้นฟูทุกกิจกรรม','Wolf+ ดูแลรอบด้าน','WOLF+ คืนพลังนักล่า','Wolf+ ตัวช่วยเรื่องพลังชาย','Wolf+ เคล็ดลับแมนไม่ทิ้ง','WOLF+ พลังผู้ชาย','WOLF+ พร้อมทุกวัน','Wolf+ ฟิตใส่ใจผู้ชาย','WOLF+ ส่งต่อประสบการณ์']};
+function accSeed(){let id=1000,out=[];ACC_PEOPLE.forEach((p,pi)=>Object.entries(ACC_PAGES).forEach(([brand,pages])=>pages.forEach((page,pgi)=>{let missing=false;if(brand==='WOLF+')missing=(pi>=13&&pgi!==1&&pgi!==5)||(pi>=9&&pi<=12&&pgi>=7&&pgi!==10);const role=pi>=16?'ปั้นเม้นใหม่':pi>=13?'ปั้นเม้นเก่า':p[2];out.push({id:id++,account:p[1],role,brand,page,status:missing?'ยังไม่มีเพจ':'มีเพจ',note:''})})));ACC_HEAVEN_ACCOUNTS.forEach((a,ri)=>ACC_HEAVEN_PAGES.forEach((page,ci)=>{const code=ACC_HEAVEN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'HEAVEN Plus',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_LORD_ACCOUNTS.forEach((a,ri)=>ACC_LORD_PAGES.forEach((page,ci)=>{const code=ACC_LORD_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'The Lord',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));return out}
 if(!ACC_ROWS.length){ACC_ROWS=accSeed();localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
 function accEsc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function saveAccounts(){localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
