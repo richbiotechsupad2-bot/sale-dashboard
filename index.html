@@ -1309,7 +1309,19 @@ function normalizeTargetRow(o){
 function normalizeGPRow(o){
   const monthStr=String(pick(o,'month','Month','เดือน')).trim();const dt=parseDateFlexible(monthStr);if(!dt)return null;
   const brand=normBrand(pick(o,'brand','Brand','แบรนด์'));if(!brand)return null;
-  return{month:monthStr.slice(0,7),y:dt.y,mo:dt.mo,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),brand,gpPercent:num(pick(o,'gppercent','GPPercent','GP%')),thresholdPercent:num(pick(o,'thresholdpercent','ThresholdPercent','เกณฑ์'))};
+  let employee=String(pick(o,'employee','Employee','พนักงาน')).trim();
+  // กรกฎาคม 2569: เกมส์ลาออกแล้ว ข้อมูลในแถวชื่อเกมส์จากต้นทางเป็นของเกอร์
+  // แก้ตั้งแต่ชั้นนำเข้าเพื่อให้ถูกต้องทั้งข้อมูลในไฟล์และข้อมูลจาก Google Sheets
+  if(dt.y===2026&&dt.mo===7&&employee==='เกมส์') employee='เกอร์';
+  return{month:monthStr.slice(0,7),y:dt.y,mo:dt.mo,employee,brand,gpPercent:num(pick(o,'gppercent','GPPercent','GP%')),thresholdPercent:num(pick(o,'thresholdpercent','ThresholdPercent','เกณฑ์'))};
+}
+
+function reconcileGPRoster(rows){
+  const corrected=rows.map(r=>(r.y===2026&&r.mo===7&&r.employee==='เกมส์')?{...r,employee:'เกอร์'}:r);
+  // หากชีตมีทั้งแถวชื่อเดิมและชื่อที่แก้แล้ว ให้เหลือข้อมูลเกอร์เพียงรายการเดียวต่อเดือน/แบรนด์
+  const unique=new Map();
+  corrected.forEach(r=>unique.set(`${r.y}-${r.mo}|${r.employee}|${r.brand}`,r));
+  return [...unique.values()];
 }
 function normalizeRedemptionRow(o){
   const dt=parseDateFlexible(pick(o,'date','Date','วันที่'));if(!dt)return null;
@@ -1437,21 +1449,21 @@ async function loadAllData(){
     // เดิมคืนค่า seed ตรง ๆ ทำให้ r.y/r.mo เป็น undefined และตัวกรองแสดง 0 ทั้งหน้า
     const normalizedSeed=()=>getSeed().map(norm).filter(Boolean);
     if(!cfg[k]){
-      RAW[k]=normalizedSeed(); DATA_SOURCE[k]='seed';
+      RAW[k]=k==='gp'?reconcileGPRoster(normalizedSeed()):normalizedSeed(); DATA_SOURCE[k]='seed';
       LOAD_STATUS[k]={state:'none',rows:0,detail:'ยังไม่ได้วางลิงก์ — ใช้ข้อมูลตัวอย่าง'};
       return;
     }
     if(!r.ok){
-      RAW[k]=normalizedSeed(); DATA_SOURCE[k]='seed';
+      RAW[k]=k==='gp'?reconcileGPRoster(normalizedSeed()):normalizedSeed(); DATA_SOURCE[k]='seed';
       LOAD_STATUS[k]={state:'error',rows:0,detail:'ดึงข้อมูลไม่สำเร็จ ('+r.reason+') — ใช้ข้อมูลตัวอย่างแทนชั่วคราว'};
       return;
     }
     const rows=(r.rows||[]).map(norm).filter(Boolean);
     if(rows.length){
-      RAW[k]=rows; DATA_SOURCE[k]='sheet';
+      RAW[k]=k==='gp'?reconcileGPRoster(rows):rows; DATA_SOURCE[k]='sheet';
       LOAD_STATUS[k]={state:'sheet',rows:rows.length,detail:'เชื่อมต่อสำเร็จ พบ '+rows.length+' แถว'};
     }else{
-      RAW[k]=normalizedSeed(); DATA_SOURCE[k]='seed';
+      RAW[k]=k==='gp'?reconcileGPRoster(normalizedSeed()):normalizedSeed(); DATA_SOURCE[k]='seed';
       LOAD_STATUS[k]={state:'empty',rows:0,detail:'เชื่อมต่อสำเร็จ แต่ไม่พบแถวข้อมูลที่ใช้ได้ (ตรวจหัวคอลัมน์/ชื่อแท็บ/gid) — ใช้ข้อมูลตัวอย่างแทนชั่วคราว'};
     }
   });
