@@ -1454,7 +1454,7 @@ function orgSeed(){
     5:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ตาล','เกมส์','ป้าย','อชิ','เกอร์','เดียร์'],
     6:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ตาล','ป้าย','อชิ','เกอร์','เดียร์'],
     7:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ตาล','ป้าย','อชิ','เกอร์','เดียร์'],
-    8:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','เกอร์','เดียร์','น้ำฝน']
+    8:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','อชิ','เกอร์','เดียร์','น้ำฝน']
   };
   const out={};
   Object.keys(monthlyNames).forEach(m=>{
@@ -1473,7 +1473,21 @@ function normalizeOrgData(){
     if(p.shift==='wfh')p.note='Standby กะเช้า/กะบ่าย';
   }));
 }
-function loadOrgData(){try{ORG_DATA=JSON.parse(localStorage.getItem(ORG_STORE)||'{}')}catch(e){ORG_DATA={}}if(!Object.keys(ORG_DATA).length)ORG_DATA=orgSeed();normalizeOrgData();saveOrgData()}
+function migrateAugust2026Roster(){
+  const migrationKey='sa2_admin_org_august_2026_v2';
+  try{if(localStorage.getItem(migrationKey))return}catch(e){}
+  const augustKey='2026-08',existing=ORG_DATA[augustKey]||[],supervisors=existing.filter(p=>p.role==='Supervisor');
+  const supervisor=supervisors[0]||orgPerson('นุ๊ก','Supervisor','management','Supervisor');
+  const augustNames=['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','อชิ','เกอร์','เดียร์','น้ำฝน'];
+  ORG_DATA[augustKey]=[supervisor,...augustNames.map(name=>{
+    const old=existing.find(p=>p.name===name);
+    const role=name==='เปิ้ล'?'Lead':'Admin';
+    const shift=role==='Lead'?'management':(['แอ๋ม','หนึ่ง'].includes(name)?'wfh':(['เกอร์','เดียร์','น้ำฝน'].includes(name)?'afternoon':'morning'));
+    return old?{...old,role,shift,note:role==='Lead'?'Standby กะเช้า/กะบ่าย':shift==='wfh'?'Standby กะเช้า/กะบ่าย':''}:orgPerson(name,role,shift,role==='Lead'?'Standby กะเช้า/กะบ่าย':shift==='wfh'?'Standby กะเช้า/กะบ่าย':'');
+  })];
+  try{localStorage.setItem(migrationKey,'1')}catch(e){}
+}
+function loadOrgData(){try{ORG_DATA=JSON.parse(localStorage.getItem(ORG_STORE)||'{}')}catch(e){ORG_DATA={}}if(!Object.keys(ORG_DATA).length)ORG_DATA=orgSeed();migrateAugust2026Roster();normalizeOrgData();saveOrgData()}
 function saveOrgData(){try{localStorage.setItem(ORG_STORE,JSON.stringify(ORG_DATA))}catch(e){}}
 function initOrgFilters(){
   loadOrgData();
