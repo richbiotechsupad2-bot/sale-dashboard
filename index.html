@@ -433,6 +433,32 @@ body{font-family:'Sarabun',sans-serif;background:
 .tmap-cell .tv{font-size:13px;}
 .tmap-cell .tp{font-size:8px;opacity:.85;}
 
+/* Executive storytelling — vivid, large-type redesign */
+.story-zone{position:relative;overflow:hidden;border-radius:22px;padding:18px;background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 48%,#fff1f2 100%);border:1px solid #ddd6fe;box-shadow:0 14px 34px rgba(76,29,149,.10)}
+.story-zone:before{content:"";position:absolute;width:230px;height:230px;border-radius:50%;right:-90px;top:-120px;background:radial-gradient(circle,#c4b5fd88,transparent 68%);pointer-events:none}
+.story-grid{position:relative;display:grid;grid-template-columns:1.45fr .8fr;gap:13px}
+.story-card{position:relative;overflow:hidden;border:1px solid #e2e8f0;border-radius:17px;padding:17px 18px 17px 21px;background:#fff;box-shadow:0 8px 22px rgba(30,41,59,.08);transition:transform .2s ease,box-shadow .2s ease}
+.story-card:hover{transform:translateY(-3px);box-shadow:0 15px 30px rgba(76,29,149,.15)}
+.story-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--story-color,#8b5cf6)}
+.story-card.primary{grid-row:span 2;background:linear-gradient(145deg,#ffffff,#f0fdfa)}
+.story-card.good{--story-color:#10b981}.story-card.focus{--story-color:#f97316}.story-card.brand{--story-color:#06b6d4}
+.story-label{display:flex;align-items:center;gap:9px;color:#475569;font-size:12px;font-weight:900;margin-bottom:8px}
+.story-icon{display:grid;place-items:center;width:35px;height:35px;border-radius:11px;background:color-mix(in srgb,var(--story-color) 14%,white);font-size:18px;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--story-color) 28%,white)}
+.story-copy{font-size:14px;line-height:1.8;color:#334155;font-weight:650}.story-copy b{font-size:16px;color:#312e81}.story-copy .g{color:#047857;font-weight:900}.story-copy .r{color:#dc2626;font-weight:900}
+.story-action{margin-top:11px;display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:#fff7ed;color:#c2410c;border:1px solid #fed7aa;font-size:11px;font-weight:900}
+.visual-panel{border-radius:22px!important;border:1px solid #dbeafe!important;padding:18px!important;background:linear-gradient(145deg,#fff,#f8fbff)!important;box-shadow:0 14px 34px rgba(30,64,175,.09)!important}
+.tmap{gap:7px;height:255px}
+.tmap-cell{position:relative;border-radius:15px;padding:15px 17px;box-shadow:inset 0 0 0 1px #ffffff44,0 8px 18px rgba(15,23,42,.14);transition:transform .2s ease,filter .2s ease,box-shadow .2s ease}
+.tmap-cell:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#ffffff28,transparent 48%);pointer-events:none}
+.tmap-cell:hover{transform:translateY(-4px) scale(1.012);filter:saturate(1.14);box-shadow:0 15px 25px rgba(15,23,42,.20);z-index:2}
+.tmap-cell .tn{font-size:15px;font-weight:900;text-shadow:0 1px 2px #0003}
+.tmap-cell .tv{font-size:24px;font-weight:950;letter-spacing:-.5px;text-shadow:0 2px 4px #0003}
+.tmap-cell .tp{font-size:11px;font-weight:900;opacity:.96;background:#ffffff22;border:1px solid #ffffff38;border-radius:999px;padding:5px 9px;width:max-content}
+.trend-panel{border-radius:22px!important;border:1px solid #bae6fd!important;padding:17px 20px 20px!important;background:linear-gradient(180deg,#fff,#f0f9ff)!important;box-shadow:0 14px 34px rgba(8,145,178,.10)!important}
+.trend-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.trend-title{font-size:15px;font-weight:900;color:#0f172a}.trend-note{font-size:10px;font-weight:800;color:#0369a1;background:#e0f2fe;border:1px solid #bae6fd;border-radius:999px;padding:6px 10px}
+@media(max-width:800px){.story-grid{grid-template-columns:1fr}.story-card.primary{grid-row:auto}.story-copy{font-size:12px}.tmap{height:auto;display:grid;grid-template-columns:1fr}.tmap-cell{min-height:125px}.trend-head{align-items:flex-start;flex-direction:column}}
+
 /* ── BADGE ── */
 .sbadge{display:inline-flex;align-items:center;gap:4px;font-size:8.5px;font-weight:700;padding:4px 10px;border-radius:14px;border:1px solid;margin-top:8px;}
 .pill{display:inline-block;font-size:8px;font-weight:700;padding:2px 6px;border-radius:6px;}
@@ -1165,11 +1191,11 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="sec">💓 Performance Pulse — สุขภาพทีมจากทุกโมดูล</div>
       <div class="hub-pulse" id="ex-pulse"></div>
       <div class="sec">🧠 Data Storytelling — สรุปสถานการณ์อัตโนมัติ</div>
-      <div id="ex-story"></div>
+      <div id="ex-story" class="story-zone"></div>
       <div class="sec">🏷️ สัดส่วนยอดขายตามแบรนด์ (Treemap)</div>
-      <div class="card"><div class="tmap" id="ex-tmap"></div></div>
+      <div class="card visual-panel"><div class="tmap" id="ex-tmap"></div></div>
       <div class="sec">📈 แนวโน้มยอดขาย — YTD / รายเดือน / รายวัน ตามช่วงที่เลือก</div>
-      <div class="card"><canvas id="exTrend" style="max-height:260px"></canvas></div>
+      <div class="card trend-panel"><div class="trend-head"><div class="trend-title">📊 ยอดขายจริงเทียบเป้าหมาย</div><div class="trend-note">แตะจุดบนกราฟเพื่อดูยอดรายวัน</div></div><canvas id="exTrend" style="max-height:310px"></canvas></div>
     </div></div>
 
     <!-- ═══ PAGE: PERFORMANCE (GP%) ═══ -->
@@ -3357,8 +3383,21 @@ function renderDashboard(){
   const progressTxt=m.isSingleMonth
     ? `ขณะนี้บรรลุเป้าเดือนแล้ว <b>${fmtPct(m.achievedPct,2)}</b> จาก ${m.N}/${m.daysInScopeMonth} วัน ${m.remainingDays>0?`เหลือ ${m.remainingDays} วัน ต้องทำยอดเฉลี่ย <b>${fmtB(m.requiredDailyRemaining)}/วัน</b> (${m.requiredIncreasePct>=0?'เพิ่มขึ้น':'ลดลง'} ${fmtPct(Math.abs(m.requiredIncreasePct),1)} จากค่าเฉลี่ยปัจจุบัน) จึงจะถึงเป้า`:'ครบกำหนดเดือนแล้ว'}`
     : `บรรลุเป้าภาพรวมช่วงที่เลือกแล้ว <b>${fmtPct(m.achievedPct,2)}</b> จากข้อมูล ${m.monthlyTrend.length} เดือน (เลือกเจาะจง 1 เดือน เพื่อดูพยากรณ์สิ้นเดือนแบบละเอียด)`;
-  story.innerHTML=`<div class="alert ${m.wow&&m.wow.pct>=0?'ag':'aw'}"><span style="font-size:16px">🧠</span><div>${wowTxt} ${progressTxt}</div></div>
-  <div class="alert ai"><span style="font-size:16px">🏷️</span><div>แบรนด์ที่บรรลุเป้าดีที่สุด: <b style="color:${bestBrand.b.c}">${bestBrand.b.lb}</b> (${fmtPct(bestBrand.pct,1)}) · แบรนด์ที่ต้องเร่ง: <b style="color:#dc2626">${worstBrand.b.lb}</b> (${fmtPct(worstBrand.pct,1)})</div></div>`;
+  story.innerHTML=`<div class="story-grid">
+    <article class="story-card primary ${m.wow&&m.wow.pct>=0?'good':'focus'}">
+      <div class="story-label"><span class="story-icon">🧠</span><span>สถานการณ์ล่าสุดและแนวโน้ม</span></div>
+      <div class="story-copy">${wowTxt}<br>${progressTxt}</div>
+      <div class="story-action">⚡ ใช้ตัวเลขนี้กำหนดเป้ารายวันของทีม</div>
+    </article>
+    <article class="story-card brand">
+      <div class="story-label"><span class="story-icon">🏆</span><span>แบรนด์ผลงานดีที่สุด</span></div>
+      <div class="story-copy"><b style="color:${bestBrand.b.c}">${bestBrand.b.lb}</b><br><span class="g">${fmtPct(bestBrand.pct,1)} ของเป้าหมาย</span></div>
+    </article>
+    <article class="story-card focus">
+      <div class="story-label"><span class="story-icon">🎯</span><span>แบรนด์ที่ต้องเร่ง</span></div>
+      <div class="story-copy"><b style="color:#dc2626">${worstBrand.b.lb}</b><br><span class="r">${fmtPct(worstBrand.pct,1)} ของเป้าหมาย</span></div>
+    </article>
+  </div>`;
 
   // Treemap (custom div-based) — สัดส่วนยอดขายตามแบรนด์ (จากข้อมูลจริง so.brandTotals)
   const tmap=document.getElementById('ex-tmap');tmap.innerHTML='';
