@@ -742,6 +742,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="org-field"><label>🗓️ เดือน</label><select id="orgMonth" class="org-select" onchange="renderAdminOrg()"></select></div>
         <button class="org-btn primary" onclick="openOrgEditor()">＋ เพิ่มชื่อ Admin</button>
         <button class="org-btn light" onclick="copyOrgRoster()">⧉ คัดลอกรายชื่อเดือนนี้</button>
+        <span id="orgSaveStatus" style="font-size:11px;font-weight:800;color:#047857;opacity:.72;transition:.2s">ข้อมูลจะถูกบันทึกอัตโนมัติในเครื่องนี้</span>
         <div class="org-summary" id="orgSummary"></div>
       </div>
       <section class="org-chart">
@@ -1487,8 +1488,42 @@ function migrateAugust2026Roster(){
   })];
   try{localStorage.setItem(migrationKey,'1')}catch(e){}
 }
-function loadOrgData(){try{ORG_DATA=JSON.parse(localStorage.getItem(ORG_STORE)||'{}')}catch(e){ORG_DATA={}}if(!Object.keys(ORG_DATA).length)ORG_DATA=orgSeed();migrateAugust2026Roster();normalizeOrgData();saveOrgData()}
-function saveOrgData(){try{localStorage.setItem(ORG_STORE,JSON.stringify(ORG_DATA))}catch(e){}}
+function hydrateOrgPhotos(){
+  Object.values(ORG_DATA).forEach(people=>people.forEach(p=>{
+    if(!p.photo||p.photo==='__DEFAULT__')p.photo=ORG_PHOTOS[p.name]||ORG_FALLBACK;
+  }));
+}
+function orgDataForStorage(){
+  const copy={};
+  Object.entries(ORG_DATA).forEach(([key,people])=>{
+    copy[key]=people.map(p=>{
+      const defaultPhoto=ORG_PHOTOS[p.name]||ORG_FALLBACK;
+      return{...p,photo:p.photo===defaultPhoto?'__DEFAULT__':p.photo};
+    });
+  });
+  return copy;
+}
+function loadOrgData(){
+  try{ORG_DATA=JSON.parse(localStorage.getItem(ORG_STORE)||'{}')}catch(e){ORG_DATA={}}
+  if(!Object.keys(ORG_DATA).length)ORG_DATA=orgSeed();
+  hydrateOrgPhotos();migrateAugust2026Roster();normalizeOrgData();saveOrgData(false);
+}
+function saveOrgData(showMessage=true){
+  try{
+    localStorage.setItem(ORG_STORE,JSON.stringify(orgDataForStorage()));
+    if(showMessage)showOrgSaveStatus('✓ บันทึกข้อมูลแล้ว',false);
+    return true;
+  }catch(e){
+    showOrgSaveStatus('บันทึกไม่สำเร็จ — พื้นที่จัดเก็บเต็ม',true);
+    alert('บันทึกข้อมูลไม่สำเร็จ เนื่องจากพื้นที่จัดเก็บของเบราว์เซอร์เต็ม กรุณาเลือกรูปที่มีขนาดเล็กลง');
+    return false;
+  }
+}
+function showOrgSaveStatus(message,isError){
+  const el=document.getElementById('orgSaveStatus');if(!el)return;
+  el.textContent=message;el.style.color=isError?'#dc2626':'#047857';el.style.opacity='1';
+  clearTimeout(showOrgSaveStatus.timer);showOrgSaveStatus.timer=setTimeout(()=>el.style.opacity='.72',2600);
+}
 function initOrgFilters(){
   loadOrgData();
   const y=document.getElementById('orgYear'),m=document.getElementById('orgMonth');if(!y||y.options.length)return;
@@ -1530,15 +1565,32 @@ function openOrgEditor(id){
   document.getElementById('orgPhotoPreview').src=ORG_NEW_PHOTO;document.getElementById('orgDeleteBtn').style.visibility=p?'visible':'hidden';document.getElementById('orgEditPhoto').value='';document.getElementById('orgEditor').classList.add('open');
 }
 function closeOrgEditor(){document.getElementById('orgEditor').classList.remove('open')}
-function previewOrgPhoto(input){const f=input.files&&input.files[0];if(!f)return;const reader=new FileReader();reader.onload=e=>{ORG_NEW_PHOTO=e.target.result;document.getElementById('orgPhotoPreview').src=ORG_NEW_PHOTO};reader.readAsDataURL(f)}
+function previewOrgPhoto(input){
+  const f=input.files&&input.files[0];if(!f)return;
+  if(!f.type.startsWith('image/')){alert('กรุณาเลือกไฟล์รูปภาพ');input.value='';return}
+  const reader=new FileReader();
+  reader.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const max=640,scale=Math.min(1,max/Math.max(img.width,img.height)),canvas=document.createElement('canvas');
+      canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));
+      canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+      ORG_NEW_PHOTO=canvas.toDataURL('image/webp',.82);
+      document.getElementById('orgPhotoPreview').src=ORG_NEW_PHOTO;
+    };
+    img.onerror=()=>alert('ไม่สามารถอ่านไฟล์รูปนี้ได้');
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(f);
+}
 function clearOrgPhoto(){ORG_NEW_PHOTO=ORG_FALLBACK;document.getElementById('orgPhotoPreview').src=ORG_FALLBACK;document.getElementById('orgEditPhoto').value=''}
 function saveOrgPerson(){
   const name=document.getElementById('orgEditName').value.trim();if(!name){alert('กรุณากรอกชื่อพนักงาน');return}
   const people=currentOrgPeople(),values={name,role:document.getElementById('orgEditRole').value,shift:document.getElementById('orgEditShift').value,status:document.getElementById('orgEditStatus').value,note:document.getElementById('orgEditNote').value.trim(),photo:ORG_NEW_PHOTO||ORG_FALLBACK};
   if(ORG_EDIT_ID){const i=people.findIndex(p=>p.id===ORG_EDIT_ID);if(i>=0)people[i]={...people[i],...values}}else people.push({id:orgId(),...values});
-  saveOrgData();closeOrgEditor();renderAdminOrg();
+  if(saveOrgData()){closeOrgEditor();renderAdminOrg()}
 }
-function deleteOrgPerson(){if(!ORG_EDIT_ID||!confirm('ยืนยันลบรายชื่อนี้ออกจากเดือนที่เลือก?'))return;ORG_DATA[orgKey()]=currentOrgPeople().filter(p=>p.id!==ORG_EDIT_ID);saveOrgData();closeOrgEditor();renderAdminOrg()}
+function deleteOrgPerson(){if(!ORG_EDIT_ID||!confirm('ยืนยันลบรายชื่อนี้ออกจากเดือนที่เลือก?'))return;const before=ORG_DATA[orgKey()];ORG_DATA[orgKey()]=currentOrgPeople().filter(p=>p.id!==ORG_EDIT_ID);if(saveOrgData()){closeOrgEditor();renderAdminOrg()}else ORG_DATA[orgKey()]=before}
 function copyOrgRoster(){const source=currentOrgPeople(),month=prompt('กรอกเลขเดือนปลายทาง 1–12');if(month==null)return;const n=Number(month);if(n<1||n>12){alert('กรุณากรอกเดือน 1–12');return}const key=document.getElementById('orgYear').value+'-'+String(n).padStart(2,'0');ORG_DATA[key]=source.map(p=>({...p,id:orgId()}));saveOrgData();document.getElementById('orgMonth').value=String(n).padStart(2,'0');renderAdminOrg()}
 
 const PAGE_RENDER={
