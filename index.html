@@ -1191,9 +1191,13 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .hs-card-head span{font-size:10px;font-weight:800;opacity:.9}
 #pg-holiday .hs-scroll{overflow:auto;max-height:610px;scrollbar-color:#818cf8 #eef2ff}
 #pg-holiday .hs-table{width:100%;min-width:1780px;border-collapse:separate;border-spacing:0;font-size:11px}
-#pg-holiday .hs-table th{position:sticky;top:0;z-index:3;padding:9px 5px;border-right:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;background:#f8fafc;color:#334155;text-align:center;font-weight:950;white-space:nowrap}
-#pg-holiday .hs-table th:first-child{left:0;z-index:5;min-width:170px;text-align:left;padding-left:13px;background:#eef2ff}
-#pg-holiday .hs-table th.weekend{background:#fff1f2;color:#dc2626}
+#pg-holiday .hs-table th{position:sticky;top:0;z-index:3;padding:10px 5px;border-right:1px solid rgba(255,255,255,.42);border-bottom:3px solid #818cf8;background:linear-gradient(155deg,#eff6ff 0%,#e0e7ff 55%,#ddd6fe 100%);color:#312e81;text-align:center;font-weight:950;white-space:nowrap;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 5px 12px rgba(67,56,202,.12);transition:transform .18s ease,filter .18s ease,box-shadow .18s ease}
+#pg-holiday .hs-table th:hover{z-index:6;transform:translateY(-2px);filter:saturate(1.18) brightness(1.02);box-shadow:0 7px 16px rgba(67,56,202,.24)}
+#pg-holiday .hs-table th b{display:inline-flex;align-items:center;justify-content:center;min-width:27px;height:27px;margin-top:3px;border-radius:9px;background:rgba(255,255,255,.84);color:#1e1b4b;font-size:14px;box-shadow:0 3px 8px rgba(49,46,129,.13)}
+#pg-holiday .hs-table th:first-child{left:0;z-index:5;min-width:210px;text-align:left;padding-left:16px;background:linear-gradient(135deg,#172554,#3730a3 58%,#7c3aed);color:#fff;border-bottom-color:#fbbf24;box-shadow:5px 0 14px rgba(30,41,59,.18)}
+#pg-holiday .hs-table th:first-child:hover{transform:none}
+#pg-holiday .hs-table th.weekend{background:linear-gradient(155deg,#fff1f2 0%,#ffe4e6 52%,#fecdd3 100%);color:#be123c;border-bottom-color:#fb7185}
+#pg-holiday .hs-table th.weekend b{background:linear-gradient(145deg,#fff,#fff1f2);color:#e11d48;box-shadow:0 3px 9px rgba(225,29,72,.18)}
 #pg-holiday .hs-table th.sum{min-width:68px;color:#fff;border-color:#ffffff33}
 #pg-holiday .hs-table td{height:42px;padding:5px 4px;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;text-align:center;font-size:10px;font-weight:950;white-space:nowrap;transition:.18s}
 #pg-holiday .hs-table td:first-child{position:sticky;left:0;z-index:2;padding:7px 10px;background:#fff;text-align:left;color:#172554;font-size:12px;box-shadow:4px 0 8px rgba(15,23,42,.05)}
@@ -1620,7 +1624,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="hs-scroll"><table class="hs-table"><thead id="hsThead"></thead><tbody id="hsTbody"></tbody></table></div>
       </section>
       <section class="hs-card hs-daily-card">
-        <div class="hs-card-head"><strong>📊 จำนวนพนักงานแต่ละกะต่อวัน</strong><span>ไม่นับ Supervisor · รวมพนักงาน 10 คน</span></div>
+        <div class="hs-card-head"><strong>📊 จำนวนพนักงานแต่ละกะต่อวัน</strong><span id="hsCountStatus">ไม่นับ Supervisor · รวมพนักงาน 9 คน</span></div>
         <div class="hs-scroll"><table class="hs-table hs-count-table"><thead id="hsCountThead"></thead><tbody id="hsCountTbody"></tbody></table></div>
       </section>
     </div></div>
@@ -3661,17 +3665,16 @@ function renderInsight(){
    HOLIDAY SCHEDULE — 26 JULY TO 25 AUGUST 2026
    ══════════════════════════════════════════════════════════════════ */
 const HOLIDAY_TEAM=[
-  {name:'แพร',full:'น.ส. ศิรินภา ปฏิบัติการ',id:'68017',meta:'',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
+  {name:'แพร',full:'น.ส. ศิรินภา ปฏิมาการ',id:'68017',meta:'',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
   {name:'ป้าย',full:'นาย วิษณุพล ไชยโชค',id:'68070',meta:'',s:'OMMMMMMMOMMMMMMMMMOMMMMMMOMMMMM'},
   {name:'หนึ่ง',full:'น.ส. หนึ่งฤทัย เหลืองไชยยะ',id:'68103',meta:'WFH',s:'MAAAAOMMMMMMOMMMAAAOMMMMMMOMMMM'},
   {name:'แอ๋ม',full:'น.ส. ภัทรียา ฟูเต็มวงค์',id:'68136',meta:'WFH',s:'MMMMMAAAAOMMAAAAOMMMMMMOMMMMMOM'},
   {name:'ดรีม',full:'นาย อชิตพล แก้วศรีนวม',id:'68182',meta:'',s:'MMMMMMMOMMMMMOMMMMMMMMOMMMMMOMM'},
   {name:'แอปเปิ้ล',full:'น.ส. วรรณกานต์ อาจประโคน',id:'68033',meta:'',s:'AAMMMOMMMMAAOMMMOMMAOAAAAAAAAAA'},
-  {name:'ตาล',full:'น.ส. ปิญดา ปราชญา',id:'68161',meta:'WFH',s:'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'},
   {name:'ไทเกอร์',full:'นาย ศราวุธ สมคล่อง',id:'68186',meta:'',s:'AAAAAOAAAAAAOAAAOAAAOAAAAAAAAAA'},
   {name:'เดียร์',full:'นาย ขวัญชัย กลิ่นนุ่ม',id:'68228',meta:'กะบ่าย',s:'AOAAAAAAOAAAAAAOAAAAAAOAAAAAAAA'},
-  {name:'น้ำฝน',full:'น.ส. ปุณณภัส กาละเหลา',id:'68261',meta:'กะบ่าย',s:'AAAAAAAOAAAAAAOAAAAAAOAAAAAAOAA'},
-  {name:'นุ๊ก',full:'น.ส. ศิริยา อินคำ',id:'68227',meta:'Supervisor',s:'NNNNNNOOOONNNMMNNNNNNOAANNNNONN'}
+  {name:'น้ำฝน',full:'น.ส. ปุณญภัส กาละเหลา',id:'68261',meta:'กะบ่าย',s:'AAAAAAAOAAAAAAOAAAAAAOAAAAAAOAA'},
+  {name:'นุ๊ก',full:'น.ส. กิติยา อิ่นคำ',id:'68227',meta:'Supervisor',s:'NNNNNNOOOONNNMMNNNNNNOAANNNNONN'}
 ];
 const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด'};
 const HS_SHORT_DAY=['อา','จ','อ','พ','พฤ','ศ','ส'];
@@ -3713,6 +3716,8 @@ function renderDailyShiftCounts(){
   const thead=document.getElementById('hsCountThead'),tbody=document.getElementById('hsCountTbody');
   if(!thead||!tbody)return;
   const countedTeam=HOLIDAY_TEAM.filter(p=>p.meta!=='Supervisor');
+  const countStatus=document.getElementById('hsCountStatus');
+  if(countStatus)countStatus.textContent=`ไม่นับ Supervisor · รวมพนักงาน ${countedTeam.length} คน`;
   const heads=HS_DATES.map(d=>{const wk=d.getUTCDay()===0||d.getUTCDay()===6;return `<th class="${wk?'weekend':''}">${HS_SHORT_DAY[d.getUTCDay()]}<br><b>${d.getUTCDate()}</b></th>`}).join('');
   thead.innerHTML=`<tr><th>ประเภทกะ / สถานะ</th>${heads}<th class="total-head">รวมทั้งรอบ</th></tr>`;
   const rows=[
