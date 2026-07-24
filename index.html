@@ -1207,6 +1207,10 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .shift-A{background:#dcfce7;color:#047857}
 #pg-holiday .shift-N{background:#e0e7ff;color:#3730a3}
 #pg-holiday .shift-O{background:#fee2e2;color:#dc2626;font-size:11px!important}
+#pg-holiday .shift-V{background:#dbeafe;color:#1d4ed8;font-size:11px!important}
+#pg-holiday .shift-L{background:#ede9fe;color:#7c3aed;font-size:11px!important}
+#pg-holiday .shift-U{background:#f1f5f9;color:#475569;font-size:11px!important}
+#pg-holiday .shift-B{background:#ffedd5;color:#ea580c;font-size:11px!important}
 #pg-holiday .hs-table td.sum{font-size:14px;background:#fff;font-weight:950}
 #pg-holiday .hs-table td.sum.off{color:#dc2626;background:#fff1f2}
 #pg-holiday .hs-table td.sum.work{color:#059669;background:#ecfdf5}
@@ -1228,6 +1232,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .hs-count-table .count-A{background:#dcfce7;color:#047857}
 #pg-holiday .hs-count-table .count-N{background:#e0e7ff;color:#3730a3}
 #pg-holiday .hs-count-table .count-O{background:#fee2e2;color:#dc2626}
+#pg-holiday .hs-count-table .count-X{background:linear-gradient(135deg,#fee2e2,#ede9fe);color:#be123c}
 #pg-holiday .hs-count-table .count-total{background:#ecfeff;color:#0f766e;font-size:15px;font-weight:950}
 #pg-holiday .hs-count-label{display:flex;align-items:center;gap:8px}
 #pg-holiday .hs-count-label i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 4px currentColor;opacity:.75}
@@ -1599,7 +1604,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
     <div id="pg-holiday" class="page"><div class="wrap">
       <section class="hs-hero">
         <div class="hs-eyebrow">SALE ADMIN 2 · HOLIDAY &amp; SHIFT CONTROL</div>
-        <div class="hs-title">🏖️ ตารางวันหยุด — สิงหาคม 2569</div>
+        <div class="hs-title" id="hsTitle">🏖️ ตารางวันหยุด — สิงหาคม 2569</div>
       </section>
       <div class="hs-kpis">
         <div class="hs-kpi" style="--kc:#4338ca"><span>พนักงานทั้งหมด</span><b id="hsKpiPeople">11 คน</b><small>รวม Supervisor / Lead / WFH</small></div>
@@ -1609,14 +1614,17 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="hs-kpi" style="--kc:#2563eb"><span>กะปกติ</span><b id="hsKpiNormal">—</b><small>09:00–18:00</small></div>
       </div>
       <div class="hs-toolbar">
+        <div class="hs-field"><label>📅 เลือกเดือน</label><select id="hsMonth" class="hs-select" onchange="changeHolidayMonth(this.value)"><option value="2026-08">สิงหาคม 2569</option><option value="2026-07">กรกฎาคม 2569</option></select></div>
         <div class="hs-field"><label>👤 เลือกพนักงาน</label><select id="hsEmployee" class="hs-select" onchange="renderHolidaySchedule()"><option value="all">พนักงานทั้งหมด</option></select></div>
-        <div class="hs-field"><label>🎨 ไฮไลต์ประเภทวัน</label><select id="hsShift" class="hs-select" onchange="renderHolidaySchedule()"><option value="all">แสดงทุกประเภท</option><option value="O">วันหยุด</option><option value="M">กะเช้า 06:00–15:00</option><option value="A">กะบ่าย 15:00–00:00</option><option value="N">กะปกติ 09:00–18:00</option></select></div>
+        <div class="hs-field"><label>🎨 ไฮไลต์ประเภทวัน</label><select id="hsShift" class="hs-select" onchange="renderHolidaySchedule()"><option value="all">แสดงทุกประเภท</option><option value="O">วันหยุด / ลา</option><option value="M">กะเช้า 06:00–15:00</option><option value="A">กะบ่าย 15:00–00:00</option><option value="N">กะปกติ 09:00–18:00</option></select></div>
         <button class="hs-btn" onclick="resetHolidayFilters()">↻ แสดงทั้งหมด</button>
         <div class="hs-legend">
           <span class="hs-pill" style="background:#fce7f3;color:#be185d"><i style="background:#db2777"></i>กะเช้า</span>
           <span class="hs-pill" style="background:#dcfce7;color:#047857"><i style="background:#059669"></i>กะบ่าย</span>
           <span class="hs-pill" style="background:#e0e7ff;color:#3730a3"><i style="background:#4338ca"></i>กะปกติ</span>
           <span class="hs-pill" style="background:#fee2e2;color:#dc2626"><i style="background:#dc2626"></i>วันหยุด</span>
+          <span class="hs-pill" style="background:#dbeafe;color:#1d4ed8"><i style="background:#2563eb"></i>พักร้อน</span>
+          <span class="hs-pill" style="background:#ede9fe;color:#7c3aed"><i style="background:#7c3aed"></i>ลากิจ</span>
         </div>
       </div>
       <section class="hs-card">
@@ -3662,9 +3670,9 @@ function renderInsight(){
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   HOLIDAY SCHEDULE — 26 JULY TO 25 AUGUST 2026
+   HOLIDAY SCHEDULE — MONTHLY PERIODS (26TH–25TH)
    ══════════════════════════════════════════════════════════════════ */
-const HOLIDAY_TEAM=[
+const HOLIDAY_AUG_TEAM=[
   {name:'แพร',full:'น.ส. ศิรินภา ปฏิมาการ',id:'68017',meta:'',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
   {name:'ป้าย',full:'นาย วิษณุพล ไชยโชค',id:'68070',meta:'',s:'OMMMMMMMOMMMMMMMMMOMMMMMMOMMMMM'},
   {name:'หนึ่ง',full:'น.ส. หนึ่งฤทัย เหลืองไชยยะ',id:'68103',meta:'WFH',s:'MAAAAOMMMMMMOMMMAAAOMMMMMMOMMMM'},
@@ -3676,13 +3684,53 @@ const HOLIDAY_TEAM=[
   {name:'น้ำฝน',full:'น.ส. ปุณญภัส กาละเหลา',id:'68261',meta:'กะบ่าย',s:'AAAAAAAOAAAAAAOAAAAAAOAAAAAAOAA'},
   {name:'นุ๊ก',full:'น.ส. กิติยา อิ่นคำ',id:'68227',meta:'Supervisor',s:'NNNNNNOOOONNNMMNNNNNNOAANNNNONN'}
 ];
-const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด'};
+const HOLIDAY_JUL_TEAM=[
+  {name:'แพร',full:'น.ส. ศิรินภา ปฏิมาการ',id:'68017',meta:'',s:'MMMMMMMMOVVOMMMMMMOMMMMMMOMMMM'},
+  {name:'ป้าย',full:'นาย วิษณุพล ไชยโชค',id:'68070',meta:'',s:'MMOMMMMMMMMMMOMMMMMMOMMMMMMMMO'},
+  {name:'หนึ่ง',full:'น.ส. หนึ่งฤทัย เหลืองไชยยะ',id:'68103',meta:'WFH',s:'OLMMMMMOMMMMMMMOLMMMMOMMMMMMMM'},
+  {name:'แอ๋ม',full:'น.ส. ภัทรียา ฟูเต็มวงค์',id:'68136',meta:'WFH',s:'VMMMMMAAAAAAMMMMMMMAMMOMAMOOMM'},
+  {name:'ดรีม',full:'นาย อชิตพล แก้วศรีนวม',id:'68182',meta:'',s:'MMMOMMMMMOMMMMMMMMOMMMMMOMMMMM'},
+  {name:'แอปเปิ้ล',full:'น.ส. วรรณกานต์ อาจประโคน',id:'68033',meta:'',s:'AAAAOOAAAAAAAAAAAAAOAAAAOAAAAA'},
+  {name:'ตาล',full:'น.ส. ปัญญดา ปราชญา',id:'68161',meta:'WFH',s:'AOAAAAAOOOAAAAAAAUAAAAAAAAAAAA'},
+  {name:'ไทเกอร์',full:'นาย ศราวุธ สมคล่อง',id:'68186',meta:'',s:'AAAAOOAAAAAAAAAAAAAOAAAAOAAAAA'},
+  {name:'เดียร์',full:'นาย ขวัญชัย กลิ่นนุ่ม',id:'68228',meta:'กะบ่าย',s:'OAAAAAOAAAAAAAOAAAAAAAAAMOAAAA'},
+  {name:'น้ำฝน',full:'น.ส. ปุณญภัส กาละเหลา',id:'68261',meta:'กะบ่าย',s:'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAO'},
+  {name:'นุ๊ก',full:'น.ส. กิติยา อิ่นคำ',id:'68227',meta:'Supervisor',s:'NNNNNNNNNNONNNNNNNNNONNNMONNNN'}
+];
+const HOLIDAY_PERIODS={
+  '2026-08':{label:'สิงหาคม 2569',range:'26 กรกฎาคม–25 สิงหาคม 2569',start:[2026,6,26],days:31,team:HOLIDAY_AUG_TEAM},
+  '2026-07':{label:'กรกฎาคม 2569',range:'26 มิถุนายน–25 กรกฎาคม 2569',start:[2026,5,26],days:30,team:HOLIDAY_JUL_TEAM}
+};
+let HS_MONTH='2026-08';
+let HOLIDAY_TEAM=HOLIDAY_PERIODS[HS_MONTH].team;
+let HS_DATES=[];
+const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด',V:'พักร้อน',L:'ลากิจ',U:'กิจ*',B:'ป่วย'};
+const HS_OFF_CODES=['O','V','L','U','B'];
 const HS_SHORT_DAY=['อา','จ','อ','พ','พฤ','ศ','ส'];
-const HS_DATES=Array.from({length:31},(_,i)=>new Date(Date.UTC(2026,6,26+i)));
+function setHolidayPeriod(key){
+  const p=HOLIDAY_PERIODS[key]||HOLIDAY_PERIODS['2026-08'];
+  HS_MONTH=key in HOLIDAY_PERIODS?key:'2026-08';
+  HOLIDAY_TEAM=p.team;
+  HS_DATES=Array.from({length:p.days},(_,i)=>new Date(Date.UTC(p.start[0],p.start[1],p.start[2]+i)));
+  document.getElementById('hsTitle').textContent=`🏖️ ตารางวันหยุด — ${p.label}`;
+  const monthSel=document.getElementById('hsMonth');if(monthSel)monthSel.value=HS_MONTH;
+}
+function populateHolidayEmployees(){
+  const sel=document.getElementById('hsEmployee');
+  sel.innerHTML='<option value="all">พนักงานทั้งหมด</option>';
+  HOLIDAY_TEAM.forEach((p,i)=>sel.insertAdjacentHTML('beforeend',`<option value="${i}">${p.name} — ${p.full} (${p.id})</option>`));
+}
 function initHolidaySchedule(){
   const sel=document.getElementById('hsEmployee');
-  if(!sel||sel.options.length>1)return;
-  HOLIDAY_TEAM.forEach((p,i)=>sel.insertAdjacentHTML('beforeend',`<option value="${i}">${p.name} — ${p.full} (${p.id})</option>`));
+  if(!sel)return;
+  setHolidayPeriod(HS_MONTH);
+  populateHolidayEmployees();
+  renderHolidaySchedule();
+}
+function changeHolidayMonth(key){
+  setHolidayPeriod(key);
+  populateHolidayEmployees();
+  document.getElementById('hsShift').value='all';
   renderHolidaySchedule();
 }
 function resetHolidayFilters(){
@@ -3695,21 +3743,23 @@ function renderHolidaySchedule(){
   if(!thead||!tbody)return;
   const emp=document.getElementById('hsEmployee').value;
   const focus=document.getElementById('hsShift').value;
-  const sum=HOLIDAY_TEAM.reduce((a,p)=>{[...p.s].forEach(x=>a[x]++);return a},{M:0,A:0,N:0,O:0});
+  const sum=HOLIDAY_TEAM.reduce((a,p)=>{[...p.s].forEach(x=>{a[x]=(a[x]||0)+1});return a},{M:0,A:0,N:0,O:0,V:0,L:0,U:0,B:0});
   document.getElementById('hsKpiPeople').textContent=HOLIDAY_TEAM.length+' คน';
-  document.getElementById('hsKpiOff').textContent=sum.O+' วัน';
+  document.getElementById('hsKpiOff').textContent=HS_OFF_CODES.reduce((n,k)=>n+(sum[k]||0),0)+' วัน';
   document.getElementById('hsKpiMorning').textContent=sum.M+' กะ';
   document.getElementById('hsKpiAfter').textContent=sum.A+' กะ';
   document.getElementById('hsKpiNormal').textContent=sum.N+' กะ';
   const heads=HS_DATES.map(d=>{const wk=d.getUTCDay()===0||d.getUTCDay()===6;return `<th class="${wk?'weekend':''}">${HS_SHORT_DAY[d.getUTCDay()]}<br><b>${d.getUTCDate()}</b></th>`}).join('');
   thead.innerHTML=`<tr><th>ชื่อ / เวลาทำงาน</th>${heads}<th class="sum" style="background:#dc2626">วันหยุด</th><th class="sum" style="background:#db2777">กะเช้า</th><th class="sum" style="background:#059669">กะบ่าย</th><th class="sum" style="background:#4338ca">กะปกติ</th><th class="sum" style="background:#0f766e">วันทำงาน</th></tr>`;
   tbody.innerHTML=HOLIDAY_TEAM.map((p,i)=>{
-    const c={M:0,A:0,N:0,O:0};[...p.s].forEach(x=>c[x]++);
-    const cells=[...p.s].map(x=>`<td class="shift-${x}" style="${focus!=='all'&&focus!==x?'opacity:.18;filter:grayscale(.7)':''}">${HS_LABEL[x]}</td>`).join('');
-    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.full} <span style="color:#64748b;font-weight:700">(${p.name})</span></b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.id}</small></div></td>${cells}<td class="sum off">${c.O}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${c.M+c.A+c.N}</td></tr>`;
+    const c={M:0,A:0,N:0,O:0,V:0,L:0,U:0,B:0};[...p.s].forEach(x=>c[x]=(c[x]||0)+1);
+    const cells=[...p.s].map(x=>`<td class="shift-${x}" style="${focus!=='all'&&!((focus==='O'&&HS_OFF_CODES.includes(x))||focus===x)?'opacity:.18;filter:grayscale(.7)':''}">${HS_LABEL[x]}</td>`).join('');
+    const off=HS_OFF_CODES.reduce((n,k)=>n+(c[k]||0),0);
+    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.full} <span style="color:#64748b;font-weight:700">(${p.name})</span></b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.id}</small></div></td>${cells}<td class="sum off">${off}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${c.M+c.A+c.N}</td></tr>`;
   }).join('');
   const shown=emp==='all'?HOLIDAY_TEAM.length:1;
-  document.getElementById('hsTableStatus').textContent=`กำลังแสดง ${shown} คน · รอบ 31 วัน · เลื่อนซ้าย–ขวาเพื่อดูครบ`;
+  const period=HOLIDAY_PERIODS[HS_MONTH];
+  document.getElementById('hsTableStatus').textContent=`กำลังแสดง ${shown} คน · ${period.range} · ${period.days} วัน`;
   renderDailyShiftCounts();
 }
 function renderDailyShiftCounts(){
@@ -3724,10 +3774,10 @@ function renderDailyShiftCounts(){
     {key:'M',icon:'🌞',label:'กะเช้า',color:'#db2777'},
     {key:'A',icon:'🌙',label:'กะบ่าย',color:'#059669'},
     {key:'N',icon:'🕘',label:'กะปกติ',color:'#4338ca'},
-    {key:'O',icon:'🏖️',label:'หยุด / ลา',color:'#dc2626'}
+    {key:'X',icon:'🏖️',label:'หยุด / ลา',color:'#dc2626'}
   ];
   tbody.innerHTML=rows.map(row=>{
-    const daily=HS_DATES.map((_,day)=>countedTeam.filter(p=>p.s[day]===row.key).length);
+    const daily=HS_DATES.map((_,day)=>countedTeam.filter(p=>row.key==='X'?HS_OFF_CODES.includes(p.s[day]):p.s[day]===row.key).length);
     return `<tr><td><span class="hs-count-label" style="color:${row.color}"><i></i><strong>${row.icon} ${row.label}</strong></span></td>${daily.map(n=>`<td class="count-${row.key}"><b>${n}</b></td>`).join('')}<td class="count-total">${daily.reduce((a,b)=>a+b,0)}</td></tr>`;
   }).join('');
 }
