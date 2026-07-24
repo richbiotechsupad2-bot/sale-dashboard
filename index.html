@@ -1262,6 +1262,21 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 @media(max-width:1100px){#pg-holiday .hs-workforce-grid{grid-template-columns:repeat(3,1fr)}#pg-holiday .hs-rules-grid{grid-template-columns:repeat(3,1fr)}#pg-holiday .hs-rule{border-bottom:1px solid #fed7aa}}
 @media(max-width:900px){#pg-holiday .hs-kpis{grid-template-columns:repeat(2,1fr)}#pg-holiday .hs-legend{width:100%;margin-left:0}#pg-holiday .hs-rules-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){#pg-holiday .hs-hero{padding:23px 20px}#pg-holiday .hs-title{font-size:24px}#pg-holiday .hs-kpis{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-kpi{min-height:105px;padding:15px 13px}#pg-holiday .hs-kpi b{font-size:24px}#pg-holiday .hs-workforce{padding:14px 12px}#pg-holiday .hs-workforce-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-workforce-title{font-size:16px}#pg-holiday .hs-workforce-grid{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-workforce-card{min-height:108px;padding:13px 12px}#pg-holiday .hs-workforce-value{font-size:19px}#pg-holiday .hs-rules-grid{grid-template-columns:1fr 1fr}#pg-holiday .hs-rule{min-height:82px;padding:10px;font-size:9px}#pg-holiday .hs-field{width:100%}#pg-holiday .hs-card-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-card-head strong{font-size:16px}}
+/* OTHER ASSIGNED WORK — page posts, clip library and comment buddies */
+#pg-other-work{--ow-purple:#6d28d9;--ow-blue:#2563eb;--ow-cyan:#0891b2;--ow-pink:#db2777;--ow-orange:#ea580c}
+#pg-other-work .ow-wrap{min-height:100vh;background:radial-gradient(circle at 7% 3%,#ddd6feaa,transparent 23%),radial-gradient(circle at 95% 18%,#fce7f3bb,transparent 25%),linear-gradient(180deg,#f8faff,#fffaf5)}
+.ow-hero{position:relative;overflow:hidden;padding:30px 32px;border-radius:27px;color:#fff;background:linear-gradient(120deg,#172554,#4338ca 38%,#7c3aed 68%,#db2777);box-shadow:0 21px 46px #5b21b633}
+.ow-hero:after{content:'🗂️';position:absolute;right:35px;top:-2px;font-size:108px;opacity:.14;transform:rotate(8deg)}
+.ow-eyebrow{font-size:10px;font-weight:950;letter-spacing:2px;color:#fde68a}.ow-title{margin-top:6px;font-size:29px;font-weight:950}.ow-sub{margin-top:6px;font-size:12px;font-weight:800;opacity:.88}
+.ow-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:16px 0}.ow-kpi{--kc:#2563eb;position:relative;overflow:hidden;min-height:119px;padding:18px;border:1px solid color-mix(in srgb,var(--kc) 25%,#e2e8f0);border-radius:20px;background:linear-gradient(145deg,#fff 52%,color-mix(in srgb,var(--kc) 14%,#fff));box-shadow:0 11px 25px color-mix(in srgb,var(--kc) 16%,transparent);transition:.2s}.ow-kpi:before{content:'';position:absolute;inset:0 0 auto;height:6px;background:linear-gradient(90deg,var(--kc),color-mix(in srgb,var(--kc) 42%,white))}.ow-kpi:hover{transform:translateY(-5px);box-shadow:0 18px 34px color-mix(in srgb,var(--kc) 24%,transparent)}.ow-kpi span{display:block;color:#64748b;font-size:10px;font-weight:900}.ow-kpi b{display:block;margin-top:8px;color:var(--kc);font-size:29px;font-weight:950}.ow-kpi small{display:block;margin-top:6px;color:#475569;font-size:9px;font-weight:800}
+.ow-toolbar{display:flex;align-items:end;gap:10px;flex-wrap:wrap;padding:15px 17px;border:1px solid #c7d2fe;border-radius:19px;background:linear-gradient(120deg,#eef2ff,#fff,#fdf2f8);box-shadow:0 9px 24px #4338ca14}.ow-field{display:grid;gap:5px;min-width:145px;flex:1}.ow-field label{font-size:9.5px;font-weight:950;color:#4338ca}.ow-field select{height:40px;border:1.5px solid #c7d2fe;border-radius:11px;padding:0 10px;background:#fff;color:#172554;font:800 11px 'Sarabun',sans-serif}.ow-reset{height:40px;border:0;border-radius:11px;padding:0 15px;color:#fff;background:linear-gradient(135deg,#db2777,#f97316);font:900 10px 'Sarabun',sans-serif;cursor:pointer;box-shadow:0 8px 17px #db277733}
+.ow-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:15px}.ow-panel{overflow:hidden;border:1px solid #dbeafe;border-radius:21px;background:#fff;box-shadow:0 13px 30px #1e293b16}.ow-panel.full{grid-column:1/-1}.ow-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;color:#fff;background:linear-gradient(100deg,#4338ca,#7c3aed,#0891b2)}.ow-panel-head strong{font-size:16px;font-weight:950}.ow-panel-head span{font-size:9.5px;font-weight:850;opacity:.9}.ow-body{padding:15px 17px}
+.ow-rules{display:grid;gap:9px}.ow-rule{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid #fed7aa;border-radius:13px;background:linear-gradient(135deg,#fff7ed,#fff);color:#9a3412;font-size:10.5px;font-weight:850}.ow-rule i{display:grid;place-items:center;width:30px;height:30px;flex:0 0 30px;border-radius:9px;background:#ffedd5;font-style:normal}
+.ow-links{display:grid;gap:8px}.ow-link{--lc:#2563eb;display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid color-mix(in srgb,var(--lc) 24%,#e2e8f0);border-radius:13px;background:linear-gradient(135deg,#fff,color-mix(in srgb,var(--lc) 9%,#fff));color:#172554;text-decoration:none;font-size:10.5px;font-weight:900;transition:.18s}.ow-link:hover{transform:translateX(4px);box-shadow:0 7px 16px color-mix(in srgb,var(--lc) 17%,transparent)}.ow-link em{margin-left:auto;color:var(--lc);font-style:normal}
+.ow-scroll{overflow:auto;max-height:590px}.ow-table{width:100%;min-width:1040px;border-collapse:separate;border-spacing:0 6px;font-size:10.5px}.ow-table th{position:sticky;top:0;z-index:2;padding:11px 10px;background:linear-gradient(135deg,#312e81,#6d28d9);color:#fff;text-align:left;font-size:9px;font-weight:950;white-space:nowrap}.ow-table th:first-child{border-radius:11px 0 0 11px}.ow-table th:last-child{border-radius:0 11px 11px 0}.ow-table td{padding:10px;background:#fff;border-top:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;font-weight:750}.ow-table td:first-child{border-left:1px solid #e2e8f0;border-radius:11px 0 0 11px}.ow-table td:last-child{border-right:1px solid #e2e8f0;border-radius:0 11px 11px 0}.ow-table tr:hover td{background:#f5f3ff}.ow-owner,.ow-brand,.ow-status{display:inline-flex;padding:4px 8px;border-radius:999px;font-size:9px;font-weight:950;white-space:nowrap}.ow-owner{background:#ede9fe;color:#6d28d9}.ow-status{background:#dcfce7;color:#047857}.ow-brand{background:#dbeafe;color:#1d4ed8}.ow-brand.wp{background:#dcfce7;color:#047857}.ow-brand.jk{background:#ffedd5;color:#c2410c}.ow-url{color:#2563eb;font-weight:850;text-decoration:none}.ow-url:hover{text-decoration:underline}
+.ow-buddy{width:100%;border-collapse:separate;border-spacing:0 7px}.ow-buddy th{padding:10px;color:#fff;background:linear-gradient(135deg,#059669,#0891b2);font-size:9.5px}.ow-buddy td{padding:10px;border:1px solid #dbeafe;font-size:10.5px;font-weight:850}.ow-buddy tr:nth-child(odd) td{background:#f8fafc}.ow-empty{padding:30px;text-align:center;color:#64748b;font-weight:850}
+@media(max-width:1000px){.ow-kpis{grid-template-columns:repeat(2,1fr)}.ow-grid{grid-template-columns:1fr}.ow-panel.full{grid-column:auto}}
+@media(max-width:560px){.ow-hero{padding:23px 20px}.ow-title{font-size:23px}.ow-kpis{grid-template-columns:1fr 1fr;gap:8px}.ow-kpi{min-height:105px;padding:15px 13px}.ow-field{min-width:calc(50% - 6px)}}
 </style>
 </head>
 <body>
@@ -1285,6 +1300,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="sb-item" data-pg="pg-page-directory" onclick="showPage('pg-page-directory')"><span class="sb-ic">📚</span><span class="sb-lbl">สรุปข้อมูลเพจทั้งหมด</span></div>
       <div class="sb-item" data-pg="pg-admin-org" onclick="showPage('pg-admin-org')"><span class="sb-ic">👥</span><span class="sb-lbl">ผังพนักงาน Admin SA2</span></div>
       <div class="sb-item" data-pg="pg-holiday" onclick="showPage('pg-holiday')"><span class="sb-ic">🏖️</span><span class="sb-lbl">ตารางวันหยุด</span></div>
+      <div class="sb-item" data-pg="pg-other-work" onclick="showPage('pg-other-work')"><span class="sb-ic">🗂️</span><span class="sb-lbl">งานอื่นๆ ที่ได้รับมอบหมาย</span></div>
       <div class="sb-item" data-pg="pg-leaderboard" onclick="showPage('pg-leaderboard')"><span class="sb-ic">🏆</span><span class="sb-lbl">Leaderboard</span></div>
       <div class="sb-item" data-pg="pg-insight" onclick="showPage('pg-insight')"><span class="sb-ic">🧠</span><span class="sb-lbl">Insight</span></div>
     </div>
@@ -1704,6 +1720,41 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="org-history-title" id="orgRosterTitle">📋 รายชื่อ Admin ประจำเดือน</div>
         <div class="org-roster" id="orgRoster"></div>
       </section>
+    </div></div>
+
+    <!-- ═══ PAGE: OTHER ASSIGNED WORK ═══ -->
+    <div id="pg-other-work" class="page"><div class="wrap ow-wrap">
+      <div class="ow-hero"><div class="ow-eyebrow">OTHER ASSIGNED WORK · PAGE CONTENT CONTROL</div><div class="ow-title">🗂️ งานอื่นๆ ที่ได้รับมอบหมาย</div><div class="ow-sub">ติดตามงานโพสต์หน้าเพจและคลิป แยกตามเดือน แบรนด์ ผู้รับผิดชอบ พร้อมกฎ คลังคลิป และ Buddy วันหยุดในหน้าเดียว</div></div>
+      <div class="ow-kpis">
+        <div class="ow-kpi" style="--kc:#7c3aed"><span>รายการที่แสดง</span><b id="owKpiRows">0</b><small>ตามตัวกรองปัจจุบัน</small></div>
+        <div class="ow-kpi" style="--kc:#059669"><span>สำเร็จแล้ว</span><b id="owKpiDone">0</b><small>รายการที่บันทึกสถานะสำเร็จ</small></div>
+        <div class="ow-kpi" style="--kc:#0891b2"><span>ผู้รับผิดชอบ</span><b id="owKpiOwners">0</b><small>จำนวนคนแบบไม่ซ้ำ</small></div>
+        <div class="ow-kpi" style="--kc:#ea580c"><span>แบรนด์</span><b id="owKpiBrands">0</b><small>แบรนด์ที่มีงานในช่วงนี้</small></div>
+      </div>
+      <div class="ow-toolbar">
+        <div class="ow-field"><label>📆 ปี</label><select id="owYear" onchange="renderOtherWork()"><option value="2569">2569</option></select></div>
+        <div class="ow-field"><label>🗓️ เดือน</label><select id="owMonth" onchange="renderOtherWork()"><option value="all">ทุกเดือน</option><option value="มิ.ย. 2569">มิถุนายน</option><option value="ก.ค. 2569">กรกฎาคม</option></select></div>
+        <div class="ow-field"><label>🏷️ แบรนด์</label><select id="owBrand" onchange="renderOtherWork()"><option value="all">ทุกแบรนด์</option><option>HEAVEN PLUS</option><option>THE LORD</option><option>WOLF+</option><option>JAOKHUN</option></select></div>
+        <div class="ow-field"><label>👤 ผู้รับผิดชอบ</label><select id="owOwner" onchange="renderOtherWork()"><option value="all">ทุกคน</option></select></div>
+        <div class="ow-field"><label>✅ สถานะ</label><select id="owStatus" onchange="renderOtherWork()"><option value="all">ทุกสถานะ</option><option>สำเร็จ</option><option>รอดำเนินการ</option></select></div>
+        <button class="ow-reset" onclick="resetOtherWork()">ล้างตัวกรอง</button>
+      </div>
+      <div class="ow-grid">
+        <section class="ow-panel"><div class="ow-panel-head"><strong>📌 กฎและเงื่อนไขการโพสต์</strong><span>ใช้เป็นมาตรฐานเดียวกัน</span></div><div class="ow-body ow-rules">
+          <div class="ow-rule"><i>🔴</i><span>เงื่อนไข: <b>3 โพสต์ + 2 คลิป / เดือน</b></span></div>
+          <div class="ow-rule"><i>⚠️</i><span>ห้ามใช้คำหรือรูปภาพที่สุ่มเสี่ยงโดยเด็ดขาด</span></div>
+          <div class="ow-rule"><i>📅</i><span>โพสต์ได้วันละ 1 โพสต์ หรือ 1 คลิป — ห้ามลงทั้งหมดในวันเดียว</span></div>
+          <a class="ow-link" style="--lc:#7c3aed" href="https://docs.google.com/spreadsheets/d/14_s_80LnY4l_5u2o3bY_nuKMO…" target="_blank" rel="noopener">🔗 เปิด Pattern การโพสต์ <em>เปิดลิงก์ ↗</em></a>
+        </div></section>
+        <section class="ow-panel"><div class="ow-panel-head"><strong>🎬 คลังคลิป Reels แยกตามแบรนด์</strong><span>กดเพื่อเปิด Google Drive</span></div><div class="ow-body ow-links">
+          <a class="ow-link" style="--lc:#2563eb" href="https://drive.google.com/drive/folders/14NiFili4iK7ohM2O--tsfrl8kGKsAPuRG" target="_blank" rel="noopener">💙 HEAVEN PLUS <em>เปิดคลัง ↗</em></a>
+          <a class="ow-link" style="--lc:#e11d48" href="https://drive.google.com/drive/folders/18BoPpAeqprWhMNlmFf65ZOinP6xLDPzs" target="_blank" rel="noopener">🧡 THE LORD <em>เปิดคลัง ↗</em></a>
+          <a class="ow-link" style="--lc:#059669" href="https://drive.google.com/drive/folders/17Z3I8VSLIC4CDwN6Kvq5srHl1a-y41IB" target="_blank" rel="noopener">💚 WOLF+ <em>เปิดคลัง ↗</em></a>
+          <a class="ow-link" style="--lc:#a16207" href="https://drive.google.com/drive/folders/1KBpY2SZYEvj6LG9DzJ7KsbvV5IrKNdKV" target="_blank" rel="noopener">🤎 JAOKHUN <em>เปิดคลัง ↗</em></a>
+        </div></section>
+        <section class="ow-panel full"><div class="ow-panel-head"><strong>📱 ตารางบันทึกโพสต์และคลิปหน้าเพจ</strong><span id="owTableStatus">กำลังแสดงข้อมูล</span></div><div class="ow-scroll"><table class="ow-table"><thead><tr><th>#</th><th>ผู้รับผิดชอบ</th><th>กำหนดโพสต์</th><th>เดือน</th><th>แบรนด์</th><th>ชื่อเพจ</th><th>ลิงก์เพจ</th><th>สถานะ</th></tr></thead><tbody id="owTbody"></tbody></table></div></section>
+        <section class="ow-panel full"><div class="ow-panel-head"><strong>💬 ปั้นคอมเมนต์ + Buddy วันหยุด</strong><span>ผู้รับผิดชอบและผู้ดูแลแทน</span></div><div class="ow-body"><div class="ow-scroll"><table class="ow-buddy"><thead><tr><th>หัวข้อที่รับผิดชอบ</th><th>SA</th><th>Buddy (วันที่เพื่อนหยุด)</th></tr></thead><tbody id="owBuddy"></tbody></table></div></div></section>
+      </div>
     </div></div>
 
     <!-- ═══ PAGE: LEADERBOARD HUB ═══ -->
@@ -2723,6 +2774,63 @@ function saveOrgPerson(){
 function deleteOrgPerson(){if(!ORG_EDIT_ID||!confirm('ยืนยันลบรายชื่อนี้ออกจากเดือนที่เลือก?'))return;const before=ORG_DATA[orgKey()];ORG_DATA[orgKey()]=currentOrgPeople().filter(p=>p.id!==ORG_EDIT_ID);if(saveOrgData()){closeOrgEditor();renderAdminOrg()}else ORG_DATA[orgKey()]=before}
 function copyOrgRoster(){const source=currentOrgPeople(),month=prompt('กรอกเลขเดือนปลายทาง 1–12');if(month==null)return;const n=Number(month);if(n<1||n>12){alert('กรุณากรอกเดือน 1–12');return}const key=document.getElementById('orgYear').value+'-'+String(n).padStart(2,'0');ORG_DATA[key]=source.map(p=>({...p,id:orgId()}));saveOrgData();document.getElementById('orgMonth').value=String(n).padStart(2,'0');renderAdminOrg()}
 
+const OTHER_WORK_ROWS=[
+  ['แอ๋ม','รูป 18/6, 21/6, 25/6 คลิป 28/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ เรื่องลับพลังหมาป่า','61582479576135','สำเร็จ'],
+  ['แอ๋ม','รูป 18/6, 21/6, 25/6 คลิป 28/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ สูตรเด็ดเผ็ดดึก','61587336055976','สำเร็จ'],
+  ['เปิ้ล','รูป 18/6, 21/6, 25/6 คลิป 28/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ ตัวจริงเรื่องพลังชาย','61583437410798','สำเร็จ'],
+  ['เปิ้ล','รูป 18/6, 21/6, 25/6 คลิป 28/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ ปลุกพลังนักล่า','61585588356729','สำเร็จ'],
+  ['เปิ้ล','รูป 17/6, 19/6, 25/6 คลิป 28/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ พลังหมาป่า ฮึด ฮึก ดุดัน','61582315213624','สำเร็จ'],
+  ['เปิ้ล','รูป 18/6, 21/6, 25/6 คลิป 28/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ สมุนไพรพลังแกร่ง','61584540080998','สำเร็จ'],
+  ['เดียร์','รูป 19/6, 21/6, 23/6 คลิป 25/6, 27/6','มิ.ย. 2569','WOLF+','WOLF+ ดูแลครบ จบในซอง','61587479236434','สำเร็จ'],
+  ['เดียร์','รูป 20/6, 22/6, 24/6 คลิป 26/6, 29/6','มิ.ย. 2569','WOLF+','WOLF+ เสริมฟิตแบบไม่ฝืน','61586934331782','สำเร็จ'],
+  ['เดียร์','รูป 20/6, 22/6, 24/6 คลิป 26/6, 29/6','มิ.ย. 2569','WOLF+','WOLF+ มั่นใจทุกกิจกรรม','61587068604861','สำเร็จ'],
+  ['เกอร์','รูป 19/6, 20/6, 21/6 คลิป 25/6, 30/6','มิ.ย. 2569','WOLF+','WOLF+ คืนพลังนักล่า (เพจ SW Club)','61588486490655','สำเร็จ'],
+  ['เกอร์','รูป 19/6, 20/6, 21/6 คลิป 24/6, 26/6','มิ.ย. 2569','WOLF+','WOLF+ พลังผู้ชาย','61588118858447','สำเร็จ'],
+  ['เกอร์','รูป 19/6, 21/6, 23/6 คลิป 27/6, 29/6','มิ.ย. 2569','WOLF+','WOLF+ ต่อเวลาแห่งความสุข','61579539023946','สำเร็จ'],
+  ['แพร','รูป 21/6-25/06','มิ.ย. 2569','JAOKHUN','เจ้าขุน แกร่งจากภายใน','61589429411143','สำเร็จ'],
+  ['แพร','รูป 21/06-25/06','มิ.ย. 2569','JAOKHUN','เจ้าขุน ฟิตพลังชาย','61589912452802','สำเร็จ'],
+  ['แพร','รูป 21/06-25/06','มิ.ย. 2569','JAOKHUN','เจ้าขุน ปลุกตื่นทุกเช้า','61590365475574','สำเร็จ'],
+  ['แพร','รูป 21/06-25/06','มิ.ย. 2569','JAOKHUN','เจ้าขุน ฟิต24ชั่วโมง','61590381704911','สำเร็จ'],
+  ['แอ๋ม','รูป 10/7,14/7,18/7 คลิป 21/7,27/7','ก.ค. 2569','WOLF+','WOLF+ เรื่องลับพลังหมาป่า','61582479576135','สำเร็จ'],
+  ['แอ๋ม','รูป 9/7,13/7,18/7 คลิป 20/7,24/7','ก.ค. 2569','WOLF+','WOLF+ สูตรเด็ดเผ็ดดึก','61587336055976','สำเร็จ'],
+  ['เปิ้ล','รูป 8/7,13/7,18/7 คลิป 23/7,31/7','ก.ค. 2569','WOLF+','WOLF+ ตัวจริงเรื่องพลังชาย','61583437410798','สำเร็จ'],
+  ['เปิ้ล','รูป 8/7,13/7,18/7 คลิป 23/7,31/7','ก.ค. 2569','WOLF+','WOLF+ ปลุกพลังนักล่า','61585588356729','สำเร็จ'],
+  ['เปิ้ล','รูป 8/7,13/7,18/7 คลิป 23/7,31/7','ก.ค. 2569','WOLF+','WOLF+ พลังหมาป่า ฮึด ฮึก ดุดัน','61582315213624','สำเร็จ'],
+  ['เปิ้ล','รูป 8/7,13/7,18/7 คลิป 23/7,31/7','ก.ค. 2569','WOLF+','WOLF+ สมุนไพรพลังแกร่ง','61584540080998','สำเร็จ'],
+  ['เดียร์','รูป 11/7,13/7,15/7 คลิป 17/7,20/7','ก.ค. 2569','WOLF+','WOLF+ ดูแลครบ จบในซอง','61587479236434','สำเร็จ'],
+  ['เดียร์','รูป 11/7,14/7,17/7 คลิป 20/7,23/7','ก.ค. 2569','WOLF+','WOLF+ เสริมฟิตแบบไม่ฝืน','61586934331782','สำเร็จ'],
+  ['เดียร์','รูป 11/7,14/7,17/7 คลิป 21/7,25/7','ก.ค. 2569','WOLF+','WOLF+ มั่นใจทุกกิจกรรม','61587068604861','สำเร็จ'],
+  ['เกอร์','รูป 10/7,14/7,18/7 คลิป 21/7,27/7','ก.ค. 2569','WOLF+','WOLF+ คืนพลังนักล่า (เพจ SW Club)','61588486490655','สำเร็จ'],
+  ['เกอร์','รูป 10/7,14/7,18/7 คลิป 21/7,27/7','ก.ค. 2569','WOLF+','WOLF+ พลังผู้ชาย','61588118858447','สำเร็จ'],
+  ['เกอร์','รูป 10/7,14/7,17/7 คลิป 21/7,27/7','ก.ค. 2569','WOLF+','WOLF+ ต่อเวลาแห่งความสุข','61579539023946','สำเร็จ'],
+  ['แพร','09/07-11/07 คลิป 12/07-13/07','ก.ค. 2569','JAOKHUN','เจ้าขุน แกร่งจากภายใน','61589429411143','สำเร็จ'],
+  ['แพร','09/07-11/07 คลิป 12/07-13/07','ก.ค. 2569','JAOKHUN','เจ้าขุน ฟิตพลังชาย','61589912452802','สำเร็จ'],
+  ['แพร','09/07-11/07 คลิป 12/07-13/07','ก.ค. 2569','JAOKHUN','เจ้าขุน ปลุกตื่นทุกเช้า','61590365475574','สำเร็จ'],
+  ['แพร','09/07-11/07 คลิป 12/07-13/07','ก.ค. 2569','JAOKHUN','เจ้าขุน ฟิต24ชั่วโมง','61590381704911','สำเร็จ']
+];
+const OTHER_BUDDIES=[
+  ['HEAVEN PLUS (ตอม)','แอ๋ม','อชิ'],['THE LORD (แจ่ม)','หนึ่ง','ป้าย'],['HEAVEN PLUS (มอส)','ป้าย','แอ๋ม'],['THE LORD (TER)','อชิ','แพร'],
+  ['WOLF+ (TER)','เดียร์','เกอร์'],['WOLF+ (NUNE)','เปิ้ล','อชิ'],['WOLF+ (ball)','เปิ้ล','เดียร์'],['เจ้าขุน (ball)','แพร','ป้าย'],['เจ้าขุน (LINK)','เกอร์','เดียร์']
+];
+function initOtherWorkFilters(){
+  const el=document.getElementById('owOwner');if(!el||el.options.length>1)return;
+  [...new Set(OTHER_WORK_ROWS.map(r=>r[0]))].sort().forEach(n=>el.insertAdjacentHTML('beforeend',`<option>${n}</option>`));
+}
+function resetOtherWork(){['owMonth','owBrand','owOwner','owStatus'].forEach(id=>document.getElementById(id).value='all');renderOtherWork()}
+function renderOtherWork(){
+  initOtherWorkFilters();
+  const month=document.getElementById('owMonth')?.value||'all',brand=document.getElementById('owBrand')?.value||'all',owner=document.getElementById('owOwner')?.value||'all',status=document.getElementById('owStatus')?.value||'all';
+  const rows=OTHER_WORK_ROWS.filter(r=>(month==='all'||r[2]===month)&&(brand==='all'||r[3]===brand)&&(owner==='all'||r[0]===owner)&&(status==='all'||r[6]===status));
+  document.getElementById('owKpiRows').textContent=rows.length;
+  document.getElementById('owKpiDone').textContent=rows.filter(r=>r[6]==='สำเร็จ').length;
+  document.getElementById('owKpiOwners').textContent=new Set(rows.map(r=>r[0])).size;
+  document.getElementById('owKpiBrands').textContent=new Set(rows.map(r=>r[3])).size;
+  document.getElementById('owTableStatus').textContent=`แสดง ${rows.length} จาก ${OTHER_WORK_ROWS.length} รายการ`;
+  const tbody=document.getElementById('owTbody');
+  tbody.innerHTML=rows.length?rows.map((r,i)=>`<tr><td>${i+1}</td><td><span class="ow-owner">${r[0]}</span></td><td>${r[1]}</td><td>${r[2]}</td><td><span class="ow-brand ${r[3]==='WOLF+'?'wp':r[3]==='JAOKHUN'?'jk':''}">${r[3]}</span></td><td>${r[4]}</td><td><a class="ow-url" href="https://www.facebook.com/profile.php?id=${r[5]}" target="_blank" rel="noopener">เปิดเพจ ↗</a></td><td><span class="ow-status">${r[6]}</span></td></tr>`).join(''):`<tr><td colspan="8"><div class="ow-empty">ไม่พบข้อมูลตามตัวกรองที่เลือก</div></td></tr>`;
+  document.getElementById('owBuddy').innerHTML=OTHER_BUDDIES.map(r=>`<tr><td>${r[0]}</td><td><span class="ow-owner">${r[1]}</span></td><td>${r[2]}</td></tr>`).join('');
+}
+
 const PAGE_RENDER={
   'pg-dashboard':renderDashboard,
   'pg-performance':renderPerformance,
@@ -2735,6 +2843,7 @@ const PAGE_RENDER={
   'pg-accounts':renderAccounts,
   'pg-page-directory':()=>{},
   'pg-admin-org':renderAdminOrg,
+  'pg-other-work':renderOtherWork,
   'pg-leaderboard':renderLeaderboard,
   'pg-insight':renderInsight,
 };
