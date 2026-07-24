@@ -1162,6 +1162,58 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 @media(max-width:1100px){#pg-dashboard #ex-kpi,.dash-brand-tops{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){#pg-dashboard .hub-hero{min-height:auto;padding:27px 22px}#pg-dashboard .hub-title{font-size:27px}.dash-spotlight{grid-template-columns:1fr}.dash-performance{grid-template-columns:repeat(2,1fr)!important}}
 @media(max-width:560px){#pg-dashboard .dash-sec{align-items:flex-start;flex-direction:column;font-size:18px}#pg-dashboard #ex-kpi,.dash-brand-tops,.dash-performance{grid-template-columns:1fr!important}#pg-dashboard #ex-kpi .kpi{min-height:130px}.spot-card{padding:18px}.spot-ico{width:59px;height:59px;flex-basis:59px;font-size:30px}.spot-card b{font-size:23px}.brand-top-card{min-height:215px}}
+/* HOLIDAY SCHEDULE — colorful, readable and audit-friendly */
+#pg-holiday{--hs-navy:#172554;--hs-blue:#2563eb;--hs-pink:#db2777;--hs-green:#059669;--hs-red:#dc2626;--hs-purple:#7c3aed}
+#pg-holiday .hs-hero{position:relative;overflow:hidden;padding:28px 30px;border-radius:25px;color:#fff;background:radial-gradient(circle at 88% 18%,rgba(255,255,255,.24),transparent 25%),linear-gradient(120deg,#172554 0%,#4338ca 48%,#db2777 100%);box-shadow:0 20px 45px rgba(67,56,202,.24)}
+#pg-holiday .hs-hero:after{content:"🏖️";position:absolute;right:35px;top:9px;font-size:88px;opacity:.15;transform:rotate(-8deg)}
+#pg-holiday .hs-eyebrow{font-size:11px;font-weight:950;letter-spacing:1.8px;color:#fde68a}
+#pg-holiday .hs-title{margin-top:5px;font-size:30px;font-weight:950;letter-spacing:.2px}
+#pg-holiday .hs-sub{margin-top:7px;font-size:13px;font-weight:750;opacity:.9}
+#pg-holiday .hs-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin:15px 0}
+#pg-holiday .hs-kpi{--kc:#2563eb;position:relative;overflow:hidden;min-height:114px;padding:17px 18px;border:1px solid color-mix(in srgb,var(--kc) 25%,#e2e8f0);border-radius:19px;background:linear-gradient(145deg,#fff 52%,color-mix(in srgb,var(--kc) 14%,#fff));box-shadow:0 10px 24px color-mix(in srgb,var(--kc) 14%,transparent);transition:.22s}
+#pg-holiday .hs-kpi:hover{transform:translateY(-4px);box-shadow:0 16px 31px color-mix(in srgb,var(--kc) 24%,transparent)}
+#pg-holiday .hs-kpi:before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--kc),color-mix(in srgb,var(--kc) 35%,white))}
+#pg-holiday .hs-kpi span{display:block;color:#64748b;font-size:11px;font-weight:900}
+#pg-holiday .hs-kpi b{display:block;margin-top:7px;color:var(--kc);font-size:29px;line-height:1;font-weight:950}
+#pg-holiday .hs-kpi small{display:block;margin-top:7px;color:#475569;font-size:10px;font-weight:750}
+#pg-holiday .hs-toolbar{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;padding:15px 17px;border:1px solid #c7d2fe;border-radius:18px;background:linear-gradient(120deg,#eef2ff,#fff,#fdf2f8);box-shadow:0 8px 22px rgba(67,56,202,.09)}
+#pg-holiday .hs-field{display:flex;flex-direction:column;gap:5px;min-width:180px}
+#pg-holiday .hs-field label{color:#4338ca;font-size:10px;font-weight:950}
+#pg-holiday .hs-select{min-height:39px;padding:0 12px;border:1.5px solid #c7d2fe;border-radius:11px;background:#fff;color:#172554;font-family:inherit;font-size:12px;font-weight:850;outline:none}
+#pg-holiday .hs-btn{min-height:39px;padding:0 15px;border:0;border-radius:11px;background:linear-gradient(135deg,#4338ca,#7c3aed);color:#fff;font-family:inherit;font-size:11px;font-weight:950;cursor:pointer;box-shadow:0 7px 16px rgba(79,70,229,.22);transition:.2s}
+#pg-holiday .hs-btn:hover{transform:translateY(-2px);filter:brightness(1.08)}
+#pg-holiday .hs-legend{display:flex;gap:7px;flex-wrap:wrap;margin-left:auto}
+#pg-holiday .hs-pill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border-radius:999px;font-size:10px;font-weight:900;border:1px solid transparent}
+#pg-holiday .hs-pill i{width:9px;height:9px;border-radius:3px}
+#pg-holiday .hs-card{margin-top:14px;overflow:hidden;border:1px solid #c7d2fe;border-radius:20px;background:#fff;box-shadow:0 15px 35px rgba(30,41,59,.12)}
+#pg-holiday .hs-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 19px;color:#fff;background:linear-gradient(100deg,#312e81,#4f46e5,#0891b2)}
+#pg-holiday .hs-card-head strong{font-size:18px;font-weight:950}
+#pg-holiday .hs-card-head span{font-size:10px;font-weight:800;opacity:.9}
+#pg-holiday .hs-scroll{overflow:auto;max-height:610px;scrollbar-color:#818cf8 #eef2ff}
+#pg-holiday .hs-table{width:100%;min-width:1780px;border-collapse:separate;border-spacing:0;font-size:11px}
+#pg-holiday .hs-table th{position:sticky;top:0;z-index:3;padding:9px 5px;border-right:1px solid #cbd5e1;border-bottom:2px solid #94a3b8;background:#f8fafc;color:#334155;text-align:center;font-weight:950;white-space:nowrap}
+#pg-holiday .hs-table th:first-child{left:0;z-index:5;min-width:170px;text-align:left;padding-left:13px;background:#eef2ff}
+#pg-holiday .hs-table th.weekend{background:#fff1f2;color:#dc2626}
+#pg-holiday .hs-table th.sum{min-width:68px;color:#fff;border-color:#ffffff33}
+#pg-holiday .hs-table td{height:42px;padding:5px 4px;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0;text-align:center;font-size:10px;font-weight:950;white-space:nowrap;transition:.18s}
+#pg-holiday .hs-table td:first-child{position:sticky;left:0;z-index:2;padding:7px 10px;background:#fff;text-align:left;color:#172554;font-size:12px;box-shadow:4px 0 8px rgba(15,23,42,.05)}
+#pg-holiday .hs-table tr:hover td{filter:brightness(.97);box-shadow:inset 0 0 0 1px #818cf855}
+#pg-holiday .hs-table tr.is-hidden{display:none}
+#pg-holiday .shift-M{background:#fce7f3;color:#be185d}
+#pg-holiday .shift-A{background:#dcfce7;color:#047857}
+#pg-holiday .shift-N{background:#e0e7ff;color:#3730a3}
+#pg-holiday .shift-O{background:#fee2e2;color:#dc2626;font-size:11px!important}
+#pg-holiday .hs-table td.sum{font-size:14px;background:#fff;font-weight:950}
+#pg-holiday .hs-table td.sum.off{color:#dc2626;background:#fff1f2}
+#pg-holiday .hs-table td.sum.work{color:#059669;background:#ecfdf5}
+#pg-holiday .hs-table td.sum.morning{color:#db2777;background:#fdf2f8}
+#pg-holiday .hs-table td.sum.after{color:#059669;background:#f0fdf4}
+#pg-holiday .hs-table td.sum.normal{color:#4338ca;background:#eef2ff}
+#pg-holiday .hs-name small{display:block;margin-top:2px;color:#64748b;font-size:9px;font-weight:750}
+#pg-holiday .hs-badge{display:inline-flex;margin-left:5px;padding:2px 6px;border-radius:999px;background:#dbeafe;color:#2563eb;font-size:8px;font-weight:950}
+#pg-holiday .hs-note{display:flex;align-items:flex-start;gap:9px;margin-top:12px;padding:13px 15px;border:1px solid #fde68a;border-radius:14px;background:#fffbeb;color:#92400e;font-size:11px;font-weight:800;line-height:1.55}
+@media(max-width:900px){#pg-holiday .hs-kpis{grid-template-columns:repeat(2,1fr)}#pg-holiday .hs-legend{width:100%;margin-left:0}}
+@media(max-width:560px){#pg-holiday .hs-hero{padding:23px 20px}#pg-holiday .hs-title{font-size:24px}#pg-holiday .hs-kpis{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-kpi{min-height:105px;padding:15px 13px}#pg-holiday .hs-kpi b{font-size:24px}#pg-holiday .hs-field{width:100%}#pg-holiday .hs-card-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-card-head strong{font-size:16px}}
 </style>
 </head>
 <body>
@@ -1184,6 +1236,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="sb-item" data-pg="pg-accounts" onclick="showPage('pg-accounts')"><span class="sb-ic">👤</span><span class="sb-lbl">การใช้บัญชีและเพจ</span></div>
       <div class="sb-item" data-pg="pg-page-directory" onclick="showPage('pg-page-directory')"><span class="sb-ic">📚</span><span class="sb-lbl">สรุปข้อมูลเพจทั้งหมด</span></div>
       <div class="sb-item" data-pg="pg-admin-org" onclick="showPage('pg-admin-org')"><span class="sb-ic">👥</span><span class="sb-lbl">ผังพนักงาน Admin SA2</span></div>
+      <div class="sb-item" data-pg="pg-holiday" onclick="showPage('pg-holiday')"><span class="sb-ic">🏖️</span><span class="sb-lbl">ตารางวันหยุด</span></div>
       <div class="sb-item" data-pg="pg-leaderboard" onclick="showPage('pg-leaderboard')"><span class="sb-ic">🏆</span><span class="sb-lbl">Leaderboard</span></div>
       <div class="sb-item" data-pg="pg-insight" onclick="showPage('pg-insight')"><span class="sb-ic">🧠</span><span class="sb-lbl">Insight</span></div>
     </div>
@@ -1521,6 +1574,38 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <article class="pages-card jk"><div class="pages-card-head"><strong>เจ้าขุน</strong><span class="pages-count">5 เพจหลัก</span></div><div class="pages-group"><div class="pages-group-title">เพจหลัก (5 เพจ)</div><ol class="pages-list"><li>เจ้าขุน ฟิตพลังชาย</li><li>เจ้าขุน แกร่งจากภายใน</li><li>เจ้าขุน ปลุกตื่นทุกเช้า</li><li>เจ้าขุน ฟิต24ชั่วโมง</li><li>เจ้าขุน สูตรลับของผู้ชาย</li></ol></div></article>
         <article class="pages-card other full"><div class="pages-card-head"><strong>ช่องทางอื่นๆ</strong><span class="pages-count">8 รายการ</span></div><div class="pages-group"><div class="pages-group-title">รายการช่องทางอื่นๆ</div><ol class="pages-list"><li>Line official Heaven Plus+</li><li>Line official WolfPlus (TH)</li><li>Men's Health Clinic</li><li>ตรวจสอบพัสดุมีปัญหาทั้งหมด</li><li>ดูแลกลุ่มประสานงาน</li><li>แก้ไขยอดหลังบ้าน</li><li>Shopee</li><li>Lazada</li></ol></div></article>
       </div>
+    </div></div>
+
+    <!-- ═══ PAGE: HOLIDAY SCHEDULE ═══ -->
+    <div id="pg-holiday" class="page"><div class="wrap">
+      <section class="hs-hero">
+        <div class="hs-eyebrow">SALE ADMIN 2 · HOLIDAY &amp; SHIFT CONTROL</div>
+        <div class="hs-title">🏖️ ตารางวันหยุด — สิงหาคม 2569</div>
+        <div class="hs-sub">ตรวจวันหยุดและกะทำงานของพนักงานได้ในหน้าเดียว · รอบ 26 กรกฎาคม – 25 สิงหาคม 2569</div>
+      </section>
+      <div class="hs-kpis">
+        <div class="hs-kpi" style="--kc:#4338ca"><span>พนักงานทั้งหมด</span><b id="hsKpiPeople">11 คน</b><small>รวม Supervisor / Lead / WFH</small></div>
+        <div class="hs-kpi" style="--kc:#dc2626"><span>วันหยุดรวม</span><b id="hsKpiOff">—</b><small>นับจากตารางรอบนี้</small></div>
+        <div class="hs-kpi" style="--kc:#db2777"><span>กะเช้า</span><b id="hsKpiMorning">—</b><small>06:00–15:00</small></div>
+        <div class="hs-kpi" style="--kc:#059669"><span>กะบ่าย</span><b id="hsKpiAfter">—</b><small>15:00–00:00</small></div>
+        <div class="hs-kpi" style="--kc:#2563eb"><span>กะปกติ</span><b id="hsKpiNormal">—</b><small>09:00–18:00</small></div>
+      </div>
+      <div class="hs-toolbar">
+        <div class="hs-field"><label>👤 เลือกพนักงาน</label><select id="hsEmployee" class="hs-select" onchange="renderHolidaySchedule()"><option value="all">พนักงานทั้งหมด</option></select></div>
+        <div class="hs-field"><label>🎨 ไฮไลต์ประเภทวัน</label><select id="hsShift" class="hs-select" onchange="renderHolidaySchedule()"><option value="all">แสดงทุกประเภท</option><option value="O">วันหยุด</option><option value="M">กะเช้า 06:00–15:00</option><option value="A">กะบ่าย 15:00–00:00</option><option value="N">กะปกติ 09:00–18:00</option></select></div>
+        <button class="hs-btn" onclick="resetHolidayFilters()">↻ แสดงทั้งหมด</button>
+        <div class="hs-legend">
+          <span class="hs-pill" style="background:#fce7f3;color:#be185d"><i style="background:#db2777"></i>กะเช้า</span>
+          <span class="hs-pill" style="background:#dcfce7;color:#047857"><i style="background:#059669"></i>กะบ่าย</span>
+          <span class="hs-pill" style="background:#e0e7ff;color:#3730a3"><i style="background:#4338ca"></i>กะปกติ</span>
+          <span class="hs-pill" style="background:#fee2e2;color:#dc2626"><i style="background:#dc2626"></i>วันหยุด</span>
+        </div>
+      </div>
+      <section class="hs-card">
+        <div class="hs-card-head"><strong>📅 ตารางวันหยุดและกะทำงานรายบุคคล</strong><span id="hsTableStatus">เลื่อนซ้าย–ขวาเพื่อดูครบทุกวัน · หัวตารางและชื่อพนักงานจะตรึงไว้</span></div>
+        <div class="hs-scroll"><table class="hs-table"><thead id="hsThead"></thead><tbody id="hsTbody"></tbody></table></div>
+      </section>
+      <div class="hs-note">💡 <span><b>วิธีตรวจสอบ:</b> เลือกชื่อพนักงานเพื่อดูตารางเฉพาะบุคคล หรือเลือก “วันหยุด” เพื่อทำให้วันทำงานจางลง ข้อมูลกะทำงานถอดจากรูปตารางที่ส่งมา และเชื่อมช่วงวันที่ซ้ำให้เป็นรอบเดียวกัน</span></div>
     </div></div>
 
     <!-- ═══ PAGE: ADMIN ORGANIZATION CHART ═══ -->
@@ -3556,11 +3641,64 @@ function renderInsight(){
 }
 
 /* ══════════════════════════════════════════════════════════════════
+   HOLIDAY SCHEDULE — 26 JULY TO 25 AUGUST 2026
+   ══════════════════════════════════════════════════════════════════ */
+const HOLIDAY_TEAM=[
+  {name:'แพร',full:'กีรณา ปฏิภาการ',meta:'กะเช้า',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
+  {name:'ป้าย',full:'วิษณุพล ไชยโชติ',meta:'กะเช้า',s:'OMMMMMMMOMMMMMMMMMOMMMMMMOMMMMM'},
+  {name:'หนึ่ง',full:'พันธ์ทิพย์ เหลืองไชย',meta:'WFH',s:'MAAAAOMMMMMMOMMMAAAOMMMMMMOMMMM'},
+  {name:'แอ๋ม',full:'ภัทรียา พุ่มสวัสดิ์',meta:'WFH',s:'MMMMMAAAAOMMAAAAOMMMMMMOMMMMMOM'},
+  {name:'อชิ',full:'อชิตพล แก้วศรีรวม',meta:'กะเช้า',s:'MMMMMMMOMMMMMOMMMMMMMMOMMMMMOMM'},
+  {name:'แอมป์',full:'วรรณกานต์ อาจประโคน',meta:'กะสลับ',s:'AAMMMOMMMMAAOMMMOMMAOAAAAAAAAAA'},
+  {name:'ดาว',full:'ปิญญดา ปราชญา',meta:'WFH',s:'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'},
+  {name:'เกอร์',full:'ศราวุธ สงผลต่อ',meta:'กะบ่าย',s:'AAAAAOAAAAAAOAAAOAAAOAAAAAAAAAA'},
+  {name:'เดียร์',full:'ขวัญชัย กลิ่นปุ่น',meta:'กะบ่าย',s:'AOAAAAAAOAAAAAAOAAAAAAOAAAAAAAA'},
+  {name:'น้ำฝน',full:'ปุณณุภัส คลองหลวง',meta:'กะบ่าย',s:'AAAAAAAOAAAAAAOAAAAAAOAAAAAAOAA'},
+  {name:'นุ๊ก',full:'ศิริยา อินคำ',meta:'Supervisor',s:'NNNNNNOOOONNNMMNNNNNNOAANNNNONN'}
+];
+const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด'};
+const HS_SHORT_DAY=['อา','จ','อ','พ','พฤ','ศ','ส'];
+const HS_DATES=Array.from({length:31},(_,i)=>new Date(Date.UTC(2026,6,26+i)));
+function initHolidaySchedule(){
+  const sel=document.getElementById('hsEmployee');
+  if(!sel||sel.options.length>1)return;
+  HOLIDAY_TEAM.forEach((p,i)=>sel.insertAdjacentHTML('beforeend',`<option value="${i}">${p.name} — ${p.full}</option>`));
+  renderHolidaySchedule();
+}
+function resetHolidayFilters(){
+  document.getElementById('hsEmployee').value='all';
+  document.getElementById('hsShift').value='all';
+  renderHolidaySchedule();
+}
+function renderHolidaySchedule(){
+  const thead=document.getElementById('hsThead'),tbody=document.getElementById('hsTbody');
+  if(!thead||!tbody)return;
+  const emp=document.getElementById('hsEmployee').value;
+  const focus=document.getElementById('hsShift').value;
+  const sum=HOLIDAY_TEAM.reduce((a,p)=>{[...p.s].forEach(x=>a[x]++);return a},{M:0,A:0,N:0,O:0});
+  document.getElementById('hsKpiPeople').textContent=HOLIDAY_TEAM.length+' คน';
+  document.getElementById('hsKpiOff').textContent=sum.O+' วัน';
+  document.getElementById('hsKpiMorning').textContent=sum.M+' กะ';
+  document.getElementById('hsKpiAfter').textContent=sum.A+' กะ';
+  document.getElementById('hsKpiNormal').textContent=sum.N+' กะ';
+  const heads=HS_DATES.map(d=>{const wk=d.getUTCDay()===0||d.getUTCDay()===6;return `<th class="${wk?'weekend':''}">${HS_SHORT_DAY[d.getUTCDay()]}<br><b>${d.getUTCDate()}</b></th>`}).join('');
+  thead.innerHTML=`<tr><th>ชื่อ / เวลาทำงาน</th>${heads}<th class="sum" style="background:#dc2626">วันหยุด</th><th class="sum" style="background:#db2777">กะเช้า</th><th class="sum" style="background:#059669">กะบ่าย</th><th class="sum" style="background:#4338ca">กะปกติ</th><th class="sum" style="background:#0f766e">วันทำงาน</th></tr>`;
+  tbody.innerHTML=HOLIDAY_TEAM.map((p,i)=>{
+    const c={M:0,A:0,N:0,O:0};[...p.s].forEach(x=>c[x]++);
+    const cells=[...p.s].map(x=>`<td class="shift-${x}" style="${focus!=='all'&&focus!==x?'opacity:.18;filter:grayscale(.7)':''}">${HS_LABEL[x]}</td>`).join('');
+    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.name}</b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.full} · ${p.meta}</small></div></td>${cells}<td class="sum off">${c.O}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${c.M+c.A+c.N}</td></tr>`;
+  }).join('');
+  const shown=emp==='all'?HOLIDAY_TEAM.length:1;
+  document.getElementById('hsTableStatus').textContent=`กำลังแสดง ${shown} คน · รอบ 31 วัน · เลื่อนซ้าย–ขวาเพื่อดูครบ`;
+}
+
+/* ══════════════════════════════════════════════════════════════════
    SECTION 14 — BOOTSTRAP
    ══════════════════════════════════════════════════════════════════ */
 async function bootstrap(){
   await loadAllData();      // โหลดจาก Google Sheets ถ้าตั้งค่าไว้ ไม่งั้น fallback ไปข้อมูลตัวอย่าง
   initFilterOptions();
+  initHolidaySchedule();
   refreshChips();
   showPage('pg-dashboard');
 }
