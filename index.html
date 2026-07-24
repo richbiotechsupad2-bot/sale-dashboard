@@ -1191,9 +1191,11 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .hs-workforce-card small{position:relative;z-index:1;display:block;margin-top:6px;color:#64748b;font-size:9px;font-weight:750;line-height:1.35}
 #pg-holiday .hs-rules{margin:0 0 14px;overflow:hidden;border:1px solid #fca5a5;border-radius:18px;background:#fff;box-shadow:0 10px 24px rgba(185,28,28,.10)}
 #pg-holiday .hs-rules-title{padding:10px 16px;color:#fff;background:linear-gradient(100deg,#b91c1c,#ef4444);font-size:17px;font-weight:950;text-align:center}
-#pg-holiday .hs-rule{display:flex;align-items:flex-start;gap:9px;padding:9px 14px;border-top:1px solid #fed7aa;background:linear-gradient(90deg,#fff7ed,#fff);color:#9a3412;font-size:11px;font-weight:850;line-height:1.45}
-#pg-holiday .hs-rule:first-of-type{border-top:0}
-#pg-holiday .hs-rule-icon{display:grid;flex:0 0 22px;place-items:center;width:22px;height:22px;border-radius:6px;background:#fff;border:1px solid #fed7aa;font-size:13px;box-shadow:0 2px 6px rgba(154,52,18,.08)}
+#pg-holiday .hs-rules-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));background:#fff7ed}
+#pg-holiday .hs-rule{display:flex;align-items:flex-start;gap:9px;min-height:70px;padding:12px 13px;border-right:1px solid #fed7aa;background:linear-gradient(145deg,#fff7ed,#fff);color:#9a3412;font-size:10px;font-weight:850;line-height:1.45;transition:background .2s,transform .2s}
+#pg-holiday .hs-rule:last-child{border-right:0}
+#pg-holiday .hs-rule:hover{position:relative;z-index:1;transform:translateY(-2px);background:#fff}
+#pg-holiday .hs-rule-icon{display:grid;flex:0 0 25px;place-items:center;width:25px;height:25px;border-radius:8px;background:#fff;border:1px solid #fed7aa;font-size:13px;box-shadow:0 2px 6px rgba(154,52,18,.08)}
 #pg-holiday .hs-toolbar{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;padding:15px 17px;border:1px solid #c7d2fe;border-radius:18px;background:linear-gradient(120deg,#eef2ff,#fff,#fdf2f8);box-shadow:0 8px 22px rgba(67,56,202,.09)}
 #pg-holiday .hs-field{display:flex;flex-direction:column;gap:5px;min-width:180px}
 #pg-holiday .hs-field label{color:#4338ca;font-size:10px;font-weight:950}
@@ -1255,9 +1257,9 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .hs-count-table .count-total{background:#ecfeff;color:#0f766e;font-size:15px;font-weight:950}
 #pg-holiday .hs-count-label{display:flex;align-items:center;gap:8px}
 #pg-holiday .hs-count-label i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 4px currentColor;opacity:.75}
-@media(max-width:1100px){#pg-holiday .hs-workforce-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){#pg-holiday .hs-kpis{grid-template-columns:repeat(2,1fr)}#pg-holiday .hs-legend{width:100%;margin-left:0}}
-@media(max-width:560px){#pg-holiday .hs-hero{padding:23px 20px}#pg-holiday .hs-title{font-size:24px}#pg-holiday .hs-kpis{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-kpi{min-height:105px;padding:15px 13px}#pg-holiday .hs-kpi b{font-size:24px}#pg-holiday .hs-workforce{padding:14px 12px}#pg-holiday .hs-workforce-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-workforce-title{font-size:16px}#pg-holiday .hs-workforce-grid{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-workforce-card{min-height:108px;padding:13px 12px}#pg-holiday .hs-workforce-value{font-size:19px}#pg-holiday .hs-field{width:100%}#pg-holiday .hs-card-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-card-head strong{font-size:16px}}
+@media(max-width:1100px){#pg-holiday .hs-workforce-grid{grid-template-columns:repeat(3,1fr)}#pg-holiday .hs-rules-grid{grid-template-columns:repeat(3,1fr)}#pg-holiday .hs-rule{border-bottom:1px solid #fed7aa}}
+@media(max-width:900px){#pg-holiday .hs-kpis{grid-template-columns:repeat(2,1fr)}#pg-holiday .hs-legend{width:100%;margin-left:0}#pg-holiday .hs-rules-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){#pg-holiday .hs-hero{padding:23px 20px}#pg-holiday .hs-title{font-size:24px}#pg-holiday .hs-kpis{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-kpi{min-height:105px;padding:15px 13px}#pg-holiday .hs-kpi b{font-size:24px}#pg-holiday .hs-workforce{padding:14px 12px}#pg-holiday .hs-workforce-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-workforce-title{font-size:16px}#pg-holiday .hs-workforce-grid{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-workforce-card{min-height:108px;padding:13px 12px}#pg-holiday .hs-workforce-value{font-size:19px}#pg-holiday .hs-rules-grid{grid-template-columns:1fr 1fr}#pg-holiday .hs-rule{min-height:82px;padding:10px;font-size:9px}#pg-holiday .hs-field{width:100%}#pg-holiday .hs-card-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-card-head strong{font-size:16px}}
 </style>
 </head>
 <body>
@@ -1637,11 +1639,13 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       </section>
       <section class="hs-rules" aria-label="กฎกติกาการจัดวันหยุดและกะทำงาน">
         <div class="hs-rules-title">⚠️ กฎกติกา</div>
-        <div class="hs-rule"><span class="hs-rule-icon">1️⃣</span><span>วันหยุดประจำเดือน: หยุดได้กะละไม่เกิน 1 คน/วัน</span></div>
-        <div class="hs-rule"><span class="hs-rule-icon">ℹ️</span><span>ไม่นับรวมวันลาพักร้อน ลากิจ และ Lead ในโควตาหยุดกะละ 1 คน</span></div>
-        <div class="hs-rule"><span class="hs-rule-icon">🏠</span><span>พนักงาน Lead, WFH ต้องพร้อม Standby เข้ากะบ่ายได้ตามสถานการณ์</span></div>
-        <div class="hs-rule"><span class="hs-rule-icon">🔄</span><span>พนักงานสามารถสลับกะกับเพื่อนได้</span></div>
-        <div class="hs-rule"><span class="hs-rule-icon">🚫</span><span>Lead และ Sup ต้องไม่หยุดในวันเดียวกัน</span></div>
+        <div class="hs-rules-grid">
+          <div class="hs-rule"><span class="hs-rule-icon">1️⃣</span><span>วันหยุดประจำเดือน: หยุดได้กะละไม่เกิน 1 คน/วัน</span></div>
+          <div class="hs-rule"><span class="hs-rule-icon">ℹ️</span><span>ไม่นับรวมวันลาพักร้อน ลากิจ และ Lead ในโควตาหยุดกะละ 1 คน</span></div>
+          <div class="hs-rule"><span class="hs-rule-icon">🏠</span><span>พนักงาน Lead, WFH ต้องพร้อม Standby เข้ากะบ่ายได้ตามสถานการณ์</span></div>
+          <div class="hs-rule"><span class="hs-rule-icon">🔄</span><span>พนักงานสามารถสลับกะกับเพื่อนได้</span></div>
+          <div class="hs-rule"><span class="hs-rule-icon">🚫</span><span>Lead และ Sup ต้องไม่หยุดในวันเดียวกัน</span></div>
+        </div>
       </section>
       <div class="hs-toolbar">
         <div class="hs-field"><label>🗓️ เลือกปี</label><select id="hsYear" class="hs-select" onchange="changeHolidayYear(this.value)"><option value="2026">2569</option></select></div>
