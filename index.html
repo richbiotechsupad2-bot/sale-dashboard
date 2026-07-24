@@ -3644,17 +3644,17 @@ function renderInsight(){
    HOLIDAY SCHEDULE — 26 JULY TO 25 AUGUST 2026
    ══════════════════════════════════════════════════════════════════ */
 const HOLIDAY_TEAM=[
-  {name:'แพร',full:'กีรณา ปฏิภาการ',meta:'กะเช้า',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
-  {name:'ป้าย',full:'วิษณุพล ไชยโชติ',meta:'กะเช้า',s:'OMMMMMMMOMMMMMMMMMOMMMMMMOMMMMM'},
-  {name:'หนึ่ง',full:'พันธ์ทิพย์ เหลืองไชย',meta:'WFH',s:'MAAAAOMMMMMMOMMMAAAOMMMMMMOMMMM'},
-  {name:'แอ๋ม',full:'ภัทรียา พุ่มสวัสดิ์',meta:'WFH',s:'MMMMMAAAAOMMAAAAOMMMMMMOMMMMMOM'},
-  {name:'อชิ',full:'อชิตพล แก้วศรีรวม',meta:'กะเช้า',s:'MMMMMMMOMMMMMOMMMMMMMMOMMMMMOMM'},
-  {name:'แอมป์',full:'วรรณกานต์ อาจประโคน',meta:'กะสลับ',s:'AAMMMOMMMMAAOMMMOMMAOAAAAAAAAAA'},
-  {name:'ดาว',full:'ปิญญดา ปราชญา',meta:'WFH',s:'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'},
-  {name:'เกอร์',full:'ศราวุธ สงผลต่อ',meta:'กะบ่าย',s:'AAAAAOAAAAAAOAAAOAAAOAAAAAAAAAA'},
-  {name:'เดียร์',full:'ขวัญชัย กลิ่นปุ่น',meta:'กะบ่าย',s:'AOAAAAAAOAAAAAAOAAAAAAOAAAAAAAA'},
-  {name:'น้ำฝน',full:'ปุณณุภัส คลองหลวง',meta:'กะบ่าย',s:'AAAAAAAOAAAAAAOAAAAAAOAAAAAAOAA'},
-  {name:'นุ๊ก',full:'ศิริยา อินคำ',meta:'Supervisor',s:'NNNNNNOOOONNNMMNNNNNNOAANNNNONN'}
+  {name:'แพร',full:'น.ส. ศิรินภา ปฏิบัติการ',id:'68017',meta:'',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
+  {name:'ป้าย',full:'นาย วิษณุพล ไชยโชค',id:'68070',meta:'',s:'OMMMMMMMOMMMMMMMMMOMMMMMMOMMMMM'},
+  {name:'หนึ่ง',full:'น.ส. หนึ่งฤทัย เหลืองไชยยะ',id:'68103',meta:'WFH',s:'MAAAAOMMMMMMOMMMAAAOMMMMMMOMMMM'},
+  {name:'แอ๋ม',full:'น.ส. ภัทรียา ฟูเต็มวงค์',id:'68136',meta:'WFH',s:'MMMMMAAAAOMMAAAAOMMMMMMOMMMMMOM'},
+  {name:'ดรีม',full:'นาย อชิตพล แก้วศรีนวม',id:'68182',meta:'',s:'MMMMMMMOMMMMMOMMMMMMMMOMMMMMOMM'},
+  {name:'แอปเปิ้ล',full:'น.ส. วรรณกานต์ อาจประโคน',id:'68033',meta:'',s:'AAMMMOMMMMAAOMMMOMMAOAAAAAAAAAA'},
+  {name:'ตาล',full:'น.ส. ปิญดา ปราชญา',id:'68161',meta:'WFH',s:'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'},
+  {name:'ไทเกอร์',full:'นาย ศราวุธ สมคล่อง',id:'68186',meta:'',s:'AAAAAOAAAAAAOAAAOAAAOAAAAAAAAAA'},
+  {name:'เดียร์',full:'นาย ขวัญชัย กลิ่นนุ่ม',id:'68228',meta:'กะบ่าย',s:'AOAAAAAAOAAAAAAOAAAAAAOAAAAAAAA'},
+  {name:'น้ำฝน',full:'น.ส. ปุณณภัส กาละเหลา',id:'68261',meta:'กะบ่าย',s:'AAAAAAAOAAAAAAOAAAAAAOAAAAAAOAA'},
+  {name:'นุ๊ก',full:'น.ส. ศิริยา อินคำ',id:'68227',meta:'Supervisor',s:'NNNNNNOOOONNNMMNNNNNNOAANNNNONN'}
 ];
 const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด'};
 const HS_SHORT_DAY=['อา','จ','อ','พ','พฤ','ศ','ส'];
@@ -3662,7 +3662,7 @@ const HS_DATES=Array.from({length:31},(_,i)=>new Date(Date.UTC(2026,6,26+i)));
 function initHolidaySchedule(){
   const sel=document.getElementById('hsEmployee');
   if(!sel||sel.options.length>1)return;
-  HOLIDAY_TEAM.forEach((p,i)=>sel.insertAdjacentHTML('beforeend',`<option value="${i}">${p.name} — ${p.full}</option>`));
+  HOLIDAY_TEAM.forEach((p,i)=>sel.insertAdjacentHTML('beforeend',`<option value="${i}">${p.name} — ${p.full} (${p.id})</option>`));
   renderHolidaySchedule();
 }
 function resetHolidayFilters(){
@@ -3686,7 +3686,7 @@ function renderHolidaySchedule(){
   tbody.innerHTML=HOLIDAY_TEAM.map((p,i)=>{
     const c={M:0,A:0,N:0,O:0};[...p.s].forEach(x=>c[x]++);
     const cells=[...p.s].map(x=>`<td class="shift-${x}" style="${focus!=='all'&&focus!==x?'opacity:.18;filter:grayscale(.7)':''}">${HS_LABEL[x]}</td>`).join('');
-    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.name}</b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.full} · ${p.meta}</small></div></td>${cells}<td class="sum off">${c.O}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${c.M+c.A+c.N}</td></tr>`;
+    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.full} <span style="color:#64748b;font-weight:700">(${p.name})</span></b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.id}</small></div></td>${cells}<td class="sum off">${c.O}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${c.M+c.A+c.N}</td></tr>`;
   }).join('');
   const shown=emp==='all'?HOLIDAY_TEAM.length:1;
   document.getElementById('hsTableStatus').textContent=`กำลังแสดง ${shown} คน · รอบ 31 วัน · เลื่อนซ้าย–ขวาเพื่อดูครบ`;
