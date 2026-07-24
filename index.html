@@ -1211,7 +1211,22 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .hs-table td.sum.normal{color:#4338ca;background:#eef2ff}
 #pg-holiday .hs-name small{display:block;margin-top:2px;color:#64748b;font-size:9px;font-weight:750}
 #pg-holiday .hs-badge{display:inline-flex;margin-left:5px;padding:2px 6px;border-radius:999px;background:#dbeafe;color:#2563eb;font-size:8px;font-weight:950}
-#pg-holiday .hs-note{display:flex;align-items:flex-start;gap:9px;margin-top:12px;padding:13px 15px;border:1px solid #fde68a;border-radius:14px;background:#fffbeb;color:#92400e;font-size:11px;font-weight:800;line-height:1.55}
+#pg-holiday .hs-daily-card{margin-top:18px;border-color:#99f6e4;box-shadow:0 17px 40px rgba(13,148,136,.16)}
+#pg-holiday .hs-daily-card .hs-card-head{background:linear-gradient(100deg,#115e59,#0f766e,#0891b2)}
+#pg-holiday .hs-daily-card .hs-card-head span{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:rgba(255,255,255,.14);font-size:10px;font-weight:950}
+#pg-holiday .hs-count-table{min-width:1450px}
+#pg-holiday .hs-count-table th:first-child{min-width:155px;background:#ccfbf1;color:#115e59}
+#pg-holiday .hs-count-table th.total-head{min-width:78px;background:#0f766e;color:#fff}
+#pg-holiday .hs-count-table td{height:45px;font-size:14px}
+#pg-holiday .hs-count-table td:first-child{font-size:12px;font-weight:950}
+#pg-holiday .hs-count-table td b{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.75);box-shadow:0 3px 8px rgba(15,23,42,.08);font-size:14px}
+#pg-holiday .hs-count-table .count-M{background:#fce7f3;color:#be185d}
+#pg-holiday .hs-count-table .count-A{background:#dcfce7;color:#047857}
+#pg-holiday .hs-count-table .count-N{background:#e0e7ff;color:#3730a3}
+#pg-holiday .hs-count-table .count-O{background:#fee2e2;color:#dc2626}
+#pg-holiday .hs-count-table .count-total{background:#ecfeff;color:#0f766e;font-size:15px;font-weight:950}
+#pg-holiday .hs-count-label{display:flex;align-items:center;gap:8px}
+#pg-holiday .hs-count-label i{width:10px;height:10px;border-radius:50%;box-shadow:0 0 0 4px currentColor;opacity:.75}
 @media(max-width:900px){#pg-holiday .hs-kpis{grid-template-columns:repeat(2,1fr)}#pg-holiday .hs-legend{width:100%;margin-left:0}}
 @media(max-width:560px){#pg-holiday .hs-hero{padding:23px 20px}#pg-holiday .hs-title{font-size:24px}#pg-holiday .hs-kpis{grid-template-columns:1fr 1fr;gap:8px}#pg-holiday .hs-kpi{min-height:105px;padding:15px 13px}#pg-holiday .hs-kpi b{font-size:24px}#pg-holiday .hs-field{width:100%}#pg-holiday .hs-card-head{align-items:flex-start;flex-direction:column}#pg-holiday .hs-card-head strong{font-size:16px}}
 </style>
@@ -1581,7 +1596,6 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <section class="hs-hero">
         <div class="hs-eyebrow">SALE ADMIN 2 · HOLIDAY &amp; SHIFT CONTROL</div>
         <div class="hs-title">🏖️ ตารางวันหยุด — สิงหาคม 2569</div>
-        <div class="hs-sub">ตรวจวันหยุดและกะทำงานของพนักงานได้ในหน้าเดียว · รอบ 26 กรกฎาคม – 25 สิงหาคม 2569</div>
       </section>
       <div class="hs-kpis">
         <div class="hs-kpi" style="--kc:#4338ca"><span>พนักงานทั้งหมด</span><b id="hsKpiPeople">11 คน</b><small>รวม Supervisor / Lead / WFH</small></div>
@@ -1605,7 +1619,10 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="hs-card-head"><strong>📅 ตารางวันหยุดและกะทำงานรายบุคคล</strong><span id="hsTableStatus">เลื่อนซ้าย–ขวาเพื่อดูครบทุกวัน · หัวตารางและชื่อพนักงานจะตรึงไว้</span></div>
         <div class="hs-scroll"><table class="hs-table"><thead id="hsThead"></thead><tbody id="hsTbody"></tbody></table></div>
       </section>
-      <div class="hs-note">💡 <span><b>วิธีตรวจสอบ:</b> เลือกชื่อพนักงานเพื่อดูตารางเฉพาะบุคคล หรือเลือก “วันหยุด” เพื่อทำให้วันทำงานจางลง ข้อมูลกะทำงานถอดจากรูปตารางที่ส่งมา และเชื่อมช่วงวันที่ซ้ำให้เป็นรอบเดียวกัน</span></div>
+      <section class="hs-card hs-daily-card">
+        <div class="hs-card-head"><strong>📊 จำนวนพนักงานแต่ละกะต่อวัน</strong><span>ไม่นับ Supervisor · รวมพนักงาน 10 คน</span></div>
+        <div class="hs-scroll"><table class="hs-table hs-count-table"><thead id="hsCountThead"></thead><tbody id="hsCountTbody"></tbody></table></div>
+      </section>
     </div></div>
 
     <!-- ═══ PAGE: ADMIN ORGANIZATION CHART ═══ -->
@@ -3690,6 +3707,24 @@ function renderHolidaySchedule(){
   }).join('');
   const shown=emp==='all'?HOLIDAY_TEAM.length:1;
   document.getElementById('hsTableStatus').textContent=`กำลังแสดง ${shown} คน · รอบ 31 วัน · เลื่อนซ้าย–ขวาเพื่อดูครบ`;
+  renderDailyShiftCounts();
+}
+function renderDailyShiftCounts(){
+  const thead=document.getElementById('hsCountThead'),tbody=document.getElementById('hsCountTbody');
+  if(!thead||!tbody)return;
+  const countedTeam=HOLIDAY_TEAM.filter(p=>p.meta!=='Supervisor');
+  const heads=HS_DATES.map(d=>{const wk=d.getUTCDay()===0||d.getUTCDay()===6;return `<th class="${wk?'weekend':''}">${HS_SHORT_DAY[d.getUTCDay()]}<br><b>${d.getUTCDate()}</b></th>`}).join('');
+  thead.innerHTML=`<tr><th>ประเภทกะ / สถานะ</th>${heads}<th class="total-head">รวมทั้งรอบ</th></tr>`;
+  const rows=[
+    {key:'M',icon:'🌞',label:'กะเช้า',color:'#db2777'},
+    {key:'A',icon:'🌙',label:'กะบ่าย',color:'#059669'},
+    {key:'N',icon:'🕘',label:'กะปกติ',color:'#4338ca'},
+    {key:'O',icon:'🏖️',label:'หยุด / ลา',color:'#dc2626'}
+  ];
+  tbody.innerHTML=rows.map(row=>{
+    const daily=HS_DATES.map((_,day)=>countedTeam.filter(p=>p.s[day]===row.key).length);
+    return `<tr><td><span class="hs-count-label" style="color:${row.color}"><i></i><strong>${row.icon} ${row.label}</strong></span></td>${daily.map(n=>`<td class="count-${row.key}"><b>${n}</b></td>`).join('')}<td class="count-total">${daily.reduce((a,b)=>a+b,0)}</td></tr>`;
+  }).join('');
 }
 
 /* ══════════════════════════════════════════════════════════════════
