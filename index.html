@@ -1580,7 +1580,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         </div>
         <div class="card rd-cross-card">
           <div class="ct"><span class="dot" style="background:#2563eb"></span>📈 ยอด Cross Sale แยกตามแบรนด์</div>
-          <div class="cs">จำนวนและสัดส่วนจาก Cross Sale รวม 302 รายการ</div>
+          <div class="cs">จำนวนและสัดส่วนจาก Cross Sale รวม 364 รายการ</div>
           <canvas id="rdBrandCross" style="max-height:320px"></canvas>
         </div>
         <div class="card rd-top5-card">
@@ -2106,12 +2106,12 @@ const SEED_GP=(function(){
   return rows;
 })();
 const SEED_REDEMPTION=(function(){
-  /* อัปเดตจากรายงาน Cross Sale ช่วง 04/07/2026–20/07/2026 (17 วัน)
-     ยอดรวม 302 ชิ้น; ผลรวมรายพนักงานและรายสินค้าตรงกับรายงานต้นทาง */
+  /* อัปเดตจากรายงาน Cross Sale ช่วง 04/07/2026–25/07/2026 (22 วัน)
+     ยอดรวม 364 ชิ้น; ยอดขาย 44,971 บาท; ผลรวมรายพนักงานและรายสินค้าตรงกับรายงานต้นทาง */
   const units={
-    'หนึ่ง':[14,13,10,8,6], 'ตาล':[13,12,9,8,5], 'แอ๋ม':[10,9,7,6,4],
-    'ป้าย':[10,9,7,6,4], 'แพร':[9,9,7,6,4], 'อชิ':[8,8,6,4,3],
-    'แอ๊ปเปิ้ล':[6,6,5,4,3], 'เกอร์':[6,6,5,4,3], 'เดียร์':[5,5,4,3,3]
+    'แพร':[12,12,12,4,3], 'แอ๋ม':[10,8,11,6,3], 'หนึ่ง':[14,12,13,11,7],
+    'ป้าย':[12,14,6,6,8], 'อชิ':[7,8,9,9,4], 'แอ๊ปเปิ้ล':[9,11,3,7,4],
+    'เดียร์':[7,5,3,4,2], 'ตาล':[19,16,9,7,6], 'เกอร์':[9,7,8,4,3]
   };
   const products=['สเปรย์ 1แถม1','น้ำหอมพลัส','กาแฟเจ้าขุน','สบู่+เจล','ห่วงรัด'];
   const prices=[129,100,150,100,150];
@@ -2120,24 +2120,28 @@ const SEED_REDEMPTION=(function(){
   return rows;
 })();
 const SEED_CROSS_SALE_DAILY=[
-  {date:'04/07/2026',qty:12,cumulative:12, avg:1.33,change:0, status:'ปกติ',note:''},
-  {date:'05/07/2026',qty:20,cumulative:32, avg:2.22,change:8, status:'ยอดสูง',note:''},
-  {date:'06/07/2026',qty:20,cumulative:52, avg:2.22,change:0, status:'ยอดสูง',note:''},
-  {date:'07/07/2026',qty:13,cumulative:65, avg:1.44,change:-7,status:'ปกติ',note:''},
-  {date:'08/07/2026',qty:15,cumulative:80, avg:1.67,change:2, status:'ปกติ',note:''},
-  {date:'09/07/2026',qty:26,cumulative:106,avg:2.89,change:11,status:'ยอดสูง',note:''},
-  {date:'10/07/2026',qty:19,cumulative:125,avg:2.11,change:-7,status:'ปกติ',note:''},
-  {date:'11/07/2026',qty:10,cumulative:135,avg:1.11,change:-9,status:'ปกติ',note:''},
-  {date:'12/07/2026',qty:21,cumulative:156,avg:2.33,change:11,status:'ยอดสูง',note:''},
-  {date:'13/07/2026',qty:15,cumulative:171,avg:1.67,change:-6,status:'ปกติ',note:''},
-  {date:'14/07/2026',qty:18,cumulative:189,avg:2.00,change:3, status:'ปกติ',note:''},
-  {date:'15/07/2026',qty:14,cumulative:203,avg:1.56,change:-4,status:'ปกติ',note:''},
-  {date:'16/07/2026',qty:13,cumulative:216,avg:1.44,change:-1,status:'ปกติ',note:''},
-  {date:'17/07/2026',qty:16,cumulative:232,avg:1.78,change:3, status:'ปกติ',note:''},
-  {date:'18/07/2026',qty:16,cumulative:248,avg:1.78,change:0, status:'ปกติ',note:''},
-  {date:'19/07/2026',qty:18,cumulative:266,avg:2.00,change:2, status:'ปกติ',note:''},
-  {date:'20/07/2026',qty:36,cumulative:302,avg:4.00,change:18,status:'ยอดสูง',note:''},
-  {date:'21/07/2026'},{date:'22/07/2026'},{date:'23/07/2026'},{date:'24/07/2026'},{date:'25/07/2026'}
+  {date:'04/07/2026',qty:11,cumulative:11, avg:1.22,change:0, status:'ปกติ',note:''},
+  {date:'05/07/2026',qty:19,cumulative:30, avg:2.11,change:8, status:'ปกติ',note:''},
+  {date:'06/07/2026',qty:19,cumulative:49, avg:2.11,change:0, status:'ปกติ',note:''},
+  {date:'07/07/2026',qty:12,cumulative:61, avg:1.33,change:-7,status:'ปกติ',note:''},
+  {date:'08/07/2026',qty:18,cumulative:79, avg:2.00,change:6, status:'ปกติ',note:''},
+  {date:'09/07/2026',qty:25,cumulative:104,avg:2.78,change:7, status:'ยอดสูง',note:''},
+  {date:'10/07/2026',qty:19,cumulative:123,avg:2.11,change:-6,status:'ปกติ',note:''},
+  {date:'11/07/2026',qty:10,cumulative:133,avg:1.11,change:-9,status:'ปกติ',note:''},
+  {date:'12/07/2026',qty:20,cumulative:153,avg:2.22,change:10,status:'ยอดสูง',note:''},
+  {date:'13/07/2026',qty:16,cumulative:169,avg:1.78,change:-4,status:'ปกติ',note:''},
+  {date:'14/07/2026',qty:18,cumulative:187,avg:2.00,change:2, status:'ปกติ',note:''},
+  {date:'15/07/2026',qty:13,cumulative:200,avg:1.44,change:-5,status:'ปกติ',note:''},
+  {date:'16/07/2026',qty:13,cumulative:213,avg:1.44,change:0, status:'ปกติ',note:''},
+  {date:'17/07/2026',qty:17,cumulative:230,avg:1.89,change:4, status:'ปกติ',note:''},
+  {date:'18/07/2026',qty:16,cumulative:246,avg:1.78,change:-1,status:'ปกติ',note:''},
+  {date:'19/07/2026',qty:19,cumulative:265,avg:2.11,change:3, status:'ปกติ',note:''},
+  {date:'20/07/2026',qty:16,cumulative:281,avg:1.78,change:-3,status:'ปกติ',note:''},
+  {date:'21/07/2026',qty:13,cumulative:294,avg:1.44,change:-3,status:'ปกติ',note:''},
+  {date:'22/07/2026',qty:18,cumulative:312,avg:2.00,change:5, status:'ปกติ',note:''},
+  {date:'23/07/2026',qty:13,cumulative:325,avg:1.44,change:-5,status:'ปกติ',note:''},
+  {date:'24/07/2026',qty:20,cumulative:345,avg:2.22,change:7, status:'ยอดสูง',note:''},
+  {date:'25/07/2026',qty:19,cumulative:364,avg:2.11,change:-1,status:'ปกติ',note:''}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
