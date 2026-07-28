@@ -1271,6 +1271,22 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 .ow-toolbar{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr)) auto;align-items:end;gap:12px;padding:20px;border:2px solid #c4b5fd;border-radius:23px;background:linear-gradient(120deg,#ede9fe 0%,#fff 48%,#fce7f3 100%);box-shadow:0 13px 30px #4338ca1f}.ow-field{display:grid;gap:7px;min-width:0}.ow-field label{font-size:12px;font-weight:950;color:#4338ca}.ow-field select,.ow-field input{width:100%;height:47px;border:2px solid #c7d2fe;border-radius:13px;padding:0 13px;background:#fff;color:#172554;outline:none;font:850 13px 'Sarabun',sans-serif;transition:.18s}.ow-field select:focus,.ow-field input:focus{border-color:#7c3aed;box-shadow:0 0 0 4px #7c3aed18}.ow-reset{height:47px;border:0;border-radius:13px;padding:0 19px;color:#fff;background:linear-gradient(135deg,#db2777,#f97316);font:950 12px 'Sarabun',sans-serif;cursor:pointer;box-shadow:0 10px 20px #db2777aa;transition:.2s}.ow-reset:hover{transform:translateY(-2px)}
 .ow-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:19px}.ow-panel{overflow:hidden;border:2px solid #dbeafe;border-radius:25px;background:#fff;box-shadow:0 16px 34px #1e293b19;transition:.2s}.ow-panel:hover{box-shadow:0 20px 42px #4338ca22}.ow-panel.full{grid-column:1/-1}.ow-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 23px;color:#fff;background:linear-gradient(100deg,#4338ca,#7c3aed 52%,#0891b2)}.ow-panel-head strong{font-size:20px;font-weight:950;text-shadow:0 2px 8px #17255466}.ow-panel-head span{padding:6px 11px;border-radius:999px;background:#ffffff22;font-size:11px;font-weight:900}.ow-body{padding:19px 21px}
 .ow-rules{display:grid;gap:12px}.ow-rule{display:flex;align-items:center;gap:13px;min-height:59px;padding:14px 16px;border:2px solid #fed7aa;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#fff);color:#9a3412;font-size:13px;font-weight:900;transition:.18s}.ow-rule:hover{transform:translateX(5px);border-color:#fb923c;box-shadow:0 9px 18px #ea580c1c}.ow-rule i{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:12px;background:#ffedd5;font-size:17px;font-style:normal}
+/* ── OTHER WORK: OPERATION RULE CARDS ── */
+.ow-guideline{--guide:#7c3aed;--guide2:#0891b2;border-color:color-mix(in srgb,var(--guide) 25%,#dbeafe)}
+.ow-guideline .ow-panel-head{background:linear-gradient(105deg,var(--guide),var(--guide2))}
+.ow-guide-body{padding:22px;background:linear-gradient(145deg,color-mix(in srgb,var(--guide) 7%,#fff),#fff 48%,color-mix(in srgb,var(--guide2) 7%,#fff))}
+.ow-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ow-guide-card{position:relative;overflow:hidden;padding:19px 19px 18px;border:2px solid color-mix(in srgb,var(--gc,#7c3aed) 20%,#e2e8f0);border-radius:20px;background:linear-gradient(145deg,#fff,color-mix(in srgb,var(--gc,#7c3aed) 7%,#fff));box-shadow:0 10px 24px color-mix(in srgb,var(--gc,#7c3aed) 10%,transparent)}
+.ow-guide-card:before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(var(--gc,#7c3aed),color-mix(in srgb,var(--gc,#7c3aed) 55%,#fff))}
+.ow-guide-title{display:flex;align-items:center;gap:10px;margin-bottom:11px;color:#172554;font-size:16px;font-weight:950}.ow-guide-title i{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:12px;background:color-mix(in srgb,var(--gc,#7c3aed) 13%,#fff);font-style:normal}
+.ow-guide-card p,.ow-guide-card li{color:#334155;font-size:13px;font-weight:750;line-height:1.75}.ow-guide-card ul{margin:8px 0 0 18px}.ow-guide-card b{color:#172554;font-weight:950}
+.ow-guide-flow{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;gap:12px}.ow-guide-step{padding:17px;border:2px solid color-mix(in srgb,var(--gc,#7c3aed) 22%,#e2e8f0);border-radius:18px;background:#fff}.ow-guide-step strong{display:block;margin-bottom:7px;color:var(--gc,#7c3aed);font-size:15px;font-weight:950}.ow-guide-arrow{display:grid;place-items:center;color:var(--gc,#7c3aed);font-size:25px;font-weight:950}
+.ow-tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}.ow-tag{display:inline-flex;padding:7px 11px;border-radius:999px;background:color-mix(in srgb,var(--tc,#7c3aed) 12%,#fff);border:1px solid color-mix(in srgb,var(--tc,#7c3aed) 28%,#fff);color:var(--tc,#7c3aed);font-size:12px;font-weight:950}
+.ow-guide-note{display:flex;align-items:flex-start;gap:11px;margin-top:15px;padding:14px 16px;border-radius:16px;background:linear-gradient(135deg,#fff7ed,#ffedd5);border:1.5px solid #fdba74;color:#9a3412;font-size:12.5px;font-weight:900;line-height:1.65}.ow-guide-note i{font-size:19px;font-style:normal}
+.ow-shift-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:13px}.ow-shift{padding:15px 16px;border-radius:16px;background:#fff;border:1.5px solid #bae6fd;color:#164e63;font-size:12.5px;font-weight:800;line-height:1.7}.ow-shift b{display:block;margin-bottom:4px;color:#0369a1;font-size:14px}
+.ow-pattern{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.ow-pattern-card{padding:19px;border-radius:20px;border:2px solid color-mix(in srgb,var(--pc) 23%,#e2e8f0);background:linear-gradient(145deg,#fff,color-mix(in srgb,var(--pc) 8%,#fff))}.ow-pattern-card .ow-guide-title{color:var(--pc)}.ow-pattern-action{margin-top:12px;padding:12px 14px;border-radius:13px;background:var(--pc);color:#fff;font-size:12.5px;font-weight:900;line-height:1.6;box-shadow:0 8px 18px color-mix(in srgb,var(--pc) 25%,transparent)}
+@media(max-width:800px){.ow-guide-grid,.ow-pattern,.ow-shift-grid{grid-template-columns:1fr}.ow-guide-flow{grid-template-columns:1fr}.ow-guide-arrow{transform:rotate(90deg);min-height:24px}.ow-guide-body{padding:14px}.ow-guide-card{padding:17px}.ow-guide-title{font-size:14px}.ow-guide-card p,.ow-guide-card li{font-size:12px}}
+
 .ow-links{display:grid;gap:11px}.ow-link{--lc:#2563eb;display:flex;align-items:center;gap:12px;min-height:58px;padding:14px 16px;border:2px solid color-mix(in srgb,var(--lc) 25%,#e2e8f0);border-radius:16px;background:linear-gradient(135deg,#fff,color-mix(in srgb,var(--lc) 11%,#fff));color:#172554;text-decoration:none;font-size:13px;font-weight:950;transition:.2s}.ow-link:hover{transform:translateX(7px) scale(1.006);box-shadow:0 10px 22px color-mix(in srgb,var(--lc) 22%,transparent)}.ow-link em{margin-left:auto;color:var(--lc);font-size:12px;font-style:normal}
 .ow-scroll{overflow:auto;max-height:650px}.ow-table{width:100%;min-width:1120px;border-collapse:separate;border-spacing:0 9px;padding:0 8px 8px;font-size:12px}.ow-table th{position:sticky;top:0;z-index:2;padding:15px 13px;background:linear-gradient(135deg,#312e81,#6d28d9 62%,#0891b2);color:#fff;text-align:left;font-size:11px;font-weight:950;white-space:nowrap}.ow-table th:first-child{border-radius:13px 0 0 13px}.ow-table th:last-child{border-radius:0 13px 13px 0}.ow-table td{padding:14px 13px;background:#fff;border-top:1.5px solid #e2e8f0;border-bottom:1.5px solid #e2e8f0;font-weight:800;line-height:1.55}.ow-table td:first-child{border-left:1.5px solid #e2e8f0;border-radius:13px 0 0 13px;color:#6d28d9;font-size:13px;font-weight:950}.ow-table td:last-child{border-right:1.5px solid #e2e8f0;border-radius:0 13px 13px 0}.ow-table tr{transition:.18s}.ow-table tr:hover{transform:translateY(-2px)}.ow-table tr:hover td{background:#f5f3ff;border-color:#c4b5fd}.ow-owner,.ow-brand,.ow-status{display:inline-flex;align-items:center;padding:6px 11px;border-radius:999px;font-size:11px;font-weight:950;white-space:nowrap}.ow-owner{background:linear-gradient(135deg,#ede9fe,#ddd6fe);color:#6d28d9}.ow-status{background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#047857}.ow-brand{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1d4ed8}.ow-brand.wp{background:linear-gradient(135deg,#dcfce7,#bbf7d0);color:#047857}.ow-brand.jk{background:linear-gradient(135deg,#ffedd5,#fed7aa);color:#c2410c}.ow-url{display:inline-flex;padding:6px 10px;border-radius:9px;background:#eff6ff;color:#2563eb;font-size:11px;font-weight:950;text-decoration:none}.ow-url:hover{background:#dbeafe}
 .ow-buddy{width:100%;border-collapse:separate;border-spacing:0 10px;font-size:13px}.ow-buddy th{padding:15px;color:#fff;background:linear-gradient(135deg,#059669,#0891b2);font-size:12px;font-weight:950;text-align:left}.ow-buddy th:first-child{border-radius:12px 0 0 12px}.ow-buddy th:last-child{border-radius:0 12px 12px 0}.ow-buddy td{padding:15px 16px;border-top:1.5px solid #bae6fd;border-bottom:1.5px solid #bae6fd;font-size:13px;font-weight:900}.ow-buddy td:first-child{border-left:6px solid #7c3aed;border-radius:12px 0 0 12px;background:linear-gradient(90deg,#f5f3ff,#fff)}.ow-buddy td:last-child{border-right:1.5px solid #bae6fd;border-radius:0 12px 12px 0;color:#0f766e}.ow-buddy tr:nth-child(even) td{background-color:#f0fdfa}.ow-buddy tr:hover td{box-shadow:0 8px 18px #0891b21c}.ow-empty{padding:45px;text-align:center;color:#64748b;font-size:14px;font-weight:900}
@@ -1753,6 +1769,63 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
               <button class="ow-reset ow-buddy-reset" onclick="resetOtherBuddyFilters()">ล้างตัวกรอง</button>
             </div>
             <div class="ow-scroll"><table class="ow-buddy"><thead><tr><th>หัวข้อที่รับผิดชอบ</th><th>SA</th><th>Buddy (วันที่เพื่อนหยุด)</th></tr></thead><tbody id="owBuddy"></tbody></table></div>
+          </div>
+        </section>
+
+        <section class="ow-panel full ow-guideline" style="--guide:#db2777;--guide2:#f97316">
+          <div class="ow-panel-head"><strong>📌 กฎและเงื่อนไขการปั้นคอมเมนต์</strong><span>ทำงานต่อเนื่องด้วยระบบ Buddy</span></div>
+          <div class="ow-guide-body">
+            <div class="ow-guide-flow" style="--gc:#db2777">
+              <div class="ow-guide-step"><strong>💬 ผู้รับผิดชอบหลัก</strong><p>ดำเนินการปั้นคอมเมนต์ตามหัวข้อที่ตัวเองรับผิดชอบให้ครบถ้วน</p></div>
+              <div class="ow-guide-arrow">➜</div>
+              <div class="ow-guide-step"><strong>🤝 Buddy รับช่วงต่อ</strong><p>หากเพื่อนคนแรกหยุดหรือไม่สะดวก ให้ Buddy ดำเนินการต่อทันที</p></div>
+            </div>
+            <div class="ow-guide-note"><i>⚠️</i><span>ช่วยกันทำให้ครบ เพราะถ้าไม่ทำตามที่ตกลงกันไว้ <b>จะมีการหักคู่</b></span></div>
+          </div>
+        </section>
+
+        <section class="ow-panel full ow-guideline" style="--guide:#0369a1;--guide2:#0f766e">
+          <div class="ow-panel-head"><strong>📌 กฎและเงื่อนไขการขุดลูกค้าและการตรวจแชท</strong><span>ทำทุกวัน · ตรวจครบทั้งสองกะ</span></div>
+          <div class="ow-guide-body">
+            <div class="ow-guide-grid">
+              <article class="ow-guide-card" style="--gc:#0284c7">
+                <div class="ow-guide-title"><i>⛏️</i><span>1. การขุดลูกค้า</span></div>
+                <p>ภายใน 1 วัน ให้แบ่งเวลามาขุดลูกค้า โดยเริ่มจากลูกค้าที่เกิน <b>1 เดือนขึ้นไปก่อน</b> และติดแท็กขุดควบคู่กับแท็กเดิม</p>
+                <div class="ow-tag-row">
+                  <span class="ow-tag" style="--tc:#7c3aed">ลูกค้าเก่า: ขุดลค.เก่า1</span>
+                  <span class="ow-tag" style="--tc:#7c3aed">ลูกค้าเก่า: ขุดลค.เก่า2</span>
+                  <span class="ow-tag" style="--tc:#0284c7">ยังไม่เคยซื้อ: ขุด1</span>
+                  <span class="ow-tag" style="--tc:#0284c7">ยังไม่เคยซื้อ: ขุด2</span>
+                </div>
+              </article>
+              <article class="ow-guide-card" style="--gc:#0f766e">
+                <div class="ow-guide-title"><i>🔍</i><span>2. การตรวจแชทย้อนหลัง</span></div>
+                <p>ช่วยตรวจแชทย้อนหลังของอีกกะ และดำเนินการเคสที่ค้างให้เรียบร้อย หลังตรวจแชทของตัวเองเสร็จแล้ว</p>
+                <div class="ow-shift-grid">
+                  <div class="ow-shift"><b>🌙 กะบ่าย</b>ตรวจแชทของกะเช้าต่อ</div>
+                  <div class="ow-shift"><b>🌅 กะเช้า</b>ตรวจแชทของกะบ่าย หรือแชทเมื่อคืนต่อ</div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="ow-panel full ow-guideline" style="--guide:#6d28d9;--guide2:#c026d3">
+          <div class="ow-panel-head"><strong>📌 เงื่อนไขการใช้ Pattern สำหรับการขุดลูกค้า</strong><span>เลือก Pattern ให้ตรงประเภทลูกค้า</span></div>
+          <div class="ow-guide-body">
+            <div class="ow-pattern">
+              <article class="ow-pattern-card" style="--pc:#7c3aed">
+                <div class="ow-guide-title"><i>🛍️</i><span>ลูกค้าเก่าที่เคยสั่งซื้อแล้ว</span></div>
+                <p>ลูกค้าที่เคยซื้อสินค้า แต่ยังไม่กลับมาสั่งซ้ำ</p>
+                <div class="ow-pattern-action">ใช้ Pattern ใน Pancake ที่ Sup ทำให้</div>
+              </article>
+              <article class="ow-pattern-card" style="--pc:#db2777">
+                <div class="ow-guide-title"><i>💬</i><span>ลูกค้าที่เคยทัก แต่ยังไม่เคยซื้อ</span></div>
+                <p>ลูกค้าที่เคยสอบถามข้อมูล แต่ยังไม่เคยสั่งซื้อสินค้า</p>
+                <div class="ow-pattern-action">ใช้ Pattern ของแต่ละคนในการติดตาม เพื่อไม่ให้ข้อความที่ลูกค้าได้รับซ้ำกัน</div>
+              </article>
+            </div>
+            <div class="ow-guide-note"><i>📣</i><span>ขอให้ทุกคนดำเนินการตามนี้ หากมีการอัปเดตเพิ่มเติมจะแจ้งให้ทราบอีกครั้งค่ะ</span></div>
           </div>
         </section>
       </div>
