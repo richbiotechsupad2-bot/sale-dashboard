@@ -1159,9 +1159,22 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-dashboard .story-card{border-radius:22px;box-shadow:0 15px 32px #1e293b18}#pg-dashboard .story-label{font-size:13px}#pg-dashboard .story-copy{font-size:12px;line-height:1.75}
 #pg-dashboard .trend-panel{padding:22px;border-radius:25px;box-shadow:0 16px 36px #33415518}
 #pg-dashboard .trend-title{font-size:17px}
+#pg-dashboard .dash-all-menu-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+#pg-dashboard .dash-menu-card{--mc:#7c3aed;position:relative;overflow:hidden;min-height:156px;padding:19px 20px 18px;border:1px solid color-mix(in srgb,var(--mc) 18%,#fff);border-radius:22px;background:linear-gradient(145deg,#fff,color-mix(in srgb,var(--mc) 8%,#fff));box-shadow:0 14px 30px color-mix(in srgb,var(--mc) 14%,transparent);transition:.2s}
+#pg-dashboard .dash-menu-card:before{content:'';position:absolute;inset:0 auto 0 0;width:6px;background:linear-gradient(180deg,var(--mc),color-mix(in srgb,var(--mc) 55%,#fff))}
+#pg-dashboard .dash-menu-card:after{content:'';position:absolute;width:105px;height:105px;right:-42px;bottom:-52px;border-radius:50%;background:var(--mc);opacity:.08}
+#pg-dashboard .dash-menu-card:hover{transform:translateY(-5px);box-shadow:0 21px 39px color-mix(in srgb,var(--mc) 22%,transparent)}
+#pg-dashboard .dash-menu-head{display:flex;align-items:center;gap:10px;margin-bottom:11px;color:#172554;font-size:14px;font-weight:950}
+#pg-dashboard .dash-menu-icon{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:13px;background:color-mix(in srgb,var(--mc) 13%,#fff);font-size:21px;box-shadow:0 7px 15px color-mix(in srgb,var(--mc) 14%,transparent)}
+#pg-dashboard .dash-menu-body{position:relative;z-index:1;color:#475569;font-size:11px;font-weight:750;line-height:1.72}
+#pg-dashboard .dash-menu-body b{color:var(--mc);font-size:14px;font-weight:950}
+#pg-dashboard .dash-menu-body .good{color:#059669;font-weight:900}
+#pg-dashboard .dash-menu-body .warn{color:#dc2626;font-weight:900}
 @media(max-width:1100px){#pg-dashboard #ex-kpi,.dash-brand-tops{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1100px){#pg-dashboard .dash-all-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){#pg-dashboard .hub-hero{min-height:auto;padding:27px 22px}#pg-dashboard .hub-title{font-size:27px}.dash-spotlight{grid-template-columns:1fr}.dash-performance{grid-template-columns:repeat(2,1fr)!important}}
 @media(max-width:560px){#pg-dashboard .dash-sec{align-items:flex-start;flex-direction:column;font-size:18px}#pg-dashboard #ex-kpi,.dash-brand-tops,.dash-performance{grid-template-columns:1fr!important}#pg-dashboard #ex-kpi .kpi{min-height:130px}.spot-card{padding:18px}.spot-ico{width:59px;height:59px;flex-basis:59px;font-size:30px}.spot-card b{font-size:23px}.brand-top-card{min-height:215px}}
+@media(max-width:560px){#pg-dashboard .dash-all-menu-grid{grid-template-columns:1fr}}
 /* HOLIDAY SCHEDULE — colorful, readable and audit-friendly */
 #pg-holiday{--hs-navy:#172554;--hs-blue:#2563eb;--hs-pink:#db2777;--hs-green:#059669;--hs-red:#dc2626;--hs-purple:#7c3aed}
 #pg-holiday .hs-hero{position:relative;overflow:hidden;padding:28px 30px;border-radius:25px;color:#fff;background:radial-gradient(circle at 88% 18%,rgba(255,255,255,.24),transparent 25%),linear-gradient(120deg,#172554 0%,#4338ca 48%,#db2777 100%);box-shadow:0 20px 45px rgba(67,56,202,.24)}
@@ -1392,6 +1405,8 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div id="ex-story" class="story-zone"></div>
       <div class="sec dash-sec"><span>📈 แนวโน้มยอดขาย</span><small>ดูทิศทางยอดจริงเทียบเป้าหมาย</small></div>
       <div class="card trend-panel"><div class="trend-head"><div class="trend-title">📊 ยอดขายจริงเทียบเป้าหมาย</div><div class="trend-note">แตะจุดบนกราฟเพื่อดูยอดรายวัน</div></div><canvas id="exTrend" style="max-height:310px"></canvas></div>
+      <div class="sec dash-sec"><span>🧭 ภาพรวมข้อมูลล่าสุดทุกเมนู</span><small>อัปเดตจากข้อมูลชุดล่าสุดใน Dashboard</small></div>
+      <div class="dash-all-menu-grid" id="dash-all-menu-grid"></div>
     </div></div>
 
     <!-- ═══ PAGE: PERFORMANCE (GP%) ═══ -->
@@ -2771,7 +2786,7 @@ function initOrgFilters(){
   const y=document.getElementById('orgYear'),m=document.getElementById('orgMonth');if(!y||y.options.length)return;
   const years=[...new Set(Object.keys(ORG_DATA).map(k=>k.split('-')[0]))].sort().reverse();if(!years.includes('2026'))years.push('2026');
   y.innerHTML=years.map(v=>`<option value="${v}" ${v==='2026'?'selected':''}>พ.ศ. ${Number(v)+543}</option>`).join('');
-  m.innerHTML=ORG_MONTHS.map((v,i)=>`<option value="${String(i+1).padStart(2,'0')}" ${i===6?'selected':''}>${v}</option>`).join('');
+  m.innerHTML=ORG_MONTHS.map((v,i)=>`<option value="${String(i+1).padStart(2,'0')}" ${i===7?'selected':''}>${v}</option>`).join('');
 }
 function orgKey(){return document.getElementById('orgYear').value+'-'+document.getElementById('orgMonth').value}
 function currentOrgPeople(){
@@ -4502,6 +4517,41 @@ function renderDashboard(){
     mkChart('exTrend',{type:'bar',data:{labels:m.monthlyTrend.map(t=>t.ym),datasets:[{label:'ยอดขายรายเดือน (YTD Trend)',data:m.monthlyTrend.map(t=>t.revenue),backgroundColor:'#0891b2bb',borderRadius:4}]},
       options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
   }
+
+  // Latest snapshot from every operational menu.
+  const accountRows=(typeof ACC_ROWS!=='undefined'?ACC_ROWS:[]).filter(r=>r.account||r.page);
+  const accountNames=[...new Set(accountRows.map(r=>r.account).filter(Boolean))];
+  const accountHave=accountRows.filter(r=>r.status==='มีเพจ').length;
+  const accountMissing=accountRows.filter(r=>r.status==='ยังไม่มีเพจ').length;
+  const latestOrg=(typeof ORG_DATA!=='undefined'&&(ORG_DATA['2026-08']||[]))||[];
+  const activeOrg=latestOrg.filter(p=>p.status!=='inactive');
+  const holidayPeriod=(typeof HOLIDAY_PERIODS!=='undefined'&&HOLIDAY_PERIODS['2026-08'])||null;
+  const holidayTeam=holidayPeriod?holidayPeriod.team.filter(p=>p.meta!=='Supervisor'):[];
+  const holidayDaily=holidayPeriod?Array.from({length:holidayPeriod.days},(_,day)=>{
+    const working=holidayTeam.filter(p=>['M','A','N'].includes(p.s[day])).length;
+    const off=holidayTeam.filter(p=>HS_OFF_CODES.includes(p.s[day])).length;
+    return {day,working,off};
+  }):[];
+  const minStaff=holidayDaily.length?[...holidayDaily].sort((a,b)=>a.working-b.working||b.off-a.off)[0]:null;
+  const assignedRows=typeof OTHER_WORK_ROWS!=='undefined'?OTHER_WORK_ROWS:[];
+  const assignedDone=assignedRows.filter(r=>r.includes('สำเร็จ')).length;
+  const assignedOwners=[...new Set(assignedRows.map(r=>r[0]).filter(Boolean))];
+  const menuCards=[
+    {c:'#2563eb',ic:'🏅',t:'Leaderboard',body:`ผู้นำยอดขาย <b>${best?best.name:'—'}</b><br>${best?fmtB(best.rev)+' · '+fmtN(best.ord)+' ออเดอร์':'ยังไม่มีข้อมูล'}`},
+    {c:'#7c3aed',ic:'📊',t:'Brand Performance',body:`แบรนด์บรรลุเป้าดีสุด <b>${bestBrand?bestBrand.b.lb:'—'}</b><br>${bestBrand?fmtPct(bestBrand.pct,1)+' ของเป้าหมาย':'ยังไม่มีข้อมูล'}`},
+    {c:'#e11d48',ic:'📈',t:'Performance (GP%)',body:`Top GP% <b>${topGP?topGP.name:'—'}</b><br>${topGP?fmtPct(topGP.avgGP,1)+' GP% เฉลี่ย':'ยังไม่มีข้อมูล'}`},
+    {c:'#0891b2',ic:'🎯',t:'Daily Target',body:dly.rows.length?`อัตราผ่านเป้าออเดอร์สูงสุด <b>${[...dly.rows].sort((a,b)=>b.pco-a.pco)[0].n}</b><br>${fmtPct([...dly.rows].sort((a,b)=>b.pco-a.pco)[0].pco,1)}`:'ยังไม่มีข้อมูล'},
+    {c:'#f59e0b',ic:'🎁',t:'Redemption',body:rd.top?`พนักงานอันดับ 1 <b>${rd.top.name}</b><br>${fmtN(rd.top.totalUnits)} ชิ้น · ${fmtB(rd.top.rev)}`:'ยังไม่มีข้อมูล'},
+    {c:'#ea580c',ic:'🏷️',t:'Products & Promotions',body:`<b>4 แบรนด์ · 29 โปรโมชั่นหลัก</b><br>สิทธิ์แลกซื้อ 5 รายการ · SKU ส่งเสริม 11 รหัส`},
+    {c:'#0f766e',ic:'👤',t:'Accounts & Pages',body:accountRows.length?`<b>${accountNames.length}</b> บัญชี · มีเพจ <span class="good">${accountHave}</span><br>ยังไม่มีเพจ <span class="${accountMissing?'warn':'good'}">${accountMissing}</span>`:'ยังไม่มีข้อมูลบัญชีและเพจ'},
+    {c:'#4338ca',ic:'📚',t:'Data Summary',body:`<b>69 เพจ · 8 ช่องทางอื่น</b><br>รวมทั้งหมด 77 ช่องทาง · เจ้าขุน 6 เพจ`},
+    {c:'#059669',ic:'👥',t:'Admin SA2',body:activeOrg.length?`ข้อมูลเดือน <b>สิงหาคม 2569</b><br>พนักงาน Active ${activeOrg.length} คน · WFH ${activeOrg.filter(p=>p.shift==='wfh'||p.role==='WFH').length} คน`:'ยังไม่มีข้อมูลเดือนสิงหาคม'},
+    {c:'#db2777',ic:'🏖️',t:'Holiday',body:holidayPeriod&&minStaff?`รอบ <b>${holidayPeriod.range}</b><br>กำลังคนน้อยสุด ${minStaff.working} คน · หยุด/ลา ${minStaff.off} คน`:'ยังไม่มีข้อมูลวันหยุดเดือนสิงหาคม'},
+    {c:'#9333ea',ic:'🗂️',t:'Assigned Tasks',body:assignedRows.length?`บันทึก <b>${assignedRows.length} งาน</b> · สำเร็จ <span class="good">${assignedDone}</span><br>ผู้รับผิดชอบ ${assignedOwners.length} คน`:'ยังไม่มีข้อมูลงาน'},
+    {c:'#dc2626',ic:'🧠',t:'Insight',body:`ควรรักษา <b>${best?best.name:'ผู้นำทีม'}</b><br>ควรเร่ง ${worstBrand?worstBrand.b.lb:'แบรนด์ที่ต่ำกว่าเป้า'} · ${worstBrand?fmtPct(worstBrand.pct,1)+' ของเป้า':'รอข้อมูล'}`}
+  ];
+  const allMenuGrid=document.getElementById('dash-all-menu-grid');
+  allMenuGrid.innerHTML=menuCards.map(x=>`<article class="dash-menu-card" style="--mc:${x.c}"><div class="dash-menu-head"><span class="dash-menu-icon">${x.ic}</span><span>${x.t}</span></div><div class="dash-menu-body">${x.body}</div></article>`).join('');
 }
 
 /* ══════════════════════════════════════════════════════════════════
