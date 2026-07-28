@@ -2067,12 +2067,12 @@ const SEED_SALES=(function(){
   };
   Object.keys(brandDaily).forEach(bk=>dates.forEach((dt,i)=>rows.push({date:dt,employee:'',brand:bk,orders:'',revenue:brandDaily[bk][i]})));
   const empBrand={
-    hv:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[342,305,182,212,88,286,331,288,253,204],r:[149328,131575,81237,93817,37772,135332,143478,126322,105906,86976]},
-    tl:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[521,542,312,418,163,449,569,438,413,479],r:[165270,193204,105724,139405,51217,157598,193674,155699,143445,166705]},
-    wolf:{staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[1293,1444,808,1002,430,1253,1330,1327,1087,1193],r:[346202,395443,224338,268945,113847,335944,351714,354978,292299,316299]},
-    jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Poppy','Tarn','Tiger'],o:[272,236,158,118,8,264,271,227,233,192],r:[100700,92150,61900,43850,2800,98100,104100,84400,90750,71500]},
+    hv:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Tarn','Tiger'],o:[390,333,308,256,330,378,341,286,233],r:[168000,140577,138111,109573,153838,168371,150239,122573,97637]},
+    tl:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Tarn','Tiger'],o:[650,607,615,509,534,653,541,496,565],r:[205869,216909,199830,167354,186272,223287,189085,167582,196268]},
+    wolf:{staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Tarn','Tiger'],o:[1559,1564,1392,1176,1475,1495,1570,1317,1398],r:[417115,424733,378061,313759,387901,400328,420735,350909,374826]},
+    jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Tarn','Tiger'],o:[319,247,203,156,340,324,289,272,236],r:[117450,96300,78550,58600,125300,126050,108900,104700,89700]},
   };
-  Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-22',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
+  Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
   return rows;
 })();
 const SEED_TARGETS=[ // เป้ารายวันต่อแบรนด์ (จริง จากไฟล์เดิม) — เป้ารายพนักงานยังไม่มีระบุในไฟล์เดิม จึงเว้นว่างไว้ก่อน (ไม่จำเป็นสำหรับเดือน ก.ค. 2569 เพราะใช้ DailyTargetSummary แทน)
