@@ -4517,6 +4517,40 @@ function renderInsight(){
   renderExecutiveToolbar('insight-toolbar');
   const grid=document.getElementById('insight-grid');grid.innerHTML='';
   const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly(),brandRank=brandAchievementRanking();
+  const accountRows=(typeof ACC_ROWS!=='undefined'?ACC_ROWS:[]).filter(r=>r.account||r.page);
+  const accountNames=[...new Set(accountRows.map(r=>r.account).filter(Boolean))];
+  const accountHave=accountRows.filter(r=>r.status==='มีเพจ').length;
+  const accountMissing=accountRows.filter(r=>r.status==='ยังไม่มีเพจ').length;
+  const accountBlocked=accountRows.filter(r=>r.status==='รับเพจไม่ได้').length;
+  const accountBrandCounts=['HEAVEN Plus','The Lord','WOLF+','เจ้าขุน'].map(name=>({
+    name,count:new Set(accountRows.filter(r=>r.brand===name&&r.page).map(r=>r.page)).size
+  }));
+  const latestOrg=(typeof ORG_DATA!=='undefined'&&(ORG_DATA['2026-08']||[]))||[];
+  const activeOrg=latestOrg.filter(p=>p.status!=='inactive');
+  const orgMorning=activeOrg.filter(p=>p.shift==='morning').length;
+  const orgAfternoon=activeOrg.filter(p=>p.shift==='afternoon').length;
+  const orgWfh=activeOrg.filter(p=>p.shift==='wfh'||p.role==='WFH').length;
+  const holidayPeriod=(typeof HOLIDAY_PERIODS!=='undefined'&&HOLIDAY_PERIODS['2026-08'])||null;
+  const holidayTeam=holidayPeriod?holidayPeriod.team.filter(p=>p.meta!=='Supervisor'):[];
+  const holidayDaily=holidayPeriod?Array.from({length:holidayPeriod.days},(_,day)=>{
+    const morning=holidayTeam.filter(p=>p.s[day]==='M').length;
+    const afternoon=holidayTeam.filter(p=>p.s[day]==='A').length;
+    const normal=holidayTeam.filter(p=>p.s[day]==='N').length;
+    const off=holidayTeam.filter(p=>HS_OFF_CODES.includes(p.s[day])).length;
+    return {day,morning,afternoon,normal,off,working:morning+afternoon+normal};
+  }):[];
+  const holidayStart=holidayPeriod?new Date(Date.UTC(...holidayPeriod.start)):null;
+  const holidayDateLabel=day=>{
+    if(!holidayStart)return '—';
+    const d=new Date(holidayStart);d.setUTCDate(d.getUTCDate()+day);
+    return `${d.getUTCDate()}/${d.getUTCMonth()+1}`;
+  };
+  const minStaff=holidayDaily.length?[...holidayDaily].sort((a,b)=>a.working-b.working||b.off-a.off)[0]:null;
+  const busiestLeave=holidayDaily.length?[...holidayDaily].sort((a,b)=>b.off-a.off||a.working-b.working)[0]:null;
+  const assignedRows=typeof OTHER_WORK_ROWS!=='undefined'?OTHER_WORK_ROWS:[];
+  const assignedDone=assignedRows.filter(r=>r.includes('สำเร็จ')).length;
+  const assignedOwners=[...new Set(assignedRows.map(r=>r[0]).filter(Boolean))];
+  const assignedBrands=[...new Set(assignedRows.map(r=>r.includes('WOLF+')?'WOLF+':r.includes('JAOKHUN')?'เจ้าขุน':r.includes('THE LORD')?'The Lord':'').filter(Boolean))];
 
   // 1) Top Performer
   const best=so.sortRev[0],worst=so.sortRev[so.sortRev.length-1];
@@ -4575,6 +4609,34 @@ function renderInsight(){
   // 8) Best/Worst Brand overview
   grid.appendChild(icard('ภาพรวมแบรนด์','🏷️',
     `บรรลุเป้าดีที่สุด: <b style="color:${brandRank[0].b.c}">${brandRank[0].b.lb}</b> ${fmtPct(brandRank[0].pct,1)}<br>ต้องเร่งที่สุด: <b style="color:${brandRank[brandRank.length-1].b.c}">${brandRank[brandRank.length-1].b.lb}</b> ${fmtPct(brandRank[brandRank.length-1].pct,1)}`));
+
+  // 9) Products & Promotions
+  grid.appendChild(icard('Products & Promotions','🏷️',
+    `<b>4 แบรนด์ · 29 โปรโมชั่นหลัก</b><br>สิทธิ์แลกซื้อ 5 รายการ · SKU ส่งเสริม 11 รหัส<br>แคมเปญล่าสุดในข้อมูล: พวงกุญแจสเตนเลส ก.ค. 2569 จำนวน 200 สิทธิ์`));
+
+  // 10) Accounts & Pages
+  grid.appendChild(icard('Accounts & Pages','👤',
+    accountRows.length?`ชื่อบัญชี <b>${accountNames.length}</b> บัญชี · รายการที่มีเพจแล้ว <span class="g">${accountHave}</span><br>ยังไม่มีเพจ <span class="${accountMissing?'r':'g'}">${accountMissing}</span> · รับเพจไม่ได้ <span class="${accountBlocked?'r':'g'}">${accountBlocked}</span><br>${accountBrandCounts.map(x=>`${x.name} ${x.count} เพจ`).join(' · ')}`:
+    `ยังไม่มีข้อมูลบัญชีและเพจในอุปกรณ์นี้`));
+
+  // 11) Data Summary
+  grid.appendChild(icard('Data Summary — เพจและช่องทาง','📚',
+    `<b>69 เพจ · 8 ช่องทางอื่น · รวม 77 ช่องทาง</b><br>HEAVEN Plus 39 · WOLF+ 14 · The Lord 10 · เจ้าขุน 6<br>HEAVEN Plus มีสัดส่วนเพจสูงสุด ${fmtPct(39/69*100,1)} ของเพจทั้งหมด`));
+
+  // 12) Admin SA2
+  grid.appendChild(icard('Admin SA2 — กำลังคนล่าสุด','👥',
+    activeOrg.length?`พนักงานสถานะ Active <b>${activeOrg.length} คน</b><br>กะเช้า ${orgMorning} · กะบ่าย ${orgAfternoon} · WFH ${orgWfh}<br>ข้อมูลอ้างอิงเดือน ส.ค. 2569`:
+    `ยังไม่มีข้อมูลผังพนักงานเดือน ส.ค. 2569`));
+
+  // 13) Holiday
+  grid.appendChild(icard('Holiday — ความพร้อมของกำลังคน','🏖️',
+    holidayPeriod&&minStaff&&busiestLeave?`รอบ <b>${holidayPeriod.range}</b> · พนักงานที่นับ ${holidayTeam.length} คน (ไม่รวม Supervisor)<br>กำลังคนน้อยสุดวันที่ <span class="r">${holidayDateLabel(minStaff.day)}</span>: ทำงาน ${minStaff.working} คน · หยุด/ลา ${minStaff.off} คน<br>ผู้หยุด/ลามากสุดวันที่ ${holidayDateLabel(busiestLeave.day)}: ${busiestLeave.off} คน`:
+    `ยังไม่มีข้อมูลตารางวันหยุดล่าสุด`));
+
+  // 14) Assigned Tasks
+  grid.appendChild(icard('Assigned Tasks — สถานะงาน','🗂️',
+    assignedRows.length?`งานที่บันทึก <b>${assignedRows.length} รายการ</b> · สำเร็จ <span class="g">${assignedDone}</span> · ผู้รับผิดชอบ ${assignedOwners.length} คน<br>แบรนด์ที่มีงาน: ${assignedBrands.join(' · ')||'—'} · Buddy วันหยุด ${typeof OTHER_BUDDIES!=='undefined'?OTHER_BUDDIES.length:0} คู่`:
+    `ยังไม่มีข้อมูลงานที่ได้รับมอบหมาย`));
 }
 
 /* ══════════════════════════════════════════════════════════════════
