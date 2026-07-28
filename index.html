@@ -1152,7 +1152,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-dashboard .pulse-card:hover{transform:translateY(-5px);box-shadow:0 22px 40px color-mix(in srgb,var(--pc) 24%,transparent)}
 #pg-dashboard .pulse-card span{font-size:11px;color:#475569}#pg-dashboard .pulse-card b{font-size:25px}#pg-dashboard .pulse-card small{font-size:10.5px}
 #pg-dashboard .dash-brand-board{padding:19px;border-radius:25px;background:linear-gradient(145deg,#fff,#f8faff);box-shadow:0 16px 36px #33415516}
-#pg-dashboard .tmap{min-height:210px;gap:10px}
+#pg-dashboard .tmap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));height:auto;min-height:210px;gap:10px}
 #pg-dashboard .tmap-cell{min-height:170px;padding:21px;border-radius:20px;box-shadow:0 13px 27px #1e293b20;transition:.2s}
 #pg-dashboard .tmap-cell:hover{transform:translateY(-6px) scale(1.012);filter:saturate(1.12)}
 #pg-dashboard .tmap-cell .tn{font-size:15px}#pg-dashboard .tmap-cell .tv{font-size:28px}#pg-dashboard .tmap-cell .tp{font-size:11px}
@@ -1170,10 +1170,10 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-dashboard .dash-menu-body b{color:var(--mc);font-size:14px;font-weight:950}
 #pg-dashboard .dash-menu-body .good{color:#059669;font-weight:900}
 #pg-dashboard .dash-menu-body .warn{color:#dc2626;font-weight:900}
-@media(max-width:1100px){#pg-dashboard #ex-kpi,.dash-brand-tops{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:1100px){#pg-dashboard #ex-kpi,.dash-brand-tops{grid-template-columns:repeat(2,1fr)}#pg-dashboard .tmap{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:1100px){#pg-dashboard .dash-all-menu-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){#pg-dashboard .hub-hero{min-height:auto;padding:27px 22px}#pg-dashboard .hub-title{font-size:27px}.dash-spotlight{grid-template-columns:1fr}.dash-performance{grid-template-columns:repeat(2,1fr)!important}}
-@media(max-width:560px){#pg-dashboard .dash-sec{align-items:flex-start;flex-direction:column;font-size:18px}#pg-dashboard #ex-kpi,.dash-brand-tops,.dash-performance{grid-template-columns:1fr!important}#pg-dashboard #ex-kpi .kpi{min-height:130px}.spot-card{padding:18px}.spot-ico{width:59px;height:59px;flex-basis:59px;font-size:30px}.spot-card b{font-size:23px}.brand-top-card{min-height:215px}}
+@media(max-width:560px){#pg-dashboard .dash-sec{align-items:flex-start;flex-direction:column;font-size:18px}#pg-dashboard #ex-kpi,.dash-brand-tops,.dash-performance{grid-template-columns:1fr!important}#pg-dashboard #ex-kpi .kpi{min-height:130px}#pg-dashboard .tmap{grid-template-columns:1fr}.spot-card{padding:18px}.spot-ico{width:59px;height:59px;flex-basis:59px;font-size:30px}.spot-card b{font-size:23px}.brand-top-card{min-height:215px}}
 @media(max-width:560px){#pg-dashboard .dash-all-menu-grid{grid-template-columns:1fr}}
 /* HOLIDAY SCHEDULE — colorful, readable and audit-friendly */
 #pg-holiday{--hs-navy:#172554;--hs-blue:#2563eb;--hs-pink:#db2777;--hs-green:#059669;--hs-red:#dc2626;--hs-purple:#7c3aed}
@@ -1403,8 +1403,6 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="card visual-panel dash-brand-board"><div class="tmap" id="ex-tmap"></div></div>
       <div class="sec dash-sec"><span>🧠 สรุปให้เลย — ดีตรงไหน ต้องเร่งอะไร</span><small>วิเคราะห์จากข้อมูลตามตัวกรอง</small></div>
       <div id="ex-story" class="story-zone"></div>
-      <div class="sec dash-sec"><span>📈 แนวโน้มยอดขาย</span><small>ดูทิศทางยอดจริงเทียบเป้าหมาย</small></div>
-      <div class="card trend-panel"><div class="trend-head"><div class="trend-title">📊 ยอดขายจริงเทียบเป้าหมาย</div><div class="trend-note">แตะจุดบนกราฟเพื่อดูยอดรายวัน</div></div><canvas id="exTrend" style="max-height:310px"></canvas></div>
       <div class="sec dash-sec"><span>🧭 ภาพรวมข้อมูลล่าสุดทุกเมนู</span><small>อัปเดตจากข้อมูลชุดล่าสุดใน Dashboard</small></div>
       <div class="dash-all-menu-grid" id="dash-all-menu-grid"></div>
     </div></div>
@@ -4501,22 +4499,11 @@ function renderDashboard(){
   const tmap=document.getElementById('ex-tmap');tmap.innerHTML='';
   so.brandTotals.slice().sort((a,b)=>b.pct-a.pct).forEach(t=>{
     const cell=document.createElement('div');cell.className='tmap-cell';
-    cell.style.background=t.b.c;cell.style.flexGrow=Math.max(t.pct,3);cell.style.flexBasis=Math.max(t.pct,8)+'%';
+    cell.style.background=t.b.c;
     cell.onclick=()=>setBrandFilter(STATE.brand===t.b.k?'all':t.b.k);
     cell.innerHTML=`<div class="tn">${t.b.ic} ${t.b.lb}</div><div class="tv">${fmtBK(t.r)}</div><div class="tp">${fmtPct(t.pct)} ของยอดทีม</div>`;
     tmap.appendChild(cell);
   });
-
-  // Trend chart — YTD/เทรนด์รายเดือน ถ้าดูหลายเดือน หรือรายวันถ้าเจาะจง 1 เดือน
-  if(m.isSingleMonth){
-    mkChart('exTrend',{type:'line',data:{labels:m.dateSet.map(dt=>dt.slice(8,10)+'/'+dt.slice(5,7)),datasets:[
-      {label:'ยอดขายรวม',data:m.combinedSeries,borderColor:'#0891b2',backgroundColor:'#0891b222',pointRadius:2,borderWidth:2.4,fill:true,tension:.25},
-      {label:'เป้า/วัน',data:Array(m.N).fill(m.combinedTarget),borderColor:'#d97706',borderDash:[6,4],borderWidth:1.5,pointRadius:0,fill:false},
-    ]},options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{grid:{color:GR},ticks:{font:{size:9},maxTicksLimit:12}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
-  } else {
-    mkChart('exTrend',{type:'bar',data:{labels:m.monthlyTrend.map(t=>t.ym),datasets:[{label:'ยอดขายรายเดือน (YTD Trend)',data:m.monthlyTrend.map(t=>t.revenue),backgroundColor:'#0891b2bb',borderRadius:4}]},
-      options:{responsive:true,plugins:{legend:{position:'top',labels:{boxWidth:9,padding:9}},tooltip:{callbacks:{label:c=>` ${c.dataset.label}: ${fmtB(c.raw)}`}}},scales:{x:{grid:{color:GR}},y:{grid:{color:GR},ticks:{callback:v=>fmtBK(v)}}}}});
-  }
 
   // Latest snapshot from every operational menu.
   const accountRows=(typeof ACC_ROWS!=='undefined'?ACC_ROWS:[]).filter(r=>r.account||r.page);
