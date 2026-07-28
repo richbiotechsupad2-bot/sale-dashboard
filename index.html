@@ -1727,6 +1727,13 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
     <!-- ═══ PAGE: OTHER ASSIGNED WORK ═══ -->
     <div id="pg-other-work" class="page"><div class="wrap ow-wrap">
       <div class="ow-hero"><div class="ow-eyebrow">OTHER ASSIGNED WORK · PAGE CONTENT CONTROL</div><div class="ow-title">🗂️ งานอื่นๆ ที่ได้รับมอบหมาย</div></div>
+      <div class="ow-grid">
+        <section class="ow-panel full"><div class="ow-panel-head"><strong>📌 กฎและเงื่อนไขการโพสต์หน้าเพจ</strong><span>ใช้เป็นมาตรฐานเดียวกัน</span></div><div class="ow-body ow-rules">
+          <div class="ow-rule"><i>🔴</i><span>เงื่อนไข: <b>3 โพสต์ + 2 คลิป / เดือน</b></span></div>
+          <div class="ow-rule"><i>⚠️</i><span>ห้ามใช้คำหรือรูปภาพที่สุ่มเสี่ยงโดยเด็ดขาด</span></div>
+          <div class="ow-rule"><i>📅</i><span>โพสต์ได้วันละ 1 โพสต์ หรือ 1 คลิป — ห้ามลงทั้งหมดในวันเดียว</span></div>
+        </div></section>
+        <section class="ow-panel full"><div class="ow-panel-head"><strong>📱 ตารางบันทึกโพสต์และคลิปหน้าเพจ</strong><span id="owTableStatus">กำลังแสดงข้อมูล</span></div>
       <div class="ow-toolbar">
         <div class="ow-field"><label>📆 ปี</label><select id="owYear" onchange="renderOtherWork()"><option value="2569">2569</option></select></div>
         <div class="ow-field"><label>🗓️ เดือน</label><select id="owMonth" onchange="renderOtherWork()"><option value="all">ทุกเดือน</option><option value="มิ.ย. 2569">มิถุนายน</option><option value="ก.ค. 2569">กรกฎาคม</option></select></div>
@@ -1735,13 +1742,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="ow-field"><label>✅ สถานะ</label><select id="owStatus" onchange="renderOtherWork()"><option value="all">ทุกสถานะ</option><option>สำเร็จ</option><option>รอดำเนินการ</option></select></div><div class="ow-field"><label>🔎 ค้นหาชื่อเพจ</label><input id="owSearch" type="search" placeholder="พิมพ์ชื่อเพจ..." oninput="renderOtherWork()"></div>
         <button class="ow-reset" onclick="resetOtherWork()">ล้างตัวกรอง</button>
       </div>
-      <div class="ow-grid">
-        <section class="ow-panel full"><div class="ow-panel-head"><strong>📌 กฎและเงื่อนไขการโพสต์หน้าเพจ</strong><span>ใช้เป็นมาตรฐานเดียวกัน</span></div><div class="ow-body ow-rules">
-          <div class="ow-rule"><i>🔴</i><span>เงื่อนไข: <b>3 โพสต์ + 2 คลิป / เดือน</b></span></div>
-          <div class="ow-rule"><i>⚠️</i><span>ห้ามใช้คำหรือรูปภาพที่สุ่มเสี่ยงโดยเด็ดขาด</span></div>
-          <div class="ow-rule"><i>📅</i><span>โพสต์ได้วันละ 1 โพสต์ หรือ 1 คลิป — ห้ามลงทั้งหมดในวันเดียว</span></div>
-        </div></section>
-        <section class="ow-panel full"><div class="ow-panel-head"><strong>📱 ตารางบันทึกโพสต์และคลิปหน้าเพจ</strong><span id="owTableStatus">กำลังแสดงข้อมูล</span></div><div class="ow-scroll"><table class="ow-table"><thead><tr><th>#</th><th>ผู้รับผิดชอบ</th><th>กำหนดโพสต์</th><th>เดือน</th><th>แบรนด์</th><th>ชื่อเพจ</th><th>สถานะ</th></tr></thead><tbody id="owTbody"></tbody></table></div></section>
+        <div class="ow-scroll"><table class="ow-table"><thead><tr><th>#</th><th>ผู้รับผิดชอบ</th><th>กำหนดโพสต์</th><th>เดือน</th><th>แบรนด์</th><th>ชื่อเพจ</th><th>สถานะ</th></tr></thead><tbody id="owTbody"></tbody></table></div></section>
         <section class="ow-panel full ow-buddy-panel">
           <div class="ow-panel-head ow-buddy-head"><div><strong>💬 ปั้นคอมเมนต์ + Buddy วันหยุด</strong><small>ค้นหาผู้รับผิดชอบและผู้ดูแลแทนได้ทันที</small></div><span id="owBuddyStatus">กำลังแสดงข้อมูล</span></div>
           <div class="ow-body">
