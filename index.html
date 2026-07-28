@@ -2592,12 +2592,27 @@ const ACC_JAOKHUN_ACCOUNTS=[
 ];
 const ACC_JAOKHUN_PAGES=[
   'เจ้าขุน ฟิตพลังชาย','เจ้าขุน แกร่งจากภายใน','เจ้าขุน ปลุกตื่นทุกเช้า',
-  'เจ้าขุน ฟิต24ชั่วโมง','เจ้าขุน สูตรลับของผู้ชาย'
+  'เจ้าขุน ฟิต24ชั่วโมง','เจ้าขุน สูตรลับของผู้ชาย','เจ้าขุน หอม เข้ม พร้อมลุย'
 ];
-/* ทุกบัญชีมีครบทั้ง 5 เพจตามภาพต้นฉบับ */
-const ACC_JAOKHUN_MATRIX=Array(12).fill('GGGGG');
+/* เพจใหม่: Ercanbald รับเพจไม่ได้ ส่วนอีก 11 บัญชีมีเพจ */
+const ACC_JAOKHUN_MATRIX=[
+  'GGGGGG','GGGGGG','GGGGGG','GGGGGY','GGGGGG','GGGGGG',
+  'GGGGGG','GGGGGG','GGGGGG','GGGGGG','GGGGGG','GGGGGG'
+];
 function accSeed(){let id=1000,out=[];ACC_WOLF_ACCOUNTS.forEach((a,ri)=>ACC_WOLF_PAGES.forEach((page,ci)=>{const code=ACC_WOLF_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'WOLF+',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_HEAVEN_ACCOUNTS.forEach((a,ri)=>ACC_HEAVEN_PAGES.forEach((page,ci)=>{const code=ACC_HEAVEN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'HEAVEN Plus',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_LORD_ACCOUNTS.forEach((a,ri)=>ACC_LORD_PAGES.forEach((page,ci)=>{const code=ACC_LORD_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'The Lord',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_JAOKHUN_ACCOUNTS.forEach((a,ri)=>ACC_JAOKHUN_PAGES.forEach((page,ci)=>{const code=ACC_JAOKHUN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'เจ้าขุน',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));return out}
 if(!ACC_ROWS.length){ACC_ROWS=accSeed();localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
+else{
+  /* อัปเดตข้อมูลเจ้าขุน ก.ค. 69 โดยรักษาข้อมูลแก้ไขส่วนอื่นของผู้ใช้ไว้ */
+  const newJkPage='เจ้าขุน หอม เข้ม พร้อมลุย';
+  let nextId=Math.max(1000,...ACC_ROWS.map(r=>Number(r.id)||0))+1;
+  ACC_JAOKHUN_ACCOUNTS.forEach(([account,role])=>{
+    const row=ACC_ROWS.find(r=>r.brand==='เจ้าขุน'&&r.account===account&&r.page===newJkPage);
+    const status=account==='Ercanbald Gehrin'?'รับเพจไม่ได้':'มีเพจ';
+    if(row){row.role=role;row.status=status}
+    else ACC_ROWS.push({id:nextId++,account,role,brand:'เจ้าขุน',page:newJkPage,status,note:''});
+  });
+  localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS));
+}
 function accEsc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function saveAccounts(){localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
 function accUnique(key){return [...new Set(ACC_ROWS.map(r=>(r[key]||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'th'))}
