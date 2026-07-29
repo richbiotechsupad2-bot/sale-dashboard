@@ -1527,7 +1527,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <section class="ed-hero">
         <div class="ed-eyebrow">DAILY TARGET · EMPLOYEE PERFORMANCE</div>
         <div class="ed-title">🎯 Daily Target — ผลงานรายวันพนักงาน</div>
-        <div class="ed-sub" id="edPeriod">รอบรายงาน 26/05/2026–25/06/2026 · เป้า 100 ออเดอร์ และ 23,553 บาท/วัน</div>
+        <div class="ed-sub" id="edPeriod">รอบรายงาน 26/07/2026–25/08/2026 · เป้า 100 ออเดอร์ และ 28,316 บาท/วัน</div>
       </section>
       <div class="ed-toolbar">
         <div class="ed-field"><label>📆 ปี พ.ศ.</label><select id="edYear" class="ed-select" onchange="renderEmployeeDaily()"></select></div>
@@ -1994,6 +1994,21 @@ const DATA = {
 };
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 const EMPLOYEE_DAILY_REPORTS={
+  '2026-08':{
+    year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–25/08/2026',days:31,orderTarget:100,revenueTarget:28316,
+    totalOrders:2281,totalSales:714686,orderPassPct:36.00,salesPassPct:44.00,
+    employees:[
+      {name:'Namfon',orders:141,sales:40018,orderPass:0,orderFail:3,salesPass:0,salesFail:3},
+      {name:'Pear',orders:310,sales:93396,orderPass:2,orderFail:1,salesPass:2,salesFail:1},
+      {name:'Nueng',orders:297,sales:98331,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
+      {name:'Apple',orders:287,sales:81935,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
+      {name:'Tiger',orders:275,sales:84862,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
+      {name:'Pay',orders:178,sales:57252,orderPass:0,orderFail:2,salesPass:1,salesFail:1},
+      {name:'Amm',orders:349,sales:115962,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Deer',orders:166,sales:50778,orderPass:0,orderFail:2,salesPass:1,salesFail:1},
+      {name:'Achi',orders:278,sales:92152,orderPass:1,orderFail:2,salesPass:1,salesFail:2}
+    ]
+  },
   '2026-07':{
     year:2026,month:7,label:'กรกฎาคม 2569',range:'26/06/2026–25/07/2026',days:30,orderTarget:100,revenueTarget:32223,
     totalOrders:23280,totalSales:7390140,orderPassPct:53.44,salesPassPct:47.62,
