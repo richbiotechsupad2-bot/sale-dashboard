@@ -3878,10 +3878,14 @@ function brandAchievementRanking(){
   }).sort((a,b)=>b.pct-a.pct);
 }
 
+const REDEMPTION_PERIOD={year:2026,month:7};
+function redemptionInPeriod(r){
+  return r.y===REDEMPTION_PERIOD.year&&r.mo===REDEMPTION_PERIOD.month;
+}
 function computeRedemption(){
   const allNames=[...new Set(RAW.redemption.map(r=>r.employee))].filter(Boolean).sort();
   const names=STATE.empB==='all'?allNames:allNames.filter(n=>n===STATE.empB);
-  const periodRows=RAW.redemption.filter(r=>inPeriod(r.y,r.mo));
+  const periodRows=RAW.redemption.filter(redemptionInPeriod);
   const productList=[...new Set(RAW.redemption.map(r=>r.product))];
   const priceOf=p=>{const r=RAW.redemption.find(x=>x.product===p);return r?r.unitPrice:0;};
   const rows=names.map(name=>{
