@@ -1554,14 +1554,14 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <section class="mf-hero">
         <div class="mf-hero-copy">
           <div class="mf-eyebrow">MONTHLY SALES PERFORMANCE · FORECAST</div>
-          <h1 id="mfTitle">📅 สรุปยอดขาย — กรกฎาคม 2569</h1>
-          <p id="mfRange">รอบรายงาน 26 มิถุนายน – 19 กรกฎาคม 2569</p>
+          <h1 id="mfTitle">📅 สรุปยอดขาย — สิงหาคม 2569</h1>
+          <p id="mfRange">รอบรายงาน 26 กรกฎาคม – 28 กรกฎาคม 2569</p>
         </div>
         <div class="mf-hero-badge"><span>สถานะภาพรวม</span><b id="mfHeroStatus">❌ ยังไม่ถึงเป้า</b><small id="mfHeroPassDays">ผ่านเป้ารายวัน 0/30 วัน</small></div>
       </section>
       <div class="mf-toolbar">
         <div class="mf-field"><label for="mfYear">📆 ปี พ.ศ.</label><select id="mfYear" onchange="setMfPeriod()"><option value="2026">2569</option></select></div>
-        <div class="mf-field"><label for="mfMonth">🗓️ เดือน</label><select id="mfMonth" onchange="setMfPeriod()"><option value="1">มกราคม</option><option value="2">กุมภาพันธ์</option><option value="3">มีนาคม</option><option value="4">เมษายน</option><option value="5">พฤษภาคม</option><option value="6">มิถุนายน</option><option value="7" selected>กรกฎาคม</option><option value="8">สิงหาคม</option><option value="9">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option></select></div>
+        <div class="mf-field"><label for="mfMonth">🗓️ เดือน</label><select id="mfMonth" onchange="setMfPeriod()"><option value="1">มกราคม</option><option value="2">กุมภาพันธ์</option><option value="3">มีนาคม</option><option value="4">เมษายน</option><option value="5">พฤษภาคม</option><option value="6">มิถุนายน</option><option value="7">กรกฎาคม</option><option value="8" selected>สิงหาคม</option><option value="9">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option></select></div>
         <div class="mf-filter-note">เลือกปีและเดือนเพื่อดูรายงานย้อนหลัง</div>
       </div>
       <div id="mfContent">
@@ -1569,12 +1569,12 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div id="mo-alerts"></div>
         <div class="mf-section"><span>🏷️ ผลงานรายแบรนด์</span><small>เรียงตาม % บรรลุเป้าหมาย</small></div>
         <div class="mf-brands" id="mo-brand"></div>
-        <div class="mf-section"><span>📊 แนวโน้มยอดขายรายวัน</span><small id="mfDailyTargetNote">เทียบเป้ารวม 289,999 บาท/วัน</small></div>
+        <div class="mf-section"><span>📊 แนวโน้มยอดขายรายวัน</span><small id="mfDailyTargetNote">เทียบเป้ารวม 254,839 บาท/วัน</small></div>
         <div class="mf-chart-grid">
           <div class="mf-panel"><div class="mf-panel-title">ยอดขายรวมรายวัน VS เป้า</div><div class="mf-panel-sub">สีเขียว = ถึงเป้า · สีแดง = ไม่ถึงเป้า</div><canvas id="moDaily" style="max-height:310px"></canvas></div>
           <div class="mf-panel"><div class="mf-panel-title">เป้าหมาย VS ยอดจริงรายแบรนด์</div><div class="mf-panel-sub">เห็นช่องว่างของแต่ละแบรนด์ได้ทันที</div><canvas id="moCumul" style="max-height:310px"></canvas></div>
         </div>
-        <div class="mf-section"><span>🔎 รายละเอียดยอดขายรายวัน</span><small id="mfTableNote">ข้อมูลถึง 19 กรกฎาคม · เลื่อนตารางซ้าย–ขวาบนมือถือ</small></div>
+        <div class="mf-section"><span>🔎 รายละเอียดยอดขายรายวัน</span><small id="mfTableNote">ข้อมูลถึง 28 กรกฎาคม · เลื่อนตารางซ้าย–ขวาบนมือถือ</small></div>
         <div class="mf-panel mf-table-panel"><div class="mf-table-scroll"><table class="mf-table" id="mo-cal"></table></div></div>
         <canvas id="moWaterfall" style="display:none"></canvas>
       </div>
@@ -4281,6 +4281,21 @@ const MONTHLY_FORECAST_DATA={
       ['22/07/69',32366,67520,122550,39100],['23/07/69',50573,70605,121563,41758],
       ['24/07/69',40622,76855,117499,37129],['25/07/69',34950,67380,110645,38800]
     ]
+  },
+  '2026-08':{
+    year:2026,month:8,label:'สิงหาคม 2569',range:'26 กรกฎาคม – 28 กรกฎาคม 2569',periodDays:31,dailyTarget:254839,
+    summaryActual:706102,
+    brands:[
+      {key:'hv',name:'HEAVEN PLUS',icon:'⭐',color:'#d97706',target:1300000,actual:90520,passDays:0,dailyTarget:41936},
+      {key:'tl',name:'THE LORD',icon:'👑',color:'#dc2626',target:1800000,actual:207055,passDays:3,dailyTarget:58065},
+      {key:'wolf',name:'WOLF+',icon:'🐺',color:'#7c3aed',target:3700000,actual:307498,passDays:0,dailyTarget:119355},
+      {key:'jk',name:'JK',icon:'🎯',color:'#059669',target:1100000,actual:101029,passDays:1,dailyTarget:35483}
+    ],
+    rows:[
+      ['26/07/69',31838,61969,110208,31879],
+      ['27/07/69',25329,80173,95879,37350],
+      ['28/07/69',33353,64913,101411,31800]
+    ]
   }
 };
 function setMfPeriod(){renderMonthly();}
@@ -4288,7 +4303,7 @@ function mfMoney(v){return Number(v||0).toLocaleString('th-TH')+' บาท';}
 function renderMonthly(){
   renderHeaderStats();
   const year=document.getElementById('mfYear')?.value||'2026';
-  const month=document.getElementById('mfMonth')?.value||'7';
+  const month=document.getElementById('mfMonth')?.value||'8';
   const data=MONTHLY_FORECAST_DATA[`${year}-${String(month).padStart(2,'0')}`];
   const content=document.getElementById('mfContent'),empty=document.getElementById('mfEmpty');
   if(!data){content.style.display='none';empty.style.display='block';document.getElementById('mfTitle').textContent='📅 Monthly & Forecast';document.getElementById('mfRange').textContent='เลือกปีและเดือนที่ต้องการดูรายงาน';document.getElementById('mfHeroStatus').textContent='⏳ รอข้อมูล';document.getElementById('mfHeroPassDays').textContent='ยังไม่มีข้อมูลในรอบนี้';return;}
@@ -4308,7 +4323,11 @@ function renderMonthly(){
   ];
   document.getElementById('mo-kpi').innerHTML=kpis.map(k=>`<article class="mf-kpi" style="--mc:${k[4]}"><div class="ic">${k[0]}</div><span>${k[1]}</span><b>${k[2]}</b><small>${k[3]}</small></article>`).join('');
   const best=[...data.brands].sort((a,b)=>b.actual/b.target-a.actual/a.target)[0],risk=[...data.brands].sort((a,b)=>a.actual/a.target-b.actual/b.target)[0];
-  document.getElementById('mo-alerts').innerHTML=`<div class="mf-insight"><div class="mf-insight-main"><strong>🚀 จุดเด่น: ${best.name} ทำได้ ${(best.actual/best.target*100).toFixed(1)}%</strong><p>ยอดขาย ${mfMoney(best.actual)} สูงกว่าเป้า ${mfMoney(best.actual-best.target)} และถึงเป้ารายวัน ${best.passDays}/${periodDays} วัน เป็นแรงขับเคลื่อนหลักของเดือนนี้</p></div><div class="mf-insight-risk"><strong>⚠️ ต้องเร่ง: ${risk.name}</strong><p>ทำได้ ${(risk.actual/risk.target*100).toFixed(1)}% ยังขาด ${mfMoney(risk.target-risk.actual)} และผ่านเป้ารายวันเพียง ${risk.passDays}/${periodDays} วัน</p></div></div>`;
+  const bestDiff=best.actual-best.target;
+  const bestSummary=bestDiff>=0
+    ?`ยอดขาย ${mfMoney(best.actual)} สูงกว่าเป้า ${mfMoney(bestDiff)}`
+    :`ยอดขาย ${mfMoney(best.actual)} เป็นแบรนด์ที่มี % บรรลุสูงสุด และยังขาดเป้า ${mfMoney(Math.abs(bestDiff))}`;
+  document.getElementById('mo-alerts').innerHTML=`<div class="mf-insight"><div class="mf-insight-main"><strong>🚀 จุดเด่น: ${best.name} ทำได้ ${(best.actual/best.target*100).toFixed(1)}%</strong><p>${bestSummary} · ถึงเป้ารายวัน ${best.passDays}/${periodDays} วัน</p></div><div class="mf-insight-risk"><strong>⚠️ ต้องเร่ง: ${risk.name}</strong><p>ทำได้ ${(risk.actual/risk.target*100).toFixed(1)}% ยังขาด ${mfMoney(risk.target-risk.actual)} และผ่านเป้ารายวันเพียง ${risk.passDays}/${periodDays} วัน</p></div></div>`;
   document.getElementById('mo-brand').innerHTML=[...data.brands].sort((a,b)=>b.actual/b.target-a.actual/a.target).map(b=>{const bp=b.actual/b.target*100,diff=b.actual-b.target;return `<article class="mf-brand" style="--mc:${b.color}"><div class="mf-brand-head"><div><div class="mf-brand-name">${b.icon} ${b.name}</div><span class="mf-brand-status ${bp>=100?'pass':'fail'}">${bp>=100?'✅ ถึงเป้า':'❌ ยังไม่ถึงเป้า'}</span></div><div class="mf-brand-pct">${bp.toFixed(1)}%</div></div><div class="mf-progress"><i style="width:${Math.min(100,bp)}%"></i></div><div class="mf-brand-grid"><div class="mf-brand-stat"><span>เป้าหมาย</span><b>${mfMoney(b.target)}</b></div><div class="mf-brand-stat"><span>ยอดจริง</span><b style="color:${b.color}">${mfMoney(b.actual)}</b></div><div class="mf-brand-stat"><span>ส่วนต่าง</span><b style="color:${diff>=0?'#059669':'#dc2626'}">${diff>=0?'+':''}${mfMoney(diff)}</b></div><div class="mf-brand-stat"><span>ถึงเป้ารายวัน</span><b>${b.passDays}/${periodDays} วัน</b></div></div></article>`;}).join('');
   document.getElementById('mfDailyTargetNote').textContent=`เทียบเป้ารวม ${dailyTarget.toLocaleString('th-TH')} บาท/วัน`;
   document.getElementById('mfTableNote').textContent=`มีข้อมูล ${data.rows.length}/${periodDays} วัน · เลื่อนตารางซ้าย–ขวาบนมือถือ`;
