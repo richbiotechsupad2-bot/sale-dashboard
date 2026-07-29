@@ -1529,7 +1529,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <section class="ed-hero">
         <div class="ed-eyebrow">DAILY TARGET · EMPLOYEE PERFORMANCE</div>
         <div class="ed-title">🎯 Daily Target — ผลงานรายวันพนักงาน</div>
-        <div class="ed-sub" id="edPeriod">รอบรายงาน 26/07/2026–25/08/2026 · เป้า 100 ออเดอร์ และ 28,316 บาท/วัน</div>
+        <div class="ed-sub" id="edPeriod">รอบรายงาน 26/07/2026–29/07/2026 · เป้า 100 ออเดอร์ และ 28,316 บาท/วัน</div>
       </section>
       <div class="ed-toolbar">
         <div class="ed-field"><label>📆 ปี พ.ศ.</label><select id="edYear" class="ed-select" onchange="renderEmployeeDaily()"></select></div>
@@ -1557,7 +1557,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         <div class="mf-hero-copy">
           <div class="mf-eyebrow">MONTHLY SALES PERFORMANCE · FORECAST</div>
           <h1 id="mfTitle">📅 สรุปยอดขาย — สิงหาคม 2569</h1>
-          <p id="mfRange">รอบรายงาน 26 กรกฎาคม – 28 กรกฎาคม 2569</p>
+          <p id="mfRange">รอบรายงาน 26 กรกฎาคม – 29 กรกฎาคม 2569</p>
         </div>
         <div class="mf-hero-badge"><span>สถานะภาพรวม</span><b id="mfHeroStatus">❌ ยังไม่ถึงเป้า</b><small id="mfHeroPassDays">ผ่านเป้ารายวัน 0/31 วัน</small></div>
       </section>
@@ -2003,7 +2003,7 @@ const DATA = {
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 const EMPLOYEE_DAILY_REPORTS={
   '2026-08':{
-    year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–25/08/2026',days:31,orderTarget:100,revenueTarget:28316,
+    year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–29/07/2026',days:31,orderTarget:100,revenueTarget:28316,
     totalOrders:2281,totalSales:714686,orderPassPct:36.00,salesPassPct:44.00,
     employees:[
       {name:'Namfon',orders:141,sales:40018,orderPass:0,orderFail:3,salesPass:0,salesFail:3},
@@ -2139,7 +2139,7 @@ const SEED_SALES=(function(){
     jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Tarn','Tiger'],o:[319,247,203,156,340,324,289,272,236],r:[117450,96300,78550,58600,125300,126050,108900,104700,89700]},
   };
   Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
-  /* รอบรายงานเดือนสิงหาคม 2569: ข้อมูลสะสม 26/07/2026–28/07/2026
+  /* รอบรายงานเดือนสิงหาคม 2569: ข้อมูลสะสม 26/07/2026–29/07/2026
      บันทึกเป็นยอดสะสมรายพนักงานแยกแบรนด์ตามรายงานต้นฉบับ */
   const augustEmpBrand={
     hv:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[16,39,43,16,8,24,19,11,34],r:[10294,20421,11197,9024,3982,8026,9811,3979,13786]},
@@ -4078,7 +4078,7 @@ function renderSales(){
   renderHeaderStats();
   const yearSel=document.getElementById('soYearFilter'),monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
   const reportPeriods=[
-    {value:'2026-08',label:'สิงหาคม 2569',range:'26/07/2026–28/07/2026'},
+    {value:'2026-08',label:'สิงหาคม 2569',range:'26/07/2026–29/07/2026'},
     {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–25/07/2026'},
     {value:'2026-06',label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026'},
     {value:'2026-05',label:'พฤษภาคม 2569',range:'26/04/2026–25/05/2026'},
@@ -4346,7 +4346,7 @@ const MONTHLY_FORECAST_DATA={
     ]
   },
   '2026-08':{
-    year:2026,month:8,label:'สิงหาคม 2569',range:'26 กรกฎาคม – 28 กรกฎาคม 2569',periodDays:31,dailyTarget:254839,
+    year:2026,month:8,label:'สิงหาคม 2569',range:'26 กรกฎาคม – 29 กรกฎาคม 2569',periodDays:31,dailyTarget:254839,
     summaryActual:706102,
     brands:[
       {key:'hv',name:'HEAVEN PLUS',icon:'⭐',color:'#d97706',target:1300000,actual:90520,passDays:0,dailyTarget:41936},
