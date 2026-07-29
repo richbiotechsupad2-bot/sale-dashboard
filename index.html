@@ -888,7 +888,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-redemption .wrap{min-height:100vh;background:radial-gradient(circle at 4% 3%,rgba(124,58,237,.10),transparent 24%),radial-gradient(circle at 96% 20%,rgba(236,72,153,.09),transparent 25%),linear-gradient(180deg,#faf7ff 0%,#f5f9ff 48%,#fff9f3 100%)}
 .rd-hero{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:31px 34px;margin-bottom:17px;border-radius:28px;color:#fff;background:radial-gradient(circle at 89% 13%,rgba(255,255,255,.27) 0 7%,transparent 7.5%),radial-gradient(circle at 78% 118%,rgba(251,191,36,.30) 0 17%,transparent 34%),linear-gradient(118deg,#312e81 0%,#6d28d9 36%,#db2777 69%,#f97316 100%);box-shadow:0 24px 54px rgba(109,40,217,.31),inset 0 1px 0 rgba(255,255,255,.48)}
 .rd-hero:after{content:'🎁';position:absolute;right:18%;top:-55px;font-size:180px;opacity:.10;transform:rotate(11deg)}
-.rd-hero-copy,.rd-hero-badge{position:relative;z-index:1}.rd-eyebrow{font-size:11px;font-weight:950;letter-spacing:2.2px;color:#fde68a}.rd-title{margin:7px 0 4px;font-size:34px;line-height:1.2;font-weight:950;text-shadow:0 4px 17px rgba(30,27,75,.58)}.rd-sub{max-width:770px;font-size:12.5px;font-weight:750;line-height:1.65;color:#fff}
+.rd-hero-copy,.rd-hero-badge{position:relative;z-index:1}.rd-eyebrow{font-size:11px;font-weight:950;letter-spacing:2.2px;color:#fde68a}.rd-title{margin:7px 0 4px;font-size:34px;line-height:1.2;font-weight:950;text-shadow:0 4px 17px rgba(30,27,75,.58)}.rd-sub{max-width:770px;font-size:12.5px;font-weight:750;line-height:1.65;color:#fff}.rd-report-period{display:inline-flex;margin-top:9px;padding:6px 12px;border:1px solid rgba(255,255,255,.38);border-radius:10px;background:rgba(255,255,255,.17);color:#fff;font-size:11px;font-weight:900;box-shadow:inset 0 1px 0 rgba(255,255,255,.22)}
 .rd-hero-badge{display:grid;place-items:center;min-width:118px;min-height:76px;padding:10px 17px;border:1px solid rgba(255,255,255,.55);border-radius:19px;background:linear-gradient(145deg,rgba(255,255,255,.30),rgba(255,255,255,.14));backdrop-filter:blur(9px);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 25px rgba(49,46,129,.26);animation:rdFloat 3s ease-in-out infinite}.rd-hero-badge b{font-size:20px}.rd-hero-badge span{font-size:9px;font-weight:900;letter-spacing:.7px}
 @keyframes rdFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
 #pg-redemption .sec{position:relative;margin:25px 0 13px;padding:0 0 8px 18px;color:#312e81;font-size:17px;font-weight:950;letter-spacing:.2px;text-shadow:0 2px 0 #fff}
@@ -1606,6 +1606,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
           <div class="rd-eyebrow">REDEMPTION PERFORMANCE CENTER</div>
           <div class="rd-title">🎁 สิทธิ์แลกซื้อ — เปลี่ยนทุกโอกาสให้เป็นยอดเพิ่ม</div>
           <div class="rd-sub">เห็นภาพรวมยอดเงิน จำนวนชิ้น สินค้ายอดนิยม และผลงานรายพนักงานในหน้าเดียว พร้อมติดตามแนวโน้ม Cross Sale รายวัน</div>
+          <div class="rd-report-period" id="rdReportPeriod">รอบรายงาน —</div>
         </div>
         <div class="rd-hero-badge"><b>✨ LIVE</b><span>อัปเดตตามตัวกรอง</span></div>
       </div>
@@ -4078,7 +4079,7 @@ function renderSales(){
   const yearSel=document.getElementById('soYearFilter'),monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
   const reportPeriods=[
     {value:'2026-08',label:'สิงหาคม 2569',range:'26/07/2026–28/07/2026'},
-    {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–22/07/2026'},
+    {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–25/07/2026'},
     {value:'2026-06',label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026'},
     {value:'2026-05',label:'พฤษภาคม 2569',range:'26/04/2026–25/05/2026'},
     {value:'2026-04',label:'เมษายน 2569',range:'26/03/2026–25/04/2026'},
@@ -4096,7 +4097,7 @@ function renderSales(){
   const periodMeta=reportPeriods.find(p=>p.value===currentPeriod);
   document.getElementById('soHeroEyebrow').textContent=periodMeta?`EXECUTIVE SALES PERFORMANCE · ${periodMeta.value}`:'EXECUTIVE SALES PERFORMANCE · ALL PERIODS';
   document.getElementById('soHeroTitle').textContent=periodMeta?`💰 Sale & Orders — ผลงานเดือน${periodMeta.label.replace(' 2569','')}`:STATE.year!=='all'?`💰 Sale & Orders — ภาพรวมปี ${Number(STATE.year)+543}`:'💰 Sale & Orders — ภาพรวมทุกปี';
-  document.getElementById('soHeroPeriod').textContent=periodMeta?`ข้อมูลสะสม ${periodMeta.range}`:STATE.year!=='all'?`ข้อมูลรวมทุกเดือนของปี ${Number(STATE.year)+543}`:'ข้อมูลรวมทุกช่วงรายงาน';
+  document.getElementById('soHeroPeriod').textContent=periodMeta?`รอบรายงาน ${periodMeta.range}`:STATE.year!=='all'?`ข้อมูลรวมทุกเดือนของปี ${Number(STATE.year)+543}`:'ข้อมูลรวมทุกช่วงรายงาน';
   brandSel.innerHTML='<option value="all">สินค้าทั้งหมด</option>'+DATA.brandMeta.map(b=>`<option value="${b.k}" ${STATE.brand===b.k?'selected':''}>${b.ic} ${b.lb}</option>`).join('');
   const employees=[...new Set(RAW.sales.filter(r=>r.employee&&inPeriod(r.y,r.mo)).map(r=>r.employee))].sort();
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+employees.map(n=>`<option value="${n}" ${STATE.empA===n?'selected':''}>${n}</option>`).join('');
@@ -4414,6 +4415,10 @@ function renderRedemption(){
   const months=[...new Set(RAW.redemption.filter(r=>+r.reportY===+REDEMPTION_PERIOD.year).map(r=>r.reportMo))].sort((a,b)=>a-b);
   document.getElementById('rdYearFilter').innerHTML=years.map(y=>`<option value="${y}" ${+REDEMPTION_PERIOD.year===+y?'selected':''}>พ.ศ. ${+y+543}</option>`).join('');
   document.getElementById('rdMonthFilter').innerHTML=months.map(m=>`<option value="${m}" ${+REDEMPTION_PERIOD.month===+m?'selected':''}>${monthNames[m]}</option>`).join('');
+  const rdPeriodRanges={'2026-08':'26/07/2026–29/07/2026','2026-07':'26/06/2026–25/07/2026'};
+  const rdPeriodKey=`${REDEMPTION_PERIOD.year}-${String(REDEMPTION_PERIOD.month).padStart(2,'0')}`;
+  const rdPeriodRange=rdPeriodRanges[rdPeriodKey]||'';
+  document.getElementById('rdReportPeriod').textContent=rdPeriodRange?`รอบรายงาน ${rdPeriodRange}`:'รอบรายงาน —';
   document.getElementById('rdFilterNote').textContent=`กำลังแสดงข้อมูล ${monthNames[+REDEMPTION_PERIOD.month]} ${+REDEMPTION_PERIOD.year+543}`;
   const ke=document.getElementById('rd-kpi');ke.innerHTML='';
   const topProduct=[...rd.perProduct].sort((a,b)=>b.units-a.units)[0];
