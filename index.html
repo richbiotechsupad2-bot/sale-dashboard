@@ -1899,7 +1899,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: LEADERBOARD HUB ═══ -->
     <div id="pg-leaderboard" class="page"><div class="wrap">
-      <div class="hub-hero"><div class="hub-eyebrow">PERFORMANCE LEADERBOARD</div><div class="hub-title">🏆 Leaderboard — ใครโดดเด่นในมิติไหน</div><div class="hub-sub">จัดอันดับจากข้อมูลจริงของยอดขาย ออเดอร์ GP% และสิทธิ์แลกซื้อ ตามตัวกรองที่เลือก</div></div>
+      <div class="hub-hero"><div class="hub-eyebrow">PERFORMANCE LEADERBOARD</div><div class="hub-title">🏆 Leaderboard — ใครโดดเด่นในมิติไหน</div><div class="hub-sub">จัดอันดับจากข้อมูลจริงของยอดขาย ออเดอร์ GP% และสิทธิ์แลกซื้อ ตามตัวกรองที่เลือก</div><div class="hub-sub" id="leaderboardReportPeriod">รอบรายงาน 26/07/2026–29/07/2026</div></div>
       <div class="hub-toolbar" id="leaderboard-toolbar"></div>
       <div class="lb-summary" id="lb-summary"></div>
       <div class="sec">⭐🎁 ผู้นำด้านคุณภาพและสิทธิ์แลกซื้อ</div>
@@ -3955,7 +3955,8 @@ function renderPerformance(){
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+periodEmployees.map(n=>`<option value="${n}" ${STATE.empB===n?'selected':''}>${n}</option>`).join('');
   const periodLabel=STATE.month==='all'?`ภาพรวมปี ${+STATE.year+543}`:`${monthNames[+STATE.month]} ${+STATE.year+543}`;
   document.getElementById('gpHeroTitle').textContent=`📈 Performance (GP%) — ${periodLabel}`;
-  document.getElementById('gpHeroPeriod').textContent='';
+  const gpReportRange=currentDailyReportRange();
+  document.getElementById('gpHeroPeriod').textContent=gpReportRange?`รอบรายงาน ${gpReportRange}`:'ข้อมูลรวมตามตัวกรอง';
   document.getElementById('gpHeroBadge').textContent=`${gp.rows.length} พนักงาน · ผ่าน ${gp.totalPass}/${gp.totalCells} รายการ`;
   const ke=document.getElementById('gp-kpi');ke.innerHTML='';
   const overallColor=gp.overallPassPct>=60?'#059669':gp.overallPassPct>=40?'#d97706':'#dc2626';
@@ -4476,6 +4477,11 @@ function renderRedemption(){
    SECTION 11 — PAGE: LEADERBOARD HUB (รวมข้ามโมดูล)
    ══════════════════════════════════════════════════════════════════ */
 const EMP_ALIAS={Pear:'แพร',Nueng:'หนึ่ง',Apple:'เปิ้ล',Tarn:'น้ำฝน',Tiger:'เกอร์',Pay:'ป้าย',Amm:'แอ๋ม',Deer:'เดียร์',Achi:'อชิ',Game:'เกมส์'};
+const DAILY_REPORT_PERIODS={'2026-08':'26/07/2026–29/07/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
+function currentDailyReportRange(){
+  if(STATE.year==='all'||STATE.month==='all')return'';
+  return DAILY_REPORT_PERIODS[`${STATE.year}-${String(STATE.month).padStart(2,'0')}`]||'';
+}
 function executivePeriodLabel(){
   if(STATE.year==='all')return'ภาพรวมทุกปี';
   return STATE.month==='all'?`ทุกเดือน ปี ${+STATE.year+543}`:`${MONTH_TH[+STATE.month]} ปี ${+STATE.year+543}`;
@@ -4519,6 +4525,8 @@ function lbRow(rank,name,valueLabel,widthPct,gradient,onClick){
 function renderLeaderboard(){
   renderHeaderStats();
   renderExecutiveToolbar('leaderboard-toolbar');
+  const leaderboardRange=currentDailyReportRange();
+  document.getElementById('leaderboardReportPeriod').textContent=leaderboardRange?`รอบรายงาน ${leaderboardRange}`:'ข้อมูลรวมตามตัวกรอง';
   const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption();
   const topSales=so.sortRev[0],topGP=[...gp.rows].filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP)[0],topRedemption=rd.rows[0];
   document.getElementById('lb-summary').innerHTML=[
