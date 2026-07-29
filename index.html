@@ -895,6 +895,8 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-redemption .sec:before{content:'';position:absolute;left:0;top:1px;width:7px;height:23px;border-radius:99px;background:linear-gradient(#7c3aed,#ec4899,#f97316);box-shadow:0 4px 11px rgba(219,39,119,.3)}
 #pg-redemption .sec:after{height:2px;background:linear-gradient(90deg,#7c3aed,#ec4899,#f97316,transparent)}
 #pg-redemption .krow{gap:15px}
+.rd-filterbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:0 0 17px;padding:14px 17px;border:1px solid #ddd6fe;border-radius:19px;background:rgba(255,255,255,.88);box-shadow:0 10px 28px rgba(79,70,229,.10)}
+.rd-filter{min-width:170px}.rd-filter label{display:block;margin-bottom:6px;color:#4338ca;font-size:10px;font-weight:950}.rd-filter select{width:100%;height:42px;padding:0 36px 0 13px;border:1px solid #c4b5fd;border-radius:12px;background:#fff;color:#312e81;font-family:'Sarabun',sans-serif;font-size:12px;font-weight:900;outline:none;cursor:pointer}.rd-filter select:focus{border-color:#7c3aed;box-shadow:0 0 0 4px #8b5cf622}.rd-filter-note{margin-left:auto;padding:10px 14px;border-radius:12px;background:#ede9fe;color:#6d28d9;font-size:10px;font-weight:900}
 #pg-redemption .kpi{position:relative;overflow:hidden;min-height:145px;padding:20px;border:1px solid rgba(255,255,255,.9);border-radius:22px;background:linear-gradient(145deg,#fff 20%,#f5f3ff 100%);box-shadow:0 15px 32px rgba(109,40,217,.15),inset 0 1px 0 #fff;transition:transform .22s,box-shadow .22s}
 #pg-redemption .kpi:nth-child(2){background:linear-gradient(145deg,#fff 20%,#fdf2f8);box-shadow:0 15px 32px rgba(219,39,119,.14)}
 #pg-redemption .kpi:nth-child(3){background:linear-gradient(145deg,#fff 20%,#fff7ed);box-shadow:0 15px 32px rgba(234,88,12,.14)}
@@ -959,7 +961,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-redemption #rd-daily .rd-status{font-size:11px;padding:7px 12px;font-weight:950;box-shadow:0 5px 12px rgba(15,23,42,.1)}
 @keyframes rdPulse{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-3px) rotate(4deg)}}
 @media(max-width:900px){.rd-hero{padding:25px 22px}.rd-title{font-size:27px}.rd-hero-badge{display:none}#pg-redemption .g31{grid-template-columns:1fr}#pg-redemption .krow.k4{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.rd-title{font-size:23px}.rd-sub{font-size:11px}#pg-redemption .krow.k4{grid-template-columns:1fr}#pg-redemption .sec{font-size:14px}#pg-redemption .card{padding:17px 15px}}
+@media(max-width:560px){.rd-title{font-size:23px}.rd-sub{font-size:11px}.rd-filter{width:100%}.rd-filter-note{width:100%;margin-left:0}#pg-redemption .krow.k4{grid-template-columns:1fr}#pg-redemption .sec{font-size:14px}#pg-redemption .card{padding:17px 15px}}
 /* ══════════════ GP OVERVIEW — COLORFUL KPI REFRESH ══════════════ */
 #gpOverviewHeading{
   position:relative;
@@ -1607,6 +1609,11 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         </div>
         <div class="rd-hero-badge"><b>✨ LIVE</b><span>อัปเดตตามตัวกรอง</span></div>
       </div>
+      <div class="rd-filterbar">
+        <div class="rd-filter"><label>📆 ปี</label><select id="rdYearFilter" onchange="setRedemptionYear(this.value)"></select></div>
+        <div class="rd-filter"><label>🗓️ เดือน</label><select id="rdMonthFilter" onchange="setRedemptionMonth(this.value)"></select></div>
+        <div class="rd-filter-note" id="rdFilterNote">เลือกปีและเดือนเพื่อดูข้อมูลย้อนหลัง</div>
+      </div>
       <div class="sec">🎁 ภาพรวมสิทธิ์แลกซื้อ — ตามช่วงเวลาที่เลือก</div>
       <div class="krow k4" id="rd-kpi"></div>
       <div class="sec">📊 กราฟ &amp; Leaderboard</div>
@@ -1623,7 +1630,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
         </div>
         <div class="card rd-cross-card">
           <div class="ct"><span class="dot" style="background:#2563eb"></span>📈 ยอด Cross Sale แยกตามแบรนด์</div>
-          <div class="cs">จำนวนและสัดส่วนจาก Cross Sale รวม 364 รายการ</div>
+          <div class="cs" id="rd-brand-cross-sub">จำนวนและสัดส่วนจาก Cross Sale รวม</div>
           <canvas id="rdBrandCross" style="max-height:320px"></canvas>
         </div>
         <div class="card rd-top5-card">
@@ -2183,7 +2190,20 @@ const SEED_REDEMPTION=(function(){
   const products=['สเปรย์ 1แถม1','น้ำหอมพลัส','กาแฟเจ้าขุน','สบู่+เจล','ห่วงรัด'];
   const prices=[129,100,150,100,150];
   const rows=[];
-  Object.keys(units).forEach(nm=>units[nm].forEach((u,pi)=>{ if(u>0) rows.push({date:'2026-07-20',employee:nm,product:products[pi],unitPrice:prices[pi],units:u}); }));
+  Object.keys(units).forEach(nm=>units[nm].forEach((u,pi)=>{ if(u>0) rows.push({date:'2026-07-20',reportMonth:'2026-07',employee:nm,product:products[pi],unitPrice:prices[pi],units:u}); }));
+  /* รอบเดือนสิงหาคม 2569: ข้อมูลล่าสุด 26–29/07/2026
+     จำนวนรวม 62 ชิ้น; ยอดขายตามรายงานพนักงาน 7,730 บาท */
+  const augUnits={
+    'แพร':[0,3,1,2,5], 'อชิ':[2,1,0,0,0], 'ป้าย':[3,0,2,2,3],
+    'แอปเปิ้ล':[0,2,1,2,1], 'แอ๋ม':[2,0,1,0,6], 'หนึ่ง':[0,3,3,3,3],
+    'เกอร์':[2,2,0,0,2], 'เดียร์':[2,0,0,0,0], 'น้ำฝน':[0,1,2,0,0]
+  };
+  const augProducts=['กาแฟเจ้าขุน','น้ำหอมพลัส','ห่วงรัด','สบู่+เจล','สเปรย์ 1 แถม 1'];
+  const augPrices=[150,100,150,100,129];
+  const augRevenue={'แพร':1295,'อชิ':300,'ป้าย':1337,'แอปเปิ้ล':679,'แอ๋ม':1224,'หนึ่ง':1437,'เกอร์':758,'เดียร์':300,'น้ำฝน':400};
+  Object.keys(augUnits).forEach(nm=>augUnits[nm].forEach((u,pi)=>{
+    if(u>0)rows.push({date:'2026-07-29',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
+  }));
   return rows;
 })();
 const SEED_CROSS_SALE_DAILY=[
@@ -2209,6 +2229,12 @@ const SEED_CROSS_SALE_DAILY=[
   {date:'23/07/2026',qty:13,cumulative:325,avg:1.44,change:-5,status:'ปกติ',note:''},
   {date:'24/07/2026',qty:20,cumulative:345,avg:2.22,change:7, status:'ยอดสูง',note:''},
   {date:'25/07/2026',qty:19,cumulative:364,avg:2.11,change:-1,status:'ปกติ',note:''}
+];
+const SEED_CROSS_SALE_DAILY_AUG=[
+  {date:'26/07/2026',qty:14,cumulative:14,avg:14.00,change:0,status:'ปกติ',note:''},
+  {date:'27/07/2026',qty:24,cumulative:38,avg:19.00,change:10,status:'ยอดสูง',note:''},
+  {date:'28/07/2026',qty:17,cumulative:55,avg:18.33,change:-7,status:'ปกติ',note:''},
+  {date:'29/07/2026',qty:7,cumulative:62,avg:15.50,change:-10,status:'ปกติ',note:''}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
@@ -2321,7 +2347,10 @@ function reconcileGPRoster(rows){
 }
 function normalizeRedemptionRow(o){
   const dt=parseDateFlexible(pick(o,'date','Date','วันที่'));if(!dt)return null;
-  return{y:dt.y,mo:dt.mo,d:dt.d,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),product:String(pick(o,'product','Product','สินค้า')).trim(),unitPrice:num(pick(o,'unitprice','UnitPrice','ราคาต่อชิ้น')),units:num(pick(o,'units','Units','จำนวนชิ้น'))};
+  const reportRaw=String(pick(o,'reportMonth','ReportMonth','รอบเดือน')).trim();
+  const reportDt=parseDateFlexible(reportRaw)||dt;
+  const reportedRaw=pick(o,'reportedRevenue','ReportedRevenue','ยอดขายรายงาน');
+  return{y:dt.y,mo:dt.mo,d:dt.d,reportY:reportDt.y,reportMo:reportDt.mo,employee:String(pick(o,'employee','Employee','พนักงาน')).trim(),product:String(pick(o,'product','Product','สินค้า')).trim(),unitPrice:num(pick(o,'unitprice','UnitPrice','ราคาต่อชิ้น')),units:num(pick(o,'units','Units','จำนวนชิ้น')),reportedRevenue:reportedRaw===''||reportedRaw==null?null:num(reportedRaw)};
 }
 function normalizeDTSRow(o){
   const monthStr=String(pick(o,'month','Month','เดือน')).trim();const dt=parseDateFlexible(monthStr);if(!dt)return null;
@@ -3878,22 +3907,26 @@ function brandAchievementRanking(){
   }).sort((a,b)=>b.pct-a.pct);
 }
 
-const REDEMPTION_PERIOD={year:2026,month:7};
+const REDEMPTION_PERIOD={year:'2026',month:'8'};
 function redemptionInPeriod(r){
-  return r.y===REDEMPTION_PERIOD.year&&r.mo===REDEMPTION_PERIOD.month;
+  return +r.reportY===+REDEMPTION_PERIOD.year&&+r.reportMo===+REDEMPTION_PERIOD.month;
 }
+function setRedemptionYear(v){REDEMPTION_PERIOD.year=String(v);const months=[...new Set(RAW.redemption.filter(r=>+r.reportY===+v).map(r=>r.reportMo))].sort((a,b)=>a-b);if(!months.includes(+REDEMPTION_PERIOD.month))REDEMPTION_PERIOD.month=String(months[months.length-1]||8);renderRedemption()}
+function setRedemptionMonth(v){REDEMPTION_PERIOD.month=String(v);renderRedemption()}
 function computeRedemption(){
   const allNames=[...new Set(RAW.redemption.map(r=>r.employee))].filter(Boolean).sort();
   const names=STATE.empB==='all'?allNames:allNames.filter(n=>n===STATE.empB);
   const periodRows=RAW.redemption.filter(redemptionInPeriod);
   const productList=[...new Set(RAW.redemption.map(r=>r.product))];
   const priceOf=p=>{const r=RAW.redemption.find(x=>x.product===p);return r?r.unitPrice:0;};
+  const preferredOrder=['หนึ่ง','แพร','ป้าย','แอ๋ม','แอปเปิ้ล','เกอร์','อชิ','น้ำฝน','เดียร์'];
   const rows=names.map(name=>{
     const rs=periodRows.filter(r=>r.employee===name);
-    const rev=sum(rs.map(r=>r.unitPrice*r.units)),totalUnits=sum(rs.map(r=>r.units));
+    const reported=rs.map(r=>r.reportedRevenue).filter(v=>Number.isFinite(v));
+    const rev=reported.length?sum(reported):sum(rs.map(r=>r.unitPrice*r.units)),totalUnits=sum(rs.map(r=>r.units));
     const u=productList.map(p=>sum(rs.filter(r=>r.product===p).map(r=>r.units)));
     return{name,u,rev,totalUnits};
-  }).sort((a,b)=>b.totalUnits-a.totalUnits||b.rev-a.rev);
+  }).filter(r=>r.totalUnits>0).sort((a,b)=>b.totalUnits-a.totalUnits||(preferredOrder.indexOf(a.name)-preferredOrder.indexOf(b.name))||b.rev-a.rev);
   const gRev=sum(rows.map(r=>r.rev)),gU=sum(rows.map(r=>r.totalUnits));
   const relevantRows=STATE.empB==='all'?periodRows:periodRows.filter(r=>r.employee===STATE.empB);
   const perProduct=productList.map((p,pi)=>({name:p,icon:['☕','🌸','💧','🧴','✨'][pi%5],color:['#f59e0b','#8b5cf6','#06b6d4','#10b981','#f43f5e'][pi%5],price:priceOf(p),units:sum(relevantRows.filter(r=>r.product===p).map(r=>r.units))}));
@@ -4376,15 +4409,23 @@ function renderMonthly(){
 function renderRedemption(){
   const rd=computeRedemption();
   renderHeaderStats();
+  const monthNames=['','มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+  const years=[...new Set(RAW.redemption.map(r=>r.reportY))].sort((a,b)=>b-a);
+  const months=[...new Set(RAW.redemption.filter(r=>+r.reportY===+REDEMPTION_PERIOD.year).map(r=>r.reportMo))].sort((a,b)=>a-b);
+  document.getElementById('rdYearFilter').innerHTML=years.map(y=>`<option value="${y}" ${+REDEMPTION_PERIOD.year===+y?'selected':''}>พ.ศ. ${+y+543}</option>`).join('');
+  document.getElementById('rdMonthFilter').innerHTML=months.map(m=>`<option value="${m}" ${+REDEMPTION_PERIOD.month===+m?'selected':''}>${monthNames[m]}</option>`).join('');
+  document.getElementById('rdFilterNote').textContent=`กำลังแสดงข้อมูล ${monthNames[+REDEMPTION_PERIOD.month]} ${+REDEMPTION_PERIOD.year+543}`;
   const ke=document.getElementById('rd-kpi');ke.innerHTML='';
+  const topProduct=[...rd.perProduct].sort((a,b)=>b.units-a.units)[0];
   [{ic:'📦',l:'ออเดอร์รวม',v:`${fmtN(rd.gU)} ชิ้น`,s:`${rd.rows.length} พนักงาน · ${rd.products.length} สินค้า`,c:'#d97706',g:'#d97706,#f59e0b'},
    {ic:'💰',l:'ยอดเงินรวม',v:fmtB(rd.gRev),s:'ตามช่วงที่เลือก',c:'#059669',g:'#10b981,#059669'},
-   {ic:'🧴',l:'สินค้าอันดับ 1',v:'สเปรย์ 1 แถม 1',s:'81 ชิ้น · 26.82% ของทั้งหมด',c:'#7c3aed',g:'#8b5cf6,#ec4899'},
+   {ic:'🧴',l:'สินค้าอันดับ 1',v:topProduct?topProduct.name:'—',s:topProduct?`${topProduct.units} ชิ้น · ${(rd.gU?topProduct.units/rd.gU*100:0).toFixed(2)}% ของทั้งหมด`:'',c:'#7c3aed',g:'#8b5cf6,#ec4899'},
    {ic:'🏆',l:'Top',v:rd.top?rd.top.name:'—',s:rd.top?`${fmtB(rd.top.rev)} · ${rd.top.totalUnits} ชิ้น`:'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>rd.top&&setEmpBFilter(STATE.empB===rd.top.name?'all':rd.top.name)},
   ].forEach(k=>ke.appendChild(kpiCard(k)));
   // Daily Cross Sale summary
+  const dailyRows=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?SEED_CROSS_SALE_DAILY_AUG:SEED_CROSS_SALE_DAILY;
   const dailyTbl=document.getElementById('rd-daily');
-  dailyTbl.innerHTML=`<thead><tr><th>วันที่</th><th>จำนวน</th><th>สะสม</th><th>ค่าเฉลี่ยต่อ<br>พนักงาน</th><th>เทียบวันก่อน</th><th>สถานะ</th></tr></thead><tbody>${SEED_CROSS_SALE_DAILY.map(r=>{
+  dailyTbl.innerHTML=`<thead><tr><th>วันที่</th><th>จำนวน</th><th>สะสม</th><th>ค่าเฉลี่ยต่อ<br>พนักงาน</th><th>เทียบวันก่อน</th><th>สถานะ</th></tr></thead><tbody>${dailyRows.map(r=>{
     const has=Number.isFinite(r.qty), high=r.status==='ยอดสูง';
     const change=has?(r.change>0?'+'+r.change:String(r.change)):'';
     return `<tr><td class="rd-date">${r.date}</td><td style="font-weight:900;color:${has?'#d97706':'var(--muted)'}">${has?r.qty:'—'}</td><td style="font-weight:${has?'800':'600'}">${has?r.cumulative:'—'}</td><td>${has?r.avg.toFixed(2):'—'}</td><td style="font-weight:900;color:${!has?'var(--muted)':r.change>0?'#059669':r.change<0?'#dc2626':'#64748b'}">${change||'—'}</td><td><span class="rd-status ${!has?'wait':high?'high':'normal'}">${has?r.status:'รอข้อมูล'}</span></td></tr>`;
@@ -4401,20 +4442,20 @@ function renderRedemption(){
     el.innerHTML=`<div class="lb-rk">${r<3?MED[r]:r+1}</div><div class="lb-nm">${s.name}</div><div class="lb-bw"><div class="lb-bf" style="width:${w}%;background:linear-gradient(90deg,#f43f5e,#f59e0b)"></div></div><div class="lb-rv">${fmtB(s.rev)}</div><div class="lb-pp">${s.totalUnits}ชิ้น</div>`;
     lb.appendChild(el);
   });
-  const brandCross=[
+  const brandCross=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?[
+    {name:'HEAVEN Plus',qty:3,share:4.84,color:'#3b82f6'},
+    {name:'Thelord',qty:9,share:14.52,color:'#ef4444'},
+    {name:'WOLF',qty:36,share:58.06,color:'#8b5cf6'},
+    {name:'เจ้าขุน',qty:14,share:22.58,color:'#f59e0b'}
+  ]:[
     {name:'HEAVEN Plus',qty:43,share:14.24,color:'#3b82f6'},
     {name:'Thelord',qty:62,share:20.53,color:'#ef4444'},
     {name:'WOLF',qty:162,share:53.64,color:'#8b5cf6'},
     {name:'เจ้าขุน',qty:35,share:11.59,color:'#f59e0b'}
   ];
+  document.getElementById('rd-brand-cross-sub').textContent=`จำนวนและสัดส่วนจาก Cross Sale รวม ${fmtN(sum(brandCross.map(x=>x.qty)))} รายการ`;
   mkChart('rdBrandCross',{type:'bar',data:{labels:brandCross.map(x=>x.name),datasets:[{label:'จำนวน Cross Sale',data:brandCross.map(x=>x.qty),backgroundColor:brandCross.map(x=>x.color+'dd'),borderColor:brandCross.map(x=>x.color),borderWidth:2,borderRadius:9}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const x=brandCross[c.dataIndex];return ` ${x.qty} รายการ · ${x.share.toFixed(2)}%`;}}}},scales:{x:{grid:{display:false},ticks:{font:{size:11,weight:'bold'}}},y:{beginAtZero:true,grid:{color:GR},ticks:{font:{weight:'bold'}}}}}});
-  const topProducts=[
-    {name:'สเปรย์ 1 แถม 1',qty:81,share:26.82,revenue:10449},
-    {name:'น้ำหอมพลัส',qty:77,share:25.50,revenue:7700},
-    {name:'กาแฟเจ้าขุน',qty:60,share:19.87,revenue:9000},
-    {name:'สบู่+เจล',qty:49,share:16.23,revenue:4900},
-    {name:'ห่วงรัด',qty:35,share:11.59,revenue:5250}
-  ];
+  const topProducts=[...rd.perProduct].sort((a,b)=>b.units-a.units).map(p=>({name:p.name,qty:p.units,share:rd.gU?p.units/rd.gU*100:0,revenue:p.units*p.price}));
   document.getElementById('rd-top5').innerHTML=`<thead><tr><th>อันดับ</th><th>สินค้า</th><th>จำนวน</th><th>สัดส่วน</th><th>ยอดขาย (บาท)</th></tr></thead><tbody>${topProducts.map((p,i)=>`<tr><td>${MED[i]||i+1}</td><td class="rd-top5-name">${p.name}</td><td>${p.qty}</td><td><span class="rd-top5-share">${p.share.toFixed(2)}%</span></td><td>${p.revenue.toLocaleString('th-TH')}</td></tr>`).join('')}</tbody>`;
   // Unit table
   const tbl=document.getElementById('rd-tbl');
