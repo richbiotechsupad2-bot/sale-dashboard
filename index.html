@@ -2004,17 +2004,17 @@ const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.',
 const EMPLOYEE_DAILY_REPORTS={
   '2026-08':{
     year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–29/07/2026',days:31,orderTarget:100,revenueTarget:28316,
-    totalOrders:2281,totalSales:714686,orderPassPct:36.00,salesPassPct:44.00,
+    totalOrders:2981,totalSales:926136,orderPassPct:36.00,salesPassPct:44.00,
     employees:[
-      {name:'Namfon',orders:141,sales:40018,orderPass:0,orderFail:3,salesPass:0,salesFail:3},
-      {name:'Pear',orders:310,sales:93396,orderPass:2,orderFail:1,salesPass:2,salesFail:1},
-      {name:'Nueng',orders:297,sales:98331,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
-      {name:'Apple',orders:287,sales:81935,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
-      {name:'Tiger',orders:275,sales:84862,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
-      {name:'Pay',orders:178,sales:57252,orderPass:0,orderFail:2,salesPass:1,salesFail:1},
-      {name:'Amm',orders:349,sales:115962,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
-      {name:'Deer',orders:166,sales:50778,orderPass:0,orderFail:2,salesPass:1,salesFail:1},
-      {name:'Achi',orders:278,sales:92152,orderPass:1,orderFail:2,salesPass:1,salesFail:2}
+      {name:'Namfon',orders:168,sales:48711,orderPass:0,orderFail:3,salesPass:0,salesFail:3},
+      {name:'Pear',orders:400,sales:124836,orderPass:2,orderFail:1,salesPass:2,salesFail:1},
+      {name:'Nueng',orders:393,sales:123621,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
+      {name:'Apple',orders:353,sales:99241,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
+      {name:'Tiger',orders:382,sales:118205,orderPass:1,orderFail:2,salesPass:1,salesFail:2},
+      {name:'Pay',orders:271,sales:92542,orderPass:0,orderFail:2,salesPass:1,salesFail:1},
+      {name:'Amm',orders:423,sales:133925,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Deer',orders:238,sales:69118,orderPass:0,orderFail:2,salesPass:1,salesFail:1},
+      {name:'Achi',orders:353,sales:115937,orderPass:1,orderFail:2,salesPass:1,salesFail:2}
     ]
   },
   '2026-07':{
@@ -2142,10 +2142,10 @@ const SEED_SALES=(function(){
   /* รอบรายงานเดือนสิงหาคม 2569: ข้อมูลสะสม 26/07/2026–29/07/2026
      บันทึกเป็นยอดสะสมรายพนักงานแยกแบรนด์ตามรายงานต้นฉบับ */
   const augustEmpBrand={
-    hv:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[16,39,43,16,8,24,19,11,34],r:[10294,20421,11197,9024,3982,8026,9811,3979,13786]},
-    tl:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[88,89,83,42,41,79,35,116,78],r:[29072,28871,25656,11088,13428,28110,10694,34024,26112]},
-    wolf:{staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[142,154,126,83,92,153,105,158,134],r:[40668,40225,32703,20417,22208,45116,28715,43940,33506]},
-    jk:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[31,66,35,24,0,41,16,21,28],r:[11700,24900,12550,9750,0,15800,6700,9050,10350]},
+    hv:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[21,43,44,40,11,25,29,31,39],r:[13449,22207,11396,16250,5379,8555,16981,11209,16901]},
+    tl:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[118,120,103,51,52,101,63,151,122],r:[37950,37010,30026,12879,16397,34657,20556,47078,38158]},
+    wolf:{staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[181,191,160,121,105,210,145,179,174],r:[52138,48758,41419,29539,26935,58409,41155,50649,44196]},
+    jk:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[33,69,46,26,0,57,34,39,47],r:[12400,25950,16400,10450,0,22000,13850,15900,18950]},
   };
   Object.keys(augustEmpBrand).forEach(bk=>{const g=augustEmpBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-08-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
   return rows;
