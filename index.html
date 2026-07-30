@@ -3950,8 +3950,8 @@ function computeRedemption(){
   const allNames=[...new Set(RAW.redemption.map(r=>r.employee))].filter(Boolean).sort();
   const names=STATE.empB==='all'?allNames:allNames.filter(n=>n===STATE.empB);
   const periodRows=RAW.redemption.filter(redemptionInPeriod);
-  const productList=[...new Set(RAW.redemption.map(r=>r.product))];
-  const priceOf=p=>{const r=RAW.redemption.find(x=>x.product===p);return r?r.unitPrice:0;};
+  const productList=[...new Set(periodRows.map(r=>r.product))];
+  const priceOf=p=>{const r=periodRows.find(x=>x.product===p);return r?r.unitPrice:0;};
   const preferredOrder=['หนึ่ง','แพร','ป้าย','แอ๋ม','แอปเปิ้ล','เกอร์','อชิ','น้ำฝน','เดียร์'];
   const rows=names.map(name=>{
     const rs=periodRows.filter(r=>r.employee===name);
