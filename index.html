@@ -4560,13 +4560,29 @@ function renderLeaderboard(){
   renderExecutiveToolbar('leaderboard-toolbar');
   const leaderboardRange=currentDailyReportRange();
   document.getElementById('leaderboardReportPeriod').textContent=leaderboardRange?`รอบรายงาน ${leaderboardRange}`:'ข้อมูลรวมตามตัวกรอง';
-  const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption();
+  const so=computeSO(),selectedGP=computeGP(),dly=computeDaily(),rd=computeRedemption();
+  let gp=selectedGP,gpPeriodLabel=executivePeriodLabel();
+  if(!gp.rows.some(r=>r.avgGP!=null)&&RAW.gp.length){
+    const brandKeys=new Set((STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)]).map(b=>b.k));
+    const available=RAW.gp.filter(r=>brandKeys.has(r.brand)&&(STATE.empB==='all'||r.employee===STATE.empB));
+    const latestKey=available.map(r=>`${r.y}-${String(r.mo).padStart(2,'0')}`).sort().pop();
+    if(latestKey){
+      const [latestYear,latestMonth]=latestKey.split('-').map(Number);
+      const latestRows=available.filter(r=>r.y===latestYear&&r.mo===latestMonth);
+      const names=[...new Set(latestRows.map(r=>r.employee))].filter(Boolean).sort();
+      gp={...selectedGP,rows:names.map(name=>{
+        const vals=latestRows.filter(r=>r.employee===name).map(r=>r.gpPercent);
+        return{name,avgGP:vals.length?avg(vals):null};
+      })};
+      gpPeriodLabel=`${MONTH_TH[latestMonth]} ปี ${latestYear+543}`;
+    }
+  }
   const topSales=so.sortRev[0],topGP=[...gp.rows].filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP)[0],topRedemption=rd.rows[0];
   document.getElementById('lb-summary').innerHTML=[
-    {l:'ผู้นำยอดขาย',v:topSales?(EMP_ALIAS[topSales.name]||topSales.name):'—',s:topSales?fmtB(topSales.rev):'ไม่มีข้อมูล'},
-    {l:'ผู้นำ GP% เฉลี่ย',v:topGP?topGP.name:'—',s:topGP?fmtPct(topGP.avgGP,1):'ไม่มีข้อมูล'},
-    {l:'ผู้นำสิทธิ์แลกซื้อ',v:topRedemption?topRedemption.name:'—',s:topRedemption?`${fmtB(topRedemption.rev)} · ${fmtN(topRedemption.totalUnits)} ชิ้น`:'ไม่มีข้อมูล'}
-  ].map(x=>`<div class="lb-summary-card"><small>${x.l} · ${executivePeriodLabel()}</small><b>${x.v}</b><span>${x.s}</span></div>`).join('');
+    {l:'ผู้นำยอดขาย',p:executivePeriodLabel(),v:topSales?(EMP_ALIAS[topSales.name]||topSales.name):'—',s:topSales?fmtB(topSales.rev):'ไม่มีข้อมูล'},
+    {l:'ผู้นำ GP% เฉลี่ย',p:gpPeriodLabel,v:topGP?topGP.name:'—',s:topGP?fmtPct(topGP.avgGP,1):'ไม่มีข้อมูล'},
+    {l:'ผู้นำสิทธิ์แลกซื้อ',p:executivePeriodLabel(),v:topRedemption?topRedemption.name:'—',s:topRedemption?`${fmtB(topRedemption.rev)} · ${fmtN(topRedemption.totalUnits)} ชิ้น`:'ไม่มีข้อมูล'}
+  ].map(x=>`<div class="lb-summary-card"><small>${x.l} · ${x.p}</small><b>${x.v}</b><span>${x.s}</span></div>`).join('');
   // Top Sales
   const es=document.getElementById('lbh-sales');es.innerHTML='';
   so.sortRev.forEach((s,r)=>es.appendChild(lbRow(r,EMP_ALIAS[s.name]||s.name,fmtBK(s.rev),so.sortRev[0]&&so.sortRev[0].rev?s.rev/so.sortRev[0].rev*100:0,'#06b6d4,#10b981',()=>setEmpAFilter(STATE.empA===s.name?'all':s.name))));
