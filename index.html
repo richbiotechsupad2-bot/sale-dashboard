@@ -4618,11 +4618,19 @@ function renderLeaderboard(){
 function renderDashboard(){
   renderHeaderStats();
   renderExecutiveToolbar('dashboard-toolbar');
-  const dashboardReportPeriods={'2026-08':'26/07/2026–29/07/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
+  const dashboardReportPeriods={'2026-08':'26/07/2026–30/07/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
   const dashboardPeriodKey=STATE.year!=='all'&&STATE.month!=='all'?`${STATE.year}-${String(STATE.month).padStart(2,'0')}`:'';
   const dashboardRange=dashboardReportPeriods[dashboardPeriodKey]||'';
   document.getElementById('hubReportPeriod').textContent=dashboardRange?`รอบรายงาน ${dashboardRange}`:'ข้อมูลรวมตามตัวกรอง';
-  const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly(),brandRank=brandAchievementRanking();
+  const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly();
+  const monthlySnapshot=(typeof MONTHLY_FORECAST_DATA!=='undefined'&&MONTHLY_FORECAST_DATA[dashboardPeriodKey])||null;
+  const monthlyTarget=monthlySnapshot?sum(monthlySnapshot.brands.map(b=>b.target)):m.totalMonthTarget;
+  const monthlyActual=monthlySnapshot?monthlySnapshot.summaryActual:m.cumulativeActual;
+  const monthlyAchievedPct=monthlyTarget?monthlyActual/monthlyTarget*100:0;
+  const brandRank=monthlySnapshot
+    ? monthlySnapshot.brands.map(x=>({b:brandOf(x.key),pct:x.target?x.actual/x.target*100:0})).sort((a,b)=>b.pct-a.pct)
+    : brandAchievementRanking();
+  const dailyReport=(typeof EMPLOYEE_DAILY_REPORTS!=='undefined'&&EMPLOYEE_DAILY_REPORTS[dashboardPeriodKey])||null;
   const best=so.sortRev[0],worst=so.sortRev[so.sortRev.length-1];
   const bestBrand=brandRank[0],worstBrand=brandRank[brandRank.length-1];
   const topGP=[...gp.rows].filter(r=>r.avgGP!=null).sort((a,b)=>b.avgGP-a.avgGP)[0]||null;
@@ -4632,7 +4640,7 @@ function renderDashboard(){
     {ic:'💰',l:'ยอดขายรวม',v:fmtBM(so.totalRev),s:fmtB(so.totalRev)+' ทั้งทีม',c:'#059669',g:'#10b981,#059669'},
     {ic:'📦',l:'ออเดอร์รวม',v:fmtN(so.totalOrd),s:'เฉลี่ย '+fmtB(so.avgOrderValue)+' / ออเดอร์',c:'#d97706',g:'#f59e0b,#ea580c'},
     {ic:'🧾',l:'ยอดเฉลี่ยต่อบิล',v:fmtB(so.avgOrderValue),s:'คำนวณจากยอดขาย ÷ ออเดอร์',c:'#0891b2',g:'#06b6d4,#2563eb'},
-    {ic:'🎯',l:'บรรลุเป้าหมาย',v:fmtPct(m.achievedPct,1),s:m.gap>0?'ยังขาด '+fmtB(m.gap):'เกินเป้า '+fmtB(Math.abs(m.gap)),c:m.gap>0?'#e11d48':'#059669',g:m.gap>0?'#f43f5e,#e11d48':'#10b981,#059669'},
+    {ic:'🎯',l:'บรรลุเป้าหมาย',v:fmtPct(monthlyAchievedPct,2),s:'เทียบเป้า '+fmtB(monthlyTarget),c:monthlyActual<monthlyTarget?'#e11d48':'#059669',g:monthlyActual<monthlyTarget?'#f43f5e,#e11d48':'#10b981,#059669'},
   ].forEach(k=>ke.appendChild(kpiCard(k)));
 
   const spotlight=document.getElementById('ex-spotlight');
@@ -4667,7 +4675,9 @@ function renderDashboard(){
   // Data Storytelling — สรุปข้อความอัตโนมัติจากค่าที่คำนวณจริง
   const story=document.getElementById('ex-story');
   const wowTxt=m.wow?`ยอดขายสัปดาห์ล่าสุดเทียบสัปดาห์ก่อนหน้า ${m.wow.pct>=0?'<span class="g">เพิ่มขึ้น '+m.wow.pct.toFixed(1)+'%</span>':'<span class="r">ลดลง '+Math.abs(m.wow.pct).toFixed(1)+'%</span>'} (avg ${fmtB(m.wow.lastAvg)}/วัน เทียบ ${fmtB(m.wow.prevAvg)}/วัน)`:'ข้อมูลยังไม่พอสำหรับเปรียบเทียบสัปดาห์ต่อสัปดาห์ (ต้องการอย่างน้อย 8 วัน)';
-  const progressTxt=m.isSingleMonth
+  const progressTxt=monthlySnapshot
+    ? `ยอดสะสม <b>${fmtB(monthlyActual)}</b> จากเป้า <b>${fmtB(monthlyTarget)}</b> บรรลุแล้ว <b>${fmtPct(monthlyAchievedPct,2)}</b> ยังขาด <b>${fmtB(Math.max(0,monthlyTarget-monthlyActual))}</b>`
+    : m.isSingleMonth
     ? `ขณะนี้บรรลุเป้าเดือนแล้ว <b>${fmtPct(m.achievedPct,2)}</b> จาก ${m.N}/${m.daysInScopeMonth} วัน ${m.remainingDays>0?`เหลือ ${m.remainingDays} วัน ต้องทำยอดเฉลี่ย <b>${fmtB(m.requiredDailyRemaining)}/วัน</b> (${m.requiredIncreasePct>=0?'เพิ่มขึ้น':'ลดลง'} ${fmtPct(Math.abs(m.requiredIncreasePct),1)} จากค่าเฉลี่ยปัจจุบัน) จึงจะถึงเป้า`:'ครบกำหนดเดือนแล้ว'}`
     : `บรรลุเป้าภาพรวมช่วงที่เลือกแล้ว <b>${fmtPct(m.achievedPct,2)}</b> จากข้อมูล ${m.monthlyTrend.length} เดือน (เลือกเจาะจง 1 เดือน เพื่อดูพยากรณ์สิ้นเดือนแบบละเอียด)`;
   story.innerHTML=`<div class="story-grid">
@@ -4716,11 +4726,11 @@ function renderDashboard(){
   const assignedOwners=[...new Set(assignedRows.map(r=>r[0]).filter(Boolean))];
   const menuCards=[
     {c:'#2563eb',ic:'🏅',t:'Leaderboard',body:`ผู้นำยอดขาย <b>${best?best.name:'—'}</b><br>${best?fmtB(best.rev)+' · '+fmtN(best.ord)+' ออเดอร์':'ยังไม่มีข้อมูล'}`},
-    {c:'#7c3aed',ic:'📊',t:'Brand Performance',body:`แบรนด์บรรลุเป้าดีสุด <b>${bestBrand?bestBrand.b.lb:'—'}</b><br>${bestBrand?fmtPct(bestBrand.pct,1)+' ของเป้าหมาย':'ยังไม่มีข้อมูล'}`},
+    {c:'#7c3aed',ic:'📊',t:'Brand Performance',body:`แบรนด์ยอดขายสูงสุด <b>${topProduct?topProduct.b.lb:'—'}</b><br>${topProduct?fmtB(topProduct.r)+' · '+fmtPct(topProduct.pct,1)+' ของยอดทีม':'ยังไม่มีข้อมูล'}`},
     {c:'#e11d48',ic:'📈',t:'Performance (GP%)',body:`Top GP% <b>${topGP?topGP.name:'—'}</b><br>${topGP?fmtPct(topGP.avgGP,1)+' GP% เฉลี่ย':'ยังไม่มีข้อมูล'}`},
     {c:'#0284c7',ic:'💰',t:'Sales & Orders',body:`ยอดขายรวม <b>${fmtB(so.totalRev)}</b><br>${fmtN(so.totalOrd)} ออเดอร์ · เฉลี่ย ${fmtB(so.avgOrderValue)} / ออเดอร์`},
-    {c:'#0891b2',ic:'🎯',t:'Daily Target',body:dly.rows.length?`อัตราผ่านเป้าออเดอร์สูงสุด <b>${[...dly.rows].sort((a,b)=>b.pco-a.pco)[0].n}</b><br>${fmtPct([...dly.rows].sort((a,b)=>b.pco-a.pco)[0].pco,1)}`:'ยังไม่มีข้อมูล'},
-    {c:'#d97706',ic:'📅',t:'Monthly Overview',body:`บรรลุเป้ารวม <b>${fmtPct(m.achievedPct,1)}</b><br>${m.gap>0?'ยังขาด '+fmtB(m.gap):'เกินเป้า '+fmtB(Math.abs(m.gap))}`},
+    {c:'#0891b2',ic:'🎯',t:'Daily Target',body:dailyReport?`<b>${fmtN(dailyReport.totalOrders)} ออเดอร์ · ${fmtB(dailyReport.totalSales)}</b><br>ผ่านออเดอร์ ${fmtPct(dailyReport.orderPassPct,2)} · ผ่านยอดขาย ${fmtPct(dailyReport.salesPassPct,2)}`:'ยังไม่มีข้อมูล'},
+    {c:'#d97706',ic:'📅',t:'Monthly Overview',body:`บรรลุเป้ารวม <b>${fmtPct(monthlyAchievedPct,2)}</b><br>ยอดจริง ${fmtB(monthlyActual)} · เป้า ${fmtB(monthlyTarget)}`},
     {c:'#f59e0b',ic:'🎁',t:'Redemption',body:rd.top?`พนักงานอันดับ 1 <b>${rd.top.name}</b><br>${fmtN(rd.top.totalUnits)} ชิ้น · ${fmtB(rd.top.rev)}`:'ยังไม่มีข้อมูล'},
     {c:'#ea580c',ic:'🏷️',t:'Products & Promotions',body:`<b>4 แบรนด์ · 29 โปรโมชั่นหลัก</b><br>สิทธิ์แลกซื้อ 5 รายการ · SKU ส่งเสริม 11 รหัส`},
     {c:'#0f766e',ic:'👤',t:'Accounts & Pages',body:accountRows.length?`<b>${accountNames.length}</b> บัญชี · มีเพจ <span class="good">${accountHave}</span><br>ยังไม่มีเพจ <span class="${accountMissing?'warn':'good'}">${accountMissing}</span>`:'ยังไม่มีข้อมูลบัญชีและเพจ'},
