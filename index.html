@@ -2035,18 +2035,18 @@ const DATA = {
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 const EMPLOYEE_DAILY_REPORTS={
   '2026-08':{
-    year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–29/07/2026',days:31,orderTarget:100,revenueTarget:28316,
-    totalOrders:2996,totalSales:938042,orderPassPct:36.00,salesPassPct:44.00,
+    year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–30/07/2026',days:31,orderTarget:100,revenueTarget:28316,
+    totalOrders:3740,totalSales:1185461,orderPassPct:32.56,salesPassPct:46.51,
     employees:[
-      {name:'Namfon',orders:168,sales:49340,orderPass:0,orderFail:4,salesPass:0,salesFail:4},
-      {name:'Pear',orders:406,sales:127517,orderPass:2,orderFail:2,salesPass:3,salesFail:1},
-      {name:'Nueng',orders:393,sales:125679,orderPass:1,orderFail:3,salesPass:2,salesFail:2},
-      {name:'Apple',orders:353,sales:99220,orderPass:2,orderFail:2,salesPass:1,salesFail:3},
-      {name:'Tiger',orders:383,sales:119821,orderPass:2,orderFail:2,salesPass:2,salesFail:2},
-      {name:'Pay',orders:274,sales:94474,orderPass:0,orderFail:3,salesPass:2,salesFail:1},
-      {name:'Amm',orders:424,sales:135570,orderPass:3,orderFail:1,salesPass:3,salesFail:1},
-      {name:'Deer',orders:240,sales:69916,orderPass:0,orderFail:3,salesPass:1,salesFail:2},
-      {name:'Achi',orders:355,sales:116505,orderPass:1,orderFail:3,salesPass:1,salesFail:3}
+      {name:'Namfon',orders:202,sales:62216,orderPass:0,orderFail:5,salesPass:0,salesFail:5},
+      {name:'Pear',orders:509,sales:156026,orderPass:3,orderFail:2,salesPass:4,salesFail:1},
+      {name:'Nueng',orders:503,sales:161984,orderPass:2,orderFail:3,salesPass:3,salesFail:2},
+      {name:'Apple',orders:463,sales:139753,orderPass:3,orderFail:2,salesPass:2,salesFail:3},
+      {name:'Tiger',orders:449,sales:142397,orderPass:2,orderFail:3,salesPass:2,salesFail:3},
+      {name:'Pay',orders:350,sales:118109,orderPass:0,orderFail:4,salesPass:2,salesFail:2},
+      {name:'Amm',orders:487,sales:156516,orderPass:3,orderFail:2,salesPass:3,salesFail:2},
+      {name:'Deer',orders:325,sales:98348,orderPass:0,orderFail:4,salesPass:2,salesFail:2},
+      {name:'Achi',orders:452,sales:150112,orderPass:1,orderFail:4,salesPass:2,salesFail:3}
     ]
   },
   '2026-07':{
@@ -2964,7 +2964,7 @@ function renderEmployeeDaily(){
     ['💰','ยอดขายรวม',fmtB(r.totalSales),`เฉลี่ย ${fmtB(avgSales)}/คน`,'#db2777'],
     ['✅','ผ่านเป้าออเดอร์',fmtPct(r.orderPassPct,2),`เป้า ${fmtN(r.orderTarget)} ออเดอร์/วัน`,'#0891b2'],
     ['🌟','ผ่านเป้ายอดขาย',fmtPct(r.salesPassPct,2),`เป้า ${fmtB(r.revenueTarget)}/วัน`,'#059669'],
-    ['👥','ทีมงาน',`${r.employees.length} คน`,`รวม ${fmtN(activeDays)} วันทำงาน`,'#f97316']
+    ['👥','ทีมงาน',`${r.employees.length} คน`,`รวม ${Math.max(...r.employees.map(e=>e.orderPass+e.orderFail))} วันทำงาน`,'#f97316']
   ];
   document.getElementById('edKpis').innerHTML=kpis.map(k=>`<div class="ed-kpi" style="--ec:${k[4]}"><div class="ed-kpi-ic">${k[0]}</div><span>${k[1]}</span><b>${k[2]}</b><small>${k[3]}</small></div>`).join('');
   const topSales=[...r.employees].sort((a,b)=>b.sales-a.sales)[0],topOrder=[...r.employees].sort((a,b)=>b.orders-a.orders)[0];
