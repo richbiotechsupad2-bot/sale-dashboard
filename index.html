@@ -4711,6 +4711,7 @@ function renderDashboard(){
   const accountNames=[...new Set(accountRows.map(r=>r.account).filter(Boolean))];
   const accountHave=accountRows.filter(r=>r.status==='มีเพจ').length;
   const accountMissing=accountRows.filter(r=>r.status==='ยังไม่มีเพจ').length;
+  if(typeof loadOrgData==='function'&&typeof ORG_DATA!=='undefined'&&!Object.keys(ORG_DATA).length)loadOrgData();
   const latestOrg=(typeof ORG_DATA!=='undefined'&&(ORG_DATA['2026-08']||[]))||[];
   const activeOrg=latestOrg.filter(p=>p.status!=='inactive');
   const holidayPeriod=(typeof HOLIDAY_PERIODS!=='undefined'&&HOLIDAY_PERIODS['2026-08'])||null;
@@ -4735,7 +4736,7 @@ function renderDashboard(){
     {c:'#ea580c',ic:'🏷️',t:'Products & Promotions',body:`<b>4 แบรนด์ · 29 โปรโมชั่นหลัก</b><br>สิทธิ์แลกซื้อ 5 รายการ · SKU ส่งเสริม 11 รหัส`},
     {c:'#0f766e',ic:'👤',t:'Accounts & Pages',body:accountRows.length?`<b>${accountNames.length}</b> บัญชี · มีเพจ <span class="good">${accountHave}</span><br>ยังไม่มีเพจ <span class="${accountMissing?'warn':'good'}">${accountMissing}</span>`:'ยังไม่มีข้อมูลบัญชีและเพจ'},
     {c:'#4338ca',ic:'📚',t:'Data Summary',body:`<b>69 เพจ · 8 ช่องทางอื่น</b><br>รวมทั้งหมด 77 ช่องทาง · เจ้าขุน 6 เพจ`},
-    {c:'#059669',ic:'👥',t:'Admin SA2',body:activeOrg.length?`ข้อมูลเดือน <b>สิงหาคม 2569</b><br>พนักงาน Active ${activeOrg.length} คน · WFH ${activeOrg.filter(p=>p.shift==='wfh'||p.role==='WFH').length} คน`:'ยังไม่มีข้อมูลเดือนสิงหาคม'},
+    {c:'#059669',ic:'👥',t:'Admin SA2',body:activeOrg.length?`Supervisor <b>${activeOrg.filter(p=>p.role==='Supervisor').length}</b> · Lead <b>${activeOrg.filter(p=>p.role==='Lead').length}</b> · Admin <b>${activeOrg.filter(p=>p.role==='Admin').length}</b><br>WFH <b>${activeOrg.filter(p=>p.shift==='wfh'||p.role==='WFH').length}</b> · พนักงานทั้งหมด <b>${activeOrg.length} คน</b>`:'ยังไม่มีข้อมูลเดือนสิงหาคม'},
     {c:'#db2777',ic:'🏖️',t:'Holiday',body:holidayPeriod&&minStaff?`รอบ <b>${holidayPeriod.range}</b><br>กำลังคนน้อยสุด ${minStaff.working} คน · หยุด/ลา ${minStaff.off} คน`:'ยังไม่มีข้อมูลวันหยุดเดือนสิงหาคม'},
     {c:'#9333ea',ic:'🗂️',t:'Assigned Tasks',body:assignedRows.length?`บันทึก <b>${assignedRows.length} งาน</b> · สำเร็จ <span class="good">${assignedDone}</span><br>ผู้รับผิดชอบ ${assignedOwners.length} คน`:'ยังไม่มีข้อมูลงาน'},
     {c:'#dc2626',ic:'🧠',t:'Insight',body:`ควรรักษา <b>${best?best.name:'ผู้นำทีม'}</b><br>ควรเร่ง ${worstBrand?worstBrand.b.lb:'แบรนด์ที่ต่ำกว่าเป้า'} · ${worstBrand?fmtPct(worstBrand.pct,1)+' ของเป้า':'รอข้อมูล'}`}
@@ -4765,6 +4766,7 @@ function renderInsight(){
   const accountBrandCounts=['HEAVEN Plus','The Lord','WOLF+','เจ้าขุน'].map(name=>({
     name,count:new Set(accountRows.filter(r=>r.brand===name&&r.page).map(r=>r.page)).size
   }));
+  if(typeof loadOrgData==='function'&&typeof ORG_DATA!=='undefined'&&!Object.keys(ORG_DATA).length)loadOrgData();
   const latestOrg=(typeof ORG_DATA!=='undefined'&&(ORG_DATA['2026-08']||[]))||[];
   const activeOrg=latestOrg.filter(p=>p.status!=='inactive');
   const orgMorning=activeOrg.filter(p=>p.shift==='morning').length;
@@ -4865,7 +4867,7 @@ function renderInsight(){
 
   // 12) Admin SA2
   grid.appendChild(icard('Admin SA2 — กำลังคนล่าสุด','👥',
-    activeOrg.length?`พนักงานสถานะ Active <b>${activeOrg.length} คน</b><br>กะเช้า ${orgMorning} · กะบ่าย ${orgAfternoon} · WFH ${orgWfh}<br>ข้อมูลอ้างอิงเดือน ส.ค. 2569`:
+    activeOrg.length?`Supervisor <b>${activeOrg.filter(p=>p.role==='Supervisor').length}</b> · Lead <b>${activeOrg.filter(p=>p.role==='Lead').length}</b> · Admin <b>${activeOrg.filter(p=>p.role==='Admin').length}</b><br>WFH <b>${orgWfh}</b> · พนักงานทั้งหมด <b>${activeOrg.length} คน</b><br>ข้อมูลอ้างอิงเดือน ส.ค. 2569`:
     `ยังไม่มีข้อมูลผังพนักงานเดือน ส.ค. 2569`));
 
   // 13) Holiday
