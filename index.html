@@ -1566,7 +1566,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <div class="ed-toolbar">
         <div class="ed-field"><label>📆 ปี พ.ศ.</label><select id="edYear" class="ed-select" onchange="renderEmployeeDaily()"></select></div>
         <div class="ed-field"><label>🗓️ เดือน</label><select id="edMonth" class="ed-select" onchange="renderEmployeeDaily()"></select></div>
-        <div class="ed-field search"><label>🔍 ค้นหาพนักงาน</label><input id="edSearch" class="ed-input" placeholder="พิมพ์ชื่อ เช่น Pear, Achi" oninput="renderEmployeeDaily()"></div>
+        <div class="ed-field search"><label>👤 เลือกพนักงาน</label><select id="edSearch" class="ed-select" onchange="renderEmployeeDaily()"><option value="all">พนักงานทั้งหมด</option></select></div>
         <div class="ed-field"><label>🏆 จัดอันดับตาม</label><select id="edSort" class="ed-select" onchange="renderEmployeeDaily()"><option value="sales">ยอดขายสูงสุด</option><option value="orders">ออเดอร์สูงสุด</option><option value="salesPass">ผ่านเป้ายอดขายสูงสุด</option><option value="orderPass">ผ่านเป้าออเดอร์สูงสุด</option><option value="name">ชื่อ A–Z</option></select></div>
         <button class="ed-reset" onclick="resetEmployeeDaily()">↻ ล้างตัวกรอง</button>
       </div>
@@ -2960,10 +2960,14 @@ function edReport(){
   const y=Number(document.getElementById('edYear').value),m=Number(document.getElementById('edMonth').value);
   return EMPLOYEE_DAILY_REPORTS[`${y}-${String(m).padStart(2,'0')}`];
 }
-function resetEmployeeDaily(){document.getElementById('edSearch').value='';document.getElementById('edSort').value='sales';renderEmployeeDaily()}
+function resetEmployeeDaily(){document.getElementById('edSearch').value='all';document.getElementById('edSort').value='sales';renderEmployeeDaily()}
 function selectEmployeeDaily(name){document.getElementById('edSearch').value=name;renderEmployeeDaily();document.getElementById('edPeople').scrollIntoView({behavior:'smooth',block:'center'})}
 function renderEmployeeDaily(){
   const r=edReport();if(!r)return;
+  const employeeSelect=document.getElementById('edSearch');
+  const selectedEmployee=employeeSelect.value||'all';
+  employeeSelect.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+r.employees.map(e=>`<option value="${e.name}">${e.name}</option>`).join('');
+  employeeSelect.value=r.employees.some(e=>e.name===selectedEmployee)?selectedEmployee:'all';
   document.getElementById('edPeriod').textContent=`รอบรายงาน ${r.range} · เป้า ${fmtN(r.orderTarget)} ออเดอร์ และ ${fmtN(r.revenueTarget)} บาท/วัน`;
   const activeDays=r.employees.reduce((s,e)=>s+e.orderPass+e.orderFail,0);
   const avgOrders=Math.round(r.totalOrders/r.employees.length),avgSales=Math.round(r.totalSales/r.employees.length);
@@ -2978,8 +2982,8 @@ function renderEmployeeDaily(){
   const topSales=[...r.employees].sort((a,b)=>b.sales-a.sales)[0],topOrder=[...r.employees].sort((a,b)=>b.orders-a.orders)[0];
   const weakest=[...r.employees].sort((a,b)=>(a.salesPass/(a.salesPass+a.salesFail))-(b.salesPass/(b.salesPass+b.salesFail)))[0];
   document.getElementById('edHighlights').innerHTML=`<div class="ed-winner"><strong>🏆 ผลงานเด่นประจำเดือน</strong><p><span class="big">${topSales.name}</span> ทำยอดขายสูงสุด ${fmtB(topSales.sales)} · ${topOrder.name} ทำออเดอร์สูงสุด ${fmtN(topOrder.orders)} ออเดอร์</p></div><div class="ed-focus"><strong>🎯 Executive Focus</strong><p><span class="big">${weakest.name}</span> มีอัตราผ่านเป้ายอดขายต่ำสุด ${fmtPct(weakest.salesPass/(weakest.salesPass+weakest.salesFail)*100,1)} ควรได้รับ Coaching เป็นลำดับแรก</p></div>`;
-  const q=(document.getElementById('edSearch').value||'').trim().toLowerCase(),sort=document.getElementById('edSort').value;
-  let rows=r.employees.filter(e=>!q||e.name.toLowerCase().includes(q));
+  const selectedName=document.getElementById('edSearch').value||'all',sort=document.getElementById('edSort').value;
+  let rows=r.employees.filter(e=>selectedName==='all'||e.name===selectedName);
   const sorters={sales:(a,b)=>b.sales-a.sales,orders:(a,b)=>b.orders-a.orders,salesPass:(a,b)=>b.salesPass-a.salesPass,orderPass:(a,b)=>b.orderPass-a.orderPass,name:(a,b)=>a.name.localeCompare(b.name)};
   rows=[...rows].sort(sorters[sort]||sorters.sales);
   document.getElementById('edPeople').innerHTML=rows.length?rows.map((e,i)=>{
