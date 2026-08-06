@@ -2204,6 +2204,13 @@ const SEED_GP=(function(){
       tl:[29.36,26.82,28.79,30.30,28.91,23.11,25.80,28.32,24.90,null],
       wolf:[31.24,28.43,28.47,28.78,29.47,27.88,27.26,30.06,27.89,null],
       jk:[30.33,31.51,31.38,28.21,27.70,28.37,28.73,34.17,24.74,null]
+    }},
+    // สิงหาคม 2569: ข้อมูลล่าสุดจากสรุป GP% รายพนักงาน
+    '2026-08':{staff:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','แอปเปิ้ล','เดียร์','เกอร์','น้ำฝน'],t:{hv:28,tl:27,wolf:29,jk:29},v:{
+      hv:[18.12,27.91,30.16,21.50,33.44,23.21,26.30,22.06,32.26],
+      tl:[21.09,20.58,18.26,22.34,20.92,22.38,11.95,23.90,25.17],
+      wolf:[26.42,23.69,26.70,24.23,23.32,25.49,20.40,26.08,26.64],
+      jk:[33.43,25.81,24.30,30.07,35.91,31.31,32.73,26.67,51.11]
     }}
   };
   const rows=[];
@@ -4102,7 +4109,7 @@ function setGPYear(v){
   STATE.month=ms.length?String(ms[0]):'all';STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance();
 }
 function setGPMonth(v){STATE.month=v;STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance()}
-function resetGPFilters(){STATE.year='2026';STATE.month='7';STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance()}
+function resetGPFilters(){STATE.year='2026';STATE.month='8';STATE.brand='all';STATE.empB='all';refreshChips();renderPerformance()}
 
 /* ══════════════════════════════════════════════════════════════════
    SECTION 7 — PAGE: SALES & ORDERS
