@@ -1953,7 +1953,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: INSIGHT ═══ -->
     <div id="pg-insight" class="page"><div class="wrap">
-      <div class="hub-hero"><div class="hub-eyebrow">DATA-DRIVEN ACTION CENTER</div><div class="hub-title">🧠 Insight — รู้ทันสถานการณ์และลงมือแก้ได้ทันที</div><div class="hub-sub">วิเคราะห์ข้อมูลทุกหัวข้อใน Dashboard เพื่อแยกจุดแข็ง จุดเสี่ยง และลำดับสิ่งที่ควรทำก่อน</div></div>
+      <div class="hub-hero"><div class="hub-eyebrow">DATA-DRIVEN ACTION CENTER</div><div class="hub-title">🧠 Insight — รู้ทันสถานการณ์และลงมือแก้ได้ทันที</div><div class="hub-sub" id="insightReportPeriod">วิเคราะห์ข้อมูลทุกหัวข้อใน Dashboard เพื่อแยกจุดแข็ง จุดเสี่ยง และลำดับสิ่งที่ควรทำก่อน</div></div>
       <div class="hub-toolbar" id="insight-toolbar"></div>
       <div class="action-board" id="insight-actions"></div>
       <div class="sec">🧠 Executive Insight — วิเคราะห์อัตโนมัติจากข้อมูลจริง</div>
@@ -4795,8 +4795,20 @@ function icard(title,icon,html){
 function renderInsight(){
   renderHeaderStats();
   renderExecutiveToolbar('insight-toolbar');
+  const insightRange=currentDailyReportRange();
+  document.getElementById('insightReportPeriod').textContent=`วิเคราะห์ข้อมูลทุกหัวข้อใน Dashboard เพื่อแยกจุดแข็ง จุดเสี่ยง และลำดับสิ่งที่ควรทำก่อน${insightRange?' · รอบรายงาน '+insightRange:''}`;
   const grid=document.getElementById('insight-grid');grid.innerHTML='';
-  const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly(),brandRank=brandAchievementRanking();
+  const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly();
+  const insightPeriodKey=STATE.year!=='all'&&STATE.month!=='all'?`${STATE.year}-${String(STATE.month).padStart(2,'0')}`:'';
+  const insightMonthlySnapshot=(typeof MONTHLY_FORECAST_DATA!=='undefined'&&MONTHLY_FORECAST_DATA[insightPeriodKey])||null;
+  const insightMonthlyTarget=insightMonthlySnapshot?sum(insightMonthlySnapshot.brands.map(b=>b.target)):m.totalMonthTarget;
+  const insightMonthlyActual=insightMonthlySnapshot?insightMonthlySnapshot.summaryActual:m.cumulativeActual;
+  const insightGap=Math.max(0,insightMonthlyTarget-insightMonthlyActual);
+  const insightRemainingDays=insightMonthlySnapshot?Math.max(0,insightMonthlySnapshot.periodDays-insightMonthlySnapshot.rows.length):m.remainingDays;
+  const insightRequiredDaily=insightRemainingDays?insightGap/insightRemainingDays:0;
+  const brandRank=insightMonthlySnapshot
+    ? insightMonthlySnapshot.brands.map(x=>({b:brandOf(x.key),pct:x.target?x.actual/x.target*100:0})).sort((a,b)=>b.pct-a.pct)
+    : brandAchievementRanking();
   const accountRows=(typeof ACC_ROWS!=='undefined'?ACC_ROWS:[]).filter(r=>r.account||r.page);
   const accountNames=[...new Set(accountRows.map(r=>r.account).filter(Boolean))];
   const accountHave=accountRows.filter(r=>r.status==='มีเพจ').length;
@@ -4840,7 +4852,7 @@ function renderInsight(){
   const bestBrand=brandRank[0],riskBrand=brandRank[brandRank.length-1];
   document.getElementById('insight-actions').innerHTML=[
     {cl:'good',t:'✅ จุดแข็งที่ควรรักษา',p:best?`${EMP_ALIAS[best.name]||best.name} นำยอดขาย ${fmtB(best.rev)} และ ${bestBrand?bestBrand.b.lb:'แบรนด์นำ'} ทำเป้าได้ดีที่สุด ${bestBrand?fmtPct(bestBrand.pct,1):''}`:'ยังไม่มีข้อมูลยอดขายในช่วงที่เลือก'},
-    {cl:'warn',t:'⚡ โอกาสที่ควรเร่ง',p:m.gap>0?`ยังขาดเป้า ${fmtB(m.gap)} ควรเร่ง ${riskBrand?riskBrand.b.lb:'แบรนด์ที่ต่ำกว่าเป้า'} และรักษายอดเฉลี่ยอย่างน้อย ${fmtB(m.requiredDailyRemaining)}/วัน`:'ยอดรวมถึงเป้าแล้ว ให้รักษาอัตราปัจจุบันและเพิ่ม GP%'},
+    {cl:'warn',t:'⚡ โอกาสที่ควรเร่ง',p:insightGap>0?`ยังขาดเป้า ${fmtB(insightGap)} ควรเร่ง ${riskBrand?riskBrand.b.lb:'แบรนด์ที่ต่ำกว่าเป้า'} และรักษายอดเฉลี่ยอย่างน้อย ${fmtB(insightRequiredDaily)}/วัน`:'ยอดรวมถึงเป้าแล้ว ให้รักษาอัตราปัจจุบันและเพิ่ม GP%'},
     {cl:'risk',t:'🚨 เรื่องที่ควรแก้ก่อน',p:coach.length?`${coach.slice(0,3).map(x=>x.name).join(', ')} ต้อง Coaching GP% ก่อน${dailyRisk?' · '+(EMP_ALIAS[dailyRisk.n]||dailyRisk.n)+' มีอัตราผ่านเป้ารายวันต่ำสุด':''}`:(dailyRisk?`${EMP_ALIAS[dailyRisk.n]||dailyRisk.n} มีอัตราผ่านเป้ารายวันต่ำสุด ควรตรวจสาเหตุ`:'ยังไม่พบความเสี่ยงที่มีข้อมูลรองรับ')}
   ].map(x=>`<div class="action-card ${x.cl}"><b>${x.t}</b><p>${x.p}</p></div>`).join('');
   grid.appendChild(icard('Top Performer','🔥',
@@ -4882,10 +4894,16 @@ function renderInsight(){
   }
 
   // 7) Forecast สิ้นเดือน (แสดงพยากรณ์ละเอียดเฉพาะตอนเจาะจง 1 เดือน)
-  grid.appendChild(icard('Forecast สิ้นเดือน — จะถึงเป้าหรือไม่','🔮',
-    !m.isSingleMonth?`เลือกเจาะจง 1 เดือน จากตัวกรองปี/เดือนด้านบน เพื่อดูพยากรณ์สิ้นเดือนแบบละเอียด (ขณะนี้กำลังดูภาพรวม ${m.monthlyTrend.length} เดือน บรรลุเป้ารวม <b>${fmtPct(m.achievedPct,2)}</b>)`:
-    m.gap<=0?`บรรลุเป้าเดือนแล้ว! ยอดสะสม ${fmtB(m.cumulativeActual)} เกินเป้า ${fmtB(Math.abs(m.gap))}`:
-    `ตามอัตราปัจจุบัน (avg ${fmtB(m.avgPerDay)}/วัน) คาดว่าสิ้นเดือนจะทำได้ <b>${fmtPct(m.achievedPct+(m.avgPerDay*m.remainingDays/m.totalMonthTarget*100),1)}</b> ของเป้า<br>ต้องขายเพิ่มเป็น <b class="r">${fmtB(m.requiredDailyRemaining)}/วัน</b> ใน ${m.remainingDays} วันที่เหลือ (${so.avgOrderValue?'≈ ต้องปิดเพิ่มราว '+Math.max(0,Math.ceil((m.requiredDailyRemaining-m.avgPerDay)/so.avgOrderValue))+' ออเดอร์/วัน จาก avg เดิม':''}) จึงจะถึงเป้า ${fmtB(m.totalMonthTarget)}`));
+  const insightForecastHtml=insightMonthlySnapshot
+    ? insightGap<=0
+      ? `บรรลุเป้าเดือนแล้ว! ยอดสะสม ${fmtB(insightMonthlyActual)} เกินเป้า ${fmtB(insightMonthlyActual-insightMonthlyTarget)}`
+      : `ยอดสะสม <b>${fmtB(insightMonthlyActual)}</b> จากเป้า ${fmtB(insightMonthlyTarget)} บรรลุแล้ว <b>${fmtPct(insightMonthlyTarget?insightMonthlyActual/insightMonthlyTarget*100:0,2)}</b><br>ยังขาด ${fmtB(insightGap)} · ต้องรักษายอดเฉลี่ย <b class="r">${fmtB(insightRequiredDaily)}/วัน</b> ใน ${insightRemainingDays} วันที่เหลือ`
+    : !m.isSingleMonth
+      ? `เลือกเจาะจง 1 เดือน จากตัวกรองปี/เดือนด้านบน เพื่อดูพยากรณ์สิ้นเดือนแบบละเอียด (ขณะนี้กำลังดูภาพรวม ${m.monthlyTrend.length} เดือน บรรลุเป้ารวม <b>${fmtPct(m.achievedPct,2)}</b>)`
+      : m.gap<=0
+        ? `บรรลุเป้าเดือนแล้ว! ยอดสะสม ${fmtB(m.cumulativeActual)} เกินเป้า ${fmtB(Math.abs(m.gap))}`
+        : `ตามอัตราปัจจุบัน (avg ${fmtB(m.avgPerDay)}/วัน) คาดว่าสิ้นเดือนจะทำได้ <b>${fmtPct(m.achievedPct+(m.avgPerDay*m.remainingDays/m.totalMonthTarget*100),1)}</b> ของเป้า<br>ต้องขายเพิ่มเป็น <b class="r">${fmtB(m.requiredDailyRemaining)}/วัน</b> ใน ${m.remainingDays} วันที่เหลือ (${so.avgOrderValue?'≈ ต้องปิดเพิ่มราว '+Math.max(0,Math.ceil((m.requiredDailyRemaining-m.avgPerDay)/so.avgOrderValue))+' ออเดอร์/วัน จาก avg เดิม':''}) จึงจะถึงเป้า ${fmtB(m.totalMonthTarget)}`;
+  grid.appendChild(icard('Forecast สิ้นเดือน — จะถึงเป้าหรือไม่','🔮',insightForecastHtml));
 
   // 8) Best/Worst Brand overview
   grid.appendChild(icard('ภาพรวมแบรนด์','🏷️',
