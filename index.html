@@ -2234,18 +2234,18 @@ const SEED_REDEMPTION=(function(){
   const prices=[129,100,150,100,150];
   const rows=[];
   Object.keys(units).forEach(nm=>units[nm].forEach((u,pi)=>{ if(u>0) rows.push({date:'2026-07-20',reportMonth:'2026-07',employee:nm,product:products[pi],unitPrice:prices[pi],units:u}); }));
-  /* รอบเดือนสิงหาคม 2569: ข้อมูลล่าสุด 26/07–05/08/2026
-     จำนวนรวม 186 ชิ้น; ยอดขายรวม 23,453 บาท */
+  /* รอบเดือนสิงหาคม 2569: ข้อมูลล่าสุด 26/07–07/08/2026
+     ยึดตารางแยกพนักงาน × สินค้า จำนวนรวม 218 ชิ้น; ยอดขายรวม 27,340 บาท */
   const augUnits={
-    'แพร':[3,7,4,5,9], 'อชิ':[8,3,1,2,5], 'ป้าย':[6,1,3,3,7],
-    'แอปเปิ้ล':[3,4,2,6,6], 'แอ๋ม':[5,2,1,3,9], 'หนึ่ง':[6,9,5,6,10],
-    'เกอร์':[4,4,1,2,7], 'เดียร์':[6,2,0,1,2], 'น้ำฝน':[3,4,3,1,2]
+    'แพร':[7,7,1,6,9], 'อชิ':[11,5,0,2,6], 'ป้าย':[5,5,5,4,5],
+    'แอปเปิ้ล':[4,5,1,7,6], 'แอ๋ม':[9,2,2,3,9], 'หนึ่ง':[5,10,6,7,10],
+    'เกอร์':[4,4,3,3,11], 'เดียร์':[5,3,2,4,1], 'น้ำฝน':[3,2,3,3,3]
   };
   const augProducts=['กาแฟเจ้าขุน','น้ำหอมพลัส','ห่วงรัด','สบู่+เจล','สเปรย์ 1 แถม 1'];
   const augPrices=[150,100,150,100,129];
-  const augRevenue={'แพร':3411,'อชิ':2495,'ป้าย':2653,'แอปเปิ้ล':2524,'แอ๋ม':2561,'หนึ่ง':4440,'เกอร์':2253,'เดียร์':1458,'น้ำฝน':1658};
+  const augRevenue={'แพร':3661,'อชิ':3124,'ป้าย':3045,'แอปเปิ้ล':2724,'แอ๋ม':3311,'หนึ่ง':4640,'เกอร์':3169,'เดียร์':1879,'น้ำฝน':1787};
   Object.keys(augUnits).forEach(nm=>augUnits[nm].forEach((u,pi)=>{
-    if(u>0)rows.push({date:'2026-08-05',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
+    if(u>0)rows.push({date:'2026-08-07',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
   }));
   return rows;
 })();
@@ -2284,7 +2284,9 @@ const SEED_CROSS_SALE_DAILY_AUG=[
   {date:'02/08/2026',qty:9,cumulative:137,avg:17.13,change:-8,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'03/08/2026',qty:10,cumulative:147,avg:16.33,change:1,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
   {date:'04/08/2026',qty:17,cumulative:164,avg:16.40,change:7,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'05/08/2026',qty:22,cumulative:186,avg:16.91,change:5,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'}
+  {date:'05/08/2026',qty:22,cumulative:186,avg:16.91,change:5,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
+  {date:'06/08/2026',qty:19,cumulative:205,avg:17.08,change:-3,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'07/08/2026',qty:13,cumulative:218,avg:16.77,change:-6,status:'ลดลง',note:'ลดลงจากวันก่อน'}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
