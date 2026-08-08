@@ -2239,11 +2239,11 @@ const SEED_REDEMPTION=(function(){
   const augUnits={
     'แพร':[7,7,1,6,9], 'อชิ':[11,5,0,2,6], 'ป้าย':[5,5,5,4,5],
     'แอปเปิ้ล':[4,5,1,7,6], 'แอ๋ม':[9,2,2,3,9], 'หนึ่ง':[5,10,6,7,10],
-    'เกอร์':[4,4,3,3,11], 'เดียร์':[5,3,2,4,1], 'น้ำฝน':[3,2,3,3,3]
+    'เกอร์':[4,2,4,5,10], 'เดียร์':[5,3,1,4,2], 'น้ำฝน':[3,4,3,1,3]
   };
   const augProducts=['กาแฟเจ้าขุน','น้ำหอมพลัส','ห่วงรัด','สบู่+เจล','สเปรย์ 1 แถม 1'];
   const augPrices=[150,100,150,100,129];
-  const augRevenue={'แพร':3661,'อชิ':3124,'ป้าย':3045,'แอปเปิ้ล':2724,'แอ๋ม':3311,'หนึ่ง':4640,'เกอร์':3169,'เดียร์':1879,'น้ำฝน':1787};
+  const augRevenue={'แพร':3661,'อชิ':3124,'ป้าย':3045,'แอปเปิ้ล':2724,'แอ๋ม':3311,'หนึ่ง':4640,'เกอร์':3190,'เดียร์':1858,'น้ำฝน':1787};
   Object.keys(augUnits).forEach(nm=>augUnits[nm].forEach((u,pi)=>{
     if(u>0)rows.push({date:'2026-08-07',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
   }));
@@ -2274,19 +2274,19 @@ const SEED_CROSS_SALE_DAILY=[
   {date:'25/07/2026',qty:19,cumulative:364,avg:2.11,change:-1,status:'ปกติ',note:''}
 ];
 const SEED_CROSS_SALE_DAILY_AUG=[
-  {date:'26/07/2026',qty:14,cumulative:14,avg:14.00,change:0,status:'เริ่มต้น',note:'วันแรกของรอบ'},
-  {date:'27/07/2026',qty:24,cumulative:38,avg:19.00,change:10,status:'ยอดสูง',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'28/07/2026',qty:17,cumulative:55,avg:18.33,change:-7,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'26/07/2026',qty:13,cumulative:13,avg:13.00,change:0,status:'เริ่มต้น',note:'วันแรกของรอบ'},
+  {date:'27/07/2026',qty:25,cumulative:38,avg:19.00,change:12,status:'ยอดสูง',note:'เพิ่มขึ้นจากวันก่อน'},
+  {date:'28/07/2026',qty:17,cumulative:55,avg:18.33,change:-8,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'29/07/2026',qty:23,cumulative:78,avg:19.50,change:6,status:'เพิ่มขึ้น',note:'ผลงานฟื้นตัวดีขึ้น'},
   {date:'30/07/2026',qty:17,cumulative:95,avg:19.00,change:-6,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'31/07/2026',qty:16,cumulative:111,avg:18.50,change:-1,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'01/08/2026',qty:17,cumulative:128,avg:18.29,change:1,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
   {date:'02/08/2026',qty:9,cumulative:137,avg:17.13,change:-8,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'03/08/2026',qty:10,cumulative:147,avg:16.33,change:1,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'04/08/2026',qty:17,cumulative:164,avg:16.40,change:7,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'05/08/2026',qty:22,cumulative:186,avg:16.91,change:5,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'06/08/2026',qty:19,cumulative:205,avg:17.08,change:-3,status:'ลดลง',note:'ลดลงจากวันก่อน'},
-  {date:'07/08/2026',qty:13,cumulative:218,avg:16.77,change:-6,status:'ลดลง',note:'ลดลงจากวันก่อน'}
+  {date:'04/08/2026',qty:18,cumulative:165,avg:16.50,change:8,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
+  {date:'05/08/2026',qty:18,cumulative:183,avg:16.64,change:0,status:'คงที่',note:'เท่ากับวันก่อน'},
+  {date:'06/08/2026',qty:20,cumulative:203,avg:16.92,change:2,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
+  {date:'07/08/2026',qty:15,cumulative:218,avg:16.77,change:-5,status:'ลดลง',note:'ลดลงจากวันก่อน'}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
@@ -4526,10 +4526,10 @@ function renderRedemption(){
     lb.appendChild(el);
   });
   const brandCrossAll=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?[
-    {key:'heaven',name:'HEAVEN Plus',qty:12,share:6.45,color:'#3b82f6'},
-    {key:'lord',name:'The Lord',qty:41,share:22.04,color:'#ef4444'},
-    {key:'wolf',name:'WOLF+',qty:99,share:53.23,color:'#8b5cf6'},
-    {key:'jk',name:'เจ้าขุน',qty:34,share:18.28,color:'#f59e0b'}
+    {key:'heaven',name:'HEAVEN Plus',qty:14,share:6.42,color:'#3b82f6'},
+    {key:'lord',name:'The Lord',qty:48,share:22.02,color:'#ef4444'},
+    {key:'wolf',name:'WOLF+',qty:119,share:54.59,color:'#8b5cf6'},
+    {key:'jk',name:'เจ้าขุน',qty:37,share:16.97,color:'#f59e0b'}
   ]:[
     {key:'heaven',name:'HEAVEN Plus',qty:43,share:14.24,color:'#3b82f6'},
     {key:'lord',name:'The Lord',qty:62,share:20.53,color:'#ef4444'},
