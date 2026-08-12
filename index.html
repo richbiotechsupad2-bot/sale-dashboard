@@ -4806,7 +4806,7 @@ function icard(title,icon,html){
 function renderInsight(){
   renderHeaderStats();
   renderExecutiveToolbar('insight-toolbar');
-  const insightRange=currentDailyReportRange();
+  const insightRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–11/08/2026':currentDailyReportRange();
   document.getElementById('insightReportPeriod').textContent=`วิเคราะห์ข้อมูลทุกหัวข้อใน Dashboard เพื่อแยกจุดแข็ง จุดเสี่ยง และลำดับสิ่งที่ควรทำก่อน${insightRange?' · รอบรายงาน '+insightRange:''}`;
   const grid=document.getElementById('insight-grid');grid.innerHTML='';
   const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly();
