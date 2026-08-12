@@ -4017,7 +4017,7 @@ function renderPerformance(){
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+periodEmployees.map(n=>`<option value="${n}" ${STATE.empB===n?'selected':''}>${n}</option>`).join('');
   const periodLabel=STATE.month==='all'?`ภาพรวมปี ${+STATE.year+543}`:`${monthNames[+STATE.month]} ${+STATE.year+543}`;
   document.getElementById('gpHeroTitle').textContent=`📈 Performance (GP%) — ${periodLabel}`;
-  const gpReportRange=currentDailyReportRange();
+  const gpReportRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–11/08/2026':currentDailyReportRange();
   document.getElementById('gpHeroPeriod').textContent=gpReportRange?`รอบรายงาน ${gpReportRange}`:'ข้อมูลรวมตามตัวกรอง';
   document.getElementById('gpHeroBadge').textContent=`${gp.rows.length} พนักงาน · ผ่าน ${gp.totalPass}/${gp.totalCells} รายการ`;
   const ke=document.getElementById('gp-kpi');ke.innerHTML='';
