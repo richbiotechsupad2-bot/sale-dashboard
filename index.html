@@ -2234,19 +2234,18 @@ const SEED_REDEMPTION=(function(){
   const prices=[129,100,150,100,150];
   const rows=[];
   Object.keys(units).forEach(nm=>units[nm].forEach((u,pi)=>{ if(u>0) rows.push({date:'2026-07-25',reportMonth:'2026-07',employee:nm,product:products[pi],unitPrice:prices[pi],units:u}); }));
-  /* รอบเดือนสิงหาคม 2569: ข้อมูลล่าสุด 26/07–11/08/2026
-     ยึดตารางแยกพนักงาน × สินค้า จำนวนรวม 276 ชิ้น; ยอดขายรวม 34,675 บาท */
+  /* รอบเดือนสิงหาคม 2569: ข้อมูลล่าสุด 26/07–13/08/2026
+     ยึดตารางแยกพนักงาน × สินค้า จำนวนรวม 311 ชิ้น; ยอดขายรวม 39,044 บาท */
   const augUnits={
-    'แพร':[7,7,2,6,11], 'อชิ':[12,6,2,3,8], 'ป้าย':[6,7,5,4,9],
-    'แอปเปิ้ล':[4,5,2,8,7], 'แอ๋ม':[9,2,4,5,10], 'หนึ่ง':[8,12,6,9,11],
-    'เกอร์':[4,6,5,5,10], 'เดียร์':[6,3,1,4,4], 'น้ำฝน':[9,7,3,2,4]
+    'แพร':[8,7,2,7,13], 'อชิ':[13,6,2,4,8], 'ป้าย':[6,7,5,4,9],
+    'แอปเปิ้ล':[6,9,2,8,8], 'แอ๋ม':[11,2,6,6,13], 'หนึ่ง':[10,14,7,11,14],
+    'เกอร์':[5,6,6,6,11], 'เดียร์':[7,3,1,5,5], 'น้ำฝน':[9,9,3,2,5]
   };
   const augProducts=['กาแฟเจ้าขุน','น้ำหอมพลัส','ห่วงรัด','สบู่+เจล','สเปรย์ 1 แถม 1'];
   const augPrices=[150,100,150,100,129];
-  augUnits['หนึ่ง']=[10,13,7,10,12];
-  const augRevenue={'แพร':4069,'อชิ':4032,'ป้าย':3911,'แอปเปิ้ล':3103,'แอ๋ม':3940,'หนึ่ง':6398,'เกอร์':3740,'เดียร์':2266,'น้ำฝน':3216};
+  const augRevenue={'แพร':4577,'อชิ':4282,'ป้าย':3911,'แอปเปิ้ล':3932,'แอ๋ม':5027,'หนึ่ง':6856,'เกอร์':4269,'เดียร์':2645,'น้ำฝน':3545};
   Object.keys(augUnits).forEach(nm=>augUnits[nm].forEach((u,pi)=>{
-    if(u>0)rows.push({date:'2026-08-09',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
+    if(u>0)rows.push({date:'2026-08-13',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
   }));
   return rows;
 })();
@@ -2291,7 +2290,9 @@ const SEED_CROSS_SALE_DAILY_AUG=[
   {date:'08/08/2026',qty:9,cumulative:227,avg:16.21,change:-8,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'09/08/2026',qty:16,cumulative:243,avg:16.20,change:7,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
   {date:'10/08/2026',qty:17,cumulative:260,avg:16.25,change:1,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'11/08/2026',qty:16,cumulative:276,avg:16.24,change:-1,status:'ลดลง',note:'ลดลงจากวันก่อน'}
+  {date:'11/08/2026',qty:16,cumulative:276,avg:16.24,change:-1,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'12/08/2026',qty:18,cumulative:294,avg:16.33,change:2,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
+  {date:'13/08/2026',qty:17,cumulative:311,avg:16.37,change:-1,status:'ลดลง',note:'ลดลงจากวันก่อน'}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
@@ -4020,7 +4021,7 @@ function renderPerformance(){
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+periodEmployees.map(n=>`<option value="${n}" ${STATE.empB===n?'selected':''}>${n}</option>`).join('');
   const periodLabel=STATE.month==='all'?`ภาพรวมปี ${+STATE.year+543}`:`${monthNames[+STATE.month]} ${+STATE.year+543}`;
   document.getElementById('gpHeroTitle').textContent=`📈 Performance (GP%) — ${periodLabel}`;
-  const gpReportRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–11/08/2026':currentDailyReportRange();
+  const gpReportRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–13/08/2026':currentDailyReportRange();
   document.getElementById('gpHeroPeriod').textContent=gpReportRange?`รอบรายงาน ${gpReportRange}`:'ข้อมูลรวมตามตัวกรอง';
   document.getElementById('gpHeroBadge').textContent=`${gp.rows.length} พนักงาน · ผ่าน ${gp.totalPass}/${gp.totalCells} รายการ`;
   const ke=document.getElementById('gp-kpi');ke.innerHTML='';
@@ -4504,7 +4505,7 @@ function renderRedemption(){
   document.getElementById('rdBrandFilter').innerHTML=`<option value="all">ทุกแบรนด์</option>`+rdBrands.map(b=>`<option value="${b.k}" ${REDEMPTION_FILTER.brand===b.k?'selected':''}>${b.n}</option>`).join('');
   document.getElementById('rdProductFilter').innerHTML=`<option value="all">สินค้าทั้งหมด</option>`+rdProducts.map(p=>`<option value="${p}" ${REDEMPTION_FILTER.product===p?'selected':''}>${p}</option>`).join('');
   document.getElementById('rdEmployeeFilter').innerHTML=`<option value="all">พนักงานทั้งหมด</option>`+rdEmployees.map(n=>`<option value="${n}" ${REDEMPTION_FILTER.employee===n?'selected':''}>${n}</option>`).join('');
-  const rdPeriodRanges={'2026-08':'26/07/2026–11/08/2026','2026-07':'04/07/2026–25/07/2026'};
+  const rdPeriodRanges={'2026-08':'26/07/2026–13/08/2026','2026-07':'04/07/2026–25/07/2026'};
   const rdPeriodKey=`${REDEMPTION_PERIOD.year}-${String(REDEMPTION_PERIOD.month).padStart(2,'0')}`;
   const rdPeriodRange=rdPeriodRanges[rdPeriodKey]||'';
   document.getElementById('rdReportPeriod').textContent=rdPeriodRange?`รอบรายงาน ${rdPeriodRange}`:'รอบรายงาน —';
@@ -4537,10 +4538,10 @@ function renderRedemption(){
     lb.appendChild(el);
   });
   const brandCrossAll=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?[
-    {key:'heaven',name:'HEAVEN Plus',qty:23,share:8.33,color:'#3b82f6'},
-    {key:'lord',name:'The Lord',qty:62,share:22.46,color:'#ef4444'},
-    {key:'wolf',name:'WOLF+',qty:149,share:53.99,color:'#8b5cf6'},
-    {key:'jk',name:'เจ้าขุน',qty:42,share:15.22,color:'#f59e0b'}
+    {key:'heaven',name:'HEAVEN Plus',qty:26,share:8.36,color:'#3b82f6'},
+    {key:'lord',name:'The Lord',qty:72,share:23.15,color:'#ef4444'},
+    {key:'wolf',name:'WOLF+',qty:166,share:53.38,color:'#8b5cf6'},
+    {key:'jk',name:'เจ้าขุน',qty:47,share:15.11,color:'#f59e0b'}
   ]:[
     {key:'heaven',name:'HEAVEN Plus',qty:43,share:14.24,color:'#3b82f6'},
     {key:'lord',name:'The Lord',qty:62,share:20.53,color:'#ef4444'},
@@ -4614,7 +4615,7 @@ function lbRow(rank,name,valueLabel,widthPct,gradient,onClick){
 function renderLeaderboard(){
   renderHeaderStats();
   renderExecutiveToolbar('leaderboard-toolbar');
-  const leaderboardRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–11/08/2026':currentDailyReportRange();
+  const leaderboardRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–13/08/2026':currentDailyReportRange();
   document.getElementById('leaderboardReportPeriod').textContent=leaderboardRange?`รอบรายงาน ${leaderboardRange}`:'ข้อมูลรวมตามตัวกรอง';
   const so=computeSO(),selectedGP=computeGP(),dly=computeDaily(),rd=computeRedemption();
   let gp=selectedGP,gpPeriodLabel=executivePeriodLabel();
@@ -4672,7 +4673,7 @@ function renderLeaderboard(){
 function renderDashboard(){
   renderHeaderStats();
   renderExecutiveToolbar('dashboard-toolbar');
-  const dashboardReportPeriods={'2026-08':'26/07/2026–11/08/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
+  const dashboardReportPeriods={'2026-08':'26/07/2026–13/08/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
   const dashboardPeriodKey=STATE.year!=='all'&&STATE.month!=='all'?`${STATE.year}-${String(STATE.month).padStart(2,'0')}`:'';
   const dashboardRange=dashboardReportPeriods[dashboardPeriodKey]||'';
   document.getElementById('hubReportPeriod').textContent=dashboardRange?`รอบรายงาน ${dashboardRange}`:'ข้อมูลรวมตามตัวกรอง';
@@ -4810,7 +4811,7 @@ function icard(title,icon,html){
 function renderInsight(){
   renderHeaderStats();
   renderExecutiveToolbar('insight-toolbar');
-  const insightRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–11/08/2026':currentDailyReportRange();
+  const insightRange=(String(STATE.year)==='2026'&&String(STATE.month)==='8')?'26/07/2026–13/08/2026':currentDailyReportRange();
   document.getElementById('insightReportPeriod').textContent=`วิเคราะห์ข้อมูลทุกหัวข้อใน Dashboard เพื่อแยกจุดแข็ง จุดเสี่ยง และลำดับสิ่งที่ควรทำก่อน${insightRange?' · รอบรายงาน '+insightRange:''}`;
   const grid=document.getElementById('insight-grid');grid.innerHTML='';
   const so=computeSO(),gp=computeGP(),dly=computeDaily(),rd=computeRedemption(),m=computeMonthly();
