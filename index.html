@@ -1454,7 +1454,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: DASHBOARD (OVERVIEW) ═══ -->
     <div id="pg-dashboard" class="page active"><div class="wrap">
-      <div class="hub-hero"><div class="hub-eyebrow">SA2 SALES COMMAND CENTER</div><div class="hub-title">✨ Dashboard Sale Admin 2</div><div class="hub-sub" id="hubReportPeriod">รอบรายงาน 26/07/2026–05/08/2026</div></div>
+      <div class="hub-hero"><div class="hub-eyebrow">SA2 SALES COMMAND CENTER</div><div class="hub-title">✨ Dashboard Sale Admin 2</div><div class="hub-sub" id="hubReportPeriod">รอบรายงาน 26/07/2026–13/08/2026</div></div>
       <div class="hub-toolbar" id="dashboard-toolbar"></div>
       <div class="sec dash-sec"><span>📊 ตัวเลขสำคัญของทีม</span><small>4 ตัวเลขที่ต้องรู้ก่อน</small></div>
       <div class="krow k4" id="ex-kpi"></div>
@@ -1934,7 +1934,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: LEADERBOARD HUB ═══ -->
     <div id="pg-leaderboard" class="page"><div class="wrap">
-      <div class="hub-hero"><div class="hub-eyebrow">PERFORMANCE LEADERBOARD</div><div class="hub-title">🏆 Leaderboard — ใครโดดเด่นในมิติไหน</div><div class="hub-sub">จัดอันดับจากข้อมูลจริงของยอดขาย ออเดอร์ GP% และสิทธิ์แลกซื้อ ตามตัวกรองที่เลือก</div><div class="hub-sub" id="leaderboardReportPeriod">รอบรายงาน 26/07/2026–05/08/2026</div></div>
+      <div class="hub-hero"><div class="hub-eyebrow">PERFORMANCE LEADERBOARD</div><div class="hub-title">🏆 Leaderboard — ใครโดดเด่นในมิติไหน</div><div class="hub-sub">จัดอันดับจากข้อมูลจริงของยอดขาย ออเดอร์ GP% และสิทธิ์แลกซื้อ ตามตัวกรองที่เลือก</div><div class="hub-sub" id="leaderboardReportPeriod">รอบรายงาน 26/07/2026–13/08/2026</div></div>
       <div class="hub-toolbar" id="leaderboard-toolbar"></div>
       <div class="lb-summary" id="lb-summary"></div>
       <div class="sec">⭐🎁 ผู้นำด้านคุณภาพและสิทธิ์แลกซื้อ</div>
@@ -4567,7 +4567,7 @@ function renderRedemption(){
    SECTION 11 — PAGE: LEADERBOARD HUB (รวมข้ามโมดูล)
    ══════════════════════════════════════════════════════════════════ */
 const EMP_ALIAS={Pear:'แพร',Nueng:'หนึ่ง',Apple:'เปิ้ล',Tarn:'น้ำฝน',Tiger:'เกอร์',Pay:'ป้าย',Amm:'แอ๋ม',Deer:'เดียร์',Achi:'อชิ',Game:'เกมส์'};
-const DAILY_REPORT_PERIODS={'2026-08':'26/07/2026–05/08/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
+const DAILY_REPORT_PERIODS={'2026-08':'26/07/2026–13/08/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
 function currentDailyReportRange(){
   if(STATE.year==='all'||STATE.month==='all')return'';
   return DAILY_REPORT_PERIODS[`${STATE.year}-${String(STATE.month).padStart(2,'0')}`]||'';
