@@ -2174,13 +2174,13 @@ const SEED_SALES=(function(){
     jk:  {staff:['Achi','Amm','Apple','Deer','Nueng','Pay','Pear','Tarn','Tiger'],o:[319,247,203,156,340,324,289,272,236],r:[117450,96300,78550,58600,125300,126050,108900,104700,89700]},
   };
   Object.keys(empBrand).forEach(bk=>{const g=empBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-07-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
-  /* รอบรายงานเดือนสิงหาคม 2569: ข้อมูลสะสม 26/07/2026–11/08/2026
+  /* รอบรายงานเดือนสิงหาคม 2569: ข้อมูลสะสม 26/07/2026–13/08/2026
      บันทึกเป็นยอดสะสมรายพนักงานแยกแบรนด์ตามรายงานต้นฉบับ */
   const augustEmpBrand={
-    hv:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[148,163,193,159,78,160,173,156,148],r:[73222,77436,73847,60311,53442,79834,84967,63194,63131]},
-    tl:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[448,381,457,348,316,434,509,532,430],r:[148679,125819,137797,108581,100823,138193,163025,165385,141086]},
-    wolf:{staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[735,756,752,668,567,803,889,947,691],r:[202111,196052,201874,175598,159512,220543,242549,260407,183948]},
-    jk:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[170,159,158,129,82,208,152,187,143],r:[66300,62400,59900,48300,33500,79200,59150,69800,56250]},
+    hv:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[184,191,197,173,79,187,178,166,178],r:[88536,87248,76103,69737,53641,90707,86821,69424,76431]},
+    tl:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[483,449,531,411,333,493,526,611,479],r:[159743,150560,162891,129278,105575,157364,169918,192825,157667]},
+    wolf:{staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[842,860,840,737,584,875,920,1004,771],r:[231614,223418,223716,196759,163695,237808,250668,275990,206896]},
+    jk:  {staff:['Achi','Amm','Apple','Deer','Namfon','Nueng','Pay','Pear','Tiger'],o:[194,175,161,141,93,216,164,203,173],r:[75000,68600,60950,53600,37350,82550,65050,75400,67950]},
   };
   Object.keys(augustEmpBrand).forEach(bk=>{const g=augustEmpBrand[bk];g.staff.forEach((nm,i)=>rows.push({date:'2026-08-25',employee:nm,brand:bk,orders:g.o[i],revenue:g.r[i]}));});
   return rows;
@@ -4144,7 +4144,7 @@ function renderSales(){
   renderHeaderStats();
   const yearSel=document.getElementById('soYearFilter'),monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
   const reportPeriods=[
-    {value:'2026-08',label:'สิงหาคม 2569',range:'26/07/2026–11/08/2026'},
+    {value:'2026-08',label:'สิงหาคม 2569',range:'26/07/2026–13/08/2026'},
     {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–25/07/2026'},
     {value:'2026-06',label:'มิถุนายน 2569',range:'26/05/2026–25/06/2026'},
     {value:'2026-05',label:'พฤษภาคม 2569',range:'26/04/2026–25/05/2026'},
