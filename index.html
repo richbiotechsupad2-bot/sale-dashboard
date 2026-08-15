@@ -4675,7 +4675,7 @@ function renderLeaderboard(){
 function renderDashboard(){
   renderHeaderStats();
   renderExecutiveToolbar('dashboard-toolbar');
-  const dashboardReportPeriods={'2026-08':'26/07/2026–13/08/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
+  const dashboardReportPeriods={'2026-08':'26/07/2026–14/08/2026','2026-07':'26/06/2026–25/07/2026','2026-06':'26/05/2026–25/06/2026','2026-05':'26/04/2026–25/05/2026','2026-04':'26/03/2026–25/04/2026','2026-03':'26/02/2026–25/03/2026','2026-02':'26/01/2026–25/02/2026','2026-01':'26/12/2025–25/01/2026'};
   const dashboardPeriodKey=STATE.year!=='all'&&STATE.month!=='all'?`${STATE.year}-${String(STATE.month).padStart(2,'0')}`:'';
   const dashboardRange=dashboardReportPeriods[dashboardPeriodKey]||'';
   document.getElementById('hubReportPeriod').textContent=dashboardRange?`รอบรายงาน ${dashboardRange}`:'ข้อมูลรวมตามตัวกรอง';
