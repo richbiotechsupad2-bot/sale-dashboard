@@ -1301,7 +1301,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .shift-L{background:#ede9fe;color:#7c3aed;font-size:11px!important}
 #pg-holiday .shift-U{background:#f1f5f9;color:#475569;font-size:11px!important}
 #pg-holiday .shift-B{background:#ffedd5;color:#ea580c;font-size:11px!important}
-#pg-holiday .shift-P{background:#f8fafc;color:#64748b;font-size:11px!important}
+#pg-holiday .shift-P{background:#dbeafe;color:#2563eb;font-size:11px!important}
 #pg-holiday .hs-table td.sum{font-size:14px;background:#fff;font-weight:950}
 #pg-holiday .hs-table td.sum.off{color:#dc2626;background:#fff1f2}
 #pg-holiday .hs-table td.sum.work{color:#059669;background:#ecfdf5}
@@ -5190,6 +5190,7 @@ function renderInsight(){
 /* ══════════════════════════════════════════════════════════════════
    HOLIDAY SCHEDULE — MONTHLY PERIODS (26TH–25TH)
    ══════════════════════════════════════════════════════════════════ */
+// ข้อมูลล่าสุดที่อนุมัติ: รอบ 26 กรกฎาคม–25 สิงหาคม 2569
 const HOLIDAY_AUG_TEAM=[
   {name:'แพร',full:'น.ส. ศิรินภา ปฏิมาการ',id:'68017',meta:'',s:'MMMMMMOMMMMMMMOMMMMMOOMMMMMMMMM'},
   {name:'ป้าย',full:'นาย วิษณุพล ไชยโชค',id:'68070',meta:'',s:'OMMMMMMMOMMMMMMMMMOMMMMMMOMMMMP'},
@@ -5222,7 +5223,7 @@ const HOLIDAY_PERIODS={
 let HS_MONTH='2026-08';
 let HOLIDAY_TEAM=HOLIDAY_PERIODS[HS_MONTH].team;
 let HS_DATES=[];
-const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด',V:'พักร้อน',L:'ลากิจ',U:'กิจ*',B:'ป่วย',P:'?'};
+const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด',V:'พักร้อน',L:'ลากิจ',U:'กิจ*',B:'ป่วย',P:'พัก'};
 const HS_OFF_CODES=['O','V','L','U','B','P'];
 const HS_SHORT_DAY=['อา','จ','อ','พ','พฤ','ศ','ส'];
 function availableHolidayMonths(year){
