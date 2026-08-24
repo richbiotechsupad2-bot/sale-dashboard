@@ -4006,11 +4006,11 @@ const COMMISSION_MONTH_SUMMARY=[
   {value:'05',label:'พ.ค.',rows:COMMISSION_MAY_ROWS,totals:[1528.38,625.50,2992.40,0],total:5146.28,color:'#77bdb1'},
   {value:'06',label:'มิ.ย.',rows:COMMISSION_JUN_ROWS,totals:[2534.28,1156.66,2914.52,538.16],total:7143.63,color:'#78aeca'},
   {value:'07',label:'ก.ค.',rows:COMMISSION_JUL_ROWS,totals:[1823.89,765.79,2419.59,1488.71],total:6497.98,color:'#928ac7'},
-  {value:'08',label:'ส.ค.',rows:COMMISSION_AUG_ROWS,totals:[2860.74,1107.21,1766.25,1528.12],total:7262.32,color:'#b091c8'}
+  {value:'08',label:'ส.ค.',rows:COMMISSION_AUG_ROWS,totals:[3031.95,1132.89,2098.30,1581.10],total:7844.24,color:'#b091c8'}
 ];
 
 /* Latest data update: August 2569 only. Visual design remains unchanged. */
-const COMMISSION_AUG_LATEST={totals:[2860.74,1107.21,2098.30,1528.12],total:7594.37};
+const COMMISSION_AUG_LATEST={totals:[3031.95,1132.89,2098.30,1581.10],total:7844.24};
 Object.assign(COMMISSION_MONTH_SUMMARY.find(m=>m.value==='08'),COMMISSION_AUG_LATEST);
 function decorateCommissionEmojis(){
   const labels=document.querySelectorAll('#pg-commission .co-field label');['📅 วัน','🗓️ เดือน','📆 ปี','🛍️ สินค้า'].forEach((text,i)=>{if(labels[i])labels[i].textContent=text});
