@@ -4379,11 +4379,11 @@ function redemptionInPeriod(r){
   return +r.reportY===+REDEMPTION_PERIOD.year&&+r.reportMo===+REDEMPTION_PERIOD.month;
 }
 function resetRedemptionDetailFilters(){REDEMPTION_FILTER.brand='all';REDEMPTION_FILTER.product='all';REDEMPTION_FILTER.employee='all'}
-function setRedemptionYear(v){REDEMPTION_PERIOD.year=String(v);const months=[...new Set(RAW.redemption.filter(r=>+r.reportY===+v).map(r=>r.reportMo))].sort((a,b)=>a-b);if(!months.includes(+REDEMPTION_PERIOD.month))REDEMPTION_PERIOD.month=String(months[months.length-1]||8);resetRedemptionDetailFilters();renderRedemption()}
-function setRedemptionMonth(v){REDEMPTION_PERIOD.month=String(v);resetRedemptionDetailFilters();renderRedemption()}
-function setRedemptionBrand(v){REDEMPTION_FILTER.brand=String(v);renderRedemption()}
-function setRedemptionProduct(v){REDEMPTION_FILTER.product=String(v);renderRedemption()}
-function setRedemptionEmployee(v){REDEMPTION_FILTER.employee=String(v);renderRedemption()}
+function setRedemptionYear(v){REDEMPTION_PERIOD.year=String(v);const months=[...new Set(RAW.redemption.filter(r=>+r.reportY===+v).map(r=>r.reportMo))].sort((a,b)=>a-b);if(!months.includes(+REDEMPTION_PERIOD.month))REDEMPTION_PERIOD.month=String(months[months.length-1]||8);resetRedemptionDetailFilters();renderRedemption();renderAugustRedemptionDaily()}
+function setRedemptionMonth(v){REDEMPTION_PERIOD.month=String(v);resetRedemptionDetailFilters();renderRedemption();renderAugustRedemptionDaily()}
+function setRedemptionBrand(v){REDEMPTION_FILTER.brand=String(v);renderRedemption();renderAugustRedemptionDaily()}
+function setRedemptionProduct(v){REDEMPTION_FILTER.product=String(v);renderRedemption();renderAugustRedemptionDaily()}
+function setRedemptionEmployee(v){REDEMPTION_FILTER.employee=String(v);renderRedemption();renderAugustRedemptionDaily()}
 function computeRedemption(){
   const basePeriodRows=RAW.redemption.filter(redemptionInPeriod);
   const allNames=[...new Set(basePeriodRows.map(r=>r.employee))].filter(Boolean).sort((a,b)=>a.localeCompare(b,'th'));
