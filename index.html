@@ -1912,7 +1912,6 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       <section id="rd-aug-daily-sales" class="rd-aug-sales">
         <div class="rd-aug-section-title"><span>🎁 สรุป REDEMPTION รายวัน</span></div>
         <div class="rd-aug-hero"><div class="rd-aug-icon">↗</div><div><h3>จำนวน Redemption รายวัน · พนักงาน 9 คน</h3><p>ติดตามจำนวนชิ้นรายวัน แยกตามแอดมิน พร้อมยอดรวมและค่าคอม</p></div></div>
-        <div class="rd-aug-tools"><label>📆 ปี<select id="rdDailyYear" onchange="renderAugustRedemptionDaily()"><option value="2026">2569</option></select></label><label>🗓️ เดือน<select id="rdDailyMonth" onchange="renderAugustRedemptionDaily()"><option value="7" selected>กรกฎาคม</option><option value="8">สิงหาคม</option></select></label><label>👤 แอดมิน<select id="rdAugEmployee" onchange="renderAugustRedemptionDaily()"></select></label><span id="rdDailyPeriod">📅 รอบรายงาน</span><span>↔ เลื่อนตารางเพื่อดูข้อมูลทั้งหมด</span></div>
         <div class="rd-aug-kpis"><article onclick="rdAugScrollTable()"><span>ยอดรวม · กดดูตาราง</span><b id="rdAugKpiTotal">455</b><small>ชิ้น</small></article><article onclick="rdAugScrollTable()"><span>ค่าคอมรวม · กดดูตาราง</span><b id="rdAugKpiCommission">4,550</b><small>บาท</small></article><article onclick="rdAugPickTop()"><span>อันดับ 1 · กดกรอง</span><b id="rdAugKpiTop">หนึ่ง</b><small id="rdAugKpiTopSub">73 ชิ้น</small></article><article onclick="rdAugScrollTable()"><span>เฉลี่ยต่อวัน · กดดูแนวโน้ม</span><b id="rdAugKpiAvg">15.2</b><small>ชิ้น/วัน</small></article></div>
         <div class="rd-aug-scroll"><table class="rd-aug-table" id="rdAugDailyTable"></table></div>
         <div class="rd-aug-note">สีม่วง = ยอดรวมรายวัน · แถวล่างสุด = ยอดรวมรายแอดมิน · จำนวน 1 ชิ้น = ค่าคอม 10 บาท</div>
@@ -4138,15 +4137,14 @@ const RD_DAILY_DATA={
 };
 let RD_DAILY_TOP_EMPLOYEE='หนึ่ง';
 function rdAugScrollTable(){document.getElementById('rdAugDailyTable')?.scrollIntoView({behavior:'smooth',block:'center'})}
-function rdAugPickEmployee(name){const sel=document.getElementById('rdAugEmployee');if(sel&&[...sel.options].some(o=>o.value===name)){sel.value=name;renderAugustRedemptionDaily()}}
+function rdAugPickEmployee(name){if(typeof setRedemptionEmployee==='function')setRedemptionEmployee(name)}
 function rdAugPickTop(){rdAugPickEmployee(RD_DAILY_TOP_EMPLOYEE)}
 function rdAugSelectRow(tr){document.querySelectorAll('#rdAugDailyTable tbody tr').forEach(r=>r.classList.remove('rd-aug-selected'));tr.classList.add('rd-aug-selected')}
 function renderAugustRedemptionDaily(){
  const section=document.getElementById('rd-aug-daily-sales'),table=document.getElementById('rdAugDailyTable');if(!section||!table)return;
- const year=document.getElementById('rdDailyYear')?.value||'2026',month=document.getElementById('rdDailyMonth')?.value||'7',key=year+'-'+String(month).padStart(2,'0'),data=RD_DAILY_DATA[key]||RD_DAILY_DATA['2026-07'],empSel=document.getElementById('rdAugEmployee'),previous=empSel?.value||'all';
- empSel.innerHTML='<option value="all">ทุกคน</option>'+data.employees.map(n=>'<option value="'+n+'">'+n+'</option>').join('');empSel.value=data.employees.includes(previous)?previous:'all';
- document.getElementById('rdDailyPeriod').textContent='📅 รอบ '+data.period;
- const chosen=empSel.value,indices=chosen==='all'?data.employees.map((_,i)=>i):[data.employees.indexOf(chosen)].filter(i=>i>=0),totals=data.employees.map((_,i)=>data.rows.reduce((n,r)=>n+r[i+1],0)),shownTotal=indices.reduce((n,i)=>n+totals[i],0),max=Math.max(...totals),topIndices=totals.map((v,i)=>v===max?i:-1).filter(i=>i>=0),topNames=topIndices.map(i=>data.employees[i]);
+ const year=String(REDEMPTION_PERIOD?.year||2026),month=String(REDEMPTION_PERIOD?.month||8),key=year+'-'+month.padStart(2,'0'),data=RD_DAILY_DATA[key]||null;
+ if(!data){section.style.display='none';return}section.style.display='';
+ const requested=String(REDEMPTION_FILTER?.employee||'all'),chosen=data.employees.includes(requested)?requested:'all',indices=chosen==='all'?data.employees.map((_,i)=>i):[data.employees.indexOf(chosen)],totals=data.employees.map((_,i)=>data.rows.reduce((n,r)=>n+r[i+1],0)),shownTotal=indices.reduce((n,i)=>n+totals[i],0),max=Math.max(...totals),topIndices=totals.map((v,i)=>v===max?i:-1).filter(i=>i>=0),topNames=topIndices.map(i=>data.employees[i]);
  RD_DAILY_TOP_EMPLOYEE=topNames[0];document.getElementById('rdAugKpiTotal').textContent=shownTotal.toLocaleString('th-TH');document.getElementById('rdAugKpiCommission').textContent=(shownTotal*10).toLocaleString('th-TH');document.getElementById('rdAugKpiTop').textContent=topNames.join(' · ');document.getElementById('rdAugKpiTopSub').textContent=max+' ชิ้น';document.getElementById('rdAugKpiAvg').textContent=(shownTotal/data.rows.length).toFixed(1);
  const head=indices.map(i=>'<th onclick="rdAugPickEmployee(\''+data.employees[i]+'\')" title="กดเพื่อดูเฉพาะ '+data.employees[i]+'">'+data.employees[i]+'</th>').join(''),body=data.rows.map(r=>{const sum=indices.reduce((n,i)=>n+r[i+1],0);return '<tr onclick="rdAugSelectRow(this)" title="กดเพื่อไฮไลต์ยอดวันนี้"><td>'+r[0]+'</td>'+indices.map(i=>'<td>'+r[i+1]+'</td>').join('')+'<td class="day-total">'+sum+'</td></tr>'}).join(''),foot=indices.map(i=>'<td>'+totals[i]+'</td>').join('');
  table.innerHTML='<thead><tr><th>วันที่</th>'+head+'<th>รวม/วัน</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td>ยอดรวม</td>'+foot+'<td>'+shownTotal+'</td></tr></tfoot>';
