@@ -1813,7 +1813,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
       </section>
       <div class="mf-toolbar">
         <div class="mf-field"><label for="mfYear">📆 ปี พ.ศ.</label><select id="mfYear" onchange="setMfPeriod()"><option value="2026">2569</option></select></div>
-        <div class="mf-field"><label for="mfMonth">🗓️ เดือน</label><select id="mfMonth" onchange="setMfPeriod()"><option value="1">มกราคม</option><option value="2">กุมภาพันธ์</option><option value="3">มีนาคม</option><option value="4">เมษายน</option><option value="5">พฤษภาคม</option><option value="6">มิถุนายน</option><option value="7">กรกฎาคม</option><option value="8" selected>สิงหาคม</option><option value="9">กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option></select></div>
+        <div class="mf-field"><label for="mfMonth">🗓️ เดือน</label><select id="mfMonth" onchange="setMfPeriod()"><option value="1">มกราคม</option><option value="2">กุมภาพันธ์</option><option value="3">มีนาคม</option><option value="4">เมษายน</option><option value="5">พฤษภาคม</option><option value="6">มิถุนายน</option><option value="7">กรกฎาคม</option><option value="8">สิงหาคม</option><option value="9" selected>กันยายน</option><option value="10">ตุลาคม</option><option value="11">พฤศจิกายน</option><option value="12">ธันวาคม</option></select></div>
         <div class="mf-filter-note">เลือกปีและเดือนเพื่อดูรายงานย้อนหลัง</div>
       </div>
       <div id="mfContent">
@@ -4852,6 +4852,19 @@ const MONTHLY_FORECAST_DATA={
       ['23/08/69',19265,71304,87923,29800],
       ['24/08/69',27527,73803,94075,22600],
       ['25/08/69',25540,87957,113586,27750]
+    ]
+  },
+  '2026-09':{
+    year:2026,month:9,label:'กันยายน 2569',range:'26 สิงหาคม – 26 สิงหาคม 2569',periodDays:31,dailyTarget:248387,
+    summaryActual:233336,displayPct:3.03,
+    brands:[
+      {key:'hv',name:'HEAVEN PLUS',icon:'⭐',color:'#d97706',target:1150000,actual:23636,passDays:0,dailyTarget:37097,displayPct:2.06},
+      {key:'tl',name:'THE LORD',icon:'👑',color:'#dc2626',target:2100000,actual:78038,passDays:1,dailyTarget:67742,displayPct:3.72},
+      {key:'wolf',name:'WOLF+',icon:'🐺',color:'#7c3aed',target:3350000,actual:104862,passDays:0,dailyTarget:108065,displayPct:3.13},
+      {key:'jk',name:'JK',icon:'🎯',color:'#059669',target:1100000,actual:26800,passDays:0,dailyTarget:35484,displayPct:2.44}
+    ],
+    rows:[
+      ['26/08/69',23636,78038,104862,26800]
     ]
   }};
 function setMfPeriod(){renderMonthly();}
