@@ -2281,6 +2281,21 @@ const DATA = {
 };
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 const EMPLOYEE_DAILY_REPORTS={
+  '2026-09':{
+    year:2026,month:9,label:'กันยายน 2569',range:'26/08/2026–26/08/2026',days:1,orderTarget:100,revenueTarget:27600,
+    totalOrders:719,totalSales:233336,orderPassPct:85.71,salesPassPct:100.00,
+    employees:[
+      {name:'Namfon',orders:0,sales:0,orderPass:0,orderFail:0,salesPass:0,salesFail:0},
+      {name:'Pear',orders:85,sales:31179,orderPass:0,orderFail:1,salesPass:1,salesFail:0},
+      {name:'Nueng',orders:104,sales:32236,orderPass:1,orderFail:0,salesPass:1,salesFail:0},
+      {name:'Apple',orders:102,sales:30244,orderPass:1,orderFail:0,salesPass:1,salesFail:0},
+      {name:'Tiger',orders:118,sales:35849,orderPass:1,orderFail:0,salesPass:1,salesFail:0},
+      {name:'Pay',orders:0,sales:0,orderPass:0,orderFail:0,salesPass:0,salesFail:0},
+      {name:'Amm',orders:105,sales:32026,orderPass:1,orderFail:0,salesPass:1,salesFail:0},
+      {name:'Deer',orders:100,sales:35443,orderPass:1,orderFail:0,salesPass:1,salesFail:0},
+      {name:'Achi',orders:105,sales:36359,orderPass:1,orderFail:0,salesPass:1,salesFail:0}
+    ]
+  },
   '2026-08':{
     year:2026,month:8,label:'สิงหาคม 2569',range:'26/07/2026–25/08/2026',days:31,orderTarget:100,revenueTarget:28316,
     totalOrders:23409,totalSales:7441092,orderPassPct:50.65,salesPassPct:63.20,
@@ -3254,23 +3269,24 @@ function renderEmployeeDaily(){
   ];
   document.getElementById('edKpis').innerHTML=kpis.map(k=>`<div class="ed-kpi" style="--ec:${k[4]}"><div class="ed-kpi-ic">${k[0]}</div><span>${k[1]}</span><b>${k[2]}</b><small>${k[3]}</small></div>`).join('');
   const topSales=[...r.employees].sort((a,b)=>b.sales-a.sales)[0],topOrder=[...r.employees].sort((a,b)=>b.orders-a.orders)[0];
-  const weakest=[...r.employees].sort((a,b)=>(a.salesPass/(a.salesPass+a.salesFail))-(b.salesPass/(b.salesPass+b.salesFail)))[0];
+  const activeEmployees=r.employees.filter(e=>e.salesPass+e.salesFail>0);
+  const weakest=[...(activeEmployees.length?activeEmployees:r.employees)].sort((a,b)=>(a.salesPass/Math.max(1,a.salesPass+a.salesFail))-(b.salesPass/Math.max(1,b.salesPass+b.salesFail)))[0];
   document.getElementById('edHighlights').innerHTML=`<div class="ed-winner"><strong>🏆 ผลงานเด่นประจำเดือน</strong><p><span class="big">${topSales.name}</span> ทำยอดขายสูงสุด ${fmtB(topSales.sales)} · ${topOrder.name} ทำออเดอร์สูงสุด ${fmtN(topOrder.orders)} ออเดอร์</p></div><div class="ed-focus"><strong>🎯 Executive Focus</strong><p><span class="big">${weakest.name}</span> มีอัตราผ่านเป้ายอดขายต่ำสุด ${fmtPct(weakest.salesPass/(weakest.salesPass+weakest.salesFail)*100,1)} ควรได้รับ Coaching เป็นลำดับแรก</p></div>`;
   const selectedName=document.getElementById('edSearch').value||'all',sort=document.getElementById('edSort').value;
   let rows=r.employees.filter(e=>selectedName==='all'||e.name===selectedName);
   const sorters={sales:(a,b)=>b.sales-a.sales,orders:(a,b)=>b.orders-a.orders,salesPass:(a,b)=>b.salesPass-a.salesPass,orderPass:(a,b)=>b.orderPass-a.orderPass,name:(a,b)=>a.name.localeCompare(b.name)};
   rows=[...rows].sort(sorters[sort]||sorters.sales);
   document.getElementById('edPeople').innerHTML=rows.length?rows.map((e,i)=>{
-    const op=e.orderPass/(e.orderPass+e.orderFail)*100,sp=e.salesPass/(e.salesPass+e.salesFail)*100,c=ED_COLORS[i%ED_COLORS.length];
+    const op=e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100,sp=e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100,c=ED_COLORS[i%ED_COLORS.length];
     return `<article class="ed-person" style="--ec:${c}" onclick="selectEmployeeDaily('${e.name}')"><span class="ed-person-rank">#${i+1}</span><div class="ed-person-name">${e.name}</div><div class="ed-person-sales">${fmtB(e.sales)}</div><div class="ed-person-orders">📦 ${fmtN(e.orders)} ออเดอร์</div><div class="ed-pass-row"><div class="ed-pass order"><span>ผ่านออเดอร์</span><b>${fmtPct(op,1)}</b></div><div class="ed-pass"><span>ผ่านยอดขาย</span><b>${fmtPct(sp,1)}</b></div></div></article>`
   }).join(''):'<div class="ed-card ed-empty">ไม่พบชื่อพนักงานตามคำค้นหา</div>';
   document.getElementById('edTbody').innerHTML=rows.length?rows.map((e,i)=>{
-    const op=e.orderPass/(e.orderPass+e.orderFail)*100,sp=e.salesPass/(e.salesPass+e.salesFail)*100;
+    const op=e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100,sp=e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100;
     return `<tr><td><span class="ed-rank ${i<3?'top':''}">${i<3?MED[i]:i+1}</span></td><td class="name">${e.name}</td><td class="orders">${fmtN(e.orders)}</td><td class="sales">${fmtB(e.sales)}</td><td><span class="ed-pill pass">${e.orderPass} วัน</span></td><td><span class="ed-pill fail">${e.orderFail} วัน</span></td><td><span class="ed-pill pass">${e.salesPass} วัน</span></td><td><span class="ed-pill fail">${e.salesFail} วัน</span></td><td>${fmtPct(op,1)}</td><td>${fmtPct(sp,1)}</td></tr>`
   }).join(''):'<tr><td class="ed-empty" colspan="10">ไม่พบข้อมูลตามตัวกรอง</td></tr>';
   const labels=rows.map(e=>e.name),colors=rows.map((_,i)=>ED_COLORS[i%ED_COLORS.length]);
   mkChart('edPerformanceChart',{data:{labels,datasets:[{type:'bar',label:'ยอดขาย (บาท)',data:rows.map(e=>e.sales),backgroundColor:colors.map(c=>c+'d9'),borderColor:colors,borderWidth:1,borderRadius:8,yAxisID:'y'},{type:'line',label:'ออเดอร์',data:rows.map(e=>e.orders),borderColor:'#f59e0b',backgroundColor:'#f59e0b',pointBackgroundColor:'#fff',pointBorderColor:'#f59e0b',pointBorderWidth:3,pointRadius:5,tension:.3,yAxisID:'y1'}]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{grid:{display:false},ticks:{font:{weight:'bold'}}},y:{beginAtZero:true,grid:{color:GR},ticks:{callback:v=>'฿'+(v/1000)+'K'}},y1:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false}}}}});
-  mkChart('edPassChart',{type:'bar',data:{labels,datasets:[{label:'ผ่านออเดอร์ %',data:rows.map(e=>e.orderPass/(e.orderPass+e.orderFail)*100),backgroundColor:'#6366f1d9',borderRadius:6},{label:'ผ่านยอดขาย %',data:rows.map(e=>e.salesPass/(e.salesPass+e.salesFail)*100),backgroundColor:'#10b981d9',borderRadius:6}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{min:0,max:100,grid:{color:GR},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{font:{weight:'bold'}}}}}});
+  mkChart('edPassChart',{type:'bar',data:{labels,datasets:[{label:'ผ่านออเดอร์ %',data:rows.map(e=>e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100),backgroundColor:'#6366f1d9',borderRadius:6},{label:'ผ่านยอดขาย %',data:rows.map(e=>e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100),backgroundColor:'#10b981d9',borderRadius:6}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{min:0,max:100,grid:{color:GR},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{font:{weight:'bold'}}}}}});
 }
 function openOrgEditor(id){
   const people=currentOrgPeople(),p=id?people.find(x=>x.id===id):null;ORG_EDIT_ID=p?p.id:null;ORG_NEW_PHOTO=p?p.photo:ORG_FALLBACK;
