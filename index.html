@@ -3045,12 +3045,13 @@ const ACC_JAOKHUN_ACCOUNTS=[
 ];
 const ACC_JAOKHUN_PAGES=[
   'เจ้าขุน ฟิตพลังชาย','เจ้าขุน แกร่งจากภายใน','เจ้าขุน ปลุกตื่นทุกเช้า',
-  'เจ้าขุน ฟิต24ชั่วโมง','เจ้าขุน สูตรลับของผู้ชาย','เจ้าขุน หอม เข้ม พร้อมลุย'
+  'เจ้าขุน ฟิต24ชั่วโมง','เจ้าขุน สูตรลับของผู้ชาย','เจ้าขุน หอม เข้ม พร้อมลุย',
+  'เจ้าขุน กาแฟสายลุย'
 ];
-/* เพจใหม่: Ercanbald รับเพจไม่ได้ ส่วนอีก 11 บัญชีมีเพจ */
+/* เพจเจ้าขุน กาแฟสายลุย: Ercanbald รับเพจไม่ได้ ส่วนอีก 11 บัญชีมีเพจ */
 const ACC_JAOKHUN_MATRIX=[
-  'GGGGGG','GGGGGG','GGGGGG','GGGGGY','GGGGGG','GGGGGG',
-  'GGGGGG','GGGGGG','GGGGGG','GGGGGG','GGGGGG','GGGGGG'
+  'GGGGGGG','GGGGGGG','GGGGGGG','GGGGGYY','GGGGGGG','GGGGGGG',
+  'GGGGGGG','GGGGGGG','GGGGGGG','GGGGGGG','GGGGGGG','GGGGGGG'
 ];
 function accSeed(){let id=1000,out=[];ACC_WOLF_ACCOUNTS.forEach((a,ri)=>ACC_WOLF_PAGES.forEach((page,ci)=>{const code=ACC_WOLF_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'WOLF+',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_HEAVEN_ACCOUNTS.forEach((a,ri)=>ACC_HEAVEN_PAGES.forEach((page,ci)=>{const code=ACC_HEAVEN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'HEAVEN Plus',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_LORD_ACCOUNTS.forEach((a,ri)=>ACC_LORD_PAGES.forEach((page,ci)=>{const code=ACC_LORD_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'The Lord',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));ACC_JAOKHUN_ACCOUNTS.forEach((a,ri)=>ACC_JAOKHUN_PAGES.forEach((page,ci)=>{const code=ACC_JAOKHUN_MATRIX[ri][ci];out.push({id:id++,account:a[0],role:a[1],brand:'เจ้าขุน',page,status:code==='G'?'มีเพจ':code==='Y'?'รับเพจไม่ได้':'ยังไม่มีเพจ',note:''})}));return out}
 if(!ACC_ROWS.length){ACC_ROWS=accSeed();localStorage.setItem(ACC_STORAGE,JSON.stringify(ACC_ROWS))}
