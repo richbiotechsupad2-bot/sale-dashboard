@@ -2279,18 +2279,18 @@ const DATA = {
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 const EMPLOYEE_DAILY_REPORTS={
   '2026-09':{
-    year:2026,month:9,label:'กันยายน 2569',range:'26/08/2026–14/09/2026',days:20,orderTarget:100,revenueTarget:27600,
-    totalOrders:13432,totalSales:4269281,orderPassPct:31.82,salesPassPct:50.65,
+    year:2026,month:9,label:'กันยายน 2569',range:'26/08/2026–17/09/2026',days:23,teamWorkdays:237,focusMetric:'order',orderTarget:100,revenueTarget:27600,
+    totalOrders:15113,totalSales:4817642,orderPassPct:31.82,salesPassPct:50.65,
     employees:[
-      {name:'Namfon',orders:1269,sales:398288,orderPass:3,orderFail:14,salesPass:5,salesFail:12},
-      {name:'Pear',orders:1675,sales:544972,orderPass:6,orderFail:11,salesPass:10,salesFail:7},
-      {name:'Nueng',orders:1240,sales:401223,orderPass:4,orderFail:12,salesPass:5,salesFail:11},
-      {name:'Apple',orders:1654,sales:530450,orderPass:6,orderFail:12,salesPass:11,salesFail:7},
-      {name:'Tiger',orders:1453,sales:443054,orderPass:4,orderFail:14,salesPass:7,salesFail:11},
-      {name:'Pay',orders:1711,sales:548844,orderPass:8,orderFail:9,salesPass:14,salesFail:3},
-      {name:'Amm',orders:1415,sales:459127,orderPass:5,orderFail:12,salesPass:8,salesFail:9},
-      {name:'Deer',orders:1313,sales:405319,orderPass:3,orderFail:14,salesPass:4,salesFail:13},
-      {name:'Achi',orders:1702,sales:547784,orderPass:10,orderFail:7,salesPass:14,salesFail:3}
+      {name:'Namfon',orders:1397,sales:438514,orderPass:3,orderFail:16,salesPass:5,salesFail:14},
+      {name:'Pear',orders:1928,sales:628416,orderPass:6,orderFail:14,salesPass:12,salesFail:8},
+      {name:'Nueng',orders:1449,sales:473647,orderPass:4,orderFail:15,salesPass:6,salesFail:13},
+      {name:'Apple',orders:1740,sales:557400,orderPass:6,orderFail:14,salesPass:11,salesFail:9},
+      {name:'Tiger',orders:1614,sales:493091,orderPass:4,orderFail:16,salesPass:7,salesFail:13},
+      {name:'Pay',orders:1868,sales:604721,orderPass:8,orderFail:11,salesPass:15,salesFail:4},
+      {name:'Amm',orders:1606,sales:523633,orderPass:5,orderFail:14,salesPass:10,salesFail:9},
+      {name:'Deer',orders:1536,sales:477245,orderPass:3,orderFail:17,salesPass:5,salesFail:15},
+      {name:'Achi',orders:1975,sales:630755,orderPass:12,orderFail:8,salesPass:16,salesFail:4}
     ]
   },
   '2026-08':{
@@ -3302,13 +3302,15 @@ function renderEmployeeDaily(){
     ['💰','ยอดขายรวม',fmtB(r.totalSales),`เฉลี่ย ${fmtB(avgSales)}/คน`,'#db2777'],
     ['✅','ผ่านเป้าออเดอร์',fmtPct(r.orderPassPct,2),`เป้า ${fmtN(r.orderTarget)} ออเดอร์/วัน`,'#0891b2'],
     ['🌟','ผ่านเป้ายอดขาย',fmtPct(r.salesPassPct,2),`เป้า ${fmtB(r.revenueTarget)}/วัน`,'#059669'],
-    ['👥','ทีมงาน',`${r.employees.length} คน`,`รวม ${Math.max(...r.employees.map(e=>e.orderPass+e.orderFail))} วันทำงาน`,'#f97316']
+    ['👥','ทีมงาน',`${r.employees.length} คน`,`รวม ${r.teamWorkdays||Math.max(...r.employees.map(e=>e.orderPass+e.orderFail))} วันทำงาน`,'#f97316']
   ];
   document.getElementById('edKpis').innerHTML=kpis.map(k=>`<div class="ed-kpi" style="--ec:${k[4]}"><div class="ed-kpi-ic">${k[0]}</div><span>${k[1]}</span><b>${k[2]}</b><small>${k[3]}</small></div>`).join('');
   const topSales=[...r.employees].sort((a,b)=>b.sales-a.sales)[0],topOrder=[...r.employees].sort((a,b)=>b.orders-a.orders)[0];
-  const activeEmployees=r.employees.filter(e=>e.salesPass+e.salesFail>0);
-  const weakest=[...(activeEmployees.length?activeEmployees:r.employees)].sort((a,b)=>(a.salesPass/Math.max(1,a.salesPass+a.salesFail))-(b.salesPass/Math.max(1,b.salesPass+b.salesFail)))[0];
-  document.getElementById('edHighlights').innerHTML=`<div class="ed-winner"><strong>🏆 ผลงานเด่นประจำเดือน</strong><p><span class="big">${topSales.name}</span> ทำยอดขายสูงสุด ${fmtB(topSales.sales)} · ${topOrder.name} ทำออเดอร์สูงสุด ${fmtN(topOrder.orders)} ออเดอร์</p></div><div class="ed-focus"><strong>🎯 Executive Focus</strong><p><span class="big">${weakest.name}</span> มีอัตราผ่านเป้ายอดขายต่ำสุด ${fmtPct(weakest.salesPass/(weakest.salesPass+weakest.salesFail)*100,1)} ควรได้รับ Coaching เป็นลำดับแรก</p></div>`;
+  const useOrderFocus=r.focusMetric==='order';
+  const activeEmployees=r.employees.filter(e=>useOrderFocus?e.orderPass+e.orderFail>0:e.salesPass+e.salesFail>0);
+  const weakest=[...(activeEmployees.length?activeEmployees:r.employees)].sort((a,b)=>{const av=useOrderFocus?a.orderPass/Math.max(1,a.orderPass+a.orderFail):a.salesPass/Math.max(1,a.salesPass+a.salesFail),bv=useOrderFocus?b.orderPass/Math.max(1,b.orderPass+b.orderFail):b.salesPass/Math.max(1,b.salesPass+b.salesFail);return av-bv})[0];
+  const weakestPct=useOrderFocus?weakest.orderPass/Math.max(1,weakest.orderPass+weakest.orderFail)*100:weakest.salesPass/Math.max(1,weakest.salesPass+weakest.salesFail)*100;
+  document.getElementById('edHighlights').innerHTML=`<div class="ed-winner"><strong>🏆 ผลงานเด่นประจำเดือน</strong><p><span class="big">${topSales.name}</span> ทำยอดขายสูงสุด ${fmtB(topSales.sales)} · ${topOrder.name} ทำออเดอร์สูงสุด ${fmtN(topOrder.orders)} ออเดอร์</p></div><div class="ed-focus"><strong>🎯 Executive Focus</strong><p><span class="big">${weakest.name}</span> มีอัตราผ่านเป้า${useOrderFocus?'ออเดอร์':'ยอดขาย'}ต่ำสุด ${fmtPct(weakestPct,1)} ควรได้รับ Coaching เป็นลำดับแรก</p></div>`;
   const selectedName=document.getElementById('edSearch').value||'all',sort=document.getElementById('edSort').value;
   let rows=r.employees.filter(e=>selectedName==='all'||e.name===selectedName);
   const sorters={sales:(a,b)=>b.sales-a.sales,orders:(a,b)=>b.orders-a.orders,salesPass:(a,b)=>b.salesPass-a.salesPass,orderPass:(a,b)=>b.orderPass-a.orderPass,name:(a,b)=>a.name.localeCompare(b.name)};
