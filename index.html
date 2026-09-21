@@ -2499,11 +2499,11 @@ const SEED_REDEMPTION=(function(){
   Object.keys(augUnits).forEach(nm=>augUnits[nm].forEach((u,pi)=>{
     if(u>0)rows.push({date:'2026-08-17',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
   }));
-  /* รอบเดือนกันยายน 2569: ข้อมูลสะสม 26/08/2026–17/09/2026 */
+  /* รอบเดือนกันยายน 2569: ข้อมูลสะสม 26/08/2026–20/09/2026 */
   const sepUnits={
-    'แพร':[8,7,8,10,10], 'แอ๋ม':[8,11,8,9,6], 'หนึ่ง':[10,3,6,10,19],
-    'ป้าย':[5,7,2,7,5], 'อชิ':[4,6,1,7,6], 'น้ำฝน':[10,10,3,5,9],
-    'แอปเปิ้ล':[7,11,2,5,7], 'เดียร์':[5,3,2,7,6], 'เกอร์':[6,12,1,10,11]
+    'แพร':[8,9,8,14,13], 'แอ๋ม':[9,13,8,9,9], 'หนึ่ง':[13,4,8,11,19],
+    'ป้าย':[5,7,2,7,5], 'อชิ':[5,6,2,7,6], 'น้ำฝน':[10,12,3,8,11],
+    'แอปเปิ้ล':[9,12,3,5,8], 'เดียร์':[6,4,2,7,6], 'เกอร์':[9,13,1,12,12]
   };
   const sepProducts=['กาแฟเจ้าขุน','น้ำหอมพลัส','ห่วงรัด','สบู่+เจล','สเปรย์ 1 แถม 1'];
   const sepPrices=[150,100,150,100,129];
@@ -2592,7 +2592,10 @@ const SEED_CROSS_SALE_DAILY_SEP=[
   {date:'14/09/2026',qty:18,cumulative:275,avg:13.75,change:2,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
   {date:'15/09/2026',qty:12,cumulative:287,avg:13.67,change:-6,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'16/09/2026',qty:17,cumulative:304,avg:13.82,change:5,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'17/09/2026',qty:11,cumulative:315,avg:13.70,change:-6,status:'ลดลง',note:'ลดลงจากวันก่อน'}
+  {date:'17/09/2026',qty:11,cumulative:315,avg:13.70,change:-6,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'18/09/2026',qty:17,cumulative:332,avg:13.83,change:6,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
+  {date:'19/09/2026',qty:12,cumulative:344,avg:13.76,change:-5,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'20/09/2026',qty:16,cumulative:360,avg:13.85,change:4,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
@@ -4245,7 +4248,7 @@ const RD_DAILY_DATA={
  '2026-08':{label:'สิงหาคม 2569',period:'26/7/69–25/8/69 · 31 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','น้ำฝน','แอปเปิ้ล','เดียร์','เกอร์'],rows:[
  ['26/7/69',1,3,3,0,2,1,0,1,2],['27/7/69',5,4,6,5,2,1,0,0,2],['28/7/69',3,2,2,1,0,1,5,1,2],['29/7/69',3,1,6,4,1,2,1,1,4],['30/7/69',0,0,4,1,2,0,6,4,0],['31/7/69',5,1,0,2,5,1,0,2,0],['1/8/69',0,3,3,1,4,3,1,1,1],['2/8/69',1,1,3,0,0,0,2,0,2],['3/8/69',3,0,1,0,1,1,2,0,2],['4/8/69',4,0,4,3,2,1,2,1,1],['5/8/69',3,5,4,0,0,2,2,0,2],['6/8/69',1,2,0,5,2,1,1,2,4],['7/8/69',1,3,2,2,3,0,1,2,3],['8/8/69',0,1,5,2,0,1,0,0,0],['9/8/69',0,4,3,0,0,2,3,2,2],['10/8/69',1,0,3,1,5,4,0,0,3],['11/8/69',2,0,3,4,2,4,0,1,0],['12/8/69',1,4,0,0,1,3,4,2,3],['13/8/69',3,4,4,0,1,0,3,1,1],['14/8/69',5,3,0,0,2,1,1,0,3],['15/8/69',0,1,4,0,1,1,5,0,2],['16/8/69',0,3,1,2,5,0,1,1,2],['17/8/69',1,3,2,2,0,1,1,0,7],['18/8/69',3,0,2,0,3,0,1,1,2],['19/8/69',1,1,1,0,0,0,0,0,2],['20/8/69',5,1,1,0,1,0,0,1,0],['21/8/69',1,2,0,1,0,1,1,1,1],['22/8/69',4,1,2,2,0,2,0,1,4],['23/8/69',3,3,2,1,1,1,0,1,2],['24/8/69',2,0,2,3,2,3,2,2,3],['25/8/69',0,0,0,0,0,0,0,0,0]
  ]},
- '2026-09':{label:'กันยายน 2569',period:'26/8/69–17/9/69 · 23 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','น้ำฝน','แอปเปิ้ล','เดียร์','เกอร์'],rows:[
+ '2026-09':{label:'กันยายน 2569',period:'26/8/69–20/9/69 · 26 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','น้ำฝน','แอปเปิ้ล','เดียร์','เกอร์'],reportedTotals:[52,48,55,26,26,44,37,25,47],reportedDayTotals:{'18/9/69':17,'19/9/69':12,'20/9/69':16},rows:[
  ['26/8/69',2,1,2,0,1,0,1,3,1],
  ['27/8/69',1,4,4,1,2,3,1,1,1],
  ['28/8/69',0,2,0,5,1,0,2,0,2],
@@ -4268,7 +4271,10 @@ const RD_DAILY_DATA={
  ['14/9/69',4,0,4,0,2,1,3,0,4],
  ['15/9/69',0,0,3,0,1,0,3,0,5],
  ['16/9/69',2,2,2,2,3,3,0,3,0],
- ['17/9/69',3,2,1,0,1,1,0,1,2]
+ ['17/9/69',3,2,1,0,1,1,0,1,2],
+ ['18/9/69',null,null,null,null,null,null,null,null,null],
+ ['19/9/69',null,null,null,null,null,null,null,null,null],
+ ['20/9/69',null,null,null,null,null,null,null,null,null]
  ]}
 };
 RD_DAILY_DATA['2026-08'].rows[30]=['25/8/69',2,2,1,0,1,0,3,0,1];
@@ -4281,9 +4287,9 @@ function renderAugustRedemptionDaily(){
  const section=document.getElementById('rd-aug-daily-sales'),table=document.getElementById('rdAugDailyTable');if(!section||!table)return;
  const year=String(REDEMPTION_PERIOD?.year||2026),month=String(REDEMPTION_PERIOD?.month||8),key=year+'-'+month.padStart(2,'0'),data=RD_DAILY_DATA[key]||null;
  if(!data){section.style.display='none';return}section.style.display='';
- const requested=String(REDEMPTION_FILTER?.employee||'all'),chosen=data.employees.includes(requested)?requested:'all',indices=chosen==='all'?data.employees.map((_,i)=>i):[data.employees.indexOf(chosen)],totals=data.employees.map((_,i)=>data.rows.reduce((n,r)=>n+r[i+1],0)),shownTotal=indices.reduce((n,i)=>n+totals[i],0),max=Math.max(...totals),topIndices=totals.map((v,i)=>v===max?i:-1).filter(i=>i>=0),topNames=topIndices.map(i=>data.employees[i]);
+ const requested=String(REDEMPTION_FILTER?.employee||'all'),chosen=data.employees.includes(requested)?requested:'all',indices=chosen==='all'?data.employees.map((_,i)=>i):[data.employees.indexOf(chosen)],totals=data.reportedTotals||data.employees.map((_,i)=>data.rows.reduce((n,r)=>n+(Number(r[i+1])||0),0)),shownTotal=indices.reduce((n,i)=>n+totals[i],0),max=Math.max(...totals),topIndices=totals.map((v,i)=>v===max?i:-1).filter(i=>i>=0),topNames=topIndices.map(i=>data.employees[i]);
  RD_DAILY_TOP_EMPLOYEE=topNames[0];document.getElementById('rdAugKpiTotal').textContent=shownTotal.toLocaleString('th-TH');document.getElementById('rdAugKpiCommission').textContent=(shownTotal*10).toLocaleString('th-TH');document.getElementById('rdAugKpiTop').textContent=topNames.join(' · ');document.getElementById('rdAugKpiTopSub').textContent=max+' ชิ้น';document.getElementById('rdAugKpiAvg').textContent=(shownTotal/data.rows.length).toFixed(1);
- const head=indices.map(i=>'<th onclick="rdAugPickEmployee(\''+data.employees[i]+'\')" title="กดเพื่อดูเฉพาะ '+data.employees[i]+'">'+data.employees[i]+'</th>').join(''),body=data.rows.map(r=>{const sum=indices.reduce((n,i)=>n+r[i+1],0);return '<tr onclick="rdAugSelectRow(this)" title="กดเพื่อไฮไลต์ยอดวันนี้"><td>'+r[0]+'</td>'+indices.map(i=>'<td>'+r[i+1]+'</td>').join('')+'<td class="day-total">'+sum+'</td></tr>'}).join(''),foot=indices.map(i=>'<td>'+totals[i]+'</td>').join('');
+ const head=indices.map(i=>'<th onclick="rdAugPickEmployee(\''+data.employees[i]+'\')" title="กดเพื่อดูเฉพาะ '+data.employees[i]+'">'+data.employees[i]+'</th>').join(''),body=data.rows.map(r=>{const knownValues=indices.filter(i=>Number.isFinite(r[i+1])),sum=knownValues.reduce((n,i)=>n+r[i+1],0),reportedTotal=chosen==='all'&&data.reportedDayTotals?.[r[0]]!=null?data.reportedDayTotals[r[0]]:knownValues.length===indices.length?sum:'—';return '<tr onclick="rdAugSelectRow(this)" title="กดเพื่อไฮไลต์ยอดวันนี้"><td>'+r[0]+'</td>'+indices.map(i=>'<td>'+(Number.isFinite(r[i+1])?r[i+1]:'—')+'</td>').join('')+'<td class="day-total">'+reportedTotal+'</td></tr>'}).join(''),foot=indices.map(i=>'<td>'+totals[i]+'</td>').join('');
  table.innerHTML='<thead><tr><th>วันที่</th>'+head+'<th>รวม/วัน</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td>ยอดรวม</td>'+foot+'<td>'+shownTotal+'</td></tr></tfoot>';
 }
 
@@ -4529,7 +4535,7 @@ function computeRedemption(){
   const productList=REDEMPTION_FILTER.product==='all'?[...new Set(basePeriodRows.map(r=>r.product))]:[REDEMPTION_FILTER.product];
   const priceOf=p=>{const r=basePeriodRows.find(x=>x.product===p);return r?r.unitPrice:0;};
   const preferredOrder=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9
-    ?['หนึ่ง','แพร','น้ำฝน','แอ๋ม','ป้าย','เกอร์','อชิ','เดียร์','แอปเปิ้ล']
+    ?['หนึ่ง','แพร','แอ๋ม','เกอร์','น้ำฝน','แอปเปิ้ล','ป้าย','อชิ','เดียร์']
     :['หนึ่ง','แพร','ป้าย','แอ๋ม','แอปเปิ้ล','เกอร์','อชิ','น้ำฝน','เดียร์'];
   const rows=names.map(name=>{
     const rs=periodRows.filter(r=>r.employee===name);
@@ -5096,7 +5102,7 @@ function renderRedemption(){
   document.getElementById('rdBrandFilter').innerHTML=`<option value="all">ทุกแบรนด์</option>`+rdBrands.map(b=>`<option value="${b.k}" ${REDEMPTION_FILTER.brand===b.k?'selected':''}>${b.n}</option>`).join('');
   document.getElementById('rdProductFilter').innerHTML=`<option value="all">สินค้าทั้งหมด</option>`+rdProducts.map(p=>`<option value="${p}" ${REDEMPTION_FILTER.product===p?'selected':''}>${p}</option>`).join('');
   document.getElementById('rdEmployeeFilter').innerHTML=`<option value="all">พนักงานทั้งหมด</option>`+rdEmployees.map(n=>`<option value="${n}" ${REDEMPTION_FILTER.employee===n?'selected':''}>${n}</option>`).join('');
-  const rdPeriodRanges={'2026-09':'26/08/2026–17/09/2026','2026-08':'26/07/2026–25/08/2026','2026-07':'04/07/2026–25/07/2026'};
+  const rdPeriodRanges={'2026-09':'26/08/2026–20/09/2026','2026-08':'26/07/2026–25/08/2026','2026-07':'04/07/2026–25/07/2026'};
   const rdPeriodKey=`${REDEMPTION_PERIOD.year}-${String(REDEMPTION_PERIOD.month).padStart(2,'0')}`;
   const rdPeriodRange=rdPeriodRanges[rdPeriodKey]||'';
   document.getElementById('rdReportPeriod').textContent=rdPeriodRange?`รอบรายงาน ${rdPeriodRange}`:'รอบรายงาน —';
@@ -5129,10 +5135,10 @@ function renderRedemption(){
     lb.appendChild(el);
   });
   const brandCrossAll=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9?[
-    {key:'heaven',name:'HEAVEN Plus',qty:27,share:8.57,color:'#3b82f6'},
-    {key:'lord',name:'The Lord',qty:77,share:24.44,color:'#ef4444'},
-    {key:'wolf',name:'WOLF+',qty:170,share:53.97,color:'#8b5cf6'},
-    {key:'jk',name:'เจ้าขุน',qty:41,share:13.02,color:'#f59e0b'}
+    {key:'heaven',name:'HEAVEN Plus',qty:32,share:8.89,color:'#3b82f6'},
+    {key:'lord',name:'The Lord',qty:94,share:26.11,color:'#ef4444'},
+    {key:'wolf',name:'WOLF+',qty:188,share:52.22,color:'#8b5cf6'},
+    {key:'jk',name:'เจ้าขุน',qty:46,share:12.78,color:'#f59e0b'}
   ]:+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?[
     {key:'heaven',name:'HEAVEN Plus',qty:47,share:10.11,color:'#3b82f6'},
     {key:'lord',name:'The Lord',qty:121,share:26.02,color:'#ef4444'},
