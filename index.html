@@ -2499,11 +2499,11 @@ const SEED_REDEMPTION=(function(){
   Object.keys(augUnits).forEach(nm=>augUnits[nm].forEach((u,pi)=>{
     if(u>0)rows.push({date:'2026-08-17',reportMonth:'2026-08',employee:nm,product:augProducts[pi],unitPrice:augPrices[pi],units:u,reportedRevenue:pi===augUnits[nm].findIndex(x=>x>0)?augRevenue[nm]:null});
   }));
-  /* รอบเดือนกันยายน 2569: ข้อมูลสะสม 26/08/2026–22/09/2026 */
+  /* รอบเดือนกันยายน 2569: ข้อมูลสะสม 26/08/2026–25/09/2026 */
   const sepUnits={
-    'แพร':[8,12,9,16,14], 'แอ๋ม':[10,13,9,10,9], 'หนึ่ง':[13,5,8,11,22],
-    'ป้าย':[6,8,2,7,5], 'อชิ':[6,7,2,7,8], 'น้ำฝน':[10,12,6,9,12],
-    'แอปเปิ้ล':[11,13,3,6,8], 'เดียร์':[6,4,2,7,6], 'เกอร์':[11,13,1,12,14]
+    'แพร':[10,13,9,18,16], 'แอ๋ม':[12,13,9,10,10], 'หนึ่ง':[18,7,11,12,24],
+    'ป้าย':[6,8,4,7,5], 'อชิ':[6,8,3,7,11], 'น้ำฝน':[11,13,6,9,12],
+    'แอปเปิ้ล':[11,13,3,7,10], 'เดียร์':[7,4,3,7,6], 'เกอร์':[11,14,2,12,14]
   };
   const sepProducts=['กาแฟเจ้าขุน','น้ำหอมพลัส','ห่วงรัด','สบู่+เจล','สเปรย์ 1 แถม 1'];
   const sepPrices=[150,100,150,100,129];
@@ -2597,7 +2597,10 @@ const SEED_CROSS_SALE_DAILY_SEP=[
   {date:'19/09/2026',qty:12,cumulative:344,avg:13.76,change:-5,status:'ลดลง',note:'ลดลงจากวันก่อน'},
   {date:'20/09/2026',qty:16,cumulative:360,avg:13.85,change:4,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
   {date:'21/09/2026',qty:18,cumulative:378,avg:14.00,change:2,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'},
-  {date:'22/09/2026',qty:15,cumulative:393,avg:14.04,change:-3,status:'ลดลง',note:'ลดลงจากวันก่อน'}
+  {date:'22/09/2026',qty:15,cumulative:393,avg:14.04,change:-3,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'23/09/2026',qty:14,cumulative:407,avg:14.04,change:-1,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'24/09/2026',qty:12,cumulative:419,avg:13.97,change:-2,status:'ลดลง',note:'ลดลงจากวันก่อน'},
+  {date:'25/09/2026',qty:13,cumulative:432,avg:13.94,change:1,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'}
 ];
 const SEED_DTS=[ // DailyTargetSummary — สรุปเป้ารายวัน (ของจริงจากไฟล์เดิม, ใช้จนกว่าจะมีข้อมูลรายวันต่อคนเพียงพอ)
   {month:'2026-07',employee:'Amm',  totalDays:19,passOrderDays:9, failOrderDays:7, passRevenueDays:8, failRevenueDays:8},
@@ -4254,7 +4257,7 @@ const RD_DAILY_DATA={
  '2026-08':{label:'สิงหาคม 2569',period:'26/7/69–25/8/69 · 31 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','น้ำฝน','แอปเปิ้ล','เดียร์','เกอร์'],rows:[
  ['26/7/69',1,3,3,0,2,1,0,1,2],['27/7/69',5,4,6,5,2,1,0,0,2],['28/7/69',3,2,2,1,0,1,5,1,2],['29/7/69',3,1,6,4,1,2,1,1,4],['30/7/69',0,0,4,1,2,0,6,4,0],['31/7/69',5,1,0,2,5,1,0,2,0],['1/8/69',0,3,3,1,4,3,1,1,1],['2/8/69',1,1,3,0,0,0,2,0,2],['3/8/69',3,0,1,0,1,1,2,0,2],['4/8/69',4,0,4,3,2,1,2,1,1],['5/8/69',3,5,4,0,0,2,2,0,2],['6/8/69',1,2,0,5,2,1,1,2,4],['7/8/69',1,3,2,2,3,0,1,2,3],['8/8/69',0,1,5,2,0,1,0,0,0],['9/8/69',0,4,3,0,0,2,3,2,2],['10/8/69',1,0,3,1,5,4,0,0,3],['11/8/69',2,0,3,4,2,4,0,1,0],['12/8/69',1,4,0,0,1,3,4,2,3],['13/8/69',3,4,4,0,1,0,3,1,1],['14/8/69',5,3,0,0,2,1,1,0,3],['15/8/69',0,1,4,0,1,1,5,0,2],['16/8/69',0,3,1,2,5,0,1,1,2],['17/8/69',1,3,2,2,0,1,1,0,7],['18/8/69',3,0,2,0,3,0,1,1,2],['19/8/69',1,1,1,0,0,0,0,0,2],['20/8/69',5,1,1,0,1,0,0,1,0],['21/8/69',1,2,0,1,0,1,1,1,1],['22/8/69',4,1,2,2,0,2,0,1,4],['23/8/69',3,3,2,1,1,1,0,1,2],['24/8/69',2,0,2,3,2,3,2,2,3],['25/8/69',0,0,0,0,0,0,0,0,0]
  ]},
- '2026-09':{label:'กันยายน 2569',period:'26/8/69–22/9/69 · 28 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','น้ำฝน','แอปเปิ้ล','เดียร์','เกอร์'],reportedTotals:[59,51,59,28,30,49,41,25,51],reportedDayTotals:{'18/9/69':17,'19/9/69':12,'20/9/69':16,'21/9/69':18,'22/9/69':15},rows:[
+ '2026-09':{label:'กันยายน 2569',period:'26/8/69–25/9/69 · 31 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','น้ำฝน','แอปเปิ้ล','เดียร์','เกอร์'],reportedTotals:[66,54,72,30,35,51,44,27,53],reportedDayTotals:{'18/9/69':17,'19/9/69':12,'20/9/69':16,'21/9/69':18,'22/9/69':15,'23/9/69':14,'24/9/69':12,'25/9/69':13},rows:[
  ['26/8/69',2,1,2,0,1,0,1,3,1],
  ['27/8/69',1,4,4,1,2,3,1,1,1],
  ['28/8/69',0,2,0,5,1,0,2,0,2],
@@ -4282,7 +4285,10 @@ const RD_DAILY_DATA={
  ['19/9/69',0,2,1,0,1,2,3,1,2],
  ['20/9/69',6,2,1,0,0,2,0,1,4],
  ['21/9/69',1,3,3,0,1,3,4,0,3],
- ['22/9/69',6,0,1,2,3,2,0,0,1]
+ ['22/9/69',6,0,1,2,3,2,0,0,1],
+ ['23/9/69',2,1,3,2,3,0,2,0,1],
+ ['24/9/69',2,0,5,0,1,2,0,2,0],
+ ['25/9/69',3,2,5,0,1,0,1,0,1]
  ]}
 };
 RD_DAILY_DATA['2026-08'].rows[30]=['25/8/69',2,2,1,0,1,0,3,0,1];
@@ -5103,7 +5109,7 @@ function renderRedemption(){
   document.getElementById('rdBrandFilter').innerHTML=`<option value="all">ทุกแบรนด์</option>`+rdBrands.map(b=>`<option value="${b.k}" ${REDEMPTION_FILTER.brand===b.k?'selected':''}>${b.n}</option>`).join('');
   document.getElementById('rdProductFilter').innerHTML=`<option value="all">สินค้าทั้งหมด</option>`+rdProducts.map(p=>`<option value="${p}" ${REDEMPTION_FILTER.product===p?'selected':''}>${p}</option>`).join('');
   document.getElementById('rdEmployeeFilter').innerHTML=`<option value="all">พนักงานทั้งหมด</option>`+rdEmployees.map(n=>`<option value="${n}" ${REDEMPTION_FILTER.employee===n?'selected':''}>${n}</option>`).join('');
-  const rdPeriodRanges={'2026-09':'26/08/2026–22/09/2026','2026-08':'26/07/2026–25/08/2026','2026-07':'04/07/2026–25/07/2026'};
+  const rdPeriodRanges={'2026-09':'26/08/2026–25/09/2026','2026-08':'26/07/2026–25/08/2026','2026-07':'04/07/2026–25/07/2026'};
   const rdPeriodKey=`${REDEMPTION_PERIOD.year}-${String(REDEMPTION_PERIOD.month).padStart(2,'0')}`;
   const rdPeriodRange=rdPeriodRanges[rdPeriodKey]||'';
   document.getElementById('rdReportPeriod').textContent=rdPeriodRange?`รอบรายงาน ${rdPeriodRange}`:'รอบรายงาน —';
@@ -5136,10 +5142,10 @@ function renderRedemption(){
     lb.appendChild(el);
   });
   const brandCrossAll=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9?[
-    {key:'heaven',name:'HEAVEN Plus',qty:35,share:8.91,color:'#3b82f6'},
-    {key:'lord',name:'The Lord',qty:104,share:26.46,color:'#ef4444'},
-    {key:'wolf',name:'WOLF+',qty:203,share:51.65,color:'#8b5cf6'},
-    {key:'jk',name:'เจ้าขุน',qty:51,share:12.98,color:'#f59e0b'}
+    {key:'heaven',name:'HEAVEN Plus',qty:39,share:9.03,color:'#3b82f6'},
+    {key:'lord',name:'The Lord',qty:111,share:25.69,color:'#ef4444'},
+    {key:'wolf',name:'WOLF+',qty:227,share:52.55,color:'#8b5cf6'},
+    {key:'jk',name:'เจ้าขุน',qty:55,share:12.73,color:'#f59e0b'}
   ]:+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?[
     {key:'heaven',name:'HEAVEN Plus',qty:47,share:10.11,color:'#3b82f6'},
     {key:'lord',name:'The Lord',qty:121,share:26.02,color:'#ef4444'},
