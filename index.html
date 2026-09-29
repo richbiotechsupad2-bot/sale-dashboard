@@ -3176,13 +3176,14 @@ function orgSeed(){
     5:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ตาล','เกมส์','ป้าย','อชิ','เกอร์','เดียร์'],
     6:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ตาล','ป้าย','อชิ','เกอร์','เดียร์'],
     7:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ตาล','ป้าย','อชิ','เกอร์','เดียร์'],
-    8:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','อชิ','เกอร์','เดียร์','น้ำฝน']
+    8:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','อชิ','เกอร์','เดียร์','น้ำฝน'],
+    10:['แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','เกอร์','เดียร์','น้ำฝน']
   };
   const out={};
   Object.keys(monthlyNames).forEach(m=>{
     const people=[orgPerson('นุ๊ก','Supervisor','management','Supervisor')];
     monthlyNames[m].forEach((name,i)=>{
-      let role=name==='เปิ้ล'?'Lead':'Admin',shift=role==='Lead'?'management':(['หนึ่ง','แอ๋ม'].includes(name)?'wfh':(['เกอร์','เดียร์','น้ำฝน'].includes(name)?'afternoon':'morning'));
+      let role=name==='เปิ้ล'?'Lead':'Admin',shift=role==='Lead'?'management':(['หนึ่ง','แอ๋ม'].includes(name)?'wfh':m==='10'?(['เกอร์','เดียร์','น้ำฝน'].includes(name)?'morning':'afternoon'):(['เกอร์','เดียร์','น้ำฝน'].includes(name)?'afternoon':'morning'));
       people.push(orgPerson(name,role,shift,role==='Lead'?'Standby กะเช้า/กะบ่าย':shift==='wfh'?'Standby กะเช้า/กะบ่าย':''));
     });
     out['2026-'+String(m).padStart(2,'0')]=people;
@@ -3209,6 +3210,28 @@ function migrateAugust2026Roster(){
   })];
   try{localStorage.setItem(migrationKey,'1')}catch(e){}
 }
+function ensureOctober2026Roster(){
+  const migrationKey='sa2_admin_org_october_2026_v1';
+  try{if(localStorage.getItem(migrationKey))return}catch(e){}
+  const key='2026-10',existing=ORG_DATA[key]||[];
+  const source=existing.length?existing:(ORG_DATA['2026-09']||ORG_DATA['2026-08']||[]);
+  const shifts={'เกอร์':'morning','เดียร์':'morning','น้ำฝน':'morning','ป้าย':'afternoon','แพร':'afternoon'};
+  const desired=['นุ๊ก','แอ๋ม','แพร','เปิ้ล','หนึ่ง','ป้าย','เกอร์','เดียร์','น้ำฝน'];
+  const people=source.filter(p=>p.name!=='อชิ').map(p=>{
+    if(p.name==='เปิ้ล')return{...p,role:'Lead',shift:'management',status:'active',note:'Standby กะเช้า/กะบ่าย'};
+    if(p.name==='นุ๊ก')return{...p,role:'Supervisor',shift:'management',status:'active'};
+    if(['แอ๋ม','หนึ่ง'].includes(p.name))return{...p,role:'Admin',shift:'wfh',status:'active',note:'Standby กะเช้า/กะบ่าย'};
+    if(shifts[p.name])return{...p,role:'Admin',shift:shifts[p.name],status:'active'};
+    return p;
+  });
+  desired.forEach(name=>{
+    if(people.some(p=>p.name===name))return;
+    const role=name==='นุ๊ก'?'Supervisor':name==='เปิ้ล'?'Lead':'Admin';
+    const shift=role==='Supervisor'||role==='Lead'?'management':['แอ๋ม','หนึ่ง'].includes(name)?'wfh':shifts[name];
+    people.push(orgPerson(name,role,shift,role==='Lead'||shift==='wfh'?'Standby กะเช้า/กะบ่าย':role==='Supervisor'?'Supervisor':''));
+  });
+  ORG_DATA[key]=people;
+}
 function hydrateOrgPhotos(){
   Object.values(ORG_DATA).forEach(people=>people.forEach(p=>{
     if(!p.photo||p.photo==='__DEFAULT__')p.photo=ORG_PHOTOS[p.name]||ORG_FALLBACK;
@@ -3227,7 +3250,8 @@ function orgDataForStorage(){
 function loadOrgData(){
   try{ORG_DATA=JSON.parse(localStorage.getItem(ORG_STORE)||'{}')}catch(e){ORG_DATA={}}
   if(!Object.keys(ORG_DATA).length)ORG_DATA=orgSeed();
-  hydrateOrgPhotos();migrateAugust2026Roster();normalizeOrgData();saveOrgData(false);
+  hydrateOrgPhotos();migrateAugust2026Roster();ensureOctober2026Roster();normalizeOrgData();
+  if(saveOrgData(false)){try{localStorage.setItem('sa2_admin_org_october_2026_v1','1')}catch(e){}}
 }
 function saveOrgData(showMessage=true){
   try{
@@ -3250,7 +3274,7 @@ function initOrgFilters(){
   const y=document.getElementById('orgYear'),m=document.getElementById('orgMonth');if(!y||y.options.length)return;
   const years=[...new Set(Object.keys(ORG_DATA).map(k=>k.split('-')[0]))].sort().reverse();if(!years.includes('2026'))years.push('2026');
   y.innerHTML=years.map(v=>`<option value="${v}" ${v==='2026'?'selected':''}>พ.ศ. ${Number(v)+543}</option>`).join('');
-  m.innerHTML=ORG_MONTHS.map((v,i)=>`<option value="${String(i+1).padStart(2,'0')}" ${i===7?'selected':''}>${v}</option>`).join('');
+  m.innerHTML=ORG_MONTHS.map((v,i)=>`<option value="${String(i+1).padStart(2,'0')}" ${i===9?'selected':''}>${v}</option>`).join('');
 }
 function orgKey(){return document.getElementById('orgYear').value+'-'+document.getElementById('orgMonth').value}
 function currentOrgPeople(){
