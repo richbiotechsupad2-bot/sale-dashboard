@@ -1833,14 +1833,14 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
     <style>.m4-hero.m4-pop{transform:translateY(-3px);box-shadow:0 25px 52px rgba(54,31,124,.36)}</style>
     <!-- ═══ PAGE: MONTHLY 4-BRAND PERFORMANCE ═══ -->
     <div id="pg-monthly-brands" class="page"><div class="wrap">
-      <div class="m4-hero" onclick="this.classList.toggle('m4-pop')"><div class="m4-eyebrow">MONTHLY BRAND PERFORMANCE · 2569</div><div class="m4-title">📊 รายงานผลงานรายเดือน เปรียบเทียบ 4 แบรนด์</div><div class="m4-sub">เปรียบเทียบลูกค้า ออเดอร์ ยอดขาย ค่าโฆษณา และประสิทธิภาพรายแบรนด์ · ข้อมูลเดือนมีนาคม–สิงหาคม 2569</div></div>
+      <div class="m4-hero" onclick="this.classList.toggle('m4-pop')"><div class="m4-eyebrow">MONTHLY BRAND PERFORMANCE · 2569</div><div class="m4-title">📊 รายงานผลงานรายเดือน เปรียบเทียบ 4 แบรนด์</div><div class="m4-sub">เปรียบเทียบลูกค้า ออเดอร์ ยอดขาย ค่าโฆษณา และประสิทธิภาพรายแบรนด์ · ข้อมูลเดือนมีนาคม–กันยายน 2569</div></div>
       <div class="m4-kpis">
         <div class="m4-kpi" onclick="this.classList.toggle('m4-pop')"><span id="m4SalesLabel">ยอดขายรวม · กรกฎาคม</span><b id="m4SalesValue">฿7.38M</b><small id="m4SalesCompare">▼ 15.3% เทียบมิถุนายน</small></div>
         <div class="m4-kpi" onclick="this.classList.toggle('m4-pop')"><span>ยอดขายหลังหัก Ads</span><b id="m4NetValue">฿3.25M</b><small id="m4NetShare">44.1% ของยอดขายรวม</small></div>
         <div class="m4-kpi" onclick="this.classList.toggle('m4-pop')"><span>ROAS รวมโดยประมาณ</span><b id="m4RoasValue">1.79</b><small>ยอดขาย ÷ ค่า Ads</small></div>
         <div class="m4-kpi" onclick="this.classList.toggle('m4-pop')"><span>แบรนด์ยอดขายสูงสุด</span><b id="m4TopBrand">WOLF+</b><small id="m4TopBrandDetail">฿3.47M · กรกฎาคม</small></div>
       </div>
-      <div class="m4-toolbar"><div class="m4-month-box"><label for="m4MonthFilter">📅 เดือน</label><select id="m4MonthFilter" class="m4-month-select" onchange="setM4Month(this.value)"><option value="all">ทุกเดือน</option><option value="มีนาคม">มีนาคม</option><option value="เมษายน">เมษายน</option><option value="พฤษภาคม">พฤษภาคม</option><option value="มิถุนายน">มิถุนายน</option><option value="กรกฎาคม">กรกฎาคม</option><option value="สิงหาคม" selected>สิงหาคม</option></select></div><b style="font-size:11px;color:#475569">กรองแบรนด์:</b><button class="m4-filter active" onclick="filterM4('all',this)">ทั้งหมด</button><button class="m4-filter" onclick="filterM4('hv',this)">💙 HEAVEN Plus</button><button class="m4-filter" onclick="filterM4('tl',this)">❤️ The Lord</button><button class="m4-filter" onclick="filterM4('wp',this)">🩵 WOLF+</button><button class="m4-filter" onclick="filterM4('jk',this)">🧡 เจ้าขุน</button><span class="m4-note">เลื่อนตารางซ้าย–ขวาเพื่อดูข้อมูลทั้งหมด</span></div>
+      <div class="m4-toolbar"><div class="m4-month-box"><label for="m4MonthFilter">📅 เดือน</label><select id="m4MonthFilter" class="m4-month-select" onchange="setM4Month(this.value)"><option value="all">ทุกเดือน</option><option value="มีนาคม">มีนาคม</option><option value="เมษายน">เมษายน</option><option value="พฤษภาคม">พฤษภาคม</option><option value="มิถุนายน">มิถุนายน</option><option value="กรกฎาคม">กรกฎาคม</option><option value="สิงหาคม">สิงหาคม</option><option value="กันยายน" selected>กันยายน</option></select></div><b style="font-size:11px;color:#475569">กรองแบรนด์:</b><button class="m4-filter active" onclick="filterM4('all',this)">ทั้งหมด</button><button class="m4-filter" onclick="filterM4('hv',this)">💙 HEAVEN Plus</button><button class="m4-filter" onclick="filterM4('tl',this)">❤️ The Lord</button><button class="m4-filter" onclick="filterM4('wp',this)">🩵 WOLF+</button><button class="m4-filter" onclick="filterM4('jk',this)">🧡 เจ้าขุน</button><span class="m4-note">เลื่อนตารางซ้าย–ขวาเพื่อดูข้อมูลทั้งหมด</span></div>
       <div class="m4-card"><div class="m4-card-head">🔎 ตารางเปรียบเทียบผลการดำเนินงานรายเดือน</div><div class="m4-scroll"><table class="m4-table">
         <thead><tr><th colspan="2">▦ ช่วงเวลาและแบรนด์</th><th colspan="5">👥 ลูกค้าและออเดอร์</th><th colspan="3">💰 ยอดขาย</th><th colspan="3">📣 ค่าโฆษณา</th><th colspan="4">📈 ประสิทธิภาพและกำไร</th></tr><tr><th>เดือน</th><th>แบรนด์</th><th>คนทัก</th><th>ออเดอร์<br>ลูกค้าเก่า</th><th>ออเดอร์<br>ลูกค้าใหม่</th><th>ออเดอร์<br>ทั้งหมด</th><th>%ปิด<br>ลูกค้าต่อทัก</th><th>ยอดขาย<br>ลูกค้าเก่า</th><th>ยอดขาย<br>ลูกค้าใหม่</th><th>ยอดขายรวม</th><th>ค่า Ads</th><th>% Ads</th><th>ROAS</th><th>ต้นทุนต่อทัก</th><th>ต้นทุนต่อ<br>ลูกค้าใหม่</th><th>เฉลี่ยต่อบิล</th><th>ยอดขาย -<br>ค่า Ads</th></tr></thead>
         <tbody id="m4-tbody"></tbody>
@@ -3121,9 +3121,13 @@ const M4_ROWS=[
 ['สิงหาคม','hv','HEAVEN Plus','9,043','1,058','1,293','2,351','26%','619,349','458,020','1,077,369','479,714','45%','2.25','53','371','458','597,655'],
 ['สิงหาคม','tl','The Lord','29,635','2,221','4,768','6,989','23.58%','915,976','1,380,373','2,296,349','1,343,135','58%','1.71','45','282','329','953,215'],
 ['สิงหาคม','wp','WOLF+','41,529','2,170','9,505','11,675','28.11%','786,263','2,365,461','3,151,724','1,635,521','52%','1.93','39','172','270','1,516,203'],
-['สิงหาคม','jk','เจ้าขุน','7,672','204','2,190','2,190','31.20%','88,650','827,000','915,650','531,443','58%','1.72','69','243','382','384,207']
+['สิงหาคม','jk','เจ้าขุน','7,672','204','2,190','2,190','31.20%','88,650','827,000','915,650','531,443','58%','1.72','69','243','382','384,207'],
+['กันยายน','hv','HEAVEN Plus','3,704','774','357','1,131','30.53%','472,005','152,743','624,748','304,917','49%','2.05','82','854','552','319,831'],
+['กันยายน','tl','The Lord','19,233','2,194','3,296','5,490','28.54%','921,248','969,573','1,890,821','1,190,915','63%','1.59','62','361','344','699,906'],
+['กันยายน','wp','WOLF+','36,504','2,122','8,893','11,015','30.17%','792,818','2,241,415','3,034,233','1,607,348','53%','1.89','44','181','275','1,426,885'],
+['กันยายน','jk','เจ้าขุน','7,979','377','2,013','2,390','29.95%','152,900','768,950','921,850','561,503','61%','1.64','70','279','386','360,347']
 ];
-let M4_MONTH='สิงหาคม',M4_BRAND='all';
+let M4_MONTH='กันยายน',M4_BRAND='all';
 function m4Num(v){return Number(String(v||0).replace(/,/g,'').replace('—','0'))||0}
 function m4Money(v){if(v>=1000000)return '฿'+(v/1000000).toFixed(2)+'M';if(v>=1000)return '฿'+(v/1000).toFixed(1)+'K';return '฿'+v.toLocaleString('en-US')}
 function renderMonthlyBrands(){
@@ -3142,8 +3146,8 @@ function updateM4Kpis(){
   const sales=rows.reduce((s,r)=>s+m4Num(r[10]),0),ads=rows.reduce((s,r)=>s+m4Num(r[11]),0),net=rows.reduce((s,r)=>s+m4Num(r[17]),0),period=M4_MONTH==='all'?'ทุกเดือน':M4_MONTH;
   document.getElementById('m4SalesLabel').textContent='ยอดขายรวม · '+period;document.getElementById('m4SalesValue').textContent=m4Money(sales);document.getElementById('m4NetValue').textContent=m4Money(net);document.getElementById('m4NetShare').textContent=(sales?net/sales*100:0).toFixed(1)+'% ของยอดขายรวม';document.getElementById('m4RoasValue').textContent=ads?(sales/ads).toFixed(2):'—';
   const top=rows.slice().sort((a,b)=>m4Num(b[10])-m4Num(a[10]))[0];document.getElementById('m4TopBrand').textContent=top?top[2]:'—';document.getElementById('m4TopBrandDetail').textContent=top?m4Money(m4Num(top[10]))+' · '+period:'ไม่มีข้อมูล';
-  const months=['มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม'],idx=months.indexOf(M4_MONTH),prev=idx>0?months[idx-1]:null,prevRows=prev?M4_ROWS.filter(r=>r[0]===prev&&(M4_BRAND==='all'||r[1]===M4_BRAND)):[],prevSales=prevRows.reduce((s,r)=>s+m4Num(r[10]),0),compare=document.getElementById('m4SalesCompare');
-  if(prev&&prevSales){const pct=(sales-prevSales)/prevSales*100;compare.textContent=(pct>=0?'▲ ':'▼ ')+Math.abs(pct).toFixed(1)+'% เทียบ'+prev;compare.style.color=pct>=0?'#059669':'#dc2626'}else{compare.textContent=M4_MONTH==='all'?'รวมข้อมูล มีนาคม–สิงหาคม':'เดือนแรกที่มีข้อมูล';compare.style.color='#64748b'}
+  const months=['มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน'],idx=months.indexOf(M4_MONTH),prev=idx>0?months[idx-1]:null,prevRows=prev?M4_ROWS.filter(r=>r[0]===prev&&(M4_BRAND==='all'||r[1]===M4_BRAND)):[],prevSales=prevRows.reduce((s,r)=>s+m4Num(r[10]),0),compare=document.getElementById('m4SalesCompare');
+  if(prev&&prevSales){const pct=(sales-prevSales)/prevSales*100;compare.textContent=(pct>=0?'▲ ':'▼ ')+Math.abs(pct).toFixed(1)+'% เทียบ'+prev;compare.style.color=pct>=0?'#059669':'#dc2626'}else{compare.textContent=M4_MONTH==='all'?'รวมข้อมูล มีนาคม–กันยายน':'เดือนแรกที่มีข้อมูล';compare.style.color='#64748b'}
 }
 
 /* ══════════════════════════════════════════════════════════════════
