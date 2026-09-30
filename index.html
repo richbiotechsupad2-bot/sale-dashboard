@@ -2278,6 +2278,21 @@ const DATA = {
 };
 const MONTH_TH=['','ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 const EMPLOYEE_DAILY_REPORTS={
+  '2026-10':{
+    year:2026,month:10,label:'ตุลาคม 2569',range:'26/09/2026–29/09/2026',days:4,teamWorkdays:20,focusMetric:'order',orderTarget:100,revenueTarget:33334,
+    targetNote:'26–29 ก.ย. ใช้เป้า 50%: 50 ออเดอร์ / 16,667 บาทต่อวัน',
+    totalOrders:2285,totalSales:754992,orderPassPct:100,salesPassPct:100,
+    employees:[
+      {name:'Apple',orders:253,sales:86012,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Tiger',orders:301,sales:102782,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Deer',orders:299,sales:90815,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Namfon',orders:238,sales:80520,orderPass:2,orderFail:0,salesPass:2,salesFail:0},
+      {name:'Nueng',orders:534,sales:179667,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Amm',orders:369,sales:123997,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Pay',orders:272,sales:83508,orderPass:3,orderFail:0,salesPass:3,salesFail:0},
+      {name:'Pear',orders:19,sales:7691,orderPass:0,orderFail:0,salesPass:0,salesFail:0,pending:true}
+    ]
+  },
   '2026-09':{
     year:2026,month:9,label:'กันยายน 2569',range:'26/08/2026–25/09/2026',days:31,teamWorkdays:230,focusMetric:'order',orderTarget:100,revenueTarget:27600,
     totalOrders:19434,totalSales:6263656,orderPassPct:26.09,salesPassPct:47.39,
@@ -3339,7 +3354,7 @@ function renderEmployeeDaily(){
   const selectedEmployee=employeeSelect.value||'all';
   employeeSelect.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+r.employees.map(e=>`<option value="${e.name}">${e.name}</option>`).join('');
   employeeSelect.value=r.employees.some(e=>e.name===selectedEmployee)?selectedEmployee:'all';
-  document.getElementById('edPeriod').textContent=`รอบรายงาน ${r.range} · เป้า ${fmtN(r.orderTarget)} ออเดอร์ และ ${fmtN(r.revenueTarget)} บาท/วัน`;
+  document.getElementById('edPeriod').textContent=`รอบรายงาน ${r.range} · เป้า ${fmtN(r.orderTarget)} ออเดอร์ และ ${fmtN(r.revenueTarget)} บาท/วัน${r.targetNote?' · '+r.targetNote:''}`;
   const activeDays=r.employees.reduce((s,e)=>s+e.orderPass+e.orderFail,0);
   const avgOrders=Math.round(r.totalOrders/r.employees.length),avgSales=Math.round(r.totalSales/r.employees.length);
   const kpis=[
@@ -3356,21 +3371,24 @@ function renderEmployeeDaily(){
   const weakest=[...(activeEmployees.length?activeEmployees:r.employees)].sort((a,b)=>{const av=useOrderFocus?a.orderPass/Math.max(1,a.orderPass+a.orderFail):a.salesPass/Math.max(1,a.salesPass+a.salesFail),bv=useOrderFocus?b.orderPass/Math.max(1,b.orderPass+b.orderFail):b.salesPass/Math.max(1,b.salesPass+b.salesFail);return av-bv})[0];
   const weakestPct=useOrderFocus?weakest.orderPass/Math.max(1,weakest.orderPass+weakest.orderFail)*100:weakest.salesPass/Math.max(1,weakest.salesPass+weakest.salesFail)*100;
   document.getElementById('edHighlights').innerHTML=`<div class="ed-winner"><strong>🏆 ผลงานเด่นประจำเดือน</strong><p><span class="big">${topSales.name}</span> ทำยอดขายสูงสุด ${fmtB(topSales.sales)} · ${topOrder.name} ทำออเดอร์สูงสุด ${fmtN(topOrder.orders)} ออเดอร์</p></div><div class="ed-focus"><strong>🎯 Executive Focus</strong><p><span class="big">${weakest.name}</span> มีอัตราผ่านเป้า${useOrderFocus?'ออเดอร์':'ยอดขาย'}ต่ำสุด ${fmtPct(weakestPct,1)} ควรได้รับ Coaching เป็นลำดับแรก</p></div>`;
+  if(r.targetNote&&r.orderPassPct===100&&r.salesPassPct===100){
+    document.querySelector('#edHighlights .ed-focus p').innerHTML=`<span class="big">ผ่าน 100%</span> ทั้งออเดอร์และยอดขาย · ${activeEmployees.length} คน รวม ${activeDays} วันทำงาน · Pear รอผล ไม่นับในอัตราผ่าน`;
+  }
   const selectedName=document.getElementById('edSearch').value||'all',sort=document.getElementById('edSort').value;
   let rows=r.employees.filter(e=>selectedName==='all'||e.name===selectedName);
   const sorters={sales:(a,b)=>b.sales-a.sales,orders:(a,b)=>b.orders-a.orders,salesPass:(a,b)=>b.salesPass-a.salesPass,orderPass:(a,b)=>b.orderPass-a.orderPass,name:(a,b)=>a.name.localeCompare(b.name)};
   rows=[...rows].sort(sorters[sort]||sorters.sales);
   document.getElementById('edPeople').innerHTML=rows.length?rows.map((e,i)=>{
     const op=e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100,sp=e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100,c=ED_COLORS[i%ED_COLORS.length];
-    return `<article class="ed-person" style="--ec:${c}" onclick="selectEmployeeDaily('${e.name}')"><span class="ed-person-rank">#${i+1}</span><div class="ed-person-name">${e.name}</div><div class="ed-person-sales">${fmtB(e.sales)}</div><div class="ed-person-orders">📦 ${fmtN(e.orders)} ออเดอร์</div><div class="ed-pass-row"><div class="ed-pass order"><span>ผ่านออเดอร์</span><b>${fmtPct(op,1)}</b></div><div class="ed-pass"><span>ผ่านยอดขาย</span><b>${fmtPct(sp,1)}</b></div></div></article>`
+    return `<article class="ed-person" style="--ec:${c}" onclick="selectEmployeeDaily('${e.name}')"><span class="ed-person-rank">#${i+1}</span><div class="ed-person-name">${e.name}</div><div class="ed-person-sales">${fmtB(e.sales)}</div><div class="ed-person-orders">📦 ${fmtN(e.orders)} ออเดอร์</div><div class="ed-pass-row"><div class="ed-pass order"><span>ผ่านออเดอร์</span><b>${e.pending?'รอผล':fmtPct(op,1)}</b></div><div class="ed-pass"><span>ผ่านยอดขาย</span><b>${e.pending?'รอผล':fmtPct(sp,1)}</b></div></div></article>`
   }).join(''):'<div class="ed-card ed-empty">ไม่พบชื่อพนักงานตามคำค้นหา</div>';
   document.getElementById('edTbody').innerHTML=rows.length?rows.map((e,i)=>{
     const op=e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100,sp=e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100;
-    return `<tr><td><span class="ed-rank ${i<3?'top':''}">${i<3?MED[i]:i+1}</span></td><td class="name">${e.name}</td><td class="orders">${fmtN(e.orders)}</td><td class="sales">${fmtB(e.sales)}</td><td><span class="ed-pill pass">${e.orderPass} วัน</span></td><td><span class="ed-pill fail">${e.orderFail} วัน</span></td><td><span class="ed-pill pass">${e.salesPass} วัน</span></td><td><span class="ed-pill fail">${e.salesFail} วัน</span></td><td>${fmtPct(op,1)}</td><td>${fmtPct(sp,1)}</td></tr>`
+    return `<tr><td><span class="ed-rank ${i<3?'top':''}">${i<3?MED[i]:i+1}</span></td><td class="name">${e.name}</td><td class="orders">${fmtN(e.orders)}</td><td class="sales">${fmtB(e.sales)}</td><td><span class="ed-pill pass">${e.orderPass} วัน</span></td><td><span class="ed-pill fail">${e.orderFail} วัน</span></td><td><span class="ed-pill pass">${e.salesPass} วัน</span></td><td><span class="ed-pill fail">${e.salesFail} วัน</span></td><td>${e.pending?'รอผล':fmtPct(op,1)}</td><td>${e.pending?'รอผล':fmtPct(sp,1)}</td></tr>`
   }).join(''):'<tr><td class="ed-empty" colspan="10">ไม่พบข้อมูลตามตัวกรอง</td></tr>';
   const labels=rows.map(e=>e.name),colors=rows.map((_,i)=>ED_COLORS[i%ED_COLORS.length]);
   mkChart('edPerformanceChart',{data:{labels,datasets:[{type:'bar',label:'ยอดขาย (บาท)',data:rows.map(e=>e.sales),backgroundColor:colors.map(c=>c+'d9'),borderColor:colors,borderWidth:1,borderRadius:8,yAxisID:'y'},{type:'line',label:'ออเดอร์',data:rows.map(e=>e.orders),borderColor:'#f59e0b',backgroundColor:'#f59e0b',pointBackgroundColor:'#fff',pointBorderColor:'#f59e0b',pointBorderWidth:3,pointRadius:5,tension:.3,yAxisID:'y1'}]},options:{responsive:true,interaction:{mode:'index',intersect:false},plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{grid:{display:false},ticks:{font:{weight:'bold'}}},y:{beginAtZero:true,grid:{color:GR},ticks:{callback:v=>'฿'+(v/1000)+'K'}},y1:{beginAtZero:true,position:'right',grid:{drawOnChartArea:false}}}}});
-  mkChart('edPassChart',{type:'bar',data:{labels,datasets:[{label:'ผ่านออเดอร์ %',data:rows.map(e=>e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100),backgroundColor:'#6366f1d9',borderRadius:6},{label:'ผ่านยอดขาย %',data:rows.map(e=>e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100),backgroundColor:'#10b981d9',borderRadius:6}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{min:0,max:100,grid:{color:GR},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{font:{weight:'bold'}}}}}});
+  mkChart('edPassChart',{type:'bar',data:{labels,datasets:[{label:'ผ่านออเดอร์ %',data:rows.map(e=>e.pending?null:e.orderPass/Math.max(1,e.orderPass+e.orderFail)*100),backgroundColor:'#6366f1d9',borderRadius:6},{label:'ผ่านยอดขาย %',data:rows.map(e=>e.pending?null:e.salesPass/Math.max(1,e.salesPass+e.salesFail)*100),backgroundColor:'#10b981d9',borderRadius:6}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{labels:{usePointStyle:true,font:{weight:'bold'}}}},scales:{x:{min:0,max:100,grid:{color:GR},ticks:{callback:v=>v+'%'}},y:{grid:{display:false},ticks:{font:{weight:'bold'}}}}}});
 }
 function openOrgEditor(id){
   const people=currentOrgPeople(),p=id?people.find(x=>x.id===id):null;ORG_EDIT_ID=p?p.id:null;ORG_NEW_PHOTO=p?p.photo:ORG_FALLBACK;
