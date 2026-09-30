@@ -2534,6 +2534,8 @@ const SEED_REDEMPTION=(function(){
   Object.keys(sepUnits).forEach(nm=>sepUnits[nm].forEach((u,pi)=>{
     rows.push({date:'2026-08-26',reportMonth:'2026-09',employee:nm,product:sepProducts[pi],unitPrice:sepPrices[pi],units:u});
   }));
+  const octUnits={'แอ๋ม':[3,1,0,1,4],'แอปเปิ้ล':[1,1,0,2,2],'เดียร์':[1,1,1,0,1],'น้ำฝน':[1,1,0,1,1],'หนึ่ง':[6,4,3,4,0],'ป้าย':[0,1,0,0,1],'เกอร์':[1,0,0,1,0],'แพร':[0,0,1,1,0]};
+  Object.entries(octUnits).forEach(([nm,counts])=>counts.forEach((u,i)=>{rows.push({date:'2026-09-29',reportMonth:'2026-10',employee:nm,product:sepProducts[i],unitPrice:sepPrices[i],units:u});}));
   return rows;
 })();
 const SEED_CROSS_SALE_DAILY=[
@@ -2592,6 +2594,13 @@ const SEED_CROSS_SALE_DAILY_AUG=[
   ,{date:'23/08/2026',qty:14,cumulative:436,avg:15.03,change:-2,status:'ลดลง',note:'ลดลงจากวันก่อน'}
   ,{date:'24/08/2026',qty:19,cumulative:455,avg:15.17,change:13,status:'เพิ่มขึ้น',note:'เพิ่มขึ้นจากวันก่อน'}
   ,{date:'25/08/2026',qty:10,cumulative:465,avg:15.00,change:-9,status:'ลดลง',note:'ลดลงจากวันก่อน'}
+];
+const SEED_CROSS_SALE_DAILY_OCT=[
+ {date:'26/09/2026',qty:11,cumulative:11,avg:11,change:0,status:'เริ่มต้น'},
+ {date:'27/09/2026',qty:9,cumulative:20,avg:10,change:-2,status:'ลดลง'},
+ {date:'28/09/2026',qty:11,cumulative:31,avg:10.33,change:2,status:'เพิ่มขึ้น'},
+ {date:'29/09/2026',qty:15,cumulative:46,avg:1.88,change:4,status:'เพิ่มขึ้น'},
+ ...Array.from({length:26},(_,i)=>{const d=new Date(Date.UTC(2026,8,30+i));return {date:String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/2026',qty:null,status:'รอข้อมูล'}})
 ];
 const SEED_CROSS_SALE_DAILY_SEP=[
   {date:'26/08/2026',qty:11,cumulative:11,avg:11.00,change:0,status:'เริ่มต้น',note:'วันแรกของรอบ'},
@@ -4302,6 +4311,10 @@ function renderAccountStatus(){
 
 /* ══════════════ JULY–AUGUST 2569 — DAILY ADMIN SALES ══════════════ */
 const RD_DAILY_DATA={
+ '2026-10':{label:'ตุลาคม 2569',period:'26/9/69–29/9/69 · 4 วัน',reportDays:4,employees:['แอ๋ม','แอปเปิ้ล','เดียร์','น้ำฝน','หนึ่ง','ป้าย','เกอร์','แพร'],reportedTotals:[9,6,4,4,17,2,2,2],rows:[
+ ['26/9/69',2,0,0,0,9,0,0,0],['27/9/69',0,1,0,2,6,0,0,0],['28/9/69',3,3,2,2,0,1,0,0],['29/9/69',4,2,2,0,2,1,2,2],
+ ...Array.from({length:26},(_,i)=>{const d=new Date(Date.UTC(2026,8,30+i));return [d.getUTCDate()+'/'+(d.getUTCMonth()+1)+'/69',...Array(8).fill(null)]})
+ ]},
  '2026-07':{label:'กรกฎาคม 2569',period:'4/7/69–25/7/69 · 22 วัน',employees:['แพร','แอ๋ม','หนึ่ง','ป้าย','อชิ','แอปเปิ้ล','เดียร์','ตาล','เกอร์'],rows:[
  ['4/7/69',0,3,1,0,4,1,1,0,1],['5/7/69',0,2,2,3,0,6,3,0,3],['6/7/69',0,1,4,3,1,0,2,4,4],['7/7/69',0,1,5,1,1,0,0,2,2],['8/7/69',3,0,4,1,1,2,2,4,1],['9/7/69',7,5,5,0,3,0,1,4,0],['10/7/69',4,4,1,1,1,0,0,5,3],['11/7/69',2,1,0,1,2,0,1,2,1],['12/7/69',2,3,0,4,3,5,1,1,1],['13/7/69',2,4,5,2,0,1,1,0,1],['14/7/69',0,1,5,3,1,4,1,2,1],['15/7/69',2,1,3,2,0,0,1,4,0],['16/7/69',3,3,2,0,3,1,1,0,0],['17/7/69',0,1,0,6,2,0,1,4,3],['18/7/69',2,0,3,1,2,2,1,4,1],['19/7/69',3,2,3,1,0,0,3,5,2],['20/7/69',4,2,2,4,1,0,1,2,0],['21/7/69',0,1,3,3,2,1,0,3,0],['22/7/69',3,0,2,2,3,2,0,4,2],['23/7/69',1,0,0,8,0,2,0,1,1],['24/7/69',2,1,5,0,1,6,0,3,2],['25/7/69',3,2,2,0,6,1,0,3,2]
  ]},
@@ -4352,8 +4365,9 @@ function renderAugustRedemptionDaily(){
  const section=document.getElementById('rd-aug-daily-sales'),table=document.getElementById('rdAugDailyTable');if(!section||!table)return;
  const year=String(REDEMPTION_PERIOD?.year||2026),month=String(REDEMPTION_PERIOD?.month||8),key=year+'-'+month.padStart(2,'0'),data=RD_DAILY_DATA[key]||null;
  if(!data){section.style.display='none';return}section.style.display='';
+ section.querySelector('.rd-aug-hero h3').textContent=`จำนวน Redemption รายวัน · พนักงาน ${data.employees.length} คน`;
  const requested=String(REDEMPTION_FILTER?.employee||'all'),chosen=data.employees.includes(requested)?requested:'all',indices=chosen==='all'?data.employees.map((_,i)=>i):[data.employees.indexOf(chosen)],totals=data.reportedTotals||data.employees.map((_,i)=>data.rows.reduce((n,r)=>n+(Number(r[i+1])||0),0)),shownTotal=indices.reduce((n,i)=>n+totals[i],0),max=Math.max(...totals),topIndices=totals.map((v,i)=>v===max?i:-1).filter(i=>i>=0),topNames=topIndices.map(i=>data.employees[i]);
- RD_DAILY_TOP_EMPLOYEE=topNames[0];document.getElementById('rdAugKpiTotal').textContent=shownTotal.toLocaleString('th-TH');document.getElementById('rdAugKpiCommission').textContent=(shownTotal*10).toLocaleString('th-TH');document.getElementById('rdAugKpiTop').textContent=topNames.join(' · ');document.getElementById('rdAugKpiTopSub').textContent=max+' ชิ้น';document.getElementById('rdAugKpiAvg').textContent=(shownTotal/data.rows.length).toFixed(1);
+ RD_DAILY_TOP_EMPLOYEE=topNames[0];document.getElementById('rdAugKpiTotal').textContent=shownTotal.toLocaleString('th-TH');document.getElementById('rdAugKpiCommission').textContent=(shownTotal*10).toLocaleString('th-TH');document.getElementById('rdAugKpiTop').textContent=topNames.join(' · ');document.getElementById('rdAugKpiTopSub').textContent=max+' ชิ้น';document.getElementById('rdAugKpiAvg').textContent=(shownTotal/(data.reportDays||data.rows.length)).toFixed(1);
  const head=indices.map(i=>'<th onclick="rdAugPickEmployee(\''+data.employees[i]+'\')" title="กดเพื่อดูเฉพาะ '+data.employees[i]+'">'+data.employees[i]+'</th>').join(''),body=data.rows.map(r=>{const knownValues=indices.filter(i=>Number.isFinite(r[i+1])),sum=knownValues.reduce((n,i)=>n+r[i+1],0),reportedTotal=chosen==='all'&&data.reportedDayTotals?.[r[0]]!=null?data.reportedDayTotals[r[0]]:knownValues.length===indices.length?sum:'—';return '<tr onclick="rdAugSelectRow(this)" title="กดเพื่อไฮไลต์ยอดวันนี้"><td>'+r[0]+'</td>'+indices.map(i=>'<td>'+(Number.isFinite(r[i+1])?r[i+1]:'—')+'</td>').join('')+'<td class="day-total">'+reportedTotal+'</td></tr>'}).join(''),foot=indices.map(i=>'<td>'+totals[i]+'</td>').join('');
  table.innerHTML='<thead><tr><th>วันที่</th>'+head+'<th>รวม/วัน</th></tr></thead><tbody>'+body+'</tbody><tfoot><tr><td>ยอดรวม</td>'+foot+'<td>'+shownTotal+'</td></tr></tfoot>';
 }
@@ -4589,7 +4603,7 @@ function brandAchievementRanking(){
   }).sort((a,b)=>b.pct-a.pct);
 }
 
-const REDEMPTION_PERIOD={year:'2026',month:'9'};
+const REDEMPTION_PERIOD={year:'2026',month:'10'};
 const REDEMPTION_FILTER={brand:'all',product:'all',employee:'all'};
 function redemptionInPeriod(r){
   return +r.reportY===+REDEMPTION_PERIOD.year&&+r.reportMo===+REDEMPTION_PERIOD.month;
@@ -4607,7 +4621,9 @@ function computeRedemption(){
   const periodRows=basePeriodRows.filter(r=>REDEMPTION_FILTER.product==='all'||r.product===REDEMPTION_FILTER.product);
   const productList=REDEMPTION_FILTER.product==='all'?[...new Set(basePeriodRows.map(r=>r.product))]:[REDEMPTION_FILTER.product];
   const priceOf=p=>{const r=basePeriodRows.find(x=>x.product===p);return r?r.unitPrice:0;};
-  const preferredOrder=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9
+  const preferredOrder=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===10
+    ?['หนึ่ง','แอ๋ม','แอปเปิ้ล','เดียร์','น้ำฝน','ป้าย','เกอร์','แพร']
+    :+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9
     ?['หนึ่ง','แพร','แอ๋ม','เกอร์','น้ำฝน','แอปเปิ้ล','ป้าย','อชิ','เดียร์']
     :['หนึ่ง','แพร','ป้าย','แอ๋ม','แอปเปิ้ล','เกอร์','อชิ','น้ำฝน','เดียร์'];
   const rows=names.map(name=>{
@@ -5185,7 +5201,7 @@ function renderRedemption(){
   document.getElementById('rdBrandFilter').innerHTML=`<option value="all">ทุกแบรนด์</option>`+rdBrands.map(b=>`<option value="${b.k}" ${REDEMPTION_FILTER.brand===b.k?'selected':''}>${b.n}</option>`).join('');
   document.getElementById('rdProductFilter').innerHTML=`<option value="all">สินค้าทั้งหมด</option>`+rdProducts.map(p=>`<option value="${p}" ${REDEMPTION_FILTER.product===p?'selected':''}>${p}</option>`).join('');
   document.getElementById('rdEmployeeFilter').innerHTML=`<option value="all">พนักงานทั้งหมด</option>`+rdEmployees.map(n=>`<option value="${n}" ${REDEMPTION_FILTER.employee===n?'selected':''}>${n}</option>`).join('');
-  const rdPeriodRanges={'2026-09':'26/08/2026–25/09/2026','2026-08':'26/07/2026–25/08/2026','2026-07':'04/07/2026–25/07/2026'};
+  const rdPeriodRanges={'2026-10':'26/09/2026–29/09/2026','2026-09':'26/08/2026–25/09/2026','2026-08':'26/07/2026–25/08/2026','2026-07':'04/07/2026–25/07/2026'};
   const rdPeriodKey=`${REDEMPTION_PERIOD.year}-${String(REDEMPTION_PERIOD.month).padStart(2,'0')}`;
   const rdPeriodRange=rdPeriodRanges[rdPeriodKey]||'';
   document.getElementById('rdReportPeriod').textContent=rdPeriodRange?`รอบรายงาน ${rdPeriodRange}`:'รอบรายงาน —';
@@ -5198,7 +5214,8 @@ function renderRedemption(){
    {ic:'🏆',l:'Top',v:rd.top?rd.top.name:'—',s:rd.top?`${fmtB(rd.top.rev)} · ${rd.top.totalUnits} ชิ้น`:'',c:'#e11d48',g:'#f43f5e,#e11d48',onClick:()=>rd.top&&setRedemptionEmployee(REDEMPTION_FILTER.employee===rd.top.name?'all':rd.top.name)},
   ].forEach(k=>ke.appendChild(kpiCard(k)));
   // Daily Cross Sale summary
-  const dailyRows=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9?SEED_CROSS_SALE_DAILY_SEP:+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?SEED_CROSS_SALE_DAILY_AUG:SEED_CROSS_SALE_DAILY;
+  document.querySelector('#rd-daily-section .rd-daily-title .ct').textContent=`จำนวน Cross Sale รายวัน · พนักงาน ${rdPeriodRows.length?new Set(rdPeriodRows.map(r=>r.employee)).size:0} คน`;
+  const dailyRows=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===10?SEED_CROSS_SALE_DAILY_OCT:+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9?SEED_CROSS_SALE_DAILY_SEP:+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===8?SEED_CROSS_SALE_DAILY_AUG:SEED_CROSS_SALE_DAILY;
   const dailyTbl=document.getElementById('rd-daily');
   dailyTbl.innerHTML=`<thead><tr><th>วันที่</th><th>จำนวน</th><th>สะสม</th><th>ค่าเฉลี่ยต่อ<br>พนักงาน</th><th>เทียบวันก่อน</th><th>สถานะ</th></tr></thead><tbody>${dailyRows.map(r=>{
     const has=Number.isFinite(r.qty), high=r.status==='ยอดสูง';
@@ -5217,7 +5234,12 @@ function renderRedemption(){
     el.innerHTML=`<div class="lb-rk">${r<3?MED[r]:r+1}</div><div class="lb-nm">${s.name}</div><div class="lb-bw"><div class="lb-bf" style="width:${w}%;background:linear-gradient(90deg,#f43f5e,#f59e0b)"></div></div><div class="lb-rv">${fmtB(s.rev)}</div><div class="lb-pp">${s.totalUnits}ชิ้น</div>`;
     lb.appendChild(el);
   });
-  const brandCrossAll=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9?[
+  const brandCrossAll=+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===10?[
+ {key:'heaven',name:'HEAVEN Plus',qty:9,share:9/46*100,color:'#3b82f6'},
+ {key:'lord',name:'The Lord',qty:10,share:10/46*100,color:'#ef4444'},
+ {key:'wolf',name:'WOLF+',qty:20,share:20/46*100,color:'#8b5cf6'},
+ {key:'jk',name:'เจ้าขุน',qty:7,share:7/46*100,color:'#f59e0b'}
+ ]:+REDEMPTION_PERIOD.year===2026&&+REDEMPTION_PERIOD.month===9?[
     {key:'heaven',name:'HEAVEN Plus',qty:39,share:9.03,color:'#3b82f6'},
     {key:'lord',name:'The Lord',qty:111,share:25.69,color:'#ef4444'},
     {key:'wolf',name:'WOLF+',qty:227,share:52.55,color:'#8b5cf6'},
