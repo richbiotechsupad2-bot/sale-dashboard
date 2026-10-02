@@ -4410,6 +4410,13 @@ const PAGE_RENDER={
 let currentPage='pg-dashboard';
 const inited={};
 function showPage(id){
+  if((id==='pg-dashboard'||id==='pg-insight')&&!inited[id]){
+    const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Bangkok',year:'numeric',month:'numeric'}).formatToParts(new Date());
+    const year=Number(parts.find(p=>p.type==='year').value),month=Number(parts.find(p=>p.type==='month').value);
+    const years=getAvailableYears(),selectedYear=years.includes(year)?year:years[0],months=getAvailableMonths(selectedYear);
+    const selectedMonth=selectedYear===year&&months.includes(month)?month:months[months.length-1];
+    if(selectedYear&&selectedMonth){STATE.year=String(selectedYear);STATE.month=String(selectedMonth);STATE.brand='all';STATE.empA='all';STATE.empB='all';populateYearOptions();populateMonthOptions();refreshChips();}
+  }
   if(id==='pg-sales'&&!inited[id]){
     const latest=RAW.sales.filter(r=>r.employee).sort((a,b)=>b.y-a.y||b.mo-a.mo)[0];
     if(latest){STATE.year=String(latest.y);STATE.month=String(latest.mo);STATE.brand='all';STATE.empA='all';refreshChips();}
