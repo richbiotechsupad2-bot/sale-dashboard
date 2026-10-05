@@ -4491,10 +4491,17 @@ function computeGP(){
   return{brands,rows,brandStats,overallPassPct:totalCells?totalPass/totalCells*100:0,totalPass,totalCells};
 }
 
+// Sales & Orders: October cumulative report through 04/10/2026.
+// Keep other menus on their existing submitted reports.
+const SO_OCTOBER_REPORT_ROWS=[{"y":2026,"mo":10,"d":4,"employee":"Amm","brand":"hv","orders":81,"revenue":35149},{"y":2026,"mo":10,"d":4,"employee":"Apple","brand":"hv","orders":30,"revenue":14830},{"y":2026,"mo":10,"d":4,"employee":"Deer","brand":"hv","orders":52,"revenue":22498},{"y":2026,"mo":10,"d":4,"employee":"Namfon","brand":"hv","orders":52,"revenue":26738},{"y":2026,"mo":10,"d":4,"employee":"Nueng","brand":"hv","orders":78,"revenue":39002},{"y":2026,"mo":10,"d":4,"employee":"Pay","brand":"hv","orders":18,"revenue":7802},{"y":2026,"mo":10,"d":4,"employee":"Tiger","brand":"hv","orders":43,"revenue":22547},{"y":2026,"mo":10,"d":4,"employee":"Pear","brand":"hv","orders":120,"revenue":52760},{"y":2026,"mo":10,"d":4,"employee":"Amm","brand":"tl","orders":243,"revenue":87414},{"y":2026,"mo":10,"d":4,"employee":"Apple","brand":"tl","orders":214,"revenue":75286},{"y":2026,"mo":10,"d":4,"employee":"Deer","brand":"tl","orders":207,"revenue":67621},{"y":2026,"mo":10,"d":4,"employee":"Namfon","brand":"tl","orders":189,"revenue":64959},{"y":2026,"mo":10,"d":4,"employee":"Nueng","brand":"tl","orders":309,"revenue":113547},{"y":2026,"mo":10,"d":4,"employee":"Pay","brand":"tl","orders":154,"revenue":56105},{"y":2026,"mo":10,"d":4,"employee":"Tiger","brand":"tl","orders":176,"revenue":57072},{"y":2026,"mo":10,"d":4,"employee":"Amm","brand":"wolf","orders":459,"revenue":125778},{"y":2026,"mo":10,"d":4,"employee":"Apple","brand":"wolf","orders":355,"revenue":96475},{"y":2026,"mo":10,"d":4,"employee":"Deer","brand":"wolf","orders":420,"revenue":114150},{"y":2026,"mo":10,"d":4,"employee":"Namfon","brand":"wolf","orders":375,"revenue":105435},{"y":2026,"mo":10,"d":4,"employee":"Nueng","brand":"wolf","orders":595,"revenue":169831},{"y":2026,"mo":10,"d":4,"employee":"Pay","brand":"wolf","orders":299,"revenue":89310},{"y":2026,"mo":10,"d":4,"employee":"Tiger","brand":"wolf","orders":375,"revenue":103295},{"y":2026,"mo":10,"d":4,"employee":"Amm","brand":"jk","orders":144,"revenue":58450},{"y":2026,"mo":10,"d":4,"employee":"Apple","brand":"jk","orders":125,"revenue":47400},{"y":2026,"mo":10,"d":4,"employee":"Deer","brand":"jk","orders":86,"revenue":32100},{"y":2026,"mo":10,"d":4,"employee":"Namfon","brand":"jk","orders":95,"revenue":35550},{"y":2026,"mo":10,"d":4,"employee":"Nueng","brand":"jk","orders":198,"revenue":74350},{"y":2026,"mo":10,"d":4,"employee":"Pay","brand":"jk","orders":38,"revenue":14200},{"y":2026,"mo":10,"d":4,"employee":"Tiger","brand":"jk","orders":87,"revenue":32800}];
+function salesOrdersReportRows(){
+  return RAW.sales.filter(r=>!(r.y===2026&&r.mo===10)).concat(SO_OCTOBER_REPORT_ROWS);
+}
+
 function computeSO(){
   const brands=STATE.brand==='all'?DATA.brandMeta:[brandOf(STATE.brand)];
   const brandKeys=new Set(brands.map(b=>b.k));
-  const periodNamed=RAW.sales.filter(r=>r.employee&&brandKeys.has(r.brand)&&inPeriod(r.y,r.mo));
+  const periodNamed=salesOrdersReportRows().filter(r=>r.employee&&brandKeys.has(r.brand)&&inPeriod(r.y,r.mo));
   // แสดงเฉพาะพนักงานที่มีข้อมูลจริงในปี/เดือน/แบรนด์ที่เลือก
   // เพื่อไม่ให้ชื่อจากเดือนอื่นติดมาเป็นแถวหรือแท่งยอด 0
   const activeStaff=[...new Set(periodNamed.map(r=>r.employee))].sort();
@@ -4807,7 +4814,7 @@ function renderSales(){
   renderHeaderStats();
   const yearSel=document.getElementById('soYearFilter'),monthSel=document.getElementById('soMonthFilter'),brandSel=document.getElementById('soBrandFilter'),empSel=document.getElementById('soEmployeeFilter');
   const reportPeriods=[
-    {value:'2026-10',label:'ตุลาคม 2569',range:'26/09/2026–01/10/2026'},
+    {value:'2026-10',label:'ตุลาคม 2569',range:'26/09/2026–04/10/2026'},
     {value:'2026-09',label:'กันยายน 2569',range:'26/08/2026–25/09/2026'},
     {value:'2026-08',label:'สิงหาคม 2569',range:'26/07/2026–25/08/2026'},
     {value:'2026-07',label:'กรกฎาคม 2569',range:'26/06/2026–25/07/2026'},
@@ -4830,7 +4837,7 @@ function renderSales(){
   document.getElementById('soHeroTitle').textContent=periodMeta?`💰 Sale & Orders — ผลงานเดือน${periodMeta.label.replace(' 2569','')}`:STATE.year!=='all'?`💰 Sale & Orders — ภาพรวมปี ${Number(STATE.year)+543}`:'💰 Sale & Orders — ภาพรวมทุกปี';
   document.getElementById('soHeroPeriod').textContent=periodMeta?`รอบรายงาน ${periodMeta.range}`:STATE.year!=='all'?`ข้อมูลรวมทุกเดือนของปี ${Number(STATE.year)+543}`:'ข้อมูลรวมทุกช่วงรายงาน';
   brandSel.innerHTML='<option value="all">สินค้าทั้งหมด</option>'+DATA.brandMeta.map(b=>`<option value="${b.k}" ${STATE.brand===b.k?'selected':''}>${b.ic} ${b.lb}</option>`).join('');
-  const employees=[...new Set(RAW.sales.filter(r=>r.employee&&inPeriod(r.y,r.mo)).map(r=>r.employee))].sort();
+  const employees=[...new Set(salesOrdersReportRows().filter(r=>r.employee&&inPeriod(r.y,r.mo)).map(r=>r.employee))].sort();
   empSel.innerHTML='<option value="all">พนักงานทั้งหมด</option>'+employees.map(n=>`<option value="${n}" ${STATE.empA===n?'selected':''}>${n}</option>`).join('');
   document.getElementById('soOrderFilter').value=String(SO_VIEW.minOrders);
   document.getElementById('soRevenueFilter').value=String(SO_VIEW.minRevenue);
@@ -5858,4 +5865,3 @@ bootstrap();
 </script>
 </body>
 </html>
-
