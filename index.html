@@ -4214,7 +4214,7 @@ const COMMISSION_AUG_LATEST={totals:[3509.60,1198.59,2520.02,1670.79],total:8899
 Object.assign(COMMISSION_MONTH_SUMMARY.find(m=>m.value==='08'),COMMISSION_AUG_LATEST);
 const COMMISSION_SEP_LATEST={totals:[1816.78,531.12,2259.31,1087.71],total:5694.92};
 COMMISSION_MONTH_SUMMARY.push({value:'09',label:'ก.ย.',rows:COMMISSION_SEP_ROWS,...COMMISSION_SEP_LATEST,color:'#c38eaa'});
-const COMMISSION_OCT_LATEST={totals:[604.89,168.75,1254.64,37.50],total:2065.79};
+const COMMISSION_OCT_LATEST={totals:[877.10,268.03,1254.64,156.40],total:2556.17};
 const COMMISSION_OCT_ROWS=Array.from({length:30},(_,i)=>{
   const d=new Date(Date.UTC(2026,8,26+i));
   const date=String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/69';
@@ -4222,7 +4222,10 @@ const COMMISSION_OCT_ROWS=Array.from({length:30},(_,i)=>{
     '27/09/69':[208.37,0,456.94,0,665.31],
     '28/09/69':[0,43.75,81.79,0,125.54],
     '29/09/69':[198.24,62.50,400.31,18.75,679.81],
-    '30/09/69':[198.28,62.50,315.60,18.75,595.13]
+    '30/09/69':[198.28,62.50,315.60,18.75,595.13],
+    '01/10/69':[60.00,99.28,0,0,159.28],
+    '02/10/69':[60.00,0,0,100.15,160.15],
+    '03/10/69':[152.21,0,0,18.75,170.96]
   };
   return [date,...(values[date]||[0,0,0,0,0])];
 });
@@ -4269,8 +4272,8 @@ function renderCommissionOnlyLatestSeptember(){
   const month=monthSel?.value||'10';if(month!=='09'&&month!=='10')return;
   const periodRows=month==='10'?COMMISSION_OCT_ROWS:COMMISSION_SEP_ROWS,latest=month==='10'?COMMISSION_OCT_LATEST:COMMISSION_SEP_LATEST;
   const daySel=document.getElementById('coDay');if(daySel){const keepDay=daySel.value||'all';daySel.innerHTML='<option value="all">ทุกวัน</option>'+periodRows.map(r=>`<option value="${r[0]}">${r[0]}</option>`).join('');daySel.value=[...daySel.options].some(o=>o.value===keepDay)?keepDay:'all';daySel.dataset.month=month}
-  const sub=document.querySelector('#pg-commission .co-sub');if(sub)sub.textContent=month==='10'?'รอบรายงาน 26/09/2569–30/09/2569 · เดือน ต.ค. 2569':'รอบรายงาน 26/08/2569–21/09/2569 · เดือน ก.ย. 2569';
-  document.getElementById('pg-commission')?.style.setProperty('--co-top',month==='10'?"'★  TOP PRODUCT  ·  WOLF+  60.7%'":"'★  TOP PRODUCT  ·  WOLF+  39.7%'");
+  const sub=document.querySelector('#pg-commission .co-sub');if(sub)sub.textContent=month==='10'?'รอบรายงาน 26/09/2569–04/10/2569 · เดือน ต.ค. 2569':'รอบรายงาน 26/08/2569–21/09/2569 · เดือน ก.ย. 2569';
+  document.getElementById('pg-commission')?.style.setProperty('--co-top',month==='10'?"'★  TOP PRODUCT  ·  WOLF+  49.1%'":"'★  TOP PRODUCT  ·  WOLF+  39.7%'");
   const product=document.getElementById('coProduct')?.value||'all',day=daySel?.value||'all',rows=day==='all'?periodRows:periodRows.filter(r=>r[0]===day),totals=day==='all'?latest.totals:[1,2,3,4].map(i=>rows.reduce((s,r)=>s+r[i],0)),allTotal=day==='all'?latest.total:rows.reduce((s,r)=>s+r[5],0),show=[product==='all'||product==='tl',product==='all'||product==='hp',product==='all'||product==='wolf',product==='all'||product==='jk'],selected=product==='all'?allTotal:totals.reduce((s,v,i)=>s+(show[i]?v:0),0),meta=[['tl','THE LORD','#ef4444'],['hp','HEAVEN','#f59e0b'],['wolf','WOLF+','#84a61f'],['jk','เจ้าขุน','#9a8fca']];
   document.getElementById('coKpis').innerHTML=`<div class="co-kpi co-total"><small>💰 COMMISSION TOTAL</small><b>฿${coMoney(selected)}</b></div>`+meta.map((m,i)=>`<div class="co-kpi co-${m[0]}" style="${show[i]?'':'opacity:.35'}"><small>${['🦁','👑','🐺','☕'][i]} ${m[1]}</small><b>฿${coMoney(show[i]?totals[i]:0)}</b></div>`).join('');
   const max=Math.max(...totals,1);document.getElementById('coBars').innerHTML=meta.map((m,i)=>`<div><div style="font-size:10px;font-weight:900;text-align:center">฿${coMoney(show[i]?totals[i]:0)}</div><div class="co-bar" style="height:${show[i]?Math.max(12,totals[i]/max*125):12}px;background:${m[2]}">${m[1]}</div></div>`).join('');
