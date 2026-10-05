@@ -3340,6 +3340,9 @@ function renderAdminOrg(){
 }
 
 /* ══════ EMPLOYEE DAILY PERFORMANCE ══════ */
+// Daily Target: approved-source cumulative report through 04/10/2026.
+// Keep reports used by other menus unchanged.
+const EMPLOYEE_DAILY_VIEW_REPORTS={'2026-10':{"year":2026,"month":10,"label":"ตุลาคม 2569","range":"26/09/2026–04/10/2026","days":9,"teamWorkdays":48,"focusMetric":"order","orderTarget":100,"revenueTarget":33334,"targetNote":"26–29 ก.ย. ใช้เป้า 50%: 50 ออเดอร์ / 16,667 บาทต่อวัน","totalOrders":5619,"totalSales":1843353,"orderPassPct":83.33333333333334,"salesPassPct":81.25,"employees":[{"name":"Apple","orders":725,"sales":234691,"orderPass":6,"orderFail":1,"salesPass":5,"salesFail":2},{"name":"Tiger","orders":682,"sales":215913,"orderPass":5,"orderFail":2,"salesPass":5,"salesFail":2},{"name":"Deer","orders":765,"sales":236369,"orderPass":6,"orderFail":1,"salesPass":6,"salesFail":1},{"name":"Namfon","orders":711,"sales":232682,"orderPass":5,"orderFail":1,"salesPass":5,"salesFail":1},{"name":"Nueng","orders":1180,"sales":396730,"orderPass":7,"orderFail":1,"salesPass":7,"salesFail":1},{"name":"Amm","orders":927,"sales":306791,"orderPass":7,"orderFail":0,"salesPass":7,"salesFail":0},{"name":"Pay","orders":509,"sales":167417,"orderPass":4,"orderFail":2,"salesPass":4,"salesFail":2},{"name":"Pear","orders":120,"sales":52760,"orderPass":0,"orderFail":0,"salesPass":0,"salesFail":0,"pending":true}]}};
 const ED_COLORS=['#7c3aed','#0891b2','#059669','#db2777','#f97316','#4f46e5','#0d9488','#d97706','#e11d48','#2563eb'];
 function initEmployeeDailyFilters(){
   const y=document.getElementById('edYear'),m=document.getElementById('edMonth');if(!y||!m)return;
@@ -3355,7 +3358,8 @@ function initEmployeeDailyFilters(){
 function edReport(){
   initEmployeeDailyFilters();
   const y=Number(document.getElementById('edYear').value),m=Number(document.getElementById('edMonth').value);
-  return EMPLOYEE_DAILY_REPORTS[`${y}-${String(m).padStart(2,'0')}`];
+  const key=`${y}-${String(m).padStart(2,'0')}`;
+  return EMPLOYEE_DAILY_VIEW_REPORTS[key]||EMPLOYEE_DAILY_REPORTS[key];
 }
 function resetEmployeeDaily(){document.getElementById('edSearch').value='all';document.getElementById('edSort').value='sales';renderEmployeeDaily()}
 function selectEmployeeDaily(name){document.getElementById('edSearch').value=name;renderEmployeeDaily();document.getElementById('edPeople').scrollIntoView({behavior:'smooth',block:'center'})}
