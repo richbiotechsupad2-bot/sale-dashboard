@@ -1568,12 +1568,9 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
   --row1:#edf7ff;--row2:#f4efff;--edge:#3b82f6;--ink:#2556c7;
   filter:drop-shadow(0 7px 8px rgba(34,56,96,.10));transition:.22s ease
 }
-#pg-other-work .ow-buddy tbody tr:nth-child(2),
-#pg-other-work .ow-buddy tbody tr:nth-child(4){--row1:#fff4df;--row2:#fff1ed;--edge:#f59e0b;--ink:#a55c00}
-#pg-other-work .ow-buddy tbody tr:nth-child(5),
-#pg-other-work .ow-buddy tbody tr:nth-child(6){--row1:#e5fff7;--row2:#eaf4ff;--edge:#10b7a2;--ink:#087e74}
-#pg-other-work .ow-buddy tbody tr:nth-child(7),
-#pg-other-work .ow-buddy tbody tr:nth-child(8){--row1:#fff0df;--row2:#f6edff;--edge:#e8811d;--ink:#9a5410}
+#pg-other-work .ow-buddy tbody tr[data-brand="lord"]{--row1:#fff4df;--row2:#fff1ed;--edge:#f59e0b;--ink:#a55c00}
+#pg-other-work .ow-buddy tbody tr[data-brand="wolf"]{--row1:#e5fff7;--row2:#eaf4ff;--edge:#10b7a2;--ink:#087e74}
+#pg-other-work .ow-buddy tbody tr[data-brand="jk"]{--row1:#fff0df;--row2:#f6edff;--edge:#e8811d;--ink:#9a5410}
 #pg-other-work .ow-buddy tbody tr:hover{transform:translateY(-3px) scale(1.003);filter:drop-shadow(0 12px 13px rgba(39,58,104,.17))}
 #pg-other-work .ow-buddy tbody td{
   height:58px;padding:10px 20px!important;border-width:1px 0!important;border-style:solid!important;
@@ -4118,8 +4115,16 @@ const OTHER_WORK_ROWS=[
   ]
 ];
 const OTHER_BUDDIES=[
-  ['HEAVEN PLUS (ตอม)','แอ๋ม','อชิ'],['THE LORD (แจ่ม)','หนึ่ง','ป้าย'],['HEAVEN PLUS (มอส)','ป้าย','แพร'],['THE LORD (TER)','อชิ','หนึ่ง'],
-  ['WOLF+ (NUNE)','เปิ้ล','น้ำฝน'],['WOLF+ (ball)','น้ำฝน','เปิ้ล'],['เจ้าขุน (ball)','แพร','ป้าย'],['เจ้าขุน (LINK)','เกอร์','เดียร์']
+  ['HEAVEN PLUS (ตอม)','แอ๋ม','ป้าย'],
+  ['HEAVEN PLUS (มอส)','ป้าย','แอ๋ม'],
+  ['THE LORD (TER)','น้ำฝน','ป้าย','lord'],
+  ['WOLF+ (NUNE)','เปิ้ล','เดียร์','wolf'],
+  ['WOLF+ (ball)','น้ำฝน','ป้าย','wolf'],
+  ['เจ้าขุน (ball)','ป้าย','แอ๋ม','jk'],
+  ['เจ้าขุน (แจ่ม)','เกอร์','เดียร์','jk'],
+  ['WOLF+ [TER]','เดียร์','เกอร์','wolf'],
+  ['THE LORD [แจ่ม]','หนึ่ง','เปิ้ล','lord'],
+  ['WILD HORSE X','เนย','หนึ่ง']
 ];
 function initOtherWorkFilters(){
   const el=document.getElementById('owOwner');
@@ -4135,7 +4140,7 @@ function renderOtherBuddies(){
   const sa=document.getElementById('owBuddySA')?.value||'all',buddy=document.getElementById('owBuddyName')?.value||'all',topic=document.getElementById('owBuddyTopic')?.value||'all';
   const rows=OTHER_BUDDIES.filter(r=>(sa==='all'||r[1]===sa)&&(buddy==='all'||r[2]===buddy)&&(topic==='all'||r[0]===topic));
   const status=document.getElementById('owBuddyStatus');if(status)status.textContent=`แสดง ${rows.length} จาก ${OTHER_BUDDIES.length} รายการ`;
-  const tbody=document.getElementById('owBuddy');if(tbody)tbody.innerHTML=rows.length?rows.map(r=>`<tr><td><span class="ow-topic">${r[0]}</span></td><td><span class="ow-owner">${r[1]}</span></td><td><span class="ow-buddy-pill">🤝 ${r[2]}</span></td></tr>`).join(''):`<tr><td colspan="3"><div class="ow-empty">ไม่พบข้อมูลตามตัวกรองที่เลือก</div></td></tr>`;
+  const tbody=document.getElementById('owBuddy');if(tbody)tbody.innerHTML=rows.length?rows.map(r=>`<tr data-brand="${r[3]||''}"><td><span class="ow-topic">${r[0]}</span></td><td><span class="ow-owner">${r[1]}</span></td><td><span class="ow-buddy-pill">🤝 ${r[2]}</span></td></tr>`).join(''):`<tr><td colspan="3"><div class="ow-empty">ไม่พบข้อมูลตามตัวกรองที่เลือก</div></td></tr>`;
 }
 function renderOtherWork(){
   initOtherWorkFilters();
