@@ -5961,13 +5961,25 @@ const HOLIDAY_OCT_TEAM=[
   {"name":"ไทเกอร์","full":"นาย ศราวุธ สมคล่อง","id":"68186","meta":"","s":"AWWWWOWAAAAAAMMMMMMOAAMMMOOAAA","leave":{"off":4,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
   {"name":"นุ๊ก","full":"น.ส. กิติยา อิ่นคำ","id":"68227","meta":"Supervisor","s":"MWWNNNNOONNNNNNMNONNNNNNNAMOOO","leave":{"off":6,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}}
 ];
+const HOLIDAY_NOV_TEAM=[
+  {"name":"หนึ่ง","full":"น.ส. หนึ่งฤทัย เหลืองไชยยะ","id":"68103","meta":"WFH","s":"MMBAMMMMOMMMMMMMMMOOOMMMMMMMMMM","leave":{"off":4,"V":5,"vacationRemaining":1,"L":2,"businessRemaining":1,"B":1,"sickRemaining":29,"U":0,"maternity":0}},
+  {"name":"แอ๋ม","full":"น.ส. ภัทรียา ฟูเต็มวงค์","id":"68136","meta":"WFH","s":"OMMMMMMOMMMMMMOMMMMMMMMMMMMMMMM","leave":{"off":3,"V":4,"vacationRemaining":2,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"เดียร์","full":"นาย ขวัญชัย กลิ่นนุ่ม","id":"68228","meta":"","s":"MOAAAAAAOAAAAAAOAAAAAAOAAAAAAAA","leave":{"off":4,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"น้ำฝน","full":"น.ส. ปุณญภัส กาละเหลา","id":"68261","meta":"","s":"MMMMMMOMMMMOMMMAMMMMMMMMMMOOMMM","leave":{"off":4,"V":0,"vacationRemaining":6,"L":2,"businessRemaining":1,"B":2,"sickRemaining":28,"U":0,"maternity":0}},
+  {"name":"แอปเปิ้ล","full":"น.ส. วรรณกานต์ อาจประโคน","id":"68033","meta":"","s":"AAAAAOAMAAAMAOMMAAMMOAAAAAAOAAA","leave":{"off":4,"V":3,"vacationRemaining":3,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"ป้าย","full":"นาย วิษณุพล ไชยโชค","id":"68070","meta":"","s":"AAAAAAOAAAAAAAAAOAAAAAAAAAAAAOO","leave":{"off":4,"V":6,"vacationRemaining":0,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"ไทเกอร์","full":"นาย ศราวุธ สมคล่อง","id":"68186","meta":"","s":"AAAAAOMAAAAAAOAMAAAAOAAAAAAOAAA","leave":{"off":4,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"เนย","full":"น.ส. ณัฐทิชา ราชะเนตร์","id":"68302","meta":"","s":"NAAAAMMMMMMMMMMOMMMMMMMMMMMMMMM","leave":{"off":1,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"นุ๊ก","full":"น.ส. กิติยา อิ่นคำ","id":"68227","meta":"Supervisor","s":"OONNNMNONNNNNMONNNNNNNONNNNNNNO","leave":{"off":6,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}}
+];
 const HOLIDAY_PERIODS={
+  '2026-11':{label:'พฤศจิกายน 2569',range:'26 ตุลาคม–25 พฤศจิกายน 2569',start:[2026,9,26],days:31,team:HOLIDAY_NOV_TEAM},
   '2026-10':{label:'ตุลาคม 2569',range:'26 กันยายน–25 ตุลาคม 2569',start:[2026,8,26],days:30,publicHolidays:[23],team:HOLIDAY_OCT_TEAM},
   '2026-09':{label:'กันยายน 2569',range:'26 สิงหาคม–25 กันยายน 2569',start:[2026,7,26],days:31,team:HOLIDAY_SEP_TEAM},
   '2026-08':{label:'สิงหาคม 2569',range:'26 กรกฎาคม–25 สิงหาคม 2569',start:[2026,6,26],days:31,team:HOLIDAY_AUG_TEAM},
   '2026-07':{label:'กรกฎาคม 2569',range:'26 มิถุนายน–25 กรกฎาคม 2569',start:[2026,5,26],days:30,team:HOLIDAY_JUL_TEAM}
 };
-let HS_MONTH='2026-10';
+let HS_MONTH='2026-11';
 let HOLIDAY_TEAM=HOLIDAY_PERIODS[HS_MONTH].team;
 let HS_DATES=[];
 const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด',V:'พักร้อน',L:'ลากิจ',U:'กิจ*',B:'ป่วย',P:'พัก',W:'WFH','-':'—'};
