@@ -1951,11 +1951,11 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 
     <!-- ═══ PAGE: ACCOUNT · STATUS (APPROVED 25 AUG 2026) ═══ -->
     <div id="pg-account-status" class="page"><div class="wrap">
-      <section class="as-hero"><div><div class="as-eyebrow">ACCOUNT · STATUS · PAGE MATRIX</div><h2>🪪 Account · Status</h2><p>ตรวจสอบสถานะบัญชีและเพจของแต่ละแบรนด์ได้ในหน้าจอเดียว</p></div><div class="as-updated"><small>อัปเดตล่าสุด</small><b>25 ส.ค. 2569</b></div></section>
+      <section class="as-hero"><div><div class="as-eyebrow">ACCOUNT · STATUS · PAGE MATRIX</div><h2>🪪 Account · Status</h2><p>ตรวจสอบสถานะบัญชีและเพจของแต่ละแบรนด์ได้ในหน้าจอเดียว</p></div><div class="as-updated"><small>อัปเดตล่าสุด</small><b>12 พ.ย. 2569</b></div></section>
       <section class="as-toolbar">
-        <label>แบรนด์<select id="asBrand" onchange="renderAccountStatus()"><option value="all">ทุกแบรนด์</option><option>WOLF+</option><option>HEAVEN Plus</option><option>The Lord</option><option>เจ้าขุน</option></select></label>
-        <label>สถานะบัญชี<select id="asRole" onchange="renderAccountStatus()"><option value="all">ทุกสถานะ</option><option>User หลัก</option><option>User รอง</option><option>ปั้นเม้นเก่า</option><option>ปั้นเม้นใหม่</option></select></label>
-        <label>สถานะเพจ<select id="asPageStatus" onchange="renderAccountStatus()"><option value="all">ทั้งหมด</option><option>มีเพจ</option><option>ยังไม่มีเพจ</option><option>รับเพจไม่ได้</option></select></label>
+        <label>แบรนด์<select id="asBrand" onchange="renderAccountStatus()"><option value="all">ทุกแบรนด์</option><option>WOLF+</option><option>HEAVEN Plus</option><option>The Lord</option><option>เจ้าขุน</option><option>WILD HORSE X</option></select></label>
+        <label>สถานะบัญชี<select id="asRole" onchange="renderAccountStatus()"><option value="all">ทุกสถานะ</option><option>User หลัก</option><option>ปั้นเม้นใหม่</option></select></label>
+        <label>สถานะเพจ<select id="asPageStatus" onchange="renderAccountStatus()"><option value="all">ทั้งหมด</option><option>มีเพจ</option><option>ยังไม่มีเพจ</option><option>รอเพิ่ม</option><option>รับเพจไม่ได้</option></select></label>
         <label class="as-search">ค้นหาบัญชี / เพจ<input id="asSearch" oninput="renderAccountStatus()" placeholder="⌕  พิมพ์ชื่อบัญชีหรือชื่อเพจ..."></label>
         <button class="as-reset" onclick="resetAccountStatus()">ล้างตัวกรอง</button>
       </section>
@@ -4326,7 +4326,143 @@ document.addEventListener('DOMContentLoaded',initCommissionSurfacePlay);
 
 /* ══════════════ ACCOUNT · STATUS MATRIX ══════════════ */
 function asEsc(v){return String(v==null?'':v).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function asRoleClass(role){return role==='User หลัก'?'main':role==='User รอง'?'second':role==='ปั้นเม้นเก่า'?'old':'new'}
+const AS_ACCOUNT_REPORTS = {
+  "The Lord": {
+    "pages": [
+      "The Lord เสริมพลังแกร่งทุกมิติ โทร. 02-114-7507",
+      "เคล็ดไม่ลับฉบับ Thelord โทร 02-1147507",
+      "The Lord สูตรลับนายท่าน โทร 02-1147507",
+      "สมุนไพรวัยเกษียณ The Lord โทร 02-1147507",
+      "Thelord ฟื้นฟูพลังชายธรรมชาติ โทร 02-1147507",
+      "The Lord สมุนไพรพลังชาย โทร. 02-114-7507",
+      "The Lord ฟื้นพลังหนุ่ม คืนพลังแกร่ง โทร. 02-114-7507",
+      "The Lord ทางเลือกของผู้ชายพลังอึด",
+      "The Lord ของดีต้องมีติดตัว โทร. 02-114-7507",
+      "The Lord ขุนศึกเจ็ดยับไม่มีแผ่ว โทร. 02-114-7507",
+      "Thelord สุขภาพดี สร้างได้ โทร 02-1147507",
+      "The Lord สูตรเด็ดสมุนไพรเสริมพลัง โทร.02-114-7507",
+      "The Lord พร้อมลุยทุกศึก โทร. 02-114-7507",
+      "The Lord ดูแลผู้ชายในทุกวัน โทร. 02-114-7507"
+    ],
+    "main": [
+      "Arryn Etchingham",
+      "Adelina Jenney",
+      "Henry Limsey",
+      "Putrawangsa",
+      "Yusri",
+      "Mercy Albia",
+      "Brunard Zellweger",
+      "Menoor Qz",
+      "Jordan Balintao",
+      "Kang Prabu Poek"
+    ],
+    "new": [
+      "Daryl Pobador",
+      "Silene Maria Delfino"
+    ],
+    "matrix": [
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGYYYY",
+      "GGGGGGGGGGYYYY",
+      "GGGGGGGGGGYYYY",
+      "GGGGGGGGGGYYYY",
+      "GGGGGGGGGGGGGG",
+      "GGGGGGGGGGGGGG"
+    ]
+  },
+  "เจ้าขุน": {
+    "pages": [
+      "เจ้าขุน ฟิตพลังชาย",
+      "เจ้าขุน แกร่งจากภายใน",
+      "เจ้าขุน ปลุกตื่นทุกเช้า",
+      "เจ้าขุน ฟิต 24 ชั่วโมง",
+      "เจ้าขุน สูตรลับของผู้ชาย",
+      "เจ้าขุน หอม เข้ม พร้อมลุย",
+      "เจ้าขุน กาแฟสายลุย",
+      "เจ้าขุน กาแฟสมุนไพร คู่ใจคอกาแฟ"
+    ],
+    "main": [
+      "Putrawangsa",
+      "Yusri",
+      "Arryn Etchingham",
+      "Santry Gagal Fokus",
+      "Adelina Jenney",
+      "Jerome Casidsid",
+      "Rome Nelle Romanos",
+      "Mercy Albia",
+      "Markjomel Titular"
+    ],
+    "new": [
+      "Killua Zoldyck",
+      "Averah Hera"
+    ],
+    "matrix": [
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG",
+      "GGGGGGGG"
+    ]
+  },
+  "WILD HORSE X": {
+    "pages": [
+      "Wild horse ปลุกพลังม้าศึก",
+      "wild horse ขุมพลังอาชา",
+      "Wild HorseX แรงม้าพลังหนุ่ม"
+    ],
+    "main": [
+      "Putrawangsa",
+      "Yusri",
+      "Arryn Etchingham",
+      "Santry Gagal Fokus",
+      "Adelina Jenney",
+      "Jerome Casidsid",
+      "Rome Nelle Romanos",
+      "Mercy Albia",
+      "Markjomel Titular"
+    ],
+    "new": [
+      "Michael Alcaraz",
+      "Cris Lawrence Domingo"
+    ],
+    "matrix": [
+      "GGG",
+      "GGG",
+      "GGG",
+      "GGG",
+      "GPP",
+      "GPP",
+      "PPP",
+      "PPP",
+      "PPP",
+      "GGG",
+      "GPP"
+    ]
+  }
+};
+const AS_ACCOUNT_ROLES = ['User หลัก', 'ปั้นเม้นใหม่'];
+function accountStatusRows(){
+ const existing=ACC_ROWS.filter(r=>!Object.hasOwn(AS_ACCOUNT_REPORTS,r.brand)&&AS_ACCOUNT_ROLES.includes(r.role));
+ const statusByCode={G:'มีเพจ',P:'รอเพิ่ม',Y:'รับเพจไม่ได้'};
+ const reported=Object.entries(AS_ACCOUNT_REPORTS).flatMap(([brand,report])=>
+  [...report.main,...report.new].flatMap((account,ri)=>
+   report.pages.map((page,ci)=>({account,brand,page,role:ri<report.main.length?AS_ACCOUNT_ROLES[0]:AS_ACCOUNT_ROLES[1],status:statusByCode[report.matrix[ri][ci]]}))
+  )
+ );
+ return existing.concat(reported);
+}
+function asRoleClass(role){return role===AS_ACCOUNT_ROLES[0]?'main':'new'}
 function asStatusClass(status){return status==='มีเพจ'?'have':status==='รับเพจไม่ได้'?'blocked':'missing'}
 function resetAccountStatus(){['asBrand','asRole','asPageStatus'].forEach(id=>document.getElementById(id).value='all');document.getElementById('asSearch').value='';renderAccountStatus()}
 function toggleAccountMatrix(el){el.closest('.as-matrix').classList.toggle('collapsed')}
@@ -4334,10 +4470,10 @@ function pulseAccountStatus(el){el.animate([{transform:'scale(1)'},{transform:'s
 function renderAccountStatus(){
  const host=document.getElementById('asMatrices');if(!host)return;if(typeof buildCorrectAccountRows==='function')buildCorrectAccountRows();
  const brand=document.getElementById('asBrand').value,role=document.getElementById('asRole').value,status=document.getElementById('asPageStatus').value,q=(document.getElementById('asSearch').value||'').trim().toLowerCase();
- const all=(typeof ACC_ROWS!=='undefined'?ACC_ROWS:[]),source=all.filter(r=>(brand==='all'||r.brand===brand)&&(role==='all'||r.role===role)&&(status==='all'||r.status===status)&&(!q||[r.account,r.page,r.brand,r.role,r.status].join(' ').toLowerCase().includes(q)));
- const names=[...new Set(source.map(r=>r.account).filter(Boolean))];document.getElementById('asKpiAccounts').textContent=names.length;document.getElementById('asKpiHave').textContent=source.filter(r=>r.status==='มีเพจ').length;document.getElementById('asKpiMissing').textContent=source.filter(r=>r.status==='ยังไม่มีเพจ').length;document.getElementById('asKpiBlocked').textContent=source.filter(r=>r.status==='รับเพจไม่ได้').length;
- const brands=brand==='all'?['WOLF+','HEAVEN Plus','The Lord','เจ้าขุน']:[brand];
- host.innerHTML=brands.map(b=>{const rows=source.filter(r=>r.brand===b),accounts=[...new Set(rows.map(r=>r.account))],pages=[...new Set(all.filter(r=>r.brand===b).map(r=>r.page).filter(Boolean))];if(!accounts.length)return '';const roleMap=Object.fromEntries(rows.map(r=>[r.account,r.role])),statusMap=new Map(rows.map(r=>[r.account+'|||'+r.page,r.status]));const head=pages.map(p=>'<th>'+asEsc(p)+'</th>').join('');const body=accounts.map(a=>'<tr><td><span class="as-role '+asRoleClass(roleMap[a])+'">'+asEsc(roleMap[a])+'</span></td><td>'+asEsc(a)+'</td>'+pages.map(p=>{const st=statusMap.get(a+'|||'+p)||'ยังไม่มีเพจ';return '<td><span class="as-status '+asStatusClass(st)+'" onclick="pulseAccountStatus(this)" title="คลิกเพื่อดูสถานะ">'+asEsc(st)+'</span></td>'}).join('')+'</tr>').join('');return '<section class="as-matrix"><div class="as-matrix-head" onclick="toggleAccountMatrix(this)"><strong>👤 ตารางสถานะบัญชี — '+asEsc(b)+'</strong><span>'+accounts.length+' บัญชี · '+pages.length+' เพจ · คลิกเพื่อย่อ/ขยาย⌄</span></div><div class="as-scroll"><table class="as-table"><thead><tr><th>สถานะ</th><th>ชื่อบัญชี</th>'+head+'</tr></thead><tbody>'+body+'</tbody></table></div><div class="as-note">สีเขียว = มีเพจ · สีชมพู = ยังไม่มีเพจ · สีเหลือง = รับเพจไม่ได้</div></section>'}).join('')||'<div class="as-matrix as-empty">ไม่พบข้อมูลตามตัวกรอง</div>'
+ const all=accountStatusRows(),source=all.filter(r=>(brand==='all'||r.brand===brand)&&(role==='all'||r.role===role)&&(status==='all'||r.status===status)&&(!q||[r.account,r.page,r.brand,r.role,r.status].join(' ').toLowerCase().includes(q)));
+ const names=[...new Set(source.map(r=>r.account).filter(Boolean))];document.getElementById('asKpiAccounts').textContent=names.length;document.getElementById('asKpiHave').textContent=source.filter(r=>r.status==='มีเพจ').length;document.getElementById('asKpiMissing').textContent=source.filter(r=>r.status==='ยังไม่มีเพจ'||r.status==='รอเพิ่ม').length;document.getElementById('asKpiBlocked').textContent=source.filter(r=>r.status==='รับเพจไม่ได้').length;
+ const brands=brand==='all'?['WOLF+','HEAVEN Plus','The Lord','เจ้าขุน','WILD HORSE X']:[brand];
+ host.innerHTML=brands.map(b=>{const rows=source.filter(r=>r.brand===b),accounts=[...new Set(rows.map(r=>r.account))],pages=[...new Set(all.filter(r=>r.brand===b).map(r=>r.page).filter(Boolean))];if(!accounts.length)return '';const brandRows=all.filter(r=>r.brand===b),roleMap=Object.fromEntries(brandRows.map(r=>[r.account,r.role])),statusMap=new Map(brandRows.map(r=>[r.account+'|||'+r.page,r.status]));const head=pages.map(p=>'<th>'+asEsc(p)+'</th>').join('');const body=accounts.map(a=>'<tr><td><span class="as-role '+asRoleClass(roleMap[a])+'">'+asEsc(roleMap[a])+'</span></td><td>'+asEsc(a)+'</td>'+pages.map(p=>{const st=statusMap.get(a+'|||'+p)||'ยังไม่มีเพจ';return '<td><span class="as-status '+asStatusClass(st)+'" onclick="pulseAccountStatus(this)" title="คลิกเพื่อดูสถานะ">'+asEsc(st)+'</span></td>'}).join('')+'</tr>').join('');return '<section class="as-matrix"><div class="as-matrix-head" onclick="toggleAccountMatrix(this)"><strong>👤 ตารางสถานะบัญชี — '+asEsc(b)+'</strong><span>'+accounts.length+' บัญชี · '+pages.length+' เพจ · คลิกเพื่อย่อ/ขยาย⌄</span></div><div class="as-scroll"><table class="as-table"><thead><tr><th>สถานะ</th><th>ชื่อบัญชี</th>'+head+'</tr></thead><tbody>'+body+'</tbody></table></div><div class="as-note">สีเขียว = มีเพจ · สีชมพู = ยังไม่มีเพจ / รอเพิ่ม · สีเหลือง = รับเพจไม่ได้</div></section>'}).join('')||'<div class="as-matrix as-empty">ไม่พบข้อมูลตามตัวกรอง</div>'
 }
 
 
