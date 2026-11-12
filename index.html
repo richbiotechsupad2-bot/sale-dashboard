@@ -1327,6 +1327,7 @@ footer{text-align:center;padding:20px;color:var(--muted);font-size:9px;border-to
 #pg-holiday .hs-count-table .count-A{background:#dcfce7;color:#047857}
 #pg-holiday .hs-count-table .count-N{background:#e0e7ff;color:#3730a3}
 #pg-holiday .hs-count-table .count-O{background:#fee2e2;color:#dc2626}
+#pg-holiday .hs-count-table .count-W{background:#ffedd5;color:#c2410c}
 #pg-holiday .hs-count-table .count-X{background:linear-gradient(135deg,#fee2e2,#ede9fe);color:#be123c}
 #pg-holiday .hs-count-table .count-total{background:#ecfeff;color:#0f766e;font-size:15px;font-weight:950}
 #pg-holiday .hs-count-label{display:flex;align-items:center;gap:8px}
@@ -5949,15 +5950,28 @@ const HOLIDAY_JUL_TEAM=[
   {name:'น้ำฝน',full:'น.ส. ปุณญภัส กาละเหลา',id:'68261',meta:'กะบ่าย',s:'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAO'},
   {name:'นุ๊ก',full:'น.ส. กิติยา อิ่นคำ',id:'68227',meta:'Supervisor',s:'NNNNNNNNNNONNNNNNNNNONNNMONNNN'}
 ];
+const HOLIDAY_OCT_TEAM=[
+  {"name":"หนึ่ง","full":"น.ส. หนึ่งฤทัย เหลืองไชยยะ","id":"68103","meta":"WFH","s":"MMOMMMMMMMMMMOAAAAAMOAAAOAAMMM","leave":{"off":4,"V":3,"vacationRemaining":3,"L":2,"businessRemaining":1,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"แอ๋ม","full":"น.ส. ภัทรียา ฟูเต็มวงค์","id":"68136","meta":"WFH","s":"MOMMMAOMMMMMOAAAAAAAMMOMMMMMMM","leave":{"off":4,"V":4,"vacationRemaining":2,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"เดียร์","full":"นาย ขวัญชัย กลิ่นนุ่ม","id":"68228","meta":"","s":"MWWWWWMMOMMMMMMOOMMMMMMMOMMMMM","leave":{"off":4,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"น้ำฝน","full":"น.ส. ปุณญภัส กาละเหลา","id":"68261","meta":"","s":"MWWOOWMMMMMOMMMMMMMMMMMOMMMMMM","leave":{"off":4,"V":0,"vacationRemaining":6,"L":2,"businessRemaining":1,"B":2,"sickRemaining":28,"U":0,"maternity":0}},
+  {"name":"แพร","full":"น.ส. ศิรินภา ปฏิมาการ","id":"68017","meta":"","s":"AOOWWWAAAA--------------------","leave":{"off":2,"V":6,"vacationRemaining":0,"L":0,"businessRemaining":3,"B":1,"sickRemaining":29,"U":0,"maternity":0}},
+  {"name":"แอปเปิ้ล","full":"น.ส. วรรณกานต์ อาจประโคน","id":"68033","meta":"","s":"AWWWWOWAAAAAAAMMMMMOAAAAAOOAAA","leave":{"off":4,"V":3,"vacationRemaining":3,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"ป้าย","full":"นาย วิษณุพล ไชยโชค","id":"68070","meta":"","s":"AWWWOWAOAAAAAAAOAAAAAOAAAAAAAV","leave":{"off":4,"V":6,"vacationRemaining":0,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"ไทเกอร์","full":"นาย ศราวุธ สมคล่อง","id":"68186","meta":"","s":"AWWWWOWAAAAAAMMMMMMOAAMMMOOAAA","leave":{"off":4,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}},
+  {"name":"นุ๊ก","full":"น.ส. กิติยา อิ่นคำ","id":"68227","meta":"Supervisor","s":"MWWNNNNOONNNNNNMNONNNNNNNAMOOO","leave":{"off":6,"V":0,"vacationRemaining":6,"L":0,"businessRemaining":3,"B":0,"sickRemaining":30,"U":0,"maternity":0}}
+];
 const HOLIDAY_PERIODS={
+  '2026-10':{label:'ตุลาคม 2569',range:'26 กันยายน–25 ตุลาคม 2569',start:[2026,8,26],days:30,publicHolidays:[23],team:HOLIDAY_OCT_TEAM},
   '2026-09':{label:'กันยายน 2569',range:'26 สิงหาคม–25 กันยายน 2569',start:[2026,7,26],days:31,team:HOLIDAY_SEP_TEAM},
   '2026-08':{label:'สิงหาคม 2569',range:'26 กรกฎาคม–25 สิงหาคม 2569',start:[2026,6,26],days:31,team:HOLIDAY_AUG_TEAM},
   '2026-07':{label:'กรกฎาคม 2569',range:'26 มิถุนายน–25 กรกฎาคม 2569',start:[2026,5,26],days:30,team:HOLIDAY_JUL_TEAM}
 };
-let HS_MONTH='2026-09';
+let HS_MONTH='2026-10';
 let HOLIDAY_TEAM=HOLIDAY_PERIODS[HS_MONTH].team;
 let HS_DATES=[];
-const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด',V:'พักร้อน',L:'ลากิจ',U:'กิจ*',B:'ป่วย',P:'พัก'};
+const HS_LABEL={M:'06:00–15:00',A:'15:00–00:00',N:'09:00–18:00',O:'หยุด',V:'พักร้อน',L:'ลากิจ',U:'กิจ*',B:'ป่วย',P:'พัก',W:'WFH','-':'—'};
+const HS_WORK_CODES=['M','A','N','W'];
 const HS_OFF_CODES=['O','V','L','U','B','P'];
 const HS_SHORT_DAY=['อา','จ','อ','พ','พฤ','ศ','ส'];
 function availableHolidayMonths(year){
@@ -5976,6 +5990,9 @@ function setHolidayPeriod(key){
   const p=HOLIDAY_PERIODS[key]||HOLIDAY_PERIODS['2026-09'];
   HS_MONTH=key in HOLIDAY_PERIODS?key:'2026-09';
   HOLIDAY_TEAM=p.team;
+  const shift=document.getElementById('hsShift');
+  shift.querySelector('option[value="W"]')?.remove();
+  if(p.team.some(person=>person.s.includes('W')))shift.add(new Option('WFH','W'));
   HS_DATES=Array.from({length:p.days},(_,i)=>new Date(Date.UTC(p.start[0],p.start[1],p.start[2]+i)));
   document.getElementById('hsTitle').textContent=`🏖️ ตารางวันหยุด — ${p.label}`;
   const yearSel=document.getElementById('hsYear');if(yearSel)yearSel.value=HS_MONTH.slice(0,4);
@@ -6011,6 +6028,13 @@ function resetHolidayFilters(){
   document.getElementById('hsShift').value='all';
   renderHolidaySchedule();
 }
+function holidayDateHeaders(){
+  const publicHolidays=HOLIDAY_PERIODS[HS_MONTH].publicHolidays||[];
+  return HS_DATES.map(d=>{
+    const weekday=d.getUTCDay(),day=d.getUTCDate(),holiday=publicHolidays.includes(day);
+    return `<th class="${weekday===0||weekday===6||holiday?'weekend':''}"${holiday?' title="วันหยุดนักขัตฤกษ์"':''}>${HS_SHORT_DAY[weekday]}<br><b>${day}</b></th>`;
+  }).join('');
+}
 function renderHolidaySchedule(){
   const thead=document.getElementById('hsThead'),tbody=document.getElementById('hsTbody');
   if(!thead||!tbody)return;
@@ -6019,9 +6043,8 @@ function renderHolidaySchedule(){
   const sum=HOLIDAY_TEAM.reduce((a,p)=>{[...p.s].forEach(x=>{a[x]=(a[x]||0)+1});return a},{M:0,A:0,N:0,O:0,V:0,L:0,U:0,B:0,P:0});
   document.getElementById('hsKpiPeople').textContent=HOLIDAY_TEAM.length+' คน';
   const leaveMetric=code=>{
-    const people=HOLIDAY_TEAM.filter(p=>p.s.includes(code)).length;
-    const days=HOLIDAY_TEAM.reduce((n,p)=>n+[...p.s].filter(x=>x===code).length,0);
-    return {people,days};
+    const amounts=HOLIDAY_TEAM.map(p=>p.leave?.[code]??[...p.s].filter(x=>x===code).length);
+    return {people:amounts.filter(n=>n>0).length,days:amounts.reduce((a,b)=>a+b,0)};
   };
   const leaveCards=[
     ['hsKpiVacation','V','วัน'],
@@ -6031,15 +6054,21 @@ function renderHolidaySchedule(){
   ];
   leaveCards.forEach(([id,code,unit])=>{
     const metric=leaveMetric(code);
-    document.getElementById(id).textContent=`${metric.people} คน | ${metric.days} ${unit}`;
+    const value=document.getElementById(id);
+    value.textContent=`${metric.people} คน | ${metric.days} ${unit}`;
+    if(HOLIDAY_TEAM.some(p=>p.leave))value.title='ยอดสรุปจากรายงานต้นทาง';
+    else value.removeAttribute('title');
   });
-  const heads=HS_DATES.map(d=>{const wk=d.getUTCDay()===0||d.getUTCDay()===6;return `<th class="${wk?'weekend':''}">${HS_SHORT_DAY[d.getUTCDay()]}<br><b>${d.getUTCDate()}</b></th>`}).join('');
+  const heads=holidayDateHeaders();
   thead.innerHTML=`<tr><th>ชื่อ / เวลาทำงาน</th>${heads}<th class="sum" style="background:#dc2626">วันหยุด</th><th class="sum" style="background:#db2777">กะเช้า</th><th class="sum" style="background:#059669">กะบ่าย</th><th class="sum" style="background:#4338ca">กะปกติ</th><th class="sum" style="background:#0f766e">วันทำงาน</th></tr>`;
   tbody.innerHTML=HOLIDAY_TEAM.map((p,i)=>{
     const c={M:0,A:0,N:0,O:0,V:0,L:0,U:0,B:0,P:0};[...p.s].forEach(x=>c[x]=(c[x]||0)+1);
-    const cells=[...p.s].map(x=>`<td class="shift-${x}" style="${focus!=='all'&&focus!==x?'opacity:.18;filter:grayscale(.7)':''}">${HS_LABEL[x]}</td>`).join('');
-    const off=HS_OFF_CODES.reduce((n,k)=>n+(c[k]||0),0);
-    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.full} <span style="color:#64748b;font-weight:700">(${p.name})</span></b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.id}</small></div></td>${cells}<td class="sum off">${off}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${c.M+c.A+c.N}</td></tr>`;
+    const cells=[...p.s].map(x=>`<td class="${x==='W'?'shift-B':x==='-'?'':'shift-'+x}" style="${focus!=='all'&&focus!==x?'opacity:.18;filter:grayscale(.7)':''}">${HS_LABEL[x]}</td>`).join('');
+    const off=p.leave?.off??HS_OFF_CODES.reduce((n,k)=>n+(c[k]||0),0);
+    const work=HS_WORK_CODES.reduce((n,k)=>n+(c[k]||0),0);
+    const l=p.leave;
+    const leaveTitle=l?` title="ยอดสรุปจากรายงาน: พักร้อน ${l.V} (เหลือ ${l.vacationRemaining}) · ลากิจ ${l.L} (เหลือ ${l.businessRemaining}) · ลาป่วย ${l.B} (เหลือ ${l.sickRemaining}) · ลาไม่รับค่าจ้าง ${l.U} · ลาคลอด ${l.maternity}"`:'';
+    return `<tr class="${emp!=='all'&&emp!=i?'is-hidden':''}"><td><div class="hs-name"><b>${p.full} <span style="color:#64748b;font-weight:700">(${p.name})</span></b>${p.meta==='WFH'?'<span class="hs-badge">🏠 WFH</span>':''}<small>${p.id}</small></div></td>${cells}<td class="sum off"${leaveTitle}>${off}</td><td class="sum morning">${c.M}</td><td class="sum after">${c.A}</td><td class="sum normal">${c.N}</td><td class="sum work">${work}</td></tr>`;
   }).join('');
   const shown=emp==='all'?HOLIDAY_TEAM.length:1;
   const period=HOLIDAY_PERIODS[HS_MONTH];
@@ -6052,7 +6081,7 @@ function renderDailyShiftCounts(){
   const countedTeam=HOLIDAY_TEAM.filter(p=>p.meta!=='Supervisor');
   const countStatus=document.getElementById('hsCountStatus');
   if(countStatus)countStatus.textContent=`ไม่นับ Supervisor · รวมพนักงาน ${countedTeam.length} คน`;
-  const heads=HS_DATES.map(d=>{const wk=d.getUTCDay()===0||d.getUTCDay()===6;return `<th class="${wk?'weekend':''}">${HS_SHORT_DAY[d.getUTCDay()]}<br><b>${d.getUTCDate()}</b></th>`}).join('');
+  const heads=holidayDateHeaders();
   thead.innerHTML=`<tr><th>ประเภทกะ / สถานะ</th>${heads}<th class="total-head">รวมทั้งรอบ</th></tr>`;
   const rows=[
     {key:'M',icon:'🌞',label:'กะเช้า',color:'#db2777'},
@@ -6060,6 +6089,7 @@ function renderDailyShiftCounts(){
     {key:'N',icon:'🕘',label:'กะปกติ',color:'#4338ca'},
     {key:'X',icon:'🏖️',label:'หยุด / ลา',color:'#dc2626'}
   ];
+  if(countedTeam.some(p=>p.s.includes('W')))rows.splice(3,0,{key:'W',icon:'🏠',label:'WFH',color:'#c2410c'});
   tbody.innerHTML=rows.map(row=>{
     const daily=HS_DATES.map((_,day)=>countedTeam.filter(p=>row.key==='X'?HS_OFF_CODES.includes(p.s[day]):p.s[day]===row.key).length);
     return `<tr><td><span class="hs-count-label" style="color:${row.color}"><i></i><strong>${row.icon} ${row.label}</strong></span></td>${daily.map(n=>`<td class="count-${row.key}"><b>${n}</b></td>`).join('')}<td class="count-total">${daily.reduce((a,b)=>a+b,0)}</td></tr>`;
